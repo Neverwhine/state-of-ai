@@ -2373,6 +2373,87 @@
       <span class="stat-source">Source: DVC Research, historical market data</span>
     </div>
 
+    <!-- ═══ CAPITAL CONCENTRATION: WHY MULTIPLES ARE INSANE ═══ -->
+    <div class="cap-concentration anim-fade" style="margin-top:3rem">
+      <h3 class="subsection-title">WHY ARE MULTIPLES SO CRAZY?</h3>
+      <p style="color:#A0A8BC;font-size:0.95rem;margin-bottom:2rem;max-width:720px">The answer isn't irrational exuberance — it's structural. <strong style="color:#F5C542">1.3% of asset managers control 66% of all capital</strong>, and they can't write $5M seed checks. So $147T in global AUM funnels into the few AI companies big enough to absorb it.</p>
+
+      <!-- Top Asset Managers Bar Chart -->
+      <div style="margin-bottom:2.5rem">
+        <h4 style="color:#4ECDC4;font-size:0.85rem;font-weight:700;letter-spacing:0.1em;margin:0 0 1rem">TOP ASSET MANAGERS — $147T GLOBAL AUM</h4>
+        <div id="aumBars" style="display:flex;flex-direction:column;gap:0.5rem">
+        </div>
+        <p style="color:#A0A8BC;font-size:0.78rem;margin-top:0.75rem">Top 10 manage <strong style="color:#E8E9ED">$62T</strong> — 42% of global AUM. They need to deploy billions per quarter. Early-stage VC is invisible to them.</p>
+        <span class="stat-source">Source: BlackRock Q4 2025 earnings, Vanguard, UBS, Fidelity filings</span>
+      </div>
+
+      <!-- AI Deal Pareto Distribution -->
+      <div style="margin-bottom:2.5rem">
+        <h4 style="color:#E8837C;font-size:0.85rem;font-weight:700;letter-spacing:0.1em;margin:0 0 0.5rem">THE PARETO OF AI CHECKS</h4>
+        <p style="color:#A0A8BC;font-size:0.82rem;margin:0 0 1.25rem">AI captured <strong style="color:#E8E9ED">61%</strong> of all global VC in 2025 ($259B of $427B). But within AI, concentration is extreme:</p>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-bottom:1.5rem">
+          <div style="background:rgba(232,131,124,0.08);border:1px solid rgba(232,131,124,0.2);border-radius:12px;padding:1.25rem;text-align:center">
+            <span style="display:block;font-size:2.2rem;font-weight:800;color:#E8837C" class="tabnum">5</span>
+            <span style="display:block;font-size:0.78rem;color:#A0A8BC;margin-top:0.25rem">companies raised</span>
+            <span style="display:block;font-size:1.4rem;font-weight:700;color:#E8E9ED;margin-top:0.15rem" class="tabnum">$84B</span>
+            <span style="display:block;font-size:0.72rem;color:#A0A8BC;margin-top:0.15rem">= 20% of ALL venture capital in 2025</span>
+          </div>
+          <div style="background:rgba(245,197,66,0.08);border:1px solid rgba(245,197,66,0.2);border-radius:12px;padding:1.25rem;text-align:center">
+            <span style="display:block;font-size:2.2rem;font-weight:800;color:#F5C542" class="tabnum">10</span>
+            <span style="display:block;font-size:0.78rem;color:#A0A8BC;margin-top:0.25rem">companies captured</span>
+            <span style="display:block;font-size:1.4rem;font-weight:700;color:#E8E9ED;margin-top:0.15rem" class="tabnum">41%</span>
+            <span style="display:block;font-size:0.72rem;color:#A0A8BC;margin-top:0.15rem">of all venture dollars in H1 2025</span>
+          </div>
+          <div style="background:rgba(78,205,196,0.08);border:1px solid rgba(78,205,196,0.2);border-radius:12px;padding:1.25rem;text-align:center">
+            <span style="display:block;font-size:2.2rem;font-weight:800;color:#4ECDC4" class="tabnum">58%</span>
+            <span style="display:block;font-size:0.78rem;color:#A0A8BC;margin-top:0.25rem">of AI funding was in</span>
+            <span style="display:block;font-size:1.4rem;font-weight:700;color:#E8E9ED;margin-top:0.15rem">Mega-rounds</span>
+            <span style="display:block;font-size:0.72rem;color:#A0A8BC;margin-top:0.15rem">deals of $500M or more</span>
+          </div>
+        </div>
+
+        <!-- Interactive Pareto Bars -->
+        <div style="background:rgba(255,255,255,0.02);border-radius:12px;padding:1.5rem;border:1px solid rgba(255,255,255,0.05)">
+          <h4 style="color:#E8E9ED;font-size:0.9rem;font-weight:700;margin:0 0 1rem">Largest AI Checks — 2025/2026</h4>
+          <div id="paretoDeals" style="display:flex;flex-direction:column;gap:0.6rem"></div>
+          <p style="color:#A0A8BC;font-size:0.72rem;margin:1rem 0 0;font-style:italic">Hover/tap for details. These 8 rounds alone total ~$250B+ — more than total global VC outside AI.</p>
+          <span class="stat-source" style="margin-top:0.5rem;display:block">Source: CNBC, Crunchbase, OECD, company announcements 2025–2026</span>
+        </div>
+      </div>
+
+      <!-- The Cascade Explanation -->
+      <div style="background:linear-gradient(135deg,rgba(245,197,66,0.06),rgba(232,131,124,0.04));border:1px solid rgba(245,197,66,0.15);border-radius:14px;padding:1.5rem 2rem;margin-bottom:1.5rem">
+        <h4 style="color:#F5C542;margin:0 0 0.75rem;font-size:0.95rem;font-weight:700">THE VALUATION CASCADE</h4>
+        <div style="display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap;margin-bottom:1rem">
+          <span style="background:rgba(78,205,196,0.12);color:#4ECDC4;padding:0.4rem 0.8rem;border-radius:8px;font-size:0.8rem;font-weight:600">$147T Global AUM</span>
+          <span style="color:#A0A8BC;font-size:1.2rem">→</span>
+          <span style="background:rgba(245,197,66,0.12);color:#F5C542;padding:0.4rem 0.8rem;border-radius:8px;font-size:0.8rem;font-weight:600">Can't do VC</span>
+          <span style="color:#A0A8BC;font-size:1.2rem">→</span>
+          <span style="background:rgba(232,131,124,0.12);color:#E8837C;padding:0.4rem 0.8rem;border-radius:8px;font-size:0.8rem;font-weight:600">Pile into ~20 AI names</span>
+          <span style="color:#A0A8BC;font-size:1.2rem">→</span>
+          <span style="background:rgba(74,144,217,0.12);color:#4A90D9;padding:0.4rem 0.8rem;border-radius:8px;font-size:0.8rem;font-weight:600">Late-stage 50–100x</span>
+          <span style="color:#A0A8BC;font-size:1.2rem">→</span>
+          <span style="background:rgba(255,255,255,0.08);color:#E8E9ED;padding:0.4rem 0.8rem;border-radius:8px;font-size:0.8rem;font-weight:600">Early-stage inherits</span>
+        </div>
+        <p style="color:#C8CCD4;font-size:0.88rem;margin:0;line-height:1.6">The vast majority of investors can't write small, high-risk VC checks. They need to deploy at scale into liquid or semi-liquid assets. So they pile into public AI stocks (NVIDIA, the Mag 7), infrastructure plays, and the ~20 private AI companies large enough to absorb $100M+ checks. <strong style="color:#F5C542">Insane competition for a tiny number of deployable deals drives late-stage multiples up — which are then inherited by early-stage VCs.</strong></p>
+      </div>
+
+      <!-- Sovereign Wealth Funds -->
+      <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:1.5rem">
+        <div style="flex:1;min-width:250px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:1.25rem">
+          <h4 style="color:#4A90D9;font-size:0.82rem;font-weight:700;letter-spacing:0.08em;margin:0 0 0.5rem">NEW ENTRANT: SOVEREIGN WEALTH</h4>
+          <p style="color:#C8CCD4;font-size:0.85rem;margin:0">Sovereign Wealth Funds deployed <strong class="tabnum" style="color:#4A90D9">$46B</strong> into AI ventures in 2025. Saudi PIF, Abu Dhabi's Mubadala, Singapore's GIC and Temasek are now among the largest AI investors — writing checks too big for traditional VC.</p>
+          <span class="stat-source" style="margin-top:0.5rem;display:block">Source: EY Global GenAI VC Report, Dec 2025</span>
+        </div>
+        <div style="flex:1;min-width:250px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:1.25rem">
+          <h4 style="color:#4ECDC4;font-size:0.82rem;font-weight:700;letter-spacing:0.08em;margin:0 0 0.5rem">THE GEOGRAPHIC FUNNEL</h4>
+          <p style="color:#C8CCD4;font-size:0.85rem;margin:0"><strong class="tabnum" style="color:#4ECDC4">97%</strong> of AI deal value went to North America. San Francisco Bay Area alone captured <strong class="tabnum" style="color:#4ECDC4">$122B</strong> — 75%+ of all US AI funding. Capital concentration is geographic, not just financial.</p>
+          <span class="stat-source" style="margin-top:0.5rem;display:block">Source: OECD, Crunchbase 2025 data</span>
+        </div>
+      </div>
+    </div>
+
     <div class="callout-box callout-green anim-fade">
       <p><strong>Be skeptical on valuation. Not on AI demand.</strong></p>
     </div>

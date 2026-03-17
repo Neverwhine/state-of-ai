@@ -731,6 +731,140 @@
     initCharts();
     initMoneyFlow();
     initAutonomousRevolution();
+    initCapitalConcentration();
+  }
+
+  // ═══ CAPITAL CONCENTRATION INTERACTIVE CHARTS ═══
+  function initCapitalConcentration() {
+    // --- AUM Horizontal Bar Chart ---
+    const aumContainer = document.getElementById('aumBars');
+    if (aumContainer) {
+      const aumData = [
+        { name: 'BlackRock',       aum: 14.04, color: '#4ECDC4' },
+        { name: 'Vanguard',        aum: 11.60, color: '#4ECDC4' },
+        { name: 'UBS',             aum: 6.90,  color: '#4A90D9' },
+        { name: 'Fidelity',        aum: 6.80,  color: '#4A90D9' },
+        { name: 'State Street',    aum: 5.70,  color: '#4A90D9' },
+        { name: 'JPMorgan',        aum: 4.80,  color: '#F5C542' },
+        { name: 'Goldman Sachs',   aum: 3.60,  color: '#F5C542' },
+        { name: 'Capital Group',   aum: 3.20,  color: '#F5C542' },
+        { name: 'Crédit Agricole', aum: 2.72,  color: '#E8837C' },
+        { name: 'Allianz',         aum: 2.55,  color: '#E8837C' },
+      ];
+      const maxAum = aumData[0].aum;
+
+      aumData.forEach((d, i) => {
+        const row = document.createElement('div');
+        row.style.cssText = 'display:flex;align-items:center;gap:0.75rem;';
+
+        const label = document.createElement('span');
+        label.style.cssText = 'min-width:110px;color:#C8CCD4;font-size:0.78rem;font-weight:600;text-align:right;white-space:nowrap;';
+        label.textContent = d.name;
+
+        const track = document.createElement('div');
+        track.style.cssText = 'flex:1;height:26px;background:rgba(255,255,255,0.04);border-radius:6px;overflow:hidden;position:relative;';
+
+        const fill = document.createElement('div');
+        const pct = (d.aum / maxAum) * 100;
+        fill.style.cssText = `width:0%;height:100%;border-radius:6px;background:${d.color};opacity:0.85;transition:width 1.2s cubic-bezier(0.22,1,0.36,1);transition-delay:${i * 0.08}s;position:relative;`;
+        fill.dataset.targetWidth = pct + '%';
+
+        const val = document.createElement('span');
+        val.style.cssText = 'position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:0.72rem;font-weight:700;color:#1a1d28;font-variant-numeric:tabular-nums;';
+        val.textContent = '$' + d.aum.toFixed(1) + 'T';
+        fill.appendChild(val);
+
+        track.appendChild(fill);
+        row.appendChild(label);
+        row.appendChild(track);
+        aumContainer.appendChild(row);
+      });
+
+      // Animate on scroll
+      const aumObs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            aumContainer.querySelectorAll('[data-target-width]').forEach(fill => {
+              fill.style.width = fill.dataset.targetWidth;
+            });
+            aumObs.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.2 });
+      aumObs.observe(aumContainer);
+    }
+
+    // --- Pareto Deals Bar Chart ---
+    const paretoContainer = document.getElementById('paretoDeals');
+    if (paretoContainer) {
+      const dealData = [
+        { company: 'OpenAI',    amount: 110, label: '$110B',  date: 'Feb 2026',  investors: 'SoftBank, Microsoft, Thrive, NVIDIA',  color: '#E8837C' },
+        { company: 'OpenAI',    amount: 40,  label: '$40B',   date: 'Mar 2025',  investors: 'SoftBank, Microsoft, Thrive Capital',  color: '#E8837C' },
+        { company: 'Anthropic', amount: 30,  label: '$30B',   date: 'Jan 2026',  investors: 'Lightspeed, Spark, Google, SWFs',      color: '#F5C542' },
+        { company: 'Scale AI',  amount: 14.3,label: '$14.3B', date: 'Jun 2025',  investors: 'Tiger Global, existing investors',      color: '#4ECDC4' },
+        { company: 'Anthropic', amount: 13,  label: '$13B',   date: 'Jul 2025',  investors: 'Menlo Ventures, a16z, SWFs',            color: '#F5C542' },
+        { company: 'xAI',       amount: 10,  label: '$10B+',  date: 'Apr 2025',  investors: 'A16z, Lightspeed, Sequoia',             color: '#4A90D9' },
+        { company: 'Prometheus',amount: 6.2, label: '$6.2B',  date: 'Feb 2025',  investors: 'Mag 7-backed data center JV',           color: '#A78BFA' },
+        { company: 'xAI',       amount: 5.3, label: '$5.3B',  date: 'Jan 2025',  investors: 'Qatar IA, a16z, Sequoia, Fidelity',     color: '#4A90D9' },
+      ];
+      const maxDeal = dealData[0].amount;
+
+      dealData.forEach((d, i) => {
+        const row = document.createElement('div');
+        row.style.cssText = 'display:flex;align-items:center;gap:0.75rem;cursor:pointer;position:relative;';
+
+        const label = document.createElement('span');
+        label.style.cssText = 'min-width:85px;color:#C8CCD4;font-size:0.78rem;font-weight:600;text-align:right;white-space:nowrap;';
+        label.textContent = d.company;
+
+        const track = document.createElement('div');
+        track.style.cssText = 'flex:1;height:32px;background:rgba(255,255,255,0.04);border-radius:8px;overflow:hidden;position:relative;';
+
+        const fill = document.createElement('div');
+        const pct = (d.amount / maxDeal) * 100;
+        fill.style.cssText = `width:0%;height:100%;border-radius:8px;background:linear-gradient(90deg,${d.color},${d.color}cc);transition:width 1s cubic-bezier(0.22,1,0.36,1);transition-delay:${i * 0.1}s;display:flex;align-items:center;justify-content:flex-end;padding-right:10px;min-width:fit-content;`;
+        fill.dataset.targetWidth = pct + '%';
+
+        const amountSpan = document.createElement('span');
+        amountSpan.style.cssText = 'font-size:0.75rem;font-weight:700;color:#1a1d28;font-variant-numeric:tabular-nums;white-space:nowrap;';
+        amountSpan.textContent = d.label;
+        fill.appendChild(amountSpan);
+
+        track.appendChild(fill);
+
+        const dateBadge = document.createElement('span');
+        dateBadge.style.cssText = 'min-width:65px;color:#A0A8BC;font-size:0.7rem;text-align:left;white-space:nowrap;';
+        dateBadge.textContent = d.date;
+
+        row.appendChild(label);
+        row.appendChild(track);
+        row.appendChild(dateBadge);
+
+        // Tooltip on hover
+        const tooltip = document.createElement('div');
+        tooltip.style.cssText = 'position:absolute;bottom:110%;left:50%;transform:translateX(-50%);background:#2D3142;border:1px solid rgba(255,255,255,0.12);border-radius:10px;padding:0.6rem 1rem;font-size:0.76rem;color:#E8E9ED;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity 0.25s;z-index:10;box-shadow:0 8px 24px rgba(0,0,0,0.4);';
+        tooltip.innerHTML = `<strong style="color:${d.color}">${d.company}</strong> · ${d.label} · ${d.date}<br><span style="color:#A0A8BC">${d.investors}</span>`;
+        row.appendChild(tooltip);
+
+        row.addEventListener('mouseenter', () => { tooltip.style.opacity = '1'; track.style.transform = 'scaleY(1.1)'; track.style.transition = 'transform 0.2s'; });
+        row.addEventListener('mouseleave', () => { tooltip.style.opacity = '0'; track.style.transform = 'scaleY(1)'; });
+
+        paretoContainer.appendChild(row);
+      });
+
+      // Animate on scroll
+      const paretoObs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            paretoContainer.querySelectorAll('div[data-target-width]').forEach(fill => {
+              fill.style.width = fill.dataset.targetWidth;
+            });
+            paretoObs.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.2 });
+      paretoObs.observe(paretoContainer);
+    }
   }
 
   if (document.readyState === 'loading') {
