@@ -1,0 +1,534 @@
+<section class="section section--dark section--agent-anatomy" id="sec-3">
+  <div class="container">
+    <h2 class="section-headline anim-fade">ANATOMY OF AN <span class="accent-teal">AI AGENT</span></h2>
+    <p class="aa-section-sub anim-fade">Every agentic product — from Cursor to Harvey to Glean — is built on the same fundamental layers.</p>
+
+    <!-- ═══ BLOCK 1: THE 7-LAYER AGENT STACK ═══ -->
+    <h3 class="subsection-title anim-fade">THE 7-LAYER AGENT STACK</h3>
+    <div class="aa-stack anim-fade">
+
+      <!-- Layer 1: UI / Frontend -->
+      <div class="aa-layer" data-layer="1" style="--layer-color: var(--accent-blue)">
+        <div class="aa-layer-bar">
+          <span class="aa-layer-num">1</span>
+          <svg class="aa-layer-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <rect x="3" y="3" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M7 21h10M12 17v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <span class="aa-layer-name">UI / Frontend Layer</span>
+          <span class="aa-layer-tagline">How agents meet users</span>
+          <svg class="aa-layer-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M6 8l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="aa-layer-detail">
+          <div class="aa-detail-tools">
+            <span class="aa-tool-chip aa-tool-chip--dvc">CopilotKit / AG-UI <span class="aa-dvc-badge">DVC</span></span>
+            <span class="aa-tool-chip">Vercel AI SDK</span>
+            <span class="aa-tool-chip">Streamlit</span>
+          </div>
+          <div class="aa-detail-stat">
+            <span class="aa-stat-number tabnum">12.4K</span>
+            <span class="aa-stat-label">GitHub ★ in &lt;1 year — AG-UI</span>
+          </div>
+          <p class="aa-detail-note">AG-UI is becoming the standard event protocol for agent-to-user interaction.</p>
+        </div>
+      </div>
+
+      <!-- Layer 2: Orchestration -->
+      <div class="aa-layer" data-layer="2" style="--layer-color: var(--accent-teal)">
+        <div class="aa-layer-bar">
+          <span class="aa-layer-num">2</span>
+          <svg class="aa-layer-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <circle cx="12" cy="6" r="3" stroke="currentColor" stroke-width="1.5"/>
+            <circle cx="6" cy="18" r="3" stroke="currentColor" stroke-width="1.5"/>
+            <circle cx="18" cy="18" r="3" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M12 9v3l-4.5 3M12 12l4.5 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <span class="aa-layer-name">Orchestration Layer</span>
+          <span class="aa-layer-tagline">Planning, routing, multi-agent coordination</span>
+          <svg class="aa-layer-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M6 8l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="aa-layer-detail">
+          <div class="aa-detail-tools">
+            <span class="aa-tool-chip">LangGraph <span class="aa-stars tabnum">129K ★</span></span>
+            <span class="aa-tool-chip">CrewAI</span>
+            <span class="aa-tool-chip">AutoGen</span>
+            <span class="aa-tool-chip">Semantic Kernel</span>
+          </div>
+          <div class="aa-detail-stat">
+            <span class="aa-stat-label">Most serious startups eventually build proprietary orchestration</span>
+          </div>
+          <p class="aa-detail-note">ReAct loops → multi-agent systems with planners, workers, verifiers.</p>
+        </div>
+      </div>
+
+      <!-- Layer 3: Memory -->
+      <div class="aa-layer" data-layer="3" style="--layer-color: var(--accent-gold)">
+        <div class="aa-layer-bar">
+          <span class="aa-layer-num">3</span>
+          <svg class="aa-layer-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <rect x="4" y="4" width="16" height="16" rx="2" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M4 9h16M9 4v16" stroke="currentColor" stroke-width="1.5"/>
+            <circle cx="15" cy="15" r="2" fill="currentColor" opacity="0.5"/>
+          </svg>
+          <span class="aa-layer-name">Memory Layer</span>
+          <span class="aa-layer-tagline">State beyond the prompt window</span>
+          <svg class="aa-layer-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M6 8l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="aa-layer-detail">
+          <div class="aa-detail-tools">
+            <span class="aa-tool-chip aa-tool-chip--dvc">mem0 <span class="aa-stars tabnum">49.6K ★</span> <span class="aa-dvc-badge">DVC</span></span>
+            <span class="aa-tool-chip">Zep</span>
+            <span class="aa-tool-chip">Letta / MemGPT</span>
+          </div>
+          <div class="aa-detail-stat">
+            <span class="aa-stat-number tabnum">+26%</span>
+            <span class="aa-stat-label">accuracy over OpenAI Memory, 90% less tokens</span>
+          </div>
+          <p class="aa-detail-note">mem0 externalizes memory from the agent framework — works with any stack.</p>
+        </div>
+      </div>
+
+      <!-- Layer 4: Tool / Action -->
+      <div class="aa-layer" data-layer="4" style="--layer-color: var(--accent-coral)">
+        <div class="aa-layer-bar">
+          <span class="aa-layer-num">4</span>
+          <svg class="aa-layer-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span class="aa-layer-name">Tool / Action Layer</span>
+          <span class="aa-layer-tagline">How agents interact with external systems</span>
+          <svg class="aa-layer-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M6 8l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="aa-layer-detail">
+          <div class="aa-detail-tools">
+            <span class="aa-tool-chip">MCP <span class="aa-stars tabnum">110.8M</span> monthly PyPI</span>
+            <span class="aa-tool-chip">A2A <span class="aa-stars tabnum">22.5K ★</span></span>
+            <span class="aa-tool-chip">Function Calling</span>
+          </div>
+          <div class="aa-detail-stat">
+            <span class="aa-stat-label">"MCP is becoming the REST of the AI era"</span>
+          </div>
+          <p class="aa-detail-note">MCP for tools, A2A for agent-to-agent, AG-UI for agent-to-user.</p>
+        </div>
+      </div>
+
+      <!-- Layer 5: Foundation Model -->
+      <div class="aa-layer" data-layer="5" style="--layer-color: #9B59B6">
+        <div class="aa-layer-bar">
+          <span class="aa-layer-num">5</span>
+          <svg class="aa-layer-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 2L2 7l10 5 10-5-10-5z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M2 17l10 5 10-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M2 12l10 5 10-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span class="aa-layer-name">Foundation Model Layer</span>
+          <span class="aa-layer-tagline">The reasoning engine(s)</span>
+          <svg class="aa-layer-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M6 8l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="aa-layer-detail">
+          <div class="aa-detail-tools">
+            <span class="aa-tool-chip">OpenAI</span>
+            <span class="aa-tool-chip">Anthropic</span>
+            <span class="aa-tool-chip">Google</span>
+            <span class="aa-tool-chip">xAI</span>
+            <span class="aa-tool-chip">Open-weight models</span>
+          </div>
+          <div class="aa-detail-stat">
+            <span class="aa-stat-number tabnum">37%</span>
+            <span class="aa-stat-label">of enterprises use 5+ models in production</span>
+            <span class="stat-source">Source: a16z</span>
+          </div>
+          <p class="aa-detail-note">Multi-model routing is now standard — Harvey uses 6+ providers.</p>
+        </div>
+      </div>
+
+      <!-- Layer 6: Execution -->
+      <div class="aa-layer" data-layer="6" style="--layer-color: #2ECC71">
+        <div class="aa-layer-bar">
+          <span class="aa-layer-num">6</span>
+          <svg class="aa-layer-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <rect x="2" y="4" width="20" height="16" rx="2" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M7 9l3 3-3 3M13 15h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span class="aa-layer-name">Execution Layer</span>
+          <span class="aa-layer-tagline">Where code actually runs</span>
+          <svg class="aa-layer-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M6 8l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="aa-layer-detail">
+          <div class="aa-detail-tools">
+            <span class="aa-tool-chip">E2B</span>
+            <span class="aa-tool-chip">Daytona</span>
+            <span class="aa-tool-chip">WebContainers</span>
+            <span class="aa-tool-chip">Cloud VMs</span>
+            <span class="aa-tool-chip">Local Runtime</span>
+          </div>
+          <div class="aa-detail-stat">
+            <span class="aa-stat-label">3 patterns: local, cloud sandbox, browser-native</span>
+          </div>
+          <p class="aa-detail-note">The execution choice defines the product: Cursor = local, Devin = cloud, Bolt = browser.</p>
+        </div>
+      </div>
+
+      <!-- Layer 7: Evaluation / Monitoring -->
+      <div class="aa-layer" data-layer="7" style="--layer-color: #95A5A6">
+        <div class="aa-layer-bar">
+          <span class="aa-layer-num">7</span>
+          <svg class="aa-layer-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M22 12h-4l-3 9L9 3l-3 9H2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span class="aa-layer-name">Evaluation / Monitoring</span>
+          <span class="aa-layer-tagline">Observability and quality</span>
+          <svg class="aa-layer-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M6 8l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="aa-layer-detail">
+          <div class="aa-detail-tools">
+            <span class="aa-tool-chip">LangSmith</span>
+            <span class="aa-tool-chip">Phoenix / Arize</span>
+            <span class="aa-tool-chip">OpenTelemetry</span>
+          </div>
+          <div class="aa-detail-stat">
+            <span class="aa-stat-label">Best startups treat eval as product, not afterthought</span>
+          </div>
+          <p class="aa-detail-note">Harvey: BigLaw Bench. Perplexity: search_evals. Sierra: provider health monitoring.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ═══ BLOCK 2: STARTUP VS ENTERPRISE ═══ -->
+    <h3 class="subsection-title anim-fade">HOW THEY BUILD DIFFERENTLY</h3>
+    <div class="aa-compare anim-fade">
+      <div class="aa-compare-col aa-compare-col--startup">
+        <div class="aa-compare-header">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 2L2 22h20L12 2z" stroke="var(--accent-teal)" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M12 10v4M12 18h.01" stroke="var(--accent-teal)" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <h4>AI Startups</h4>
+        </div>
+        <div class="aa-compare-row"><span class="aa-row-dim">Models</span><span class="aa-row-val">Single provider, fast iteration</span></div>
+        <div class="aa-compare-row"><span class="aa-row-dim">Orchestration</span><span class="aa-row-val">Proprietary, vertically integrated</span></div>
+        <div class="aa-compare-row"><span class="aa-row-dim">Memory</span><span class="aa-row-val">Product-specific (Devin Knowledge, Glean graphs)</span></div>
+        <div class="aa-compare-row"><span class="aa-row-dim">Tool Access</span><span class="aa-row-val">Built-in connectors</span></div>
+        <div class="aa-compare-row"><span class="aa-row-dim">UI</span><span class="aa-row-val">Novel metaphors (spreadsheet, browser, IDE)</span></div>
+        <div class="aa-compare-row"><span class="aa-row-dim">Execution</span><span class="aa-row-val">Cloud sandbox or browser</span></div>
+        <div class="aa-compare-row"><span class="aa-row-dim">Governance</span><span class="aa-row-val">Speed &gt; compliance</span></div>
+        <div class="aa-compare-row"><span class="aa-row-dim">Build vs Buy</span><span class="aa-row-val">Build the whole stack</span></div>
+      </div>
+
+      <div class="aa-compare-callout anim-fade">
+        <div class="aa-callout-arrow">→</div>
+        <div class="aa-callout-stat">
+          <span class="aa-callout-year tabnum">2024</span>
+          <span class="aa-callout-pct tabnum">47% build / 53% buy</span>
+        </div>
+        <div class="aa-callout-divider"></div>
+        <div class="aa-callout-stat">
+          <span class="aa-callout-year tabnum">2025</span>
+          <span class="aa-callout-pct tabnum">24% build / 76% buy</span>
+        </div>
+        <span class="stat-source">Source: Menlo Ventures</span>
+      </div>
+
+      <div class="aa-compare-col aa-compare-col--enterprise">
+        <div class="aa-compare-header">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <rect x="3" y="8" width="18" height="14" rx="2" stroke="var(--accent-gold)" stroke-width="1.5"/>
+            <path d="M7 8V5a5 5 0 0110 0v3" stroke="var(--accent-gold)" stroke-width="1.5" stroke-linecap="round"/>
+            <rect x="7" y="12" width="4" height="4" rx="1" stroke="var(--accent-gold)" stroke-width="1.5"/>
+            <rect x="13" y="12" width="4" height="4" rx="1" stroke="var(--accent-gold)" stroke-width="1.5"/>
+          </svg>
+          <h4>Enterprise Teams</h4>
+        </div>
+        <div class="aa-compare-row"><span class="aa-row-dim">Models</span><span class="aa-row-val">5+ providers, routing &amp; failover</span></div>
+        <div class="aa-compare-row"><span class="aa-row-dim">Orchestration</span><span class="aa-row-val">OSS frameworks (LangGraph, Semantic Kernel)</span></div>
+        <div class="aa-compare-row"><span class="aa-row-dim">Memory</span><span class="aa-row-val">mem0 or custom stores, portable</span></div>
+        <div class="aa-compare-row"><span class="aa-row-dim">Tool Access</span><span class="aa-row-val">MCP servers + internal APIs</span></div>
+        <div class="aa-compare-row"><span class="aa-row-dim">UI</span><span class="aa-row-val">CopilotKit / AG-UI or internal frontends</span></div>
+        <div class="aa-compare-row"><span class="aa-row-dim">Execution</span><span class="aa-row-val">Hybrid: cloud + on-prem + airgapped</span></div>
+        <div class="aa-compare-row"><span class="aa-row-dim">Governance</span><span class="aa-row-val">Audit, approvals, SOC2, HIPAA</span></div>
+        <div class="aa-compare-row"><span class="aa-row-dim">Build vs Buy</span><span class="aa-row-val">24% build / 76% buy (Menlo 2025)</span></div>
+      </div>
+    </div>
+
+    <!-- ═══ BLOCK 3: OSS AGENT ECOSYSTEM ═══ -->
+    <h3 class="subsection-title anim-fade">THE OSS AGENT ECOSYSTEM</h3>
+    <div class="aa-oss-grid anim-fade">
+
+      <!-- Orchestration -->
+      <div class="aa-oss-card">
+        <div class="aa-oss-header">
+          <h4 class="aa-oss-name">LangChain / LangGraph</h4>
+          <span class="aa-oss-group">Orchestration</span>
+        </div>
+        <div class="aa-oss-badges">
+          <span class="aa-badge aa-badge--stars"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 1l1.5 3.1L11 4.5 8.5 7l.6 3.5L6 8.8 2.9 10.5l.6-3.5L1 4.5l3.5-.4L6 1z" fill="var(--accent-gold)"/></svg> <span class="tabnum">129K</span></span>
+          <span class="aa-badge aa-badge--dl"><span class="tabnum">223.6M</span> PyPI/mo</span>
+        </div>
+        <p class="aa-oss-desc">The dominant orchestration framework — graph-based agent workflows.</p>
+      </div>
+
+      <div class="aa-oss-card">
+        <div class="aa-oss-header">
+          <h4 class="aa-oss-name">CrewAI</h4>
+          <span class="aa-oss-group">Orchestration</span>
+        </div>
+        <div class="aa-oss-badges">
+          <span class="aa-badge aa-badge--stars"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 1l1.5 3.1L11 4.5 8.5 7l.6 3.5L6 8.8 2.9 10.5l.6-3.5L1 4.5l3.5-.4L6 1z" fill="var(--accent-gold)"/></svg> Popular</span>
+        </div>
+        <p class="aa-oss-desc">Role-based multi-agent orchestration with simple abstractions.</p>
+      </div>
+
+      <div class="aa-oss-card">
+        <div class="aa-oss-header">
+          <h4 class="aa-oss-name">AutoGen</h4>
+          <span class="aa-oss-group">Orchestration</span>
+        </div>
+        <div class="aa-oss-badges">
+          <span class="aa-badge aa-badge--stars"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 1l1.5 3.1L11 4.5 8.5 7l.6 3.5L6 8.8 2.9 10.5l.6-3.5L1 4.5l3.5-.4L6 1z" fill="var(--accent-gold)"/></svg> Popular</span>
+        </div>
+        <p class="aa-oss-desc">Microsoft's multi-agent conversation framework.</p>
+      </div>
+
+      <!-- Memory -->
+      <div class="aa-oss-card aa-oss-card--dvc">
+        <div class="aa-oss-header">
+          <h4 class="aa-oss-name">mem0</h4>
+          <span class="aa-oss-group">Memory</span>
+          <span class="aa-dvc-badge">DVC Portfolio</span>
+        </div>
+        <div class="aa-oss-badges">
+          <span class="aa-badge aa-badge--stars"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 1l1.5 3.1L11 4.5 8.5 7l.6 3.5L6 8.8 2.9 10.5l.6-3.5L1 4.5l3.5-.4L6 1z" fill="var(--accent-gold)"/></svg> <span class="tabnum">49.6K</span></span>
+          <span class="aa-badge aa-badge--dl"><span class="tabnum">2.19M</span> PyPI/mo</span>
+          <span class="aa-badge aa-badge--raised"><span class="tabnum">$25.5M</span> raised</span>
+        </div>
+        <p class="aa-oss-desc">Intelligent memory layer for AI agents — works with any stack.</p>
+      </div>
+
+      <div class="aa-oss-card">
+        <div class="aa-oss-header">
+          <h4 class="aa-oss-name">Letta / MemGPT</h4>
+          <span class="aa-oss-group">Memory</span>
+        </div>
+        <div class="aa-oss-badges">
+          <span class="aa-badge aa-badge--stars"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 1l1.5 3.1L11 4.5 8.5 7l.6 3.5L6 8.8 2.9 10.5l.6-3.5L1 4.5l3.5-.4L6 1z" fill="var(--accent-gold)"/></svg> Popular</span>
+        </div>
+        <p class="aa-oss-desc">Long-term memory management via virtual context windows.</p>
+      </div>
+
+      <!-- Protocols -->
+      <div class="aa-oss-card">
+        <div class="aa-oss-header">
+          <h4 class="aa-oss-name">MCP</h4>
+          <span class="aa-oss-group">Protocol</span>
+        </div>
+        <div class="aa-oss-badges">
+          <span class="aa-badge aa-badge--stars"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 1l1.5 3.1L11 4.5 8.5 7l.6 3.5L6 8.8 2.9 10.5l.6-3.5L1 4.5l3.5-.4L6 1z" fill="var(--accent-gold)"/></svg> <span class="tabnum">7.5K</span></span>
+          <span class="aa-badge aa-badge--dl"><span class="tabnum">110.8M</span> PyPI/mo</span>
+          <span class="aa-badge aa-badge--dl"><span class="tabnum">85.6M</span> npm/mo</span>
+        </div>
+        <p class="aa-oss-desc">Model Context Protocol — the REST of AI. Agent ↔ Tools standard.</p>
+      </div>
+
+      <div class="aa-oss-card">
+        <div class="aa-oss-header">
+          <h4 class="aa-oss-name">A2A</h4>
+          <span class="aa-oss-group">Protocol</span>
+        </div>
+        <div class="aa-oss-badges">
+          <span class="aa-badge aa-badge--stars"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 1l1.5 3.1L11 4.5 8.5 7l.6 3.5L6 8.8 2.9 10.5l.6-3.5L1 4.5l3.5-.4L6 1z" fill="var(--accent-gold)"/></svg> <span class="tabnum">22.5K</span></span>
+          <span class="aa-badge aa-badge--dl"><span class="tabnum">4.36M</span> PyPI/mo</span>
+        </div>
+        <p class="aa-oss-desc">Agent-to-Agent protocol — cross-org agent collaboration. Google-led.</p>
+      </div>
+
+      <div class="aa-oss-card aa-oss-card--dvc">
+        <div class="aa-oss-header">
+          <h4 class="aa-oss-name">AG-UI</h4>
+          <span class="aa-oss-group">Protocol</span>
+          <span class="aa-dvc-badge">DVC Portfolio</span>
+        </div>
+        <div class="aa-oss-badges">
+          <span class="aa-badge aa-badge--stars"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 1l1.5 3.1L11 4.5 8.5 7l.6 3.5L6 8.8 2.9 10.5l.6-3.5L1 4.5l3.5-.4L6 1z" fill="var(--accent-gold)"/></svg> <span class="tabnum">12.4K</span></span>
+          <span class="aa-badge aa-badge--dl"><span class="tabnum">1.21M</span> npm/mo</span>
+        </div>
+        <p class="aa-oss-desc">Agent-to-User Interface protocol — CopilotKit-led open standard.</p>
+      </div>
+
+      <!-- UI / Frontend -->
+      <div class="aa-oss-card aa-oss-card--dvc">
+        <div class="aa-oss-header">
+          <h4 class="aa-oss-name">CopilotKit</h4>
+          <span class="aa-oss-group">UI / Frontend</span>
+          <span class="aa-dvc-badge">DVC Portfolio</span>
+        </div>
+        <div class="aa-oss-badges">
+          <span class="aa-badge aa-badge--stars"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 1l1.5 3.1L11 4.5 8.5 7l.6 3.5L6 8.8 2.9 10.5l.6-3.5L1 4.5l3.5-.4L6 1z" fill="var(--accent-gold)"/></svg> <span class="tabnum">29.3K</span></span>
+          <span class="aa-badge aa-badge--dl"><span class="tabnum">515K</span> npm/mo</span>
+        </div>
+        <p class="aa-oss-desc">Open-source framework for building AI copilots into any app.</p>
+      </div>
+
+      <div class="aa-oss-card">
+        <div class="aa-oss-header">
+          <h4 class="aa-oss-name">Vercel AI SDK</h4>
+          <span class="aa-oss-group">UI / Frontend</span>
+        </div>
+        <div class="aa-oss-badges">
+          <span class="aa-badge aa-badge--stars"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 1l1.5 3.1L11 4.5 8.5 7l.6 3.5L6 8.8 2.9 10.5l.6-3.5L1 4.5l3.5-.4L6 1z" fill="var(--accent-gold)"/></svg> <span class="tabnum">22.6K</span></span>
+          <span class="aa-badge aa-badge--dl"><span class="tabnum">36.5M</span> npm/mo</span>
+        </div>
+        <p class="aa-oss-desc">Streaming AI UI components for React, Next.js, and Svelte.</p>
+      </div>
+
+      <!-- Execution -->
+      <div class="aa-oss-card">
+        <div class="aa-oss-header">
+          <h4 class="aa-oss-name">E2B</h4>
+          <span class="aa-oss-group">Execution</span>
+        </div>
+        <div class="aa-oss-badges">
+          <span class="aa-badge aa-badge--stars"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 1l1.5 3.1L11 4.5 8.5 7l.6 3.5L6 8.8 2.9 10.5l.6-3.5L1 4.5l3.5-.4L6 1z" fill="var(--accent-gold)"/></svg> Popular</span>
+        </div>
+        <p class="aa-oss-desc">Secure cloud sandboxes for AI-generated code execution.</p>
+      </div>
+
+      <div class="aa-oss-card">
+        <div class="aa-oss-header">
+          <h4 class="aa-oss-name">Daytona</h4>
+          <span class="aa-oss-group">Execution</span>
+        </div>
+        <div class="aa-oss-badges">
+          <span class="aa-badge aa-badge--stars"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 1l1.5 3.1L11 4.5 8.5 7l.6 3.5L6 8.8 2.9 10.5l.6-3.5L1 4.5l3.5-.4L6 1z" fill="var(--accent-gold)"/></svg> Popular</span>
+        </div>
+        <p class="aa-oss-desc">Open-source standardized development environments and sandboxes.</p>
+      </div>
+
+      <!-- Observability -->
+      <div class="aa-oss-card">
+        <div class="aa-oss-header">
+          <h4 class="aa-oss-name">LangSmith</h4>
+          <span class="aa-oss-group">Observability</span>
+        </div>
+        <div class="aa-oss-badges">
+          <span class="aa-badge aa-badge--stars">Commercial</span>
+        </div>
+        <p class="aa-oss-desc">End-to-end observability and evaluation platform for LLM apps.</p>
+      </div>
+
+      <div class="aa-oss-card">
+        <div class="aa-oss-header">
+          <h4 class="aa-oss-name">Phoenix / Arize</h4>
+          <span class="aa-oss-group">Observability</span>
+        </div>
+        <div class="aa-oss-badges">
+          <span class="aa-badge aa-badge--stars">OTel-native</span>
+        </div>
+        <p class="aa-oss-desc">OpenTelemetry-native LLM tracing and evaluation.</p>
+      </div>
+
+    </div>
+
+    <!-- ═══ BLOCK 4: THREE PROTOCOLS ═══ -->
+    <h3 class="subsection-title anim-fade">THE THREE PROTOCOLS</h3>
+    <div class="aa-protocols anim-fade">
+
+      <div class="aa-proto-diagram">
+        <!-- MCP Card -->
+        <div class="aa-proto-card aa-proto-card--mcp">
+          <div class="aa-proto-icon">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+              <rect x="4" y="4" width="24" height="24" rx="4" stroke="var(--accent-coral)" stroke-width="2"/>
+              <path d="M10 16h12M16 10v12" stroke="var(--accent-coral)" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h4 class="aa-proto-name">MCP</h4>
+          <p class="aa-proto-role">Agent ↔ Tools / Data</p>
+          <p class="aa-proto-desc">"The REST of AI" — how agents access external tools and data.</p>
+          <div class="aa-proto-stats">
+            <span class="aa-badge aa-badge--dl"><span class="tabnum">110.8M</span> PyPI</span>
+            <span class="aa-badge aa-badge--dl"><span class="tabnum">85.6M</span> npm</span>
+          </div>
+          <p class="aa-proto-backers">Anthropic-led. Adopted by OpenAI, Google, Microsoft.</p>
+        </div>
+
+        <!-- Connecting line: MCP → Agent -->
+        <div class="aa-proto-line aa-proto-line--left"></div>
+
+        <!-- Center: The Agent -->
+        <div class="aa-proto-center">
+          <div class="aa-proto-center-circle">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+              <circle cx="14" cy="10" r="5" stroke="var(--accent-teal)" stroke-width="1.5"/>
+              <path d="M6 24c0-4.4 3.6-8 8-8s8 3.6 8 8" stroke="var(--accent-teal)" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            <span>The Agent</span>
+          </div>
+        </div>
+
+        <!-- Connecting line: Agent → A2A -->
+        <div class="aa-proto-line aa-proto-line--right"></div>
+
+        <!-- A2A Card -->
+        <div class="aa-proto-card aa-proto-card--a2a">
+          <div class="aa-proto-icon">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+              <circle cx="10" cy="16" r="5" stroke="var(--accent-teal)" stroke-width="2"/>
+              <circle cx="22" cy="16" r="5" stroke="var(--accent-teal)" stroke-width="2"/>
+              <path d="M15 16h2" stroke="var(--accent-teal)" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h4 class="aa-proto-name">A2A</h4>
+          <p class="aa-proto-role">Agent ↔ Agent</p>
+          <p class="aa-proto-desc">How agents collaborate across organizations.</p>
+          <div class="aa-proto-stats">
+            <span class="aa-badge aa-badge--stars"><span class="tabnum">22.5K</span> ★</span>
+            <span class="aa-badge aa-badge--dl">50+ partners</span>
+          </div>
+          <p class="aa-proto-backers">Google-led. Salesforce, SAP, ServiceNow.</p>
+        </div>
+      </div>
+
+      <!-- AG-UI below center, connected by vertical line -->
+      <div class="aa-proto-bottom">
+        <div class="aa-proto-line aa-proto-line--down"></div>
+        <div class="aa-proto-card aa-proto-card--agui aa-proto-card--dvc">
+          <div class="aa-proto-icon">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+              <rect x="6" y="4" width="20" height="14" rx="3" stroke="var(--accent-gold)" stroke-width="2"/>
+              <circle cx="16" cy="24" r="4" stroke="var(--accent-gold)" stroke-width="2"/>
+              <path d="M16 18v2" stroke="var(--accent-gold)" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <span class="aa-dvc-badge">DVC Portfolio</span>
+          <h4 class="aa-proto-name">AG-UI</h4>
+          <p class="aa-proto-role">Agent ↔ User</p>
+          <p class="aa-proto-desc">How agents surface work to humans. CopilotKit-led open protocol.</p>
+          <div class="aa-proto-stats">
+            <span class="aa-badge aa-badge--stars"><span class="tabnum">12.4K</span> ★</span>
+            <span class="aa-badge aa-badge--dl"><span class="tabnum">1.21M</span> npm</span>
+          </div>
+          <p class="aa-proto-backers">Supported by LangGraph, CrewAI, Microsoft, Google, AWS.</p>
+        </div>
+      </div>
+
+      <p class="aa-proto-quote anim-fade">"Together, these three protocols are creating an interoperable agent ecosystem — the TCP/IP moment for AI agents."</p>
+
+    </div>
+
+  </div>
+</section>

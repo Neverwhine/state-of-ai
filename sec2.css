@@ -1,0 +1,1058 @@
+/* ============================================================
+   SEC-2: The Autonomous Revolution — Expanded Styles
+   ============================================================ */
+
+/* Section override */
+#sec-2.section--tall {
+  min-height: auto;
+  align-items: flex-start;
+  padding-top: 100px;
+  padding-bottom: 100px;
+}
+
+/* Subtle animated radial gradient background */
+#sec-2::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    radial-gradient(ellipse 600px 400px at 10% 20%, rgba(78, 205, 196, 0.04) 0%, transparent 70%),
+    radial-gradient(ellipse 500px 350px at 90% 60%, rgba(232, 131, 124, 0.03) 0%, transparent 70%),
+    radial-gradient(ellipse 400px 300px at 50% 90%, rgba(245, 197, 66, 0.03) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+#sec-2 .container {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Block 1: Philosophy Quote ── */
+
+.ar-quote {
+  position: relative;
+  width: 100%;
+  background: rgba(78, 205, 196, 0.06);
+  border-left: 4px solid var(--accent-teal);
+  border-radius: var(--radius);
+  padding: 40px 48px;
+  margin-bottom: 48px;
+  overflow: hidden;
+}
+
+.ar-quote blockquote {
+  font-size: 22px;
+  line-height: 1.6;
+  font-style: italic;
+  font-weight: 300;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+.ar-quote cite {
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  color: var(--accent-teal);
+  margin-top: 16px;
+  display: block;
+}
+
+.ar-quote-icon {
+  position: absolute;
+  top: 20px;
+  right: 24px;
+  opacity: 0.1;
+  color: var(--accent-teal);
+}
+
+/* ── Block 2: Agent Tool Cards ── */
+
+.ar-particles-wrap {
+  position: relative;
+}
+
+#arParticleCanvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ar-agent-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 48px;
+}
+
+.ar-agent-card {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.ar-agent-card:hover {
+  background: var(--bg-card-hover);
+  transform: translateY(-2px);
+}
+
+.ar-agent-card--gold {
+  border-color: rgba(245, 197, 66, 0.4);
+}
+
+.ar-card-front {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+}
+
+.ar-card-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 18px;
+  color: white;
+  flex-shrink: 0;
+}
+
+.ar-card-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.ar-card-info h3 {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.ar-card-stat {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--accent-teal);
+  margin: 2px 0;
+}
+
+.ar-card-desc {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.ar-card-toggle {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: var(--text-secondary);
+  transition: transform 0.3s;
+  flex-shrink: 0;
+}
+
+.ar-agent-card.ar-card--expanded .ar-card-toggle {
+  transform: rotate(45deg);
+  color: var(--accent-teal);
+}
+
+.ar-card-detail {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 0 20px;
+}
+
+.ar-agent-card.ar-card--expanded .ar-card-detail {
+  max-height: 300px;
+  padding: 0 20px 20px;
+}
+
+.ar-card-detail p {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding-top: 16px;
+  margin: 0;
+}
+
+/* ── Block 3: Vibe Coding ── */
+
+.ar-vibe-section {
+  margin-bottom: 48px;
+}
+
+.ar-evidence-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.ar-evidence-card {
+  background: rgba(245, 197, 66, 0.06);
+  border: 1px solid rgba(245, 197, 66, 0.15);
+  border-radius: var(--radius-sm);
+  padding: 20px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+.ar-evidence-card strong {
+  color: var(--text-primary);
+}
+
+.ar-stat-bar {
+  background: rgba(78, 205, 196, 0.08);
+  border-radius: var(--radius-sm);
+  padding: 16px 24px;
+  margin-top: 16px;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--accent-teal);
+}
+
+.ar-stat-bar span {
+  color: var(--text-secondary);
+  font-weight: 400;
+  font-size: 12px;
+  display: block;
+  margin-top: 4px;
+}
+
+.ar-caveat {
+  font-size: 12px;
+  color: var(--text-secondary);
+  opacity: 0.7;
+  margin-top: 12px;
+  font-style: italic;
+}
+
+/* ── Block 4: Deployment Patterns ── */
+
+.ar-deploy-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.ar-deploy-card {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  padding: 24px 20px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ar-deploy-icon {
+  width: 40px;
+  height: 40px;
+  color: var(--accent-teal);
+}
+
+.ar-deploy-card h4 {
+  font-size: 15px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.ar-deploy-products {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.ar-deploy-econ {
+  font-size: 11px;
+  color: var(--accent-gold);
+  font-weight: 600;
+}
+
+.ar-deploy-bar-track {
+  height: 6px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-top: auto;
+}
+
+.ar-deploy-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  width: 0;
+  transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ar-deploy-bar-fill--teal { background: var(--accent-teal); }
+.ar-deploy-bar-fill--blue { background: var(--accent-blue); }
+.ar-deploy-bar-fill--gold { background: var(--accent-gold); }
+.ar-deploy-bar-fill--coral { background: var(--accent-coral); }
+
+.ar-deploy-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent-coral);
+  margin-top: 4px;
+}
+
+/* ── Block 5: Task Type Chart ── */
+
+.ar-task-chart {
+  margin-bottom: 48px;
+}
+
+.ar-task-bar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.ar-task-label {
+  width: 180px;
+  flex-shrink: 0;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: right;
+  color: var(--text-secondary);
+}
+
+.ar-task-track {
+  flex: 1;
+  height: 32px;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 6px;
+  overflow: hidden;
+  position: relative;
+}
+
+.ar-task-fill {
+  height: 100%;
+  border-radius: 6px;
+  width: 0;
+  background: linear-gradient(90deg, var(--accent-teal), var(--accent-gold));
+  transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  padding-left: 12px;
+  min-width: 0;
+}
+
+.ar-task-fill.animated {
+  width: var(--target-width);
+}
+
+.ar-task-value {
+  font-size: 11px;
+  font-weight: 700;
+  color: white;
+  white-space: nowrap;
+}
+
+.ar-task-evidence {
+  font-size: 10px;
+  color: var(--text-secondary);
+  opacity: 0.6;
+  width: 200px;
+  flex-shrink: 0;
+}
+
+/* ── Block 6: Security ── */
+
+.ar-security-section {
+  background: #1E2130;
+  border-left: 4px solid var(--accent-coral);
+  border-radius: var(--radius);
+  padding: 40px 36px;
+  margin-bottom: 48px;
+  position: relative;
+  overflow: hidden;
+}
+
+.ar-security-title {
+  font-size: 18px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 8px;
+}
+
+.ar-security-statement {
+  font-size: 20px;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--accent-coral);
+  margin-bottom: 32px;
+  line-height: 1.5;
+}
+
+.ar-threat-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.ar-threat-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(232, 131, 124, 0.15);
+  border-radius: var(--radius-sm);
+  padding: 20px;
+}
+
+.ar-threat-card h5 {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0 0 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ar-threat-card h5 svg {
+  width: 18px;
+  height: 18px;
+  color: var(--accent-coral);
+  flex-shrink: 0;
+}
+
+.ar-threat-card p {
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.ar-security-solution {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.ar-security-icon {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  opacity: 0.08;
+}
+
+/* ── Block 7: Smart Home Timeline ── */
+
+.ar-smarthome {
+  margin-bottom: 48px;
+}
+
+.ar-smarthome-title {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  margin-bottom: 24px;
+}
+
+.ar-timeline-scroll {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 16px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.ar-timeline-scroll::-webkit-scrollbar {
+  height: 4px;
+}
+
+.ar-timeline-scroll::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.ar-timeline-scroll::-webkit-scrollbar-thumb {
+  background: var(--accent-teal);
+  border-radius: 2px;
+}
+
+.ar-timeline-card {
+  min-width: 240px;
+  max-width: 260px;
+  flex-shrink: 0;
+  scroll-snap-align: start;
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  padding: 24px 20px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: var(--transition);
+}
+
+.ar-timeline-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow);
+}
+
+.ar-timeline-time {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--accent-teal);
+  font-variant-numeric: tabular-nums;
+}
+
+.ar-timeline-scene {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.ar-timeline-desc {
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+.ar-timeline-icon {
+  width: 32px;
+  height: 32px;
+  color: var(--accent-teal);
+  opacity: 0.6;
+}
+
+/* Tech spec collapsible */
+.ar-techspec {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  margin-top: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+}
+
+.ar-techspec-header {
+  padding: 16px 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.ar-techspec-header span {
+  font-size: 12px;
+  color: var(--accent-teal);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.ar-techspec-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ar-techspec.open .ar-techspec-body {
+  max-height: 400px;
+}
+
+.ar-techspec-body ul {
+  list-style: none;
+  padding: 0 20px 20px;
+  margin: 0;
+}
+
+.ar-techspec-body li {
+  font-size: 12px;
+  color: var(--text-secondary);
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ar-techspec-body li::before {
+  content: '\2192';
+  color: var(--accent-teal);
+  font-weight: 700;
+}
+
+.ar-techspec-toggle {
+  transition: transform 0.3s;
+}
+
+.ar-techspec.open .ar-techspec-toggle {
+  transform: rotate(180deg);
+}
+
+/* ── Responsive: Tablet (max-width: 900px) ── */
+
+@media (max-width: 900px) {
+  .ar-agent-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .ar-deploy-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .ar-quote {
+    padding: 28px 32px;
+  }
+
+  .ar-quote blockquote {
+    font-size: 18px;
+  }
+
+  .ar-task-evidence {
+    display: none;
+  }
+
+  .ar-task-label {
+    width: 140px;
+    font-size: 12px;
+  }
+}
+
+/* ── Responsive: Mobile (max-width: 600px) ── */
+
+@media (max-width: 600px) {
+  #sec-2.section--tall {
+    padding-top: 60px;
+    padding-bottom: 60px;
+  }
+
+  .ar-agent-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ar-deploy-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ar-evidence-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ar-threat-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ar-quote {
+    padding: 24px;
+  }
+
+  .ar-quote blockquote {
+    font-size: 16px;
+  }
+
+  .ar-task-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 4px;
+    margin-bottom: 16px;
+  }
+
+  .ar-task-label {
+    width: auto;
+    text-align: left;
+    font-size: 12px;
+  }
+
+  .ar-task-evidence {
+    width: auto;
+    display: block;
+    font-size: 10px;
+  }
+
+  .ar-security-section {
+    padding: 28px 24px;
+  }
+
+  .ar-security-statement {
+    font-size: 16px;
+  }
+
+  .ar-timeline-card {
+    min-width: 200px;
+    max-width: 220px;
+  }
+}
+
+/* ── Reduced motion ── */
+
+@media (prefers-reduced-motion: reduce) {
+  .ar-deploy-bar-fill,
+  .ar-task-fill,
+  .ar-card-detail,
+  .ar-techspec-body,
+  .ar-card-toggle,
+  .ar-techspec-toggle,
+  .ar-agent-card,
+  .ar-timeline-card {
+    transition: none;
+  }
+
+  .ar-task-fill {
+    width: var(--target-width);
+  }
+
+  .ar-deploy-bar-fill {
+    transition: none;
+  }
+}
+
+/* ── Missing class reconciliation ── */
+
+/* Manus/Meta highlight card */
+.ar-agent-card--highlight {
+  border-color: rgba(245, 197, 66, 0.4);
+  background: rgba(245, 197, 66, 0.04);
+}
+
+/* Deploy bar inline */
+.ar-deploy-bar {
+  height: 6px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-top: auto;
+  position: relative;
+}
+
+.ar-deploy-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  width: 0;
+  background: var(--bar-color, var(--accent-teal));
+  transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ar-deploy-bar-label {
+  font-size: 10px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+  display: block;
+}
+
+.ar-deploy-examples {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.ar-deploy-badge {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent-coral);
+  margin-top: 4px;
+}
+
+.ar-deploy-callout {
+  background: rgba(78, 205, 196, 0.06);
+  border: 1px solid rgba(78, 205, 196, 0.15);
+  border-radius: var(--radius-sm);
+  padding: 16px 24px;
+  margin-top: 16px;
+  margin-bottom: 48px;
+  text-align: center;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+.ar-deploy-callout strong {
+  color: var(--accent-teal);
+}
+
+/* Evidence card layout (icon + content) */
+.ar-evidence-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  background: rgba(245, 197, 66, 0.06);
+  border: 1px solid rgba(245, 197, 66, 0.15);
+  border-radius: var(--radius-sm);
+  padding: 20px;
+  margin-top: 16px;
+}
+
+.ar-evidence-icon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.ar-evidence-content {
+  flex: 1;
+}
+
+.ar-evidence-content p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin: 0 0 8px;
+}
+
+.ar-evidence-content strong {
+  color: var(--text-primary);
+}
+
+/* Quote sub-elements */
+.ar-quote-text {
+  font-size: 22px;
+  line-height: 1.6;
+  font-style: italic;
+  font-weight: 300;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+.ar-quote-cite {
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  color: var(--accent-teal);
+  margin-top: 16px;
+  display: block;
+}
+
+.ar-quote-decoration {
+  position: absolute;
+  bottom: 20px;
+  right: 24px;
+  opacity: 0.15;
+}
+
+/* Stat bar with fill animation */
+.ar-stat-bar {
+  position: relative;
+  background: rgba(78, 205, 196, 0.08);
+  border-radius: var(--radius-sm);
+  padding: 16px 24px;
+  margin-top: 16px;
+  overflow: hidden;
+}
+
+.ar-stat-bar-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: rgba(78, 205, 196, 0.12);
+  width: 0;
+  transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: var(--radius-sm);
+}
+
+.ar-stat-bar-fill.animated {
+  width: var(--bar-target, 84%);
+}
+
+.ar-stat-bar-label {
+  position: relative;
+  z-index: 1;
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--accent-teal);
+  display: none;
+}
+
+.ar-stat-bar-text {
+  position: relative;
+  z-index: 1;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--accent-teal);
+  margin: 0;
+}
+
+.ar-stat-bar .stat-source {
+  position: relative;
+  z-index: 1;
+}
+
+/* Security section sub-elements */
+.ar-security-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.ar-security-header svg {
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+
+.ar-security-thesis {
+  font-size: 20px;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--accent-coral);
+  margin: 4px 0 0;
+  line-height: 1.5;
+}
+
+.ar-security-footer {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.ar-security-footer p {
+  margin: 0 0 4px;
+}
+
+/* Threat card sub-elements */
+.ar-threat-icon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  margin-bottom: 8px;
+}
+
+.ar-threat-card h4 {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0 0 8px;
+  color: var(--text-primary);
+}
+
+.ar-threat-card--solution {
+  border-color: rgba(78, 205, 196, 0.2);
+  background: rgba(78, 205, 196, 0.03);
+}
+
+.ar-threat-card--solution h4 {
+  color: var(--accent-teal);
+}
+
+/* How It Works collapsible (smart home) */
+.ar-howworks {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  margin-top: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+}
+
+.ar-howworks-toggle {
+  width: 100%;
+  padding: 16px 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: var(--font);
+  color: var(--text-primary);
+  background: none;
+  border: none;
+}
+
+.ar-howworks-toggle span {
+  font-size: 12px;
+  color: var(--accent-teal);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.ar-howworks-chevron {
+  color: var(--accent-teal);
+  transition: transform 0.3s;
+}
+
+.ar-howworks.open .ar-howworks-chevron {
+  transform: rotate(180deg);
+}
+
+.ar-howworks-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ar-howworks.open .ar-howworks-body {
+  max-height: 400px;
+}
+
+.ar-howworks-body ul {
+  list-style: none;
+  padding: 0 20px 20px;
+  margin: 0;
+}
+
+.ar-howworks-body li {
+  font-size: 12px;
+  color: var(--text-secondary);
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ar-howworks-body li::before {
+  content: '\2192';
+  color: var(--accent-teal);
+  font-weight: 700;
+}
+
+/* Mobile responsive additions */
+@media (max-width: 600px) {
+  .ar-evidence-card {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .ar-security-header {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .ar-quote-text {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 900px) {
+  .ar-quote-text {
+    font-size: 18px;
+  }
+}
