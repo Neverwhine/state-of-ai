@@ -808,6 +808,7 @@
         { company: 'xAI',       amount: 5.3, label: '$5.3B',  date: 'Jan 2025',  investors: 'Qatar IA, a16z, Sequoia, Fidelity',     color: '#4A90D9' },
       ];
       const maxDeal = dealData[0].amount;
+      let activeTooltipRow = null; // track active tooltip for mobile
 
       dealData.forEach((d, i) => {
         const row = document.createElement('div');
@@ -840,16 +841,52 @@
         row.appendChild(track);
         row.appendChild(dateBadge);
 
-        // Tooltip on hover
+        // Detail row (mobile-friendly, replaces tooltip on small screens)
+        const detailRow = document.createElement('div');
+        detailRow.style.cssText = 'display:none;padding:0.5rem 0 0.25rem 0;font-size:0.76rem;color:#A0A8BC;line-height:1.5;';
+        detailRow.innerHTML = `<span style="color:${d.color};font-weight:600">${d.company}</span> · ${d.label} · ${d.date} — <span style="color:#C8CCD4">${d.investors}</span>`;
+
+        // Tooltip (desktop hover)
         const tooltip = document.createElement('div');
         tooltip.style.cssText = 'position:absolute;bottom:110%;left:50%;transform:translateX(-50%);background:#2D3142;border:1px solid rgba(255,255,255,0.12);border-radius:10px;padding:0.6rem 1rem;font-size:0.76rem;color:#E8E9ED;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity 0.25s;z-index:10;box-shadow:0 8px 24px rgba(0,0,0,0.4);';
         tooltip.innerHTML = `<strong style="color:${d.color}">${d.company}</strong> · ${d.label} · ${d.date}<br><span style="color:#A0A8BC">${d.investors}</span>`;
         row.appendChild(tooltip);
 
-        row.addEventListener('mouseenter', () => { tooltip.style.opacity = '1'; track.style.transform = 'scaleY(1.1)'; track.style.transition = 'transform 0.2s'; });
-        row.addEventListener('mouseleave', () => { tooltip.style.opacity = '0'; track.style.transform = 'scaleY(1)'; });
+        // Desktop hover
+        row.addEventListener('mouseenter', () => {
+          if (window.innerWidth > 768) {
+            tooltip.style.opacity = '1'; track.style.transform = 'scaleY(1.1)'; track.style.transition = 'transform 0.2s';
+          }
+        });
+        row.addEventListener('mouseleave', () => {
+          tooltip.style.opacity = '0'; track.style.transform = 'scaleY(1)';
+        });
 
-        paretoContainer.appendChild(row);
+        // Mobile tap — toggle detail row
+        row.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const isVisible = detailRow.style.display !== 'none';
+          // Close any previously open detail
+          if (activeTooltipRow && activeTooltipRow !== detailRow) {
+            activeTooltipRow.style.display = 'none';
+          }
+          detailRow.style.display = isVisible ? 'none' : 'block';
+          activeTooltipRow = isVisible ? null : detailRow;
+          // Highlight bar
+          fill.style.opacity = isVisible ? '1' : '0.95';
+          track.style.transform = isVisible ? 'scaleY(1)' : 'scaleY(1.05)';
+          track.style.transition = 'transform 0.2s';
+        });
+
+        const wrapper = document.createElement('div');
+        wrapper.appendChild(row);
+        wrapper.appendChild(detailRow);
+        paretoContainer.appendChild(wrapper);
+      });
+
+      // Close on outside tap
+      document.addEventListener('click', () => {
+        if (activeTooltipRow) { activeTooltipRow.style.display = 'none'; activeTooltipRow = null; }
       });
 
       // Animate on scroll
