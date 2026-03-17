@@ -5,7 +5,7 @@
   'use strict';
 
   function initSec2() {
-    var section = document.getElementById('sec-2');
+    var section = document.getElementById('sec-4');
     if (!section) return;
 
     initAgentCards(section);
@@ -272,7 +272,7 @@
   'use strict';
 
   function initSec2Extra() {
-    var section = document.getElementById('sec-2');
+    var section = document.getElementById('sec-4');
     if (!section) return;
 
     /* Deploy bar animation using CSS custom property --bar-pct */

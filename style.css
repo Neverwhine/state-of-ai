@@ -3960,3 +3960,205 @@ canvas {
   .ar-stat-bar-fill,
   .ar-card-detail { transition: none; }
 }
+
+/* ============================================
+   SECTION BRIDGE — Transitional Text
+   ============================================ */
+.section-bridge {
+  max-width: 720px;
+  margin: 0 auto 2.5rem;
+  text-align: center;
+}
+
+.section-bridge p {
+  font-size: 1.05rem;
+  line-height: 1.65;
+  color: #A0A8BC;
+  font-style: italic;
+}
+
+/* ============================================
+   RABBIT HOLE — Collapsible Deep-Dives
+   ============================================ */
+.rabbit-hole {
+  margin: 1.5rem 0;
+}
+
+.rabbit-hole-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: 100%;
+  padding: 0.85rem 1.25rem;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background 0.25s, border-color 0.25s;
+  font-family: var(--font);
+}
+
+.rabbit-hole-toggle:hover {
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(255,255,255,0.14);
+}
+
+.rabbit-hole-icon {
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.rabbit-hole-title {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #E8E9ED;
+  flex: 1;
+  text-align: left;
+}
+
+.rabbit-hole-arrow {
+  font-size: 0.9rem;
+  color: var(--accent-teal);
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+}
+
+.rabbit-hole.open .rabbit-hole-arrow {
+  transform: rotate(90deg);
+}
+
+.rabbit-hole-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 0 1.25rem;
+}
+
+.rabbit-hole.open .rabbit-hole-content {
+  max-height: 5000px;
+  padding: 1rem 1.25rem 1.25rem;
+}
+
+.rabbit-hole-content p {
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: #C8CCD4;
+  margin-bottom: 0.75rem;
+}
+
+.rabbit-hole-content p:last-child {
+  margin-bottom: 0;
+}
+
+/* ============================================
+   EXPLOSION PILLS — App Revenue Pills (sec-1)
+   ============================================ */
+.explosion-pill {
+  transition: all 0.25s ease;
+}
+
+.explosion-pill:hover {
+  background: rgba(255,255,255,0.08) !important;
+  border-color: rgba(255,255,255,0.2) !important;
+  transform: translateY(-1px);
+}
+
+/* Tooltip for explosion pills */
+.explosion-pill[data-tooltip]:hover::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #2D3142;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 8px;
+  padding: 0.5rem 0.85rem;
+  font-size: 0.76rem;
+  color: #E8E9ED;
+  white-space: nowrap;
+  z-index: 10;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  pointer-events: none;
+}
+
+.explosion-pill[data-tooltip]:hover::before {
+  content: '';
+  position: absolute;
+  bottom: calc(100% + 2px);
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: rgba(255,255,255,0.12);
+  z-index: 11;
+  pointer-events: none;
+}
+
+/* ============================================
+   HERO TENSION LINE
+   ============================================ */
+.hero-tension {
+  font-size: clamp(14px, 1.6vw, 17px);
+  color: #A0A8BC;
+  max-width: 680px;
+  text-align: center;
+  line-height: 1.6;
+  margin: 0 auto;
+}
+
+/* ============================================
+   SKIP HINT — Bottom-of-Section Advance
+   ============================================ */
+.skip-hint {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  margin-top: 3rem;
+  color: #A0A8BC;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  opacity: 0.6;
+  transition: opacity 0.3s;
+}
+
+.skip-hint:hover {
+  opacity: 1;
+}
+
+.skip-hint .skip-arrow {
+  width: 14px;
+  height: 14px;
+  border-right: 2px solid var(--accent-teal);
+  border-bottom: 2px solid var(--accent-teal);
+  transform: rotate(45deg);
+}
+
+/* ============================================
+   TABULAR NUMBERS
+   ============================================ */
+.tabnum {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ============================================
+   NEW SECTIONS — Responsive
+   ============================================ */
+@media (max-width: 768px) {
+  .explosion-pill[data-tooltip]:hover::after {
+    white-space: normal;
+    max-width: 220px;
+    left: 0;
+    transform: none;
+  }
+
+  .explosion-pill[data-tooltip]:hover::before {
+    left: 30px;
+    transform: none;
+  }
+
+  .section-bridge p {
+    font-size: 0.95rem;
+  }
+}

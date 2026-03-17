@@ -667,9 +667,9 @@
     });
   }
 
-  // --- AUTONOMOUS REVOLUTION (sec-2) ---
+  // --- AUTONOMOUS REVOLUTION (sec-4) ---
   function initAutonomousRevolution() {
-    const sec = document.getElementById('sec-2');
+    const sec = document.getElementById('sec-4');
     if (!sec) return;
 
     // Agent card expand/collapse
@@ -719,6 +719,18 @@
     }
   }
 
+  // --- RABBIT HOLE TOGGLES ---
+  function initRabbitHoles() {
+    document.querySelectorAll('.rabbit-hole-toggle').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var hole = btn.closest('.rabbit-hole');
+        if (hole) {
+          hole.classList.toggle('open');
+        }
+      });
+    });
+  }
+
   // --- INIT ---
   function init() {
     initParticles('particleCanvas');
@@ -732,6 +744,7 @@
     initMoneyFlow();
     initAutonomousRevolution();
     initCapitalConcentration();
+    initRabbitHoles();
   }
 
   // ═══ CAPITAL CONCENTRATION INTERACTIVE CHARTS ═══

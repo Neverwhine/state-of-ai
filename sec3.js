@@ -7,7 +7,7 @@
   'use strict';
 
   function init() {
-    var sec = document.getElementById('sec-3');
+    var sec = document.getElementById('sec-5');
     if (!sec || !sec.classList.contains('section--agent-anatomy')) return;
 
     initAccordion(sec);
