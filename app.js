@@ -505,9 +505,7 @@
       if (!header) return;
       header.addEventListener('click', () => {
         const wasExpanded = layer.classList.contains('expanded');
-        // Collapse all
         layers.forEach((l) => l.classList.remove('expanded'));
-        // Toggle clicked
         if (!wasExpanded) {
           layer.classList.add('expanded');
         }
@@ -540,24 +538,115 @@
       });
     });
 
-    // Year toggle
+    // ═══ SCROLL-DRIVEN YEAR PROGRESSION ═══
     const yearBtns = section.querySelectorAll('.mf-year-toggle .mf-toggle-btn');
+    const yearSequence = ['2024', '2025', '2026'];
+    let currentYearIdx = 0;
+    let autoScrollActive = true;
+    let marginsRevealed = false;
+
+    // Hide margins initially
+    section.classList.add('mf-margins-hidden');
+
+    // Core function: switch year with pop animation
+    function switchToYear(year, animate) {
+      yearBtns.forEach((b) => b.classList.remove('active'));
+      const targetBtn = section.querySelector('.mf-toggle-btn[data-year="' + year + '"]');
+      if (targetBtn) targetBtn.classList.add('active');
+
+      section.querySelectorAll('[data-years]').forEach((el) => {
+        try {
+          const years = JSON.parse(el.dataset.years);
+          if (years[year]) {
+            if (animate) {
+              el.classList.remove('pop');
+              // Force reflow to restart animation
+              void el.offsetWidth;
+              el.classList.add('pop');
+            }
+            el.textContent = years[year];
+          }
+        } catch (e) { /* skip */ }
+      });
+    }
+
+    // Reveal margins with staggered animation
+    function revealMargins() {
+      if (marginsRevealed) return;
+      marginsRevealed = true;
+      section.classList.remove('mf-margins-hidden');
+    }
+
+    // Manual click still works — disables auto-scroll
     yearBtns.forEach((btn) => {
       btn.addEventListener('click', () => {
-        yearBtns.forEach((b) => b.classList.remove('active'));
-        btn.classList.add('active');
+        autoScrollActive = false;
         const year = btn.dataset.year;
-        // Update all elements with data-years attribute
-        section.querySelectorAll('[data-years]').forEach((el) => {
-          try {
-            const years = JSON.parse(el.dataset.years);
-            if (years[year]) {
-              el.textContent = years[year];
-            }
-          } catch (e) { /* skip */ }
-        });
+        currentYearIdx = yearSequence.indexOf(year);
+        switchToYear(year, true);
+        // If user clicks 2026, reveal margins after a beat
+        if (year === '2026') {
+          setTimeout(revealMargins, 800);
+        }
       });
     });
+
+    // Scroll-driven observer: divide section into 3 zones
+    function initScrollYearProgression() {
+      const sectionEl = section;
+
+      function onScroll() {
+        if (!autoScrollActive) return;
+
+        const rect = sectionEl.getBoundingClientRect();
+        const sectionH = rect.height;
+        const viewH = window.innerHeight;
+
+        // scrollProgress: how far section top has moved above viewport top
+        // 0 = section top at viewport top, 1 = section bottom at viewport top
+        const scrolledPast = -rect.top; // positive when scrolled past top
+        const scrollProgress = Math.max(0, Math.min(1,
+          scrolledPast / (sectionH - viewH)
+        ));
+
+        // Map progress: stay on 2024 longer, then 2025, then 2026
+        // 0-0.20 = 2024, 0.20-0.45 = 2025, 0.45+ = 2026
+        let targetIdx;
+        if (scrollProgress < 0.20) {
+          targetIdx = 0; // 2024
+        } else if (scrollProgress < 0.45) {
+          targetIdx = 1; // 2025
+        } else {
+          targetIdx = 2; // 2026
+        }
+
+        if (targetIdx !== currentYearIdx) {
+          currentYearIdx = targetIdx;
+          switchToYear(yearSequence[currentYearIdx], true);
+        }
+
+        // Reveal margins once user hits bottom third of section
+        if (scrollProgress > 0.6) {
+          revealMargins();
+        }
+      }
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      // Initial check
+      onScroll();
+    }
+
+    // Start scroll progression once the section enters view
+    const sectionObs = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          initScrollYearProgression();
+          sectionObs.unobserve(section);
+        }
+      },
+      { threshold: 0.05 }
+    );
+    sectionObs.observe(section);
 
     // $1 Journey toggle
     const journeyBtn = document.getElementById('mfJourneyBtn');
