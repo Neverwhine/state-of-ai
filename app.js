@@ -430,7 +430,7 @@
               labels: ['2023', '2024', '2025', '2026E', '2027E', '2028E'],
               datasets: [
                 {
-                  label: 'Base Case (TWh)',
+                  label: 'US Base Case (TWh)',
                   data: [176, 205, 240, 280, 325, 390],
                   borderColor: '#4ECDC4',
                   backgroundColor: 'rgba(78, 205, 196, 0.1)',
@@ -441,7 +441,7 @@
                   borderWidth: 2.5,
                 },
                 {
-                  label: 'High Case (TWh)',
+                  label: 'US High Case (TWh)',
                   data: [176, 215, 265, 340, 440, 580],
                   borderColor: '#E8837C',
                   backgroundColor: 'rgba(232, 131, 124, 0.06)',
@@ -451,6 +451,18 @@
                   pointBackgroundColor: '#E8837C',
                   borderWidth: 2.5,
                   borderDash: [6, 4],
+                },
+                {
+                  label: 'China (TWh)',
+                  data: [90, 100, 150, 190, 220, 260],
+                  borderColor: '#F5C542',
+                  backgroundColor: 'rgba(245, 197, 66, 0.08)',
+                  fill: true,
+                  tension: 0.4,
+                  pointRadius: 5,
+                  pointBackgroundColor: '#F5C542',
+                  borderWidth: 2.5,
+                  borderDash: [4, 3],
                 },
               ],
             },
