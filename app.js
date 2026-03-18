@@ -563,7 +563,7 @@
 
     // New DOM references
     const progressFill = document.getElementById('mfProgressFill');
-    const yearEpoch = document.getElementById('mfYearEpoch');
+    const yearEpoch = null; // removed — no more background year
     const scrollHint = document.getElementById('mfScrollHint');
 
     // Hide margins initially
@@ -571,12 +571,12 @@
 
     // Active transition timer IDs (for cancellation)
     let transitionTimer = null;
-    let glowTimer = null;
+    // glowTimer removed — no more layer glow
 
     // Force-finish any in-progress transition
     function forceFinishTransition(year) {
       if (transitionTimer) { clearTimeout(transitionTimer); transitionTimer = null; }
-      if (glowTimer) { clearTimeout(glowTimer); glowTimer = null; }
+      // glow cleanup removed
       const dataEls = section.querySelectorAll('[data-years]');
       const layerEls = section.querySelectorAll('.mf-layer');
       dataEls.forEach((el) => {
@@ -649,12 +649,7 @@
         el.classList.add('transitioning-out');
       });
 
-      // Add glow to layer rows
-      layerEls.forEach((l) => {
-        l.classList.remove('year-transitioning');
-        void l.offsetWidth;
-        l.classList.add('year-transitioning');
-      });
+      // Layer glow removed for cleaner feel
 
       // Phase 2: After fade-out, swap text + fade in with stagger
       transitionTimer = setTimeout(() => {
@@ -681,11 +676,7 @@
               isTransitioning = false;
             }, 300);
 
-            // Clean up glow after animation
-            glowTimer = setTimeout(() => {
-              glowTimer = null;
-              layerEls.forEach((l) => l.classList.remove('year-transitioning'));
-            }, 800);
+            // glow cleanup removed
           });
         });
       }, 220); // slightly shorter fade-out for snappier feel
@@ -999,24 +990,24 @@
         rank: '#1 Best Positioned',
         color: '#4ECDC4',
         superpower: 'Owns search (90%), cloud ($70B+ run rate), custom TPUs, 750M Gemini MAU, and the Anthropic relationship',
-        heel: 'Every AI answer that replaces a search link cannibalizes $200B in ad revenue. AI Overviews compress ad inventory.',
-        stat: 'Perplexity: 30M daily queries (~0.2% of Google\'s 15B/day). Small but the fastest-growing search threat since Bing.'
+        heel: 'AI Overviews halve clickthrough rates (15% → 8%), compressing Google\'s $200B search ad machine. Each AI answer that replaces a search link erodes high-intent ad inventory.',
+        stat: 'Perplexity: 200M daily queries (~1.3% of Google\'s 15B/day). ChatGPT: 2.5B prompts/day. Combined AI search is now a real threat — growing 20%+ month-over-month.'
       },
       microsoft: {
         name: 'Microsoft',
         rank: '#2 Enterprise King',
         color: '#7C4DFF',
         superpower: 'Deepest enterprise distribution: Office 365, Azure, GitHub, LinkedIn. 100M+ Copilot MAU. Multi-model (OpenAI, Anthropic, Mistral).',
-        heel: 'Consumer AI is invisible — 2.4M daily Copilot web visits vs. ChatGPT\'s 400M+. No consumer identity. Bing AI never broke through.',
-        stat: 'M365 Copilot drives real ARPU uplift. But OpenAI dependency is a strategic risk if OpenAI builds its own cloud.'
+        heel: 'Consumer AI is invisible — 2.4M daily Copilot web visits vs. ChatGPT\'s 831M users. No consumer identity. Bing AI never broke through.',
+        stat: 'Rolled out Claude Code to its E+D division, telling even non-technical employees to use it. M365 Copilot drives ARPU uplift, but hedging away from OpenAI dependency.'
       },
       meta: {
         name: 'Meta',
         rank: '#3 Brute Force',
         color: '#4A90D9',
         superpower: '3.58B daily users across Facebook/Instagram/WhatsApp. $201B revenue. Can embed AI into every surface without asking.',
-        heel: 'Four AI reorgs in 6 months. Llama 4 flopped on benchmarks. Open-source lead lost to DeepSeek.',
-        stat: '$14.3B invested in Scale AI (49% stake). Hired co-founder Andrew Tulloch — reportedly offered $1.5B comp package over 6 years.'
+        heel: 'Four AI reorgs in 6 months. Llama 4 flopped on benchmarks. Open-source lead lost to DeepSeek. Planning 20% workforce reduction — shift to AI-driven operations.',
+        stat: 'Started using Claude Code internally. $14.3B invested in Scale AI (49% stake). Hired Andrew Tulloch with $1.5B comp package. Cutting humans, adding AI.'
       },
       apple: {
         name: 'Apple',
@@ -1038,7 +1029,7 @@
         name: 'NVIDIA',
         rank: 'Arms Dealer',
         color: '#76B900',
-        superpower: '$113B committed across ecosystem: OpenAI, Anthropic, xAI, robotics. Acquired Groq for $20B. Vera Rubin ships 2026.',
+        superpower: '$36B+ committed across ecosystem investments: OpenAI, Anthropic, xAI, robotics. Acquired Groq for $20B. Vera Rubin ships 2026.',
         heel: 'Google TPU, Amazon Trainium, Microsoft Maia — every hyperscaler building custom silicon to reduce NVIDIA dependency.',
         stat: 'Ironically: NVIDIA\'s biggest risk is its own customers becoming competitors. But switching costs are enormous (CUDA moat).'
       },
