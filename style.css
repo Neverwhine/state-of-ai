@@ -2737,16 +2737,6 @@ canvas {
   background: linear-gradient(180deg, transparent, rgba(45,49,66,0.4), transparent);
 }
 
-/* Flow Canvas */
-.mf-flow-canvas {
-  position: absolute;
-  bottom: -30px;
-  left: 0;
-  width: 100%;
-  height: 30px;
-  z-index: 1;
-  pointer-events: none;
-}
 
 /* ── Responsive ── */
 @media (max-width: 900px) {

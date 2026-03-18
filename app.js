@@ -798,98 +798,11 @@
       });
     }
 
-    // Particle flow canvases between layers
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (!reducedMotion) {
-      initFlowCanvases(section);
-    }
   }
 
-  function initFlowCanvases(section) {
-    const canvases = section.querySelectorAll('.mf-flow-canvas');
-    canvases.forEach((canvas) => {
-      const ctx = canvas.getContext('2d');
-      const colorFrom = canvas.dataset.colorFrom || '#4ECDC4';
-      const colorTo = canvas.dataset.colorTo || '#7C4DFF';
-      let particles = [];
-      const PARTICLE_COUNT = 12;
-
-      function resize() {
-        const rect = canvas.parentElement.getBoundingClientRect();
-        canvas.width = rect.width;
-        canvas.height = 30;
-      }
-
-      function createParticle() {
-        return {
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          vx: (Math.random() - 0.5) * 0.3,
-          vy: 0.4 + Math.random() * 0.6,
-          r: 1.5 + Math.random() * 1.5,
-          progress: Math.random(),
-        };
-      }
-
-      function hexToRgb(hex) {
-        const r = parseInt(hex.slice(1, 3), 16);
-        const g = parseInt(hex.slice(3, 5), 16);
-        const b = parseInt(hex.slice(5, 7), 16);
-        return { r, g, b };
-      }
-
-      function lerpColor(c1, c2, t) {
-        const a = hexToRgb(c1);
-        const b = hexToRgb(c2);
-        return `rgba(${Math.round(a.r + (b.r - a.r) * t)}, ${Math.round(a.g + (b.g - a.g) * t)}, ${Math.round(a.b + (b.b - a.b) * t)}, 0.6)`;
-      }
-
-      function init() {
-        resize();
-        particles = [];
-        for (let i = 0; i < PARTICLE_COUNT; i++) {
-          particles.push(createParticle());
-        }
-      }
-
-      function animate() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        for (const p of particles) {
-          p.y += p.vy;
-          p.x += p.vx;
-          p.progress = p.y / canvas.height;
-          if (p.y > canvas.height) {
-            p.y = 0;
-            p.x = Math.random() * canvas.width;
-            p.progress = 0;
-          }
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-          ctx.fillStyle = lerpColor(colorFrom, colorTo, p.progress);
-          ctx.fill();
-        }
-        requestAnimationFrame(animate);
-      }
-
-      // Only run when visible
-      const observer = new IntersectionObserver(
-        (entries) => {
-          if (entries[0].isIntersecting) {
-            init();
-            animate();
-            observer.unobserve(canvas);
-          }
-        },
-        { threshold: 0.1 }
-      );
-      observer.observe(canvas);
-    });
-  }
-
-
-  // --- ANATOMY OF AI AGENT (sec-6) ---
+  // --- ANATOMY OF AI AGENT (sec-5) ---
   function initAnatomyLayers() {
-    const sec = document.getElementById('sec-6');
+    const sec = document.getElementById('sec-5');
     if (!sec) return;
 
     // Layer expand/collapse
@@ -907,9 +820,9 @@
     });
   }
 
-  // --- AUTONOMOUS REVOLUTION (sec-5) ---
+  // --- AUTONOMOUS REVOLUTION (sec-4) ---
   function initAutonomousRevolution() {
-    const sec = document.getElementById('sec-5');
+    const sec = document.getElementById('sec-4');
     if (!sec) return;
 
     // Agent card expand/collapse
@@ -1148,7 +1061,7 @@
     initCharts();
     initMoneyFlow();
     initAutonomousRevolution();
-  initAnatomyLayers();
+    initAnatomyLayers();
     initCapitalConcentration();
     initRabbitHoles();
     initIncumbents();
