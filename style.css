@@ -1868,20 +1868,39 @@ canvas {
    ============================================ */
 
 .section--money-flow {
-  min-height: auto;
-  padding: 80px 0 60px;
+  min-height: 300vh;
+  position: relative;
+  padding: 0;
+  overflow: visible;
+  display: block;
+  align-items: initial;
+  justify-content: initial;
 }
 
 .money-flow-container {
-  position: relative;
+  position: sticky;
+  top: 0;
+  height: 100vh;
   max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 1rem 4rem 0.5rem;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.section--money-flow .section-headline {
+  margin-bottom: 12px;
+  font-size: clamp(24px, 4vw, 42px);
 }
 
 .money-flow-subtitle {
   text-align: center;
   color: var(--text-secondary);
-  font-size: 1.15rem;
-  margin-bottom: 32px;
+  font-size: 1rem;
+  margin-bottom: 16px;
 }
 
 /* Controls row */
@@ -2099,7 +2118,7 @@ canvas {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 14px 20px;
+  padding: 10px 20px;
   cursor: pointer;
   flex-wrap: wrap;
 }
@@ -2162,6 +2181,25 @@ canvas {
 .mf-layer.expanded .mf-layer-body {
   max-height: 2000px;
   padding: 0 20px 20px;
+}
+
+/* Expand hint chevron */
+.mf-expand-hint {
+  color: var(--layer-accent, #4ECDC4);
+  font-size: 0.85rem;
+  transition: transform 0.3s ease;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+.mf-layer.expanded .mf-expand-hint {
+  transform: rotate(90deg);
+}
+@keyframes hint-pulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+.mf-layer:first-child .mf-expand-hint {
+  animation: hint-pulse 2s ease-in-out 3;
 }
 
 /* Company Pills */
@@ -2679,7 +2717,8 @@ canvas {
 
 @media (max-width: 600px) {
   .section--money-flow {
-    padding: 60px 0 40px;
+    min-height: 250vh;
+    padding: 0;
   }
 
   .mf-layer-header {
@@ -4222,4 +4261,384 @@ canvas {
 /* Active year indicator pulse */
 .mf-toggle-btn.auto-active {
   box-shadow: 0 0 0 2px rgba(78, 205, 196, 0.5);
+}
+
+/* Mobile: reduce scroll-pin height for shorter scroll */
+@media (max-width: 600px) {
+  .section--money-flow {
+    min-height: 250vh;
+  }
+  .money-flow-container {
+    padding: 1.5rem 1rem;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SECTION: INCUMBENTS' DILEMMA — Stack Matrix
+   ═══════════════════════════════════════════════════════════════ */
+
+.section--incumbents {
+  padding: 80px 0 60px;
+}
+
+.incumbents-sub {
+  color: #A0A8BC;
+  font-size: 1.15rem;
+  line-height: 1.6;
+  max-width: 640px;
+  margin: 0 auto 3rem;
+  text-align: center;
+}
+
+/* ── Matrix Container ── */
+.inc-matrix {
+  position: relative;
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto 2.5rem;
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 16px;
+  overflow: hidden;
+  background: rgba(56,62,82,0.3);
+}
+
+/* ── Header Row (company columns) ── */
+.inc-matrix-header {
+  display: grid;
+  grid-template-columns: 120px repeat(7, 1fr);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.inc-matrix-corner {
+  padding: 1rem 0.75rem;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  color: #6B7280;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.inc-col-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 1rem 0.4rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  border-left: 1px solid rgba(255,255,255,0.04);
+}
+
+.inc-col-header:hover,
+.inc-col-header.inc-active {
+  background: rgba(255,255,255,0.04);
+}
+
+.inc-co-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.9rem;
+  color: #fff;
+  background: var(--co-color);
+  opacity: 0.9;
+}
+
+.inc-co-name {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #E8E9ED;
+  white-space: nowrap;
+}
+
+.inc-co-rank {
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: var(--co-color);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.inc-co-rank--role {
+  font-size: 0.58rem;
+  opacity: 0.8;
+}
+
+/* ── Matrix Rows ── */
+.inc-matrix-row {
+  display: grid;
+  grid-template-columns: 120px repeat(7, 1fr);
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+
+.inc-matrix-row:last-child {
+  border-bottom: none;
+}
+
+.inc-row-label {
+  padding: 0.9rem 0.75rem;
+  display: flex;
+  align-items: center;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #C8CCD4;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* ── Cells ── */
+.inc-cell {
+  position: relative;
+  padding: 0.9rem 0.4rem;
+  border-left: 1px solid rgba(255,255,255,0.04);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.inc-cell::after {
+  content: '';
+  display: block;
+  width: 36px;
+  height: 10px;
+  border-radius: 5px;
+  transition: opacity 0.5s ease, transform 0.5s ease, background 0.3s ease;
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+/* Cell fill states — animate in when .inc-revealed */
+.inc-matrix.inc-revealed .inc-cell--strong::after {
+  background: var(--co-color);
+  opacity: 0.75;
+  transform: scaleX(1);
+}
+
+.inc-matrix.inc-revealed .inc-cell--medium::after {
+  background: var(--co-color);
+  opacity: 0.3;
+  transform: scaleX(1);
+}
+
+.inc-matrix.inc-revealed .inc-cell--weak::after {
+  background: transparent;
+  border: 1px solid var(--co-color);
+  opacity: 0.25;
+  transform: scaleX(1);
+  height: 8px;
+}
+
+/* Staggered cell animation */
+.inc-matrix-row:nth-child(1) .inc-cell::after { transition-delay: 0.1s; }
+.inc-matrix-row:nth-child(2) .inc-cell::after { transition-delay: 0.2s; }
+.inc-matrix-row:nth-child(3) .inc-cell::after { transition-delay: 0.3s; }
+.inc-matrix-row:nth-child(4) .inc-cell::after { transition-delay: 0.4s; }
+.inc-matrix-row:nth-child(5) .inc-cell::after { transition-delay: 0.5s; }
+
+/* Column highlight on hover */
+.inc-cell.inc-col-hover {
+  background: rgba(255,255,255,0.03);
+}
+
+.inc-cell-plus {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  font-size: 0.55rem;
+  font-weight: 800;
+  color: var(--co-color);
+  opacity: 0;
+  transition: opacity 0.5s ease 0.35s;
+}
+
+.inc-matrix.inc-revealed .inc-cell-plus {
+  opacity: 0.7;
+}
+
+/* ── Detail Card (glassmorphism) ── */
+.inc-detail {
+  position: relative;
+  max-width: 960px;
+  margin: 0 auto;
+  height: 0;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.inc-detail-inner {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%) translateY(8px);
+  width: 420px;
+  max-width: 90vw;
+  background: rgba(56,62,82,0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 16px;
+  padding: 1.5rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.05);
+  z-index: 20;
+}
+
+.inc-detail.inc-detail--visible .inc-detail-inner {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+
+.inc-detail-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.inc-detail-name {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #fff;
+}
+
+.inc-detail-rank {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.2rem 0.6rem;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.08);
+}
+
+.inc-detail-row {
+  margin-bottom: 0.75rem;
+}
+
+.inc-detail-row:last-child {
+  margin-bottom: 0;
+}
+
+.inc-detail-label {
+  display: block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #6B7280;
+  margin-bottom: 0.2rem;
+}
+
+.inc-detail-value {
+  display: block;
+  font-size: 0.85rem;
+  color: #E8E9ED;
+  line-height: 1.4;
+}
+
+/* ── Bottom Insight ── */
+.inc-insight {
+  text-align: center;
+  max-width: 680px;
+  margin: 2rem auto 0;
+  padding: 1.5rem 2rem;
+  background: rgba(56,62,82,0.35);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 12px;
+}
+
+.inc-insight p {
+  font-size: 1.05rem;
+  color: #C8CCD4;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ── Mobile Responsive ── */
+@media (max-width: 768px) {
+  .inc-matrix-header {
+    grid-template-columns: 80px repeat(7, 1fr);
+  }
+  .inc-matrix-row {
+    grid-template-columns: 80px repeat(7, 1fr);
+  }
+  .inc-row-label {
+    font-size: 0.65rem;
+    padding: 0.7rem 0.4rem;
+  }
+  .inc-co-icon {
+    width: 26px;
+    height: 26px;
+    font-size: 0.75rem;
+  }
+  .inc-co-name {
+    font-size: 0.6rem;
+  }
+  .inc-co-rank {
+    display: none;
+  }
+  .inc-cell::after {
+    width: 24px;
+    height: 8px;
+  }
+  .inc-detail-inner {
+    width: 340px;
+  }
+  .incumbents-sub {
+    font-size: 1rem;
+    padding: 0 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .inc-matrix-header {
+    grid-template-columns: 60px repeat(7, 1fr);
+  }
+  .inc-matrix-row {
+    grid-template-columns: 60px repeat(7, 1fr);
+  }
+  .inc-row-label {
+    font-size: 0.55rem;
+    letter-spacing: 0;
+  }
+  .inc-co-name {
+    display: none;
+  }
+  .inc-co-icon {
+    width: 22px;
+    height: 22px;
+    font-size: 0.65rem;
+    border-radius: 6px;
+  }
+  .inc-cell::after {
+    width: 16px;
+    height: 6px;
+    border-radius: 3px;
+  }
+  .inc-cell {
+    padding: 0.7rem 0.2rem;
+  }
+  .inc-col-header {
+    padding: 0.7rem 0.2rem;
+  }
+  .inc-detail-inner {
+    width: calc(100vw - 2rem);
+    left: 0;
+    transform: translateY(8px);
+    position: relative;
+  }
+  .inc-detail.inc-detail--visible .inc-detail-inner {
+    transform: translateY(0);
+  }
 }

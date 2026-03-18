@@ -609,12 +609,11 @@
           scrolledPast / (sectionH - viewH)
         ));
 
-        // Map progress: stay on 2024 longer, then 2025, then 2026
-        // 0-0.20 = 2024, 0.20-0.45 = 2025, 0.45+ = 2026
+        // Map progress: 0-0.25 = 2024, 0.25-0.50 = 2025, 0.50+ = 2026
         let targetIdx;
-        if (scrollProgress < 0.20) {
+        if (scrollProgress < 0.25) {
           targetIdx = 0; // 2024
-        } else if (scrollProgress < 0.45) {
+        } else if (scrollProgress < 0.50) {
           targetIdx = 1; // 2025
         } else {
           targetIdx = 2; // 2026
@@ -626,7 +625,7 @@
         }
 
         // Reveal margins once user hits bottom third of section
-        if (scrollProgress > 0.6) {
+        if (scrollProgress > 0.70) {
           revealMargins();
         }
       }
@@ -820,6 +819,170 @@
     });
   }
 
+  // ═══ INCUMBENTS' DILEMMA — Stack Matrix ═══
+  function initIncumbents() {
+    const matrix = document.querySelector('.inc-matrix');
+    if (!matrix) return;
+
+    const detail = document.getElementById('incDetail');
+    const detailName = detail.querySelector('.inc-detail-name');
+    const detailRank = detail.querySelector('.inc-detail-rank');
+    const detailSuper = detail.querySelector('.inc-detail-super');
+    const detailHeel = detail.querySelector('.inc-detail-heel');
+    const detailStat = detail.querySelector('.inc-detail-stat');
+
+    const companyData = {
+      google: {
+        name: 'Google',
+        rank: '#1 Best Positioned',
+        color: '#4ECDC4',
+        superpower: 'Search + TPU cost moat + Gemini 750M MAU',
+        heel: 'Every AI answer cannibalizes ad revenue',
+        stat: '$350B rev · Perplexity doing 200M queries/day on its turf'
+      },
+      microsoft: {
+        name: 'Microsoft',
+        rank: '#2',
+        color: '#7C4DFF',
+        superpower: 'Enterprise distribution king · 100M Copilot MAU',
+        heel: 'Consumer identity crisis — 2.4M daily web visits vs ChatGPT',
+        stat: 'Multi-model platform = brand weakness'
+      },
+      meta: {
+        name: 'Meta',
+        rank: '#3',
+        color: '#4A90D9',
+        superpower: '3.58B daily users · $196B ads · brute-force distribution',
+        heel: '4 AI reorgs in 6 months · Llama 4 flopped',
+        stat: 'Paid up to $1.5B for a single researcher'
+      },
+      apple: {
+        name: 'Apple',
+        rank: '#4',
+        color: '#A0A8BC',
+        superpower: 'Best silicon · 2B+ devices · trust moat',
+        heel: 'Worst execution — outsourced Siri brain to Google',
+        stat: 'OpenAI → Gemini: couldn\'t ship its own intelligence'
+      },
+      xai: {
+        name: 'xAI',
+        rank: '#5 Wildcard',
+        color: '#E8837C',
+        superpower: 'X data flywheel · SpaceX capital adjacency',
+        heel: 'Unproven at enterprise scale',
+        stat: 'SpaceX: $8B profit in 2025 as financial backstop'
+      },
+      nvidia: {
+        name: 'NVIDIA',
+        rank: 'Arms Dealer',
+        color: '#76B900',
+        superpower: 'Invested $1B across 50 deals · $113B committed',
+        heel: 'Everyone building custom silicon alternatives',
+        stat: 'Shaping both demand creation & supply-side lock-in'
+      },
+      amazon: {
+        name: 'Amazon',
+        rank: 'Unique Threat',
+        color: '#FF8C42',
+        superpower: 'AWS $129B · $69B ads · 1M+ robots',
+        heel: '$69B ad business at risk from agent commerce',
+        stat: 'Sued Perplexity · Built Rufus + Buy for Me defensively'
+      }
+    };
+
+    let activeCompany = null;
+
+    // Reveal cells on scroll
+    const revealObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('inc-revealed');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+    revealObserver.observe(matrix);
+
+    function showDetail(companyKey) {
+      const data = companyData[companyKey];
+      if (!data) return;
+      activeCompany = companyKey;
+
+      detailName.textContent = data.name;
+      detailName.style.color = data.color;
+      detailRank.textContent = data.rank;
+      detailRank.style.color = data.color;
+      detailSuper.textContent = data.superpower;
+      detailHeel.textContent = data.heel;
+      detailStat.textContent = data.stat;
+
+      detail.classList.add('inc-detail--visible');
+      detail.setAttribute('aria-hidden', 'false');
+
+      // Highlight column
+      document.querySelectorAll('.inc-col-header').forEach(function(h) {
+        h.classList.toggle('inc-active', h.dataset.company === companyKey);
+      });
+      document.querySelectorAll('.inc-cell').forEach(function(c) {
+        c.classList.toggle('inc-col-hover', c.dataset.company === companyKey);
+      });
+    }
+
+    function hideDetail() {
+      activeCompany = null;
+      detail.classList.remove('inc-detail--visible');
+      detail.setAttribute('aria-hidden', 'true');
+      document.querySelectorAll('.inc-col-header').forEach(function(h) {
+        h.classList.remove('inc-active');
+      });
+      document.querySelectorAll('.inc-cell').forEach(function(c) {
+        c.classList.remove('inc-col-hover');
+      });
+    }
+
+    // Desktop: hover on column headers
+    document.querySelectorAll('.inc-col-header').forEach(function(header) {
+      header.addEventListener('mouseenter', function() {
+        showDetail(header.dataset.company);
+      });
+      header.addEventListener('click', function(e) {
+        e.stopPropagation();
+        if (activeCompany === header.dataset.company) {
+          hideDetail();
+        } else {
+          showDetail(header.dataset.company);
+        }
+      });
+    });
+
+    // Cells also trigger their company
+    document.querySelectorAll('.inc-cell').forEach(function(cell) {
+      cell.addEventListener('mouseenter', function() {
+        showDetail(cell.dataset.company);
+      });
+      cell.addEventListener('click', function(e) {
+        e.stopPropagation();
+        if (activeCompany === cell.dataset.company) {
+          hideDetail();
+        } else {
+          showDetail(cell.dataset.company);
+        }
+      });
+    });
+
+    // Close on click outside
+    document.addEventListener('click', function(e) {
+      if (activeCompany && !e.target.closest('.inc-matrix') && !e.target.closest('.inc-detail')) {
+        hideDetail();
+      }
+    });
+
+    // Close on mouseleave from matrix area
+    matrix.addEventListener('mouseleave', function() {
+      hideDetail();
+    });
+  }
+
   // --- INIT ---
   function init() {
     initParticles('particleCanvas');
@@ -834,6 +997,7 @@
     initAutonomousRevolution();
     initCapitalConcentration();
     initRabbitHoles();
+    initIncumbents();
   }
 
   // ═══ CAPITAL CONCENTRATION INTERACTIVE CHARTS ═══
