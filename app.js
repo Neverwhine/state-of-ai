@@ -895,9 +895,30 @@
     });
   }
 
-  // --- AUTONOMOUS REVOLUTION (sec-4) ---
+
+  // --- ANATOMY OF AI AGENT (sec-6) ---
+  function initAnatomyLayers() {
+    const sec = document.getElementById('sec-6');
+    if (!sec) return;
+
+    // Layer expand/collapse
+    sec.querySelectorAll('.aa-layer').forEach((layer) => {
+      const bar = layer.querySelector('.aa-layer-bar');
+      if (!bar) return;
+      bar.addEventListener('click', () => {
+        const wasExpanded = layer.classList.contains('aa-layer--expanded');
+        // collapse all
+        sec.querySelectorAll('.aa-layer--expanded').forEach((l) =>
+          l.classList.remove('aa-layer--expanded')
+        );
+        if (!wasExpanded) layer.classList.add('aa-layer--expanded');
+      });
+    });
+  }
+
+  // --- AUTONOMOUS REVOLUTION (sec-5) ---
   function initAutonomousRevolution() {
-    const sec = document.getElementById('sec-4');
+    const sec = document.getElementById('sec-5');
     if (!sec) return;
 
     // Agent card expand/collapse
@@ -912,16 +933,17 @@
       });
     });
 
-    // How It Works collapsible
-    const hw = sec.querySelector('.ar-howworks');
-    if (hw) {
+    // How It Works collapsible (all instances)
+    sec.querySelectorAll('.ar-howworks').forEach((hw) => {
       const btn = hw.querySelector('.ar-howworks-toggle');
-      btn.addEventListener('click', () => {
+      if (!btn) return;
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
         const collapsed = hw.dataset.collapsed === 'true';
         hw.dataset.collapsed = collapsed ? 'false' : 'true';
         btn.setAttribute('aria-expanded', collapsed ? 'true' : 'false');
       });
-    }
+    });
 
     // Task bars — animate on scroll via existing anim-fade + visible
     // The bars use .ar-task-bar.visible .ar-task-fill { width: var(--target-width) }
@@ -1135,6 +1157,7 @@
     initCharts();
     initMoneyFlow();
     initAutonomousRevolution();
+  initAnatomyLayers();
     initCapitalConcentration();
     initRabbitHoles();
     initIncumbents();

@@ -1196,23 +1196,9 @@
     <p class="section-intro anim-fade" style="max-width:780px;color:#C8CCD4;font-size:1.05rem;line-height:1.65;margin:0 auto 2.5rem">AI is moving from a system you consult to a system that acts. That changes software from a tool for humans to a layer of labor that can execute across workflows. It is the biggest shift in computing behavior since the browser put the internet in reach.</p>
 
     <!-- ═══ BLOCK 1: PHILOSOPHY QUOTE ═══ -->
-    <div class="ar-quote anim-fade">
-      <div class="ar-quote-icon">
-        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
-          <path d="M6 6h4l-2 8h4v12H4V14l2-8zm16 0h4l-2 8h4v12H20V14l2-8z" fill="#4ECDC4" opacity="0.5"/>
-        </svg>
-      </div>
-      <blockquote class="ar-quote-text">
-        "In the past, reading and writing was an attribute of the elite. Now it's a human right. Ability to make software will be a human right soon, and it's not going to feel like making software."
-      </blockquote>
+    <div class="ar-quote ar-quote--compact anim-fade">
+      <blockquote class="ar-quote-text">"Ability to make software will be a human right soon, and it's not going to feel like making software."</blockquote>
       <cite class="ar-quote-cite">— The Vibe Coding Thesis</cite>
-      <div class="ar-quote-decoration">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <rect x="2" y="4" width="14" height="16" rx="2" stroke="#4ECDC4" stroke-width="1.5" fill="none"/>
-          <path d="M6 8h6M6 11h4M6 14h5" stroke="#4ECDC4" stroke-width="1.5" stroke-linecap="round"/>
-          <path d="M18 7l3 3-3 3" stroke="#4ECDC4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </div>
     </div>
 
     <!-- ═══ BLOCK 2: 6 EXPLORABLE AGENT TOOL CARDS ═══ -->
@@ -1257,7 +1243,7 @@
       </div>
 
       <!-- Card 3: Manus → Meta -->
-      <div class="ar-agent-card ar-agent-card--highlight anim-fade" data-agent="manus">
+      <div class="ar-agent-card anim-fade" data-agent="manus">
         <div class="ar-card-front">
           <div class="ar-card-icon" style="background:#1877F2">M</div>
           <div class="ar-card-info">
@@ -1308,7 +1294,7 @@
       </div>
 
       <!-- Card 6: OpenClaw -->
-      <div class="ar-agent-card ar-agent-card--highlight anim-fade" data-agent="openclaw">
+      <div class="ar-agent-card anim-fade" data-agent="openclaw">
         <div class="ar-card-front">
           <div class="ar-card-icon" style="background:#76B947">OC</div>
           <div class="ar-card-info">
@@ -1325,7 +1311,7 @@
       </div>
 
       <!-- Card 7: NemoClaw -->
-      <div class="ar-agent-card ar-agent-card--highlight anim-fade" data-agent="nemoclaw">
+      <div class="ar-agent-card anim-fade" data-agent="nemoclaw">
         <div class="ar-card-front">
           <div class="ar-card-icon" style="background:#76B900">NC</div>
           <div class="ar-card-info">
@@ -1368,7 +1354,7 @@
           </div>
           <div class="vibe-card">
             <strong>Lovable</strong>
-            <span class="tabnum">$400M ARR, 2 founders</span>
+            <span class="tabnum">$400M ARR</span>
             <span class="stat-source">Source: TechCrunch, 2026</span>
           </div>
           <div class="vibe-card">
@@ -1384,25 +1370,18 @@
         </div>
       </div>
 
-      <!-- Evidence Callouts -->
-      <div class="ar-evidence-card anim-fade">
-        <svg class="ar-evidence-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M9 12l2 2 4-4" stroke="#4ECDC4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          <circle cx="12" cy="12" r="10" stroke="#4ECDC4" stroke-width="1.5" fill="none"/>
-        </svg>
-        <div class="ar-evidence-content">
-          <p>AppDirect's non-technical marketing team vibe-coded <strong class="tabnum">200K+</strong> lines of code, built <strong class="tabnum">11</strong> projects with <strong class="tabnum">4</strong> in production, and have <strong class="tabnum">80+</strong> applications in progress across Sales, Finance, HR, and Operations.</p>
-          <span class="stat-source">Source: Lovable / AppDirect case study, 2025</span>
-        </div>
-      </div>
-      <div class="ar-evidence-card anim-fade">
-        <svg class="ar-evidence-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M9 12l2 2 4-4" stroke="#4ECDC4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          <circle cx="12" cy="12" r="10" stroke="#4ECDC4" stroke-width="1.5" fill="none"/>
-        </svg>
-        <div class="ar-evidence-content">
-          <p>A founder with zero coding background built a transcription platform that reached <strong class="tabnum">80,000</strong> users, <strong class="tabnum">1M+</strong> minutes processed, and six-figure ARR — in four months.</p>
-          <span class="stat-source">Source: Replit / Whisper AI, 2025</span>
+      <!-- Evidence Callouts — Expandable -->
+      <div class="ar-howworks anim-fade" data-collapsed="true">
+        <button class="ar-howworks-toggle" aria-expanded="false">
+          <span>Real-World Evidence — Vibe Coding in Action</span>
+          <svg class="ar-howworks-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <polyline points="5,8 10,13 15,8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <div class="ar-howworks-body">
+          <p style="color:#C8CCD4;font-size:0.84rem;line-height:1.55;margin:0 0 0.75rem"><strong style="color:#4ECDC4">AppDirect:</strong> Non-technical marketing team vibe-coded <strong class="tabnum">200K+</strong> lines of code, built <strong class="tabnum">11</strong> projects with <strong class="tabnum">4</strong> in production, and have <strong class="tabnum">80+</strong> applications in progress across Sales, Finance, HR, and Operations.</p>
+          <p style="color:#C8CCD4;font-size:0.84rem;line-height:1.55;margin:0 0 0.5rem"><strong style="color:#4ECDC4">Zero-code founder:</strong> Built a transcription platform that reached <strong class="tabnum">80,000</strong> users, <strong class="tabnum">1M+</strong> minutes processed, and six-figure ARR — in four months.</p>
+          <span class="stat-source">Source: Lovable / AppDirect case study, Replit / Whisper AI, 2025</span>
         </div>
       </div>
 
@@ -1415,8 +1394,11 @@
         <span class="stat-source">Source: Stack Overflow Developer Survey, 2025</span>
       </div>
 
-      <!-- Caveat -->
-      <p class="ar-caveat anim-fade">Caveat: Prototype creation is the easy win. Durable, maintainable production software remains harder. <span class="stat-source">Source: Forbes, 2026</span></p>
+      <!-- Self-referential note -->
+      <div class="ar-aaas-callout anim-fade" style="margin:1.5rem 0 0;padding:1rem 1.25rem;background:rgba(78,205,196,0.05);border:1px solid rgba(78,205,196,0.12);border-radius:10px;display:flex;align-items:flex-start;gap:0.75rem">
+        <span style="font-size:1.2rem;flex-shrink:0;margin-top:1px">&#128187;</span>
+        <p style="color:#A0A8BC;font-size:0.82rem;line-height:1.55;margin:0"><strong style="color:#C8CCD4">Agents building agents:</strong> 100% of Claude Code is written in Claude Code. 100% of Perplexity Computer is written in Perplexity Computer — as is this presentation.</p>
+      </div>
     </div>
 
     <!-- ═══ BLOCK 4: DEPLOYMENT PATTERNS ═══ -->
@@ -1785,6 +1767,7 @@
             <span class="aa-tool-chip aa-tool-chip--dvc">CopilotKit / AG-UI <span class="aa-dvc-badge">DVC</span></span>
             <span class="aa-tool-chip">Vercel AI SDK</span>
             <span class="aa-tool-chip">Streamlit</span>
+            <span class="aa-tool-chip">Gradio</span>
           </div>
           <div class="aa-detail-stat">
             <span class="aa-stat-number tabnum">12.4K</span>
@@ -1816,6 +1799,7 @@
             <span class="aa-tool-chip">CrewAI</span>
             <span class="aa-tool-chip">AutoGen</span>
             <span class="aa-tool-chip">Semantic Kernel</span>
+            <span class="aa-tool-chip">Pydantic AI</span>
           </div>
           <div class="aa-detail-stat">
             <span class="aa-stat-label">Most serious startups eventually build proprietary orchestration</span>
@@ -1871,6 +1855,8 @@
             <span class="aa-tool-chip">MCP <span class="aa-stars tabnum">110.8M</span> monthly PyPI</span>
             <span class="aa-tool-chip">A2A <span class="aa-stars tabnum">22.5K ★</span></span>
             <span class="aa-tool-chip">Function Calling</span>
+            <span class="aa-tool-chip">Browser Use</span>
+            <span class="aa-tool-chip">Composio</span>
           </div>
           <div class="aa-detail-stat">
             <span class="aa-stat-label">"MCP is becoming the REST of the AI era"</span>
@@ -1900,7 +1886,9 @@
             <span class="aa-tool-chip">Anthropic</span>
             <span class="aa-tool-chip">Google</span>
             <span class="aa-tool-chip">xAI</span>
-            <span class="aa-tool-chip">Open-weight models</span>
+            <span class="aa-tool-chip">Meta / Llama</span>
+            <span class="aa-tool-chip">DeepSeek</span>
+            <span class="aa-tool-chip">Mistral</span>
           </div>
           <div class="aa-detail-stat">
             <span class="aa-stat-number tabnum">37%</span>
@@ -1932,6 +1920,7 @@
             <span class="aa-tool-chip">WebContainers</span>
             <span class="aa-tool-chip">Cloud VMs</span>
             <span class="aa-tool-chip">Local Runtime</span>
+            <span class="aa-tool-chip">Modal</span>
             <span class="aa-tool-chip" style="border-color:#76B947">Dynamo <span class="aa-stars" style="color:#76B947">NVIDIA OSS</span></span>
           </div>
           <div class="aa-detail-stat">
@@ -1959,6 +1948,7 @@
             <span class="aa-tool-chip">LangSmith</span>
             <span class="aa-tool-chip">Phoenix / Arize</span>
             <span class="aa-tool-chip">OpenTelemetry</span>
+            <span class="aa-tool-chip">Braintrust</span>
           </div>
           <div class="aa-detail-stat">
             <span class="aa-stat-label">Best startups treat eval as product, not afterthought</span>
@@ -2294,7 +2284,7 @@
     <!-- So What -->
     <div class="so-what-box anim-fade" style="margin-top:3rem;padding:2rem;background:linear-gradient(135deg,rgba(78,205,196,0.08),rgba(74,144,217,0.05));border:1px solid rgba(78,205,196,0.18);border-radius:14px">
       <h3 style="color:#4ECDC4;margin:0 0 0.75rem;font-size:1.05rem;font-weight:700;letter-spacing:0.04em">SO WHAT?</h3>
-      <p style="color:#C8CCD4;font-size:0.95rem;line-height:1.6;margin:0 0 0.75rem">The enduring advantage in agents will not come from having a model. It will come from orchestrating the full system around the model: memory, tools, workflows, reliability, and distribution.</p>
+      <p style="color:#C8CCD4;font-size:0.95rem;line-height:1.6;margin:0 0 0.75rem">The enduring advantage in agents will not come from having a model. It will come from orchestrating the full system around the model: memory, tools, workflows, reliability, and distribution. <strong style="color:#F5C542">We have moved from prompt engineering to context engineering.</strong></p>
       <p style="color:#A0A8BC;font-size:0.9rem;line-height:1.55;margin:0;font-style:italic">That architecture is the map of defensibility. The winners will not be the loudest at the frontier; they will be the ones who turn intelligence into dependable, repeatable execution.</p>
     </div>
 
