@@ -55,6 +55,22 @@
   gap: 0;
 }
 
+/* Prevent sidebar from blocking section text on narrow screens */
+@media (min-width: 769px) and (max-width: 1200px) {
+  .section {
+    padding-left: 56px !important;
+  }
+  .section--money-flow {
+    padding-left: 0 !important; /* Follow the Money has its own padding */
+  }
+  .section > .container {
+    padding-left: 16px;
+  }
+  .money-flow-container {
+    padding-left: 56px;
+  }
+}
+
 .sidebar-inner {
   display: flex;
   flex-direction: column;
@@ -1885,11 +1901,25 @@ canvas {
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding: 1rem 4rem 0.5rem;
+  justify-content: flex-start;
+  padding: 3vh 4rem 0.5rem;
   box-sizing: border-box;
-  overflow: hidden;
-  /* Needed for progress bar + epoch + scroll hint positioning */
+  overflow-y: auto;
+  overflow-x: hidden;
+  /* Smooth internal scrolling when layers expand */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(78,205,196,0.3) transparent;
+}
+
+.money-flow-container::-webkit-scrollbar {
+  width: 4px;
+}
+.money-flow-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+.money-flow-container::-webkit-scrollbar-thumb {
+  background: rgba(78,205,196,0.3);
+  border-radius: 4px;
 }
 
 .section--money-flow .section-headline {
@@ -1982,15 +2012,7 @@ canvas {
 
 /* Margin Sidebar */
 .mf-margin-sidebar {
-  position: absolute;
-  right: -60px;
-  top: 240px;
-  width: 48px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  z-index: 2;
+  display: none; /* Removed: margin data already shown in layer headers + expanded bodies */
 }
 
 .mf-margin-label {
@@ -2127,7 +2149,7 @@ canvas {
   background: var(--bg-card);
   border-radius: 0 12px 12px 0;
   margin-bottom: 2px;
-  overflow: hidden;
+  overflow: visible;
   transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
@@ -2202,6 +2224,7 @@ canvas {
 .mf-layer.expanded .mf-layer-body {
   max-height: 2000px;
   padding: 0 20px 20px;
+  overflow: visible;
 }
 
 /* Expand hint chevron */
@@ -2283,8 +2306,8 @@ canvas {
   content: attr(data-tooltip);
   position: absolute;
   bottom: calc(100% + 8px);
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
+  transform: none;
   background: var(--bg-primary);
   color: var(--text-primary);
   padding: 6px 12px;
@@ -2292,8 +2315,12 @@ canvas {
   font-size: 0.72rem;
   white-space: nowrap;
   border: 1px solid rgba(255,255,255,0.1);
-  z-index: 10;
+  z-index: 100;
   pointer-events: none;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+  max-width: 90vw;
+  white-space: normal;
+  min-width: 200px;
 }
 
 /* Margin Detail rows */

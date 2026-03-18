@@ -508,6 +508,20 @@
         layers.forEach((l) => l.classList.remove('expanded'));
         if (!wasExpanded) {
           layer.classList.add('expanded');
+          // Scroll expanded layer into view within the sticky container
+          setTimeout(() => {
+            const container = section.querySelector('.money-flow-container');
+            if (container) {
+              const layerTop = layer.offsetTop - container.offsetTop;
+              const containerScroll = container.scrollTop;
+              const containerHeight = container.clientHeight;
+              const layerBottom = layerTop + layer.offsetHeight;
+              // If expanded layer's bottom goes below visible area, scroll down
+              if (layerBottom > containerScroll + containerHeight) {
+                container.scrollTo({ top: Math.max(0, layerTop - 60), behavior: 'smooth' });
+              }
+            }
+          }, 100);
         }
       });
     });
