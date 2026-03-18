@@ -1889,6 +1889,7 @@ canvas {
   padding: 1rem 4rem 0.5rem;
   box-sizing: border-box;
   overflow: hidden;
+  /* Needed for progress bar + epoch + scroll hint positioning */
 }
 
 .section--money-flow .section-headline {
@@ -1918,7 +1919,26 @@ canvas {
   border-radius: 8px;
   overflow: hidden;
   border: 1px solid rgba(255,255,255,0.1);
+  position: relative;
 }
+
+/* Sliding pill indicator */
+.mf-toggle-pill {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  height: calc(100% - 4px);
+  width: calc(33.333% - 2px);
+  background: var(--accent-teal);
+  border-radius: 6px;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.mf-toggle[data-active-idx="0"] .mf-toggle-pill { transform: translateX(0); }
+.mf-toggle[data-active-idx="1"] .mf-toggle-pill { transform: translateX(100%); }
+.mf-toggle[data-active-idx="2"] .mf-toggle-pill { transform: translateX(200%); }
 
 .mf-toggle-btn {
   background: transparent;
@@ -1929,15 +1949,16 @@ canvas {
   font-size: 0.85rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s, color 0.2s;
+  transition: color 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  z-index: 1;
 }
 
 .mf-toggle-btn:hover {
-  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.85);
 }
 
 .mf-toggle-btn.active {
-  background: var(--accent-teal);
   color: var(--bg-primary);
 }
 
@@ -4205,20 +4226,116 @@ canvas {
   }
 }
 
-/* ═══ SCROLL-DRIVEN YEAR ANIMATION ═══ */
+/* ═══ SCROLL-DRIVEN YEAR ANIMATION — APPLE-QUALITY ═══ */
 
-/* Pop animation for revenue numbers */
-@keyframes revPop {
-  0% { transform: scale(1); opacity: 0.7; }
-  40% { transform: scale(1.25); opacity: 1; color: #F5C542; }
-  100% { transform: scale(1); opacity: 1; }
+/* Scroll progress bar — thin line at top of sticky container */
+.mf-scroll-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: rgba(255,255,255,0.06);
+  z-index: 10;
+  overflow: hidden;
 }
 
-.mf-layer-rev.pop,
-.mf-layer-capex.pop {
-  animation: revPop 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-  display: inline-block; /* needed for transform */
+.mf-scroll-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--accent-teal), var(--accent-gold));
+  transition: width 0.1s linear;
+  will-change: width;
 }
+
+/* Year epoch label — the big year that fades in during transitions */
+.mf-year-epoch {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: clamp(80px, 12vw, 160px);
+  font-weight: 800;
+  font-family: 'Inter', sans-serif;
+  color: rgba(255,255,255,0.03);
+  pointer-events: none;
+  z-index: 0;
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  letter-spacing: -0.04em;
+  user-select: none;
+}
+
+.mf-year-epoch.flash {
+  animation: yearFlash 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes yearFlash {
+  0% { color: rgba(255,255,255,0.03); }
+  15% { color: rgba(78,205,196,0.12); }
+  100% { color: rgba(255,255,255,0.03); }
+}
+
+/* Revenue number transitions — smooth crossfade + subtle scale */
+.mf-layer-rev,
+.mf-layer-capex {
+  display: inline-block;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+/* Phase 1: fade out old number */
+.mf-layer-rev.transitioning-out,
+.mf-layer-capex.transitioning-out {
+  opacity: 0;
+  transform: scale(0.92) translateY(4px);
+  transition: transform 0.25s cubic-bezier(0.4, 0, 1, 1),
+              opacity 0.2s cubic-bezier(0.4, 0, 1, 1);
+}
+
+/* Phase 2: fade in new number */
+.mf-layer-rev.transitioning-in,
+.mf-layer-capex.transitioning-in {
+  opacity: 0;
+  transform: scale(1.08) translateY(-4px);
+  transition: none;
+}
+
+.mf-layer-rev.settled,
+.mf-layer-capex.settled {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Layer row glow pulse on year change */
+.mf-layer.year-transitioning {
+  position: relative;
+}
+
+.mf-layer.year-transitioning::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  opacity: 0;
+  animation: layerGlow 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  pointer-events: none;
+}
+
+@keyframes layerGlow {
+  0% { box-shadow: inset 0 0 0 1px rgba(78,205,196,0); opacity: 0; }
+  30% { box-shadow: inset 0 0 0 1px rgba(78,205,196,0.25); opacity: 1; }
+  100% { box-shadow: inset 0 0 0 1px rgba(78,205,196,0); opacity: 0; }
+}
+
+/* Stagger for glow effect — cascades top to bottom (layer 5 is first visually) */
+.mf-layer[data-layer="5"].year-transitioning::after { animation-delay: 0ms; }
+.mf-layer[data-layer="4"].year-transitioning::after { animation-delay: 70ms; }
+.mf-layer[data-layer="3"].year-transitioning::after { animation-delay: 140ms; }
+.mf-layer[data-layer="2"].year-transitioning::after { animation-delay: 210ms; }
+.mf-layer[data-layer="1"].year-transitioning::after { animation-delay: 280ms; }
 
 /* Margin elements — hidden by default, revealed after year progression */
 .mf-layer-gm,
@@ -4226,7 +4343,7 @@ canvas {
 .mf-margin-detail,
 .mf-flow-label,
 .mf-margin-sidebar {
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .mf-margins-hidden .mf-layer-gm,
@@ -4251,16 +4368,57 @@ canvas {
 .section--money-flow .mf-ai-tax,
 .section--money-flow .mf-margin-detail,
 .section--money-flow .mf-flow-label {
-  transition: opacity 0.6s ease 0.1s, transform 0.6s ease 0.1s;
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.1s, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.1s;
 }
 
 .section--money-flow .mf-margin-sidebar {
-  transition: opacity 0.6s ease 0.3s, transform 0.6s ease 0.3s;
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.3s, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
 }
 
 /* Active year indicator pulse */
 .mf-toggle-btn.auto-active {
   box-shadow: 0 0 0 2px rgba(78, 205, 196, 0.5);
+}
+
+/* Scroll hint: subtle down arrow */
+.mf-scroll-hint {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  opacity: 0.5;
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.mf-scroll-hint.hidden {
+  opacity: 0;
+}
+
+.mf-scroll-hint-text {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.mf-scroll-hint-arrow {
+  width: 16px;
+  height: 16px;
+  border-right: 1.5px solid var(--accent-teal);
+  border-bottom: 1.5px solid var(--accent-teal);
+  transform: rotate(45deg);
+  animation: scrollHintBob 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes scrollHintBob {
+  0%, 100% { transform: rotate(45deg) translateY(0); opacity: 0.5; }
+  50% { transform: rotate(45deg) translateY(4px); opacity: 1; }
 }
 
 /* Mobile: reduce scroll-pin height for shorter scroll */
@@ -4271,6 +4429,8 @@ canvas {
   .money-flow-container {
     padding: 1.5rem 1rem;
   }
+  .mf-scroll-hint { bottom: 16px; }
+  .mf-year-epoch { font-size: 60px; }
 }
 
 /* ═══════════════════════════════════════════════════════════════

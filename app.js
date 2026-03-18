@@ -538,36 +538,143 @@
       });
     });
 
-    // ═══ SCROLL-DRIVEN YEAR PROGRESSION ═══
+    // ═══ SCROLL-DRIVEN YEAR PROGRESSION — APPLE-QUALITY ═══
     const yearBtns = section.querySelectorAll('.mf-year-toggle .mf-toggle-btn');
+    const yearToggle = section.querySelector('.mf-year-toggle');
     const yearSequence = ['2024', '2025', '2026'];
     let currentYearIdx = 0;
     let autoScrollActive = true;
     let marginsRevealed = false;
+    let isTransitioning = false;
+
+    // New DOM references
+    const progressFill = document.getElementById('mfProgressFill');
+    const yearEpoch = document.getElementById('mfYearEpoch');
+    const scrollHint = document.getElementById('mfScrollHint');
 
     // Hide margins initially
     section.classList.add('mf-margins-hidden');
 
-    // Core function: switch year with pop animation
+    // Active transition timer IDs (for cancellation)
+    let transitionTimer = null;
+    let glowTimer = null;
+
+    // Force-finish any in-progress transition
+    function forceFinishTransition(year) {
+      if (transitionTimer) { clearTimeout(transitionTimer); transitionTimer = null; }
+      if (glowTimer) { clearTimeout(glowTimer); glowTimer = null; }
+      const dataEls = section.querySelectorAll('[data-years]');
+      const layerEls = section.querySelectorAll('.mf-layer');
+      dataEls.forEach((el) => {
+        el.style.transitionDelay = '0ms';
+        el.classList.remove('transitioning-out', 'transitioning-in', 'settled');
+        try {
+          const years = JSON.parse(el.dataset.years);
+          if (years[year]) el.textContent = years[year];
+        } catch (e) { /* skip */ }
+      });
+      layerEls.forEach((l) => l.classList.remove('year-transitioning'));
+      isTransitioning = false;
+    }
+
+    // ─── Cinematic year switch with 2-phase crossfade ───
     function switchToYear(year, animate) {
+      const targetIdx = yearSequence.indexOf(year);
+      if (targetIdx === -1) return;
+
+      // Update pill indicator (smooth slide)
+      if (yearToggle) yearToggle.setAttribute('data-active-idx', targetIdx);
+
+      // Update button active states
       yearBtns.forEach((b) => b.classList.remove('active'));
       const targetBtn = section.querySelector('.mf-toggle-btn[data-year="' + year + '"]');
       if (targetBtn) targetBtn.classList.add('active');
 
-      section.querySelectorAll('[data-years]').forEach((el) => {
-        try {
-          const years = JSON.parse(el.dataset.years);
-          if (years[year]) {
-            if (animate) {
-              el.classList.remove('pop');
-              // Force reflow to restart animation
-              void el.offsetWidth;
-              el.classList.add('pop');
-            }
-            el.textContent = years[year];
-          }
-        } catch (e) { /* skip */ }
+      // Update background epoch text
+      if (yearEpoch) {
+        yearEpoch.textContent = year;
+        yearEpoch.classList.remove('flash');
+        void yearEpoch.offsetWidth;
+        yearEpoch.classList.add('flash');
+      }
+
+      const dataEls = section.querySelectorAll('[data-years]');
+      const layerEls = section.querySelectorAll('.mf-layer');
+
+      if (!animate) {
+        // No animation — instant swap (initial load)
+        dataEls.forEach((el) => {
+          try {
+            const years = JSON.parse(el.dataset.years);
+            if (years[year]) el.textContent = years[year];
+          } catch (e) { /* skip */ }
+        });
+        return;
+      }
+
+      // If already transitioning, force-finish the old one first
+      if (isTransitioning) {
+        forceFinishTransition(year);
+      }
+
+      isTransitioning = true;
+
+      // Calculate stagger delay per element based on its layer
+      function getStagger(el) {
+        const layer = el.closest('.mf-layer');
+        if (!layer) return 0;
+        const layerNum = parseInt(layer.dataset.layer) || 5;
+        // Layer 5 at top = 0ms, layer 1 at bottom = 240ms
+        return (5 - layerNum) * 60;
+      }
+
+      // Phase 1: Fade out old numbers (no stagger for fade-out — all go at once)
+      dataEls.forEach((el) => {
+        el.style.transitionDelay = '0ms';
+        el.classList.remove('settled', 'transitioning-in');
+        el.classList.add('transitioning-out');
       });
+
+      // Add glow to layer rows
+      layerEls.forEach((l) => {
+        l.classList.remove('year-transitioning');
+        void l.offsetWidth;
+        l.classList.add('year-transitioning');
+      });
+
+      // Phase 2: After fade-out, swap text + fade in with stagger
+      transitionTimer = setTimeout(() => {
+        transitionTimer = null;
+        dataEls.forEach((el) => {
+          try {
+            const years = JSON.parse(el.dataset.years);
+            if (years[year]) el.textContent = years[year];
+          } catch (e) { /* skip */ }
+          el.classList.remove('transitioning-out');
+          el.classList.add('transitioning-in');
+        });
+
+        // Phase 3: Settle into final position with cascading stagger
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            dataEls.forEach((el) => {
+              el.style.transitionDelay = getStagger(el) + 'ms';
+              el.classList.remove('transitioning-in');
+              el.classList.add('settled');
+            });
+            // Mark as done after the last stagger completes
+            setTimeout(() => {
+              isTransitioning = false;
+            }, 300);
+
+            // Clean up glow after animation
+            glowTimer = setTimeout(() => {
+              glowTimer = null;
+              layerEls.forEach((l) => l.classList.remove('year-transitioning'));
+            }, 800);
+          });
+        });
+      }, 220); // slightly shorter fade-out for snappier feel
     }
 
     // Reveal margins with staggered animation
@@ -581,57 +688,76 @@
     yearBtns.forEach((btn) => {
       btn.addEventListener('click', () => {
         autoScrollActive = false;
+        // Hide scroll hint when user takes manual control
+        if (scrollHint) scrollHint.classList.add('hidden');
         const year = btn.dataset.year;
         currentYearIdx = yearSequence.indexOf(year);
         switchToYear(year, true);
-        // If user clicks 2026, reveal margins after a beat
         if (year === '2026') {
           setTimeout(revealMargins, 800);
         }
       });
     });
 
-    // Scroll-driven observer: divide section into 3 zones
+    // ─── Scroll handler with progress bar + smooth year switching ───
     function initScrollYearProgression() {
       const sectionEl = section;
+      let ticking = false;
 
       function onScroll() {
-        if (!autoScrollActive) return;
+        if (ticking) return;
+        ticking = true;
 
-        const rect = sectionEl.getBoundingClientRect();
-        const sectionH = rect.height;
-        const viewH = window.innerHeight;
+        requestAnimationFrame(() => {
+          ticking = false;
 
-        // scrollProgress: how far section top has moved above viewport top
-        // 0 = section top at viewport top, 1 = section bottom at viewport top
-        const scrolledPast = -rect.top; // positive when scrolled past top
-        const scrollProgress = Math.max(0, Math.min(1,
-          scrolledPast / (sectionH - viewH)
-        ));
+          const rect = sectionEl.getBoundingClientRect();
+          const sectionH = rect.height;
+          const viewH = window.innerHeight;
+          const scrolledPast = -rect.top;
+          const scrollProgress = Math.max(0, Math.min(1,
+            scrolledPast / (sectionH - viewH)
+          ));
 
-        // Map progress: 0-0.25 = 2024, 0.25-0.50 = 2025, 0.50+ = 2026
-        let targetIdx;
-        if (scrollProgress < 0.25) {
-          targetIdx = 0; // 2024
-        } else if (scrollProgress < 0.50) {
-          targetIdx = 1; // 2025
-        } else {
-          targetIdx = 2; // 2026
-        }
+          // Update progress bar (direct DOM, no transitions for smoothness)
+          if (progressFill) {
+            progressFill.style.width = (scrollProgress * 100) + '%';
+          }
 
-        if (targetIdx !== currentYearIdx) {
-          currentYearIdx = targetIdx;
-          switchToYear(yearSequence[currentYearIdx], true);
-        }
+          // Hide scroll hint after scrolling past 15%
+          if (scrollHint) {
+            if (scrollProgress > 0.15) {
+              scrollHint.classList.add('hidden');
+            } else {
+              scrollHint.classList.remove('hidden');
+            }
+          }
 
-        // Reveal margins once user hits bottom third of section
-        if (scrollProgress > 0.70) {
-          revealMargins();
-        }
+          // Year zones: 0-0.25 = 2024, 0.25-0.50 = 2025, 0.50+ = 2026
+          if (!autoScrollActive) return;
+
+          let targetIdx;
+          if (scrollProgress < 0.25) {
+            targetIdx = 0;
+          } else if (scrollProgress < 0.50) {
+            targetIdx = 1;
+          } else {
+            targetIdx = 2;
+          }
+
+          if (targetIdx !== currentYearIdx) {
+            currentYearIdx = targetIdx;
+            switchToYear(yearSequence[currentYearIdx], true);
+          }
+
+          // Reveal margins once user hits bottom third
+          if (scrollProgress > 0.70) {
+            revealMargins();
+          }
+        });
       }
 
       window.addEventListener('scroll', onScroll, { passive: true });
-      // Initial check
       onScroll();
     }
 

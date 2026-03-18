@@ -90,12 +90,18 @@
 
 <section class="section section--dark section--money-flow" id="sec-1">
   <div class="container money-flow-container">
+    <!-- Scroll progress bar -->
+    <div class="mf-scroll-progress"><div class="mf-scroll-progress-fill" id="mfProgressFill"></div></div>
+    <!-- Background year epoch -->
+    <div class="mf-year-epoch" id="mfYearEpoch">2024</div>
+
     <h2 class="section-headline anim-fade">FOLLOW THE <span class="accent-teal">MONEY</span></h2>
     <p class="money-flow-subtitle anim-fade">How <strong class="tabnum">$60B</strong> of AI revenue generates <strong class="tabnum">$700B</strong> of infrastructure investment</p>
 
     <!-- Controls -->
     <div class="mf-controls anim-fade">
-      <div class="mf-toggle mf-year-toggle" id="mfYearToggle">
+      <div class="mf-toggle mf-year-toggle" id="mfYearToggle" data-active-idx="0">
+        <div class="mf-toggle-pill"></div>
         <button class="mf-toggle-btn active" data-year="2024">2024</button>
         <button class="mf-toggle-btn" data-year="2025">2025</button>
         <button class="mf-toggle-btn" data-year="2026">2026E</button>
@@ -475,6 +481,13 @@
       </div>
 
     </div><!-- /.mf-stack -->
+
+    <!-- Scroll hint -->
+    <div class="mf-scroll-hint" id="mfScrollHint">
+      <span class="mf-scroll-hint-text">Scroll to explore</span>
+      <div class="mf-scroll-hint-arrow"></div>
+    </div>
+
   </div>
 </section>
 
