@@ -39,18 +39,19 @@
     <div class="nav-dot" data-section="1"><span>Follow the Money</span></div>
     <div class="nav-dot" data-section="2"><span>$60B Explosion</span></div>
     <div class="nav-dot" data-section="3"><span>Model Wars</span></div>
-    <div class="nav-dot" data-section="4"><span>Three Pillars</span></div>
-    <div class="nav-dot" data-section="5"><span>Agent Revolution</span></div>
-    <div class="nav-dot" data-section="6"><span>Agent Anatomy</span></div>
-    <div class="nav-dot" data-section="7"><span>$650B Sprint</span></div>
+    <div class="nav-dot" data-section="4"><span>Agent Revolution</span></div>
+    <div class="nav-dot" data-section="5"><span>Agent Anatomy</span></div>
+    <div class="nav-dot" data-section="6"><span>$650B Sprint</span></div>
+    <div class="nav-dot" data-section="7"><span>Five Layers</span></div>
     <div class="nav-dot" data-section="8"><span>Business Models</span></div>
     <div class="nav-dot" data-section="9"><span>Agent Economy</span></div>
     <div class="nav-dot" data-section="10"><span>Physical AI</span></div>
     <div class="nav-dot" data-section="11"><span>Geopolitics</span></div>
-    <div class="nav-dot" data-section="12"><span>Risks</span></div>
-    <div class="nav-dot" data-section="13"><span>DVC Portfolio</span></div>
-    <div class="nav-dot" data-section="14"><span>5-Year Outlook</span></div>
-    <div class="nav-dot" data-section="15"><span>Closing</span></div>
+    <div class="nav-dot" data-section="12"><span>Incumbents' Dilemma</span></div>
+    <div class="nav-dot" data-section="13"><span>Risks</span></div>
+    <div class="nav-dot" data-section="14"><span>DVC Portfolio</span></div>
+    <div class="nav-dot" data-section="15"><span>10-Year Outlook</span></div>
+    <div class="nav-dot" data-section="16"><span>Closing</span></div>
   </div>
 </nav>
 
@@ -84,6 +85,8 @@
   </div>
   <span class="hero-dvc-url">davidovs.com</span>
 </section>
+
+
 
 <section class="section section--dark section--money-flow" id="sec-1">
   <div class="container money-flow-container">
@@ -488,6 +491,9 @@
   </div>
 </section>
 
+<!-- ============================== -->
+<!-- SECTION 2: THE $60B EXPLOSION  -->
+<!-- ============================== -->
 <section class="section section--dark" id="sec-2">
   <div class="container">
 
@@ -612,9 +618,84 @@
 
     </div>
 
+    <!-- Margin context badges -->
+    <div class="anim-fade" style="display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;margin:1.5rem 0 0.5rem">
+      <div style="padding:0.6rem 1rem;background:rgba(78,205,196,0.06);border:1px solid rgba(78,205,196,0.12);border-radius:8px;text-align:center">
+        <span style="color:#4ECDC4;font-size:0.78rem;font-weight:700;letter-spacing:0.06em">SHOOTING STARS</span>
+        <span class="tabnum" style="display:block;color:#E8E9ED;font-size:1rem;font-weight:700;margin-top:0.15rem">~60% GM</span>
+        <span style="color:#A0A8BC;font-size:0.72rem">Sustainable growers</span>
+      </div>
+      <div style="padding:0.6rem 1rem;background:rgba(232,131,124,0.06);border:1px solid rgba(232,131,124,0.12);border-radius:8px;text-align:center">
+        <span style="color:#E8837C;font-size:0.78rem;font-weight:700;letter-spacing:0.06em">SUPERNOVAS</span>
+        <span class="tabnum" style="display:block;color:#E8E9ED;font-size:1rem;font-weight:700;margin-top:0.15rem">~25% GM</span>
+        <span style="color:#A0A8BC;font-size:0.72rem">Fastest growers</span>
+      </div>
+      <div style="padding:0.6rem 1rem;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:8px;text-align:center">
+        <span style="color:#A0A8BC;font-size:0.78rem;font-weight:700;letter-spacing:0.06em">TRAD SaaS</span>
+        <span class="tabnum" style="display:block;color:#E8E9ED;font-size:1rem;font-weight:700;margin-top:0.15rem">70–85% GM</span>
+        <span style="color:#A0A8BC;font-size:0.72rem">Benchmark</span>
+      </div>
+    </div>
+    <span class="stat-source anim-fade" style="display:block;text-align:center;margin-bottom:2.5rem">Source: Bessemer Cloud Index (AI Supernovas / Shooting Stars), company filings, TechCrunch 2026</span>
 
+    <!-- ═══ THE ARPU PROBLEM ═══ -->
+    <div class="explosion-arpu anim-fade" style="margin-top:1rem">
+      <h3 class="subsection-title" style="margin-bottom:0.5rem">AI IS STILL EXPLORING BUSINESS MODELS</h3>
+      <p style="color:#A0A8BC;font-size:0.88rem;margin-bottom:1.5rem;max-width:680px;margin-left:auto;margin-right:auto;text-align:center">
+        OpenAI has <strong class="tabnum" style="color:#E8E9ED">900M</strong> weekly active users but only <strong class="tabnum" style="color:#E8E9ED">50M</strong> subscribers — a <strong class="tabnum" style="color:#E8837C">5.6%</strong> paid conversion rate. Compare the ad revenue per user:
+      </p>
 
+      <div style="max-width:620px;margin:0 auto;display:flex;flex-direction:column;gap:0.65rem">
 
+        <div style="display:flex;align-items:center;gap:0.75rem">
+          <span style="flex-shrink:0;width:120px;color:#A0A8BC;font-size:0.85rem;font-weight:600;text-align:right">Netflix (sub)</span>
+          <div style="flex:1;position:relative;height:30px;background:rgba(255,255,255,0.03);border-radius:8px;overflow:hidden">
+            <div style="height:100%;width:100%;background:linear-gradient(90deg,#F5C542,#D4A840);border-radius:8px;display:flex;align-items:center;justify-content:flex-end;padding-right:0.75rem">
+              <span class="tabnum" style="color:#1A1A2E;font-size:0.8rem;font-weight:700">$138/yr</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:center;gap:0.75rem">
+          <span style="flex-shrink:0;width:120px;color:#A0A8BC;font-size:0.85rem;font-weight:600;text-align:right">Meta (ads)</span>
+          <div style="flex:1;position:relative;height:30px;background:rgba(255,255,255,0.03);border-radius:8px;overflow:hidden">
+            <div style="height:100%;width:42%;background:linear-gradient(90deg,#4A90D9,#3A7CC4);border-radius:8px;display:flex;align-items:center;justify-content:flex-end;padding-right:0.75rem">
+              <span class="tabnum" style="color:#E8E9ED;font-size:0.8rem;font-weight:700">$58/yr</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:center;gap:0.75rem">
+          <span style="flex-shrink:0;width:120px;color:#A0A8BC;font-size:0.85rem;font-weight:600;text-align:right">Google (ads)</span>
+          <div style="flex:1;position:relative;height:30px;background:rgba(255,255,255,0.03);border-radius:8px;overflow:hidden">
+            <div style="height:100%;width:37%;background:linear-gradient(90deg,#4ECDC4,#3DB8B0);border-radius:8px;display:flex;align-items:center;justify-content:flex-end;padding-right:0.75rem">
+              <span class="tabnum" style="color:#E8E9ED;font-size:0.8rem;font-weight:700">$51/yr</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:center;gap:0.75rem">
+          <span style="flex-shrink:0;width:120px;color:#E8837C;font-size:0.85rem;font-weight:700;text-align:right">OpenAI (blended)</span>
+          <div style="flex:1;position:relative;height:30px;background:rgba(232,131,124,0.08);border:1px solid rgba(232,131,124,0.2);border-radius:8px;overflow:hidden">
+            <div style="height:100%;width:20%;background:linear-gradient(90deg,#E8837C,#D0706A);border-radius:8px;display:flex;align-items:center;justify-content:flex-end;padding-right:0.75rem">
+              <span class="tabnum" style="color:#E8E9ED;font-size:0.8rem;font-weight:700">~$28/yr</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <p style="color:#C8CCD4;font-size:0.85rem;line-height:1.55;max-width:680px;margin:1.25rem auto 0;text-align:center">
+        OpenAI's $25B ARR blends to ~$28/user across 900M WAU — but 94% are free. Ad revenue alone is estimated at $500M–$800M in 2026, or <strong style="color:#E8837C">&lt;$1/yr per free user</strong> — a fraction of what Meta and Google extract. Subscriptions carry the economics; ads alone cannot fund inference at scale.
+      </p>
+      <span class="stat-source" style="display:block;text-align:center;margin-top:0.75rem">Source: OpenAI (Feb 2026), Statista (Meta ARPU 2025), Reuters (ad estimates), Netflix Q4 2025 earnings</span>
+    </div>
+
+    <!-- ═══ CLOSING CALLOUT ═══ -->
+    <div class="callout-box anim-fade" style="margin-top:3rem">
+      <div class="callout-icon">&#9889;</div>
+      <p><strong>The next trillion-dollar company might run on a business model we haven't seen yet.</strong> Subscriptions, usage-based pricing, ads, marketplaces, agent-to-agent payments — AI is still auditioning revenue models, and the winners may not look like any software company that came before.</p>
+    </div>
 
   </div>
 </section>
@@ -723,326 +804,7 @@
   </div>
 </section>
 
-<section class="section section--dark section--incumbents" id="sec-4">
-  <div class="container">
-
-    <!-- Section Bridge -->
-    <div class="section-bridge anim-fade">
-      <p>More than eight companies are now operating at the frontier. The question is no longer who can build &mdash; but who owns the full stack.</p>
-    </div>
-
-    <h2 class="section-headline anim-fade">THE <span class="accent-gold">THREE PILLARS</span> &mdash; AND WHAT'S MISSING</h2>
-    <p class="section-intro anim-fade" style="max-width:780px;color:#C8CCD4;font-size:1.05rem;line-height:1.65;margin:0 auto 2.5rem">
-      Everyone says AI is built on three pillars: <strong style="color:#E8E9ED">Data, Compute, and Talent.</strong> They are right &mdash; but incomplete. The conventional model describes the machinery. It does not describe what makes the machinery <em>work</em>.
-    </p>
-
-    <!-- THREE PILLARS VISUAL -->
-    <div class="anim-fade" style="margin:0 auto 2.5rem;max-width:780px">
-      <!-- DISTRIBUTION (Roof) -->
-      <div style="background:rgba(78,205,196,0.1);border:2px solid rgba(78,205,196,0.3);border-radius:12px 12px 0 0;padding:1rem 1.5rem;text-align:center;margin-bottom:2px">
-        <h4 style="color:#4ECDC4;font-size:0.85rem;font-weight:700;margin:0 0 0.5rem">&uarr; DISTRIBUTION (Roof)</h4>
-        <p style="color:#A0A8BC;font-size:0.82rem;margin:0">Without distribution, the best model in the world is a science project. The companies that control the surface &mdash; search, devices, social, enterprise workflows &mdash; choose which models users actually touch.</p>
-      </div>
-
-      <!-- THREE PILLARS: Data, Compute, Talent -->
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-bottom:2px">
-        <div style="background:#383E52;padding:1.5rem;text-align:center">
-          <span style="font-size:2rem;display:block;margin-bottom:0.5rem">&#128202;</span>
-          <h4 style="color:#4A90D9;margin:0 0 0.5rem;font-size:0.95rem;font-weight:700">Data</h4>
-          <p style="color:#A0A8BC;font-size:0.8rem;margin:0;line-height:1.45">Models plateau without proprietary data. The winners will have data nobody else can buy.</p>
-        </div>
-        <div style="background:#383E52;padding:1.5rem;text-align:center">
-          <span style="font-size:2rem;display:block;margin-bottom:0.5rem">&#9889;</span>
-          <h4 style="color:#4ECDC4;margin:0 0 0.5rem;font-size:0.95rem;font-weight:700">Compute</h4>
-          <p style="color:#A0A8BC;font-size:0.8rem;margin:0;line-height:1.45">$650B+ in CapEx. Silicon and cloud access are still the primary bottleneck for frontier performance.</p>
-        </div>
-        <div style="background:#383E52;padding:1.5rem;text-align:center">
-          <span style="font-size:2rem;display:block;margin-bottom:0.5rem">&#129504;</span>
-          <h4 style="color:#7C4DFF;margin:0 0 0.5rem;font-size:0.95rem;font-weight:700">Talent</h4>
-          <p style="color:#A0A8BC;font-size:0.8rem;margin:0;line-height:1.45">Frontier researchers are the scarcest resource in AI. Single hires can be worth billions.</p>
-        </div>
-      </div>
-
-      <!-- CULTURE (Foundation) -->
-      <div style="background:rgba(245,197,66,0.1);border:2px solid rgba(245,197,66,0.3);border-radius:0 0 12px 12px;padding:1rem 1.5rem;text-align:center">
-        <h4 style="color:#F5C542;font-size:0.85rem;font-weight:700;margin:0 0 0.5rem">&darr; CULTURE (Foundation)</h4>
-        <p style="color:#A0A8BC;font-size:0.82rem;margin:0">The company that builds the best model but ships it slowly, that has the best data but no internal speed to act on it, that has the talent but can't keep them &mdash; loses. Speed of execution is the secret ingredient.</p>
-      </div>
-    </div>
-
-    <div class="callout-box anim-fade" style="margin-bottom:3rem">
-      <p><strong>Three pillars are necessary. Five layers are sufficient.</strong> DVC invests across the full building &mdash; with a bias toward the culture and distribution layers where durable value concentrates.</p>
-    </div>
-
-    <!-- ═══ INCUMBENTS' DILEMMA ═══ -->
-    <h2 class="section-headline anim-fade" style="margin-top:2rem">THE INCUMBENTS' <span class="accent-coral">DILEMMA</span></h2>
-    <p class="incumbents-sub anim-fade">Every giant has unmatched resources &mdash; and a critical vulnerability.<br>Startups win in the seams.</p>
-
-    <!-- ── Stack Matrix ── -->
-    <div class="inc-matrix anim-fade">
-      <div class="inc-matrix-header">
-        <div class="inc-matrix-corner"></div>
-        <div class="inc-col-header" data-company="google" style="--co-color:#4ECDC4">
-          <span class="inc-co-icon">G</span>
-          <span class="inc-co-name">Google</span>
-          <span class="inc-co-rank">#1</span>
-        </div>
-        <div class="inc-col-header" data-company="microsoft" style="--co-color:#7C4DFF">
-          <span class="inc-co-icon">M</span>
-          <span class="inc-co-name">Microsoft</span>
-          <span class="inc-co-rank">#2</span>
-        </div>
-        <div class="inc-col-header" data-company="meta" style="--co-color:#4A90D9">
-          <span class="inc-co-icon">m</span>
-          <span class="inc-co-name">Meta</span>
-          <span class="inc-co-rank">#3</span>
-        </div>
-        <div class="inc-col-header" data-company="apple" style="--co-color:#A0A8BC">
-          <span class="inc-co-icon">A</span>
-          <span class="inc-co-name">Apple</span>
-          <span class="inc-co-rank">#4</span>
-        </div>
-        <div class="inc-col-header" data-company="xai" style="--co-color:#E8837C">
-          <span class="inc-co-icon">x</span>
-          <span class="inc-co-name">xAI</span>
-          <span class="inc-co-rank">#5</span>
-        </div>
-        <div class="inc-col-header" data-company="nvidia" style="--co-color:#76B900">
-          <span class="inc-co-icon">N</span>
-          <span class="inc-co-name">NVIDIA</span>
-          <span class="inc-co-rank inc-co-rank--role">Arms Dealer</span>
-        </div>
-        <div class="inc-col-header" data-company="amazon" style="--co-color:#FF8C42">
-          <span class="inc-co-icon">a</span>
-          <span class="inc-co-name">Amazon</span>
-          <span class="inc-co-rank inc-co-rank--role">Threat</span>
-        </div>
-      </div>
-
-      <!-- Row: Distribution -->
-      <div class="inc-matrix-row" data-layer="distribution">
-        <div class="inc-row-label">Distribution</div>
-        <div class="inc-cell inc-cell--strong" data-company="google" style="--co-color:#4ECDC4"></div>
-        <div class="inc-cell inc-cell--strong" data-company="microsoft" style="--co-color:#7C4DFF"></div>
-        <div class="inc-cell inc-cell--strong" data-company="meta" style="--co-color:#4A90D9"></div>
-        <div class="inc-cell inc-cell--strong" data-company="apple" style="--co-color:#A0A8BC"></div>
-        <div class="inc-cell inc-cell--medium" data-company="xai" style="--co-color:#E8837C"></div>
-        <div class="inc-cell inc-cell--weak" data-company="nvidia" style="--co-color:#76B900"></div>
-        <div class="inc-cell inc-cell--strong" data-company="amazon" style="--co-color:#FF8C42"></div>
-      </div>
-
-      <!-- Row: Talent -->
-      <div class="inc-matrix-row" data-layer="talent">
-        <div class="inc-row-label">Talent</div>
-        <div class="inc-cell inc-cell--strong" data-company="google" style="--co-color:#4ECDC4"></div>
-        <div class="inc-cell inc-cell--medium" data-company="microsoft" style="--co-color:#7C4DFF"></div>
-        <div class="inc-cell inc-cell--medium" data-company="meta" style="--co-color:#4A90D9"></div>
-        <div class="inc-cell inc-cell--weak" data-company="apple" style="--co-color:#A0A8BC"></div>
-        <div class="inc-cell inc-cell--medium" data-company="xai" style="--co-color:#E8837C"></div>
-        <div class="inc-cell inc-cell--strong" data-company="nvidia" style="--co-color:#76B900"></div>
-        <div class="inc-cell inc-cell--medium" data-company="amazon" style="--co-color:#FF8C42"></div>
-      </div>
-
-      <!-- Row: Compute -->
-      <div class="inc-matrix-row" data-layer="compute">
-        <div class="inc-row-label">Compute</div>
-        <div class="inc-cell inc-cell--strong" data-company="google" style="--co-color:#4ECDC4"></div>
-        <div class="inc-cell inc-cell--strong" data-company="microsoft" style="--co-color:#7C4DFF"></div>
-        <div class="inc-cell inc-cell--strong" data-company="meta" style="--co-color:#4A90D9"></div>
-        <div class="inc-cell inc-cell--strong" data-company="apple" style="--co-color:#A0A8BC"></div>
-        <div class="inc-cell inc-cell--medium" data-company="xai" style="--co-color:#E8837C"></div>
-        <div class="inc-cell inc-cell--strong" data-company="nvidia" style="--co-color:#76B900"><span class="inc-cell-plus">+++</span></div>
-        <div class="inc-cell inc-cell--strong" data-company="amazon" style="--co-color:#FF8C42"></div>
-      </div>
-
-      <!-- Row: Data -->
-      <div class="inc-matrix-row" data-layer="data">
-        <div class="inc-row-label">Data</div>
-        <div class="inc-cell inc-cell--strong" data-company="google" style="--co-color:#4ECDC4"></div>
-        <div class="inc-cell inc-cell--medium" data-company="microsoft" style="--co-color:#7C4DFF"></div>
-        <div class="inc-cell inc-cell--strong" data-company="meta" style="--co-color:#4A90D9"></div>
-        <div class="inc-cell inc-cell--weak" data-company="apple" style="--co-color:#A0A8BC"></div>
-        <div class="inc-cell inc-cell--strong" data-company="xai" style="--co-color:#E8837C"></div>
-        <div class="inc-cell inc-cell--weak" data-company="nvidia" style="--co-color:#76B900"></div>
-        <div class="inc-cell inc-cell--strong" data-company="amazon" style="--co-color:#FF8C42"></div>
-      </div>
-
-      <!-- Row: Culture -->
-      <div class="inc-matrix-row" data-layer="culture">
-        <div class="inc-row-label">Culture</div>
-        <div class="inc-cell inc-cell--medium" data-company="google" style="--co-color:#4ECDC4"></div>
-        <div class="inc-cell inc-cell--strong" data-company="microsoft" style="--co-color:#7C4DFF"></div>
-        <div class="inc-cell inc-cell--weak" data-company="meta" style="--co-color:#4A90D9"></div>
-        <div class="inc-cell inc-cell--weak" data-company="apple" style="--co-color:#A0A8BC"></div>
-        <div class="inc-cell inc-cell--medium" data-company="xai" style="--co-color:#E8837C"></div>
-        <div class="inc-cell inc-cell--strong" data-company="nvidia" style="--co-color:#76B900"></div>
-        <div class="inc-cell inc-cell--strong" data-company="amazon" style="--co-color:#FF8C42"></div>
-      </div>
-    </div>
-
-    <!-- ── Detail Card (populated by JS) ── -->
-    <div class="inc-detail" id="incDetail" aria-hidden="true">
-      <div class="inc-detail-inner">
-        <div class="inc-detail-header">
-          <span class="inc-detail-name"></span>
-          <span class="inc-detail-rank"></span>
-        </div>
-        <div class="inc-detail-body">
-          <div class="inc-detail-row">
-            <span class="inc-detail-label">Superpower</span>
-            <span class="inc-detail-value inc-detail-super"></span>
-          </div>
-          <div class="inc-detail-row">
-            <span class="inc-detail-label">Achilles Heel</span>
-            <span class="inc-detail-value inc-detail-heel"></span>
-          </div>
-          <div class="inc-detail-row">
-            <span class="inc-detail-label">Key Stat</span>
-            <span class="inc-detail-value inc-detail-stat"></span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ═══ DEEP DIVES (expandable research) ═══ -->
-    <div class="rabbit-hole anim-fade" style="margin-top:2rem">
-      <button class="rabbit-hole-toggle">
-        <span class="rabbit-hole-icon">&#128371;</span>
-        <span class="rabbit-hole-title">Google: From Laggard to Leader?</span>
-        <span class="rabbit-hole-arrow">&#9656;</span>
-      </button>
-      <div class="rabbit-hole-content">
-        <div style="padding:1.5rem;display:flex;flex-direction:column;gap:1rem">
-          <div style="padding:0.85rem;background:rgba(255,255,255,0.02);border-radius:8px;border-left:3px solid #4ECDC4">
-            <strong style="color:#4ECDC4;font-size:0.85rem">Search Threat: Real but Contained</strong>
-            <p style="color:#A0A8BC;font-size:0.82rem;margin:0.3rem 0 0;line-height:1.5">Google's worldwide search share dipped below 90% in late 2024 (89.34% in October), but recovered to ~90% by Feb 2026. ChatGPT Search crossed ~1% share. The sharper risk: AI answer engines reduce high-intent query volume and compress ad inventory economics even if share holds.</p>
-          </div>
-          <div style="padding:0.85rem;background:rgba(255,255,255,0.02);border-radius:8px;border-left:3px solid #F5C542">
-            <strong style="color:#F5C542;font-size:0.85rem">TPU Inference Advantage</strong>
-            <p style="color:#A0A8BC;font-size:0.82rem;margin:0.3rem 0 0;line-height:1.5">Google's proprietary TPU stack saves an estimated ~$3B/year vs. third-party compute for AI-augmented search. Ironwood (7th gen TPU) is "the first designed specifically for inference at scale" with 10&times; compute improvement and 2&times; power efficiency vs. prior high-perf TPU.</p>
-          </div>
-          <div style="padding:0.85rem;background:rgba(255,255,255,0.02);border-radius:8px;border-left:3px solid #4A90D9">
-            <strong style="color:#4A90D9;font-size:0.85rem">Recovery Momentum</strong>
-            <p style="color:#A0A8BC;font-size:0.82rem;margin:0.3rem 0 0;line-height:1.5">Gemini app: <span class="tabnum">750M</span> MAU. Google Cloud: <span class="tabnum">48%</span> growth in Q4 2025, run rate above $70B. All 15 products with 500M+ users now use Gemini models. <span class="tabnum">8M+</span> paid Gemini Enterprise seats sold in 4 months. Reuters called Google the AI momentum leader in Feb 2026.</p>
-          </div>
-          <div style="padding:0.85rem;background:rgba(255,255,255,0.02);border-radius:8px;border-left:3px solid #7C4DFF">
-            <strong style="color:#7C4DFF;font-size:0.85rem">Anthropic Position</strong>
-            <p style="color:#A0A8BC;font-size:0.82rem;margin:0.3rem 0 0;line-height:1.5">Google invested $3B+ in Anthropic. Anthropic trains and runs Claude on Google TPUs and planned access to up to 1M TPUs. Google is analogous to NVIDIA: it earns strategic exposure and infrastructure revenue from a frontier lab.</p>
-          </div>
-          <span class="stat-source">Source: Reuters (Feb 2026), Alphabet Q4 2025 earnings, Search Engine Land, Statcounter, Anthropic Series G announcement</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="rabbit-hole anim-fade" style="margin-top:0.75rem">
-      <button class="rabbit-hole-toggle">
-        <span class="rabbit-hole-icon">&#128371;</span>
-        <span class="rabbit-hole-title">Meta: Weakest AI Can Still Win</span>
-        <span class="rabbit-hole-arrow">&#9656;</span>
-      </button>
-      <div class="rabbit-hole-content">
-        <div style="padding:1.5rem;display:flex;flex-direction:column;gap:1rem">
-          <div style="padding:0.85rem;background:rgba(255,255,255,0.02);border-radius:8px;border-left:3px solid #4A90D9">
-            <strong style="color:#4A90D9;font-size:0.85rem">Brute-Force Distribution</strong>
-            <p style="color:#A0A8BC;font-size:0.82rem;margin:0.3rem 0 0;line-height:1.5">$201B revenue in FY2025, $60.5B net income. 3.58B Family Daily Active People. Meta can stuff AI into Facebook, Instagram, WhatsApp, Messenger, ad tools, smart glasses and creator tools across billions of users &mdash; even with a weaker model.</p>
-          </div>
-          <div style="padding:0.85rem;background:rgba(255,255,255,0.02);border-radius:8px;border-left:3px solid #E8837C">
-            <strong style="color:#E8837C;font-size:0.85rem">Frontier Struggles</strong>
-            <p style="color:#A0A8BC;font-size:0.82rem;margin:0.3rem 0 0;line-height:1.5">Llama 4 received poor reception. DeepSeek seized the open-weight lead. Meta planned its <strong>fourth AI restructuring in six months</strong> by Aug 2025. The $14.3B Scale AI investment and Meta Superintelligence Labs are reactive, not proactive.</p>
-          </div>
-          <div style="padding:0.85rem;background:rgba(255,255,255,0.02);border-radius:8px;border-left:3px solid #F5C542">
-            <strong style="color:#F5C542;font-size:0.85rem">The Talent War</strong>
-            <p style="color:#A0A8BC;font-size:0.82rem;margin:0.3rem 0 0;line-height:1.5">Meta hired Nat Friedman and Daniel Gross to lead the reorg. Brought in talent from DeepMind, OpenAI, Anthropic. Sam Altman said Meta offered OpenAI employees $100M bonuses. The comp war is real but culture stability remains the question.</p>
-          </div>
-          <span class="stat-source">Source: Reuters (Jun-Aug 2025), META FY2025 filings, SemiAnalysis</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="rabbit-hole anim-fade" style="margin-top:0.75rem">
-      <button class="rabbit-hole-toggle">
-        <span class="rabbit-hole-icon">&#128371;</span>
-        <span class="rabbit-hole-title">Microsoft, Apple &amp; xAI: Strengths and Gaps</span>
-        <span class="rabbit-hole-arrow">&#9656;</span>
-      </button>
-      <div class="rabbit-hole-content">
-        <div style="padding:1.5rem;display:flex;flex-direction:column;gap:1rem">
-          <div style="padding:0.85rem;background:rgba(255,255,255,0.02);border-radius:8px;border-left:3px solid #7C4DFF">
-            <strong style="color:#7C4DFF;font-size:0.85rem">Microsoft: Enterprise King, Consumer Blank</strong>
-            <p style="color:#A0A8BC;font-size:0.82rem;margin:0.3rem 0 0;line-height:1.5">100M+ MAU across Copilot apps, but only 2.4M daily web visits (vs. ChatGPT's dominance). Enterprise M365 Copilot is driving real ARPU growth. Consumer identity remains weak. Multi-model platform (OpenAI, Anthropic, Mistral, xAI) is a platform strength and brand weakness simultaneously.</p>
-          </div>
-          <div style="padding:0.85rem;background:rgba(255,255,255,0.02);border-radius:8px;border-left:3px solid #A0A8BC">
-            <strong style="color:#A0A8BC;font-size:0.85rem">Apple: Best Chips, Worst Execution</strong>
-            <p style="color:#A0A8BC;font-size:0.82rem;margin:0.3rem 0 0;line-height:1.5">Apple Intelligence received "mostly underwhelming" reviews. Siri overhaul delayed a year. Tim Cook "lost confidence" in AI leadership. End result: switched from OpenAI to Google Gemini as the foundation for the redesigned Siri stack (Jan 2026). Apple has the chips but can't ship the product.</p>
-          </div>
-          <div style="padding:0.85rem;background:rgba(255,255,255,0.02);border-radius:8px;border-left:3px solid #E8837C">
-            <strong style="color:#E8837C;font-size:0.85rem">xAI: Hybrid Wildcard</strong>
-            <p style="color:#A0A8BC;font-size:0.82rem;margin:0.3rem 0 0;line-height:1.5">X provides 500M tweets/day as a real-time data flywheel. Grok 3: 93.3% on AIME 2025, competitive across math/science/coding. SpaceX generates ~$8B profit (50% margin), giving xAI capital credibility no standalone startup has. Now merged into SpaceX at $1.25T combined.</p>
-          </div>
-          <span class="stat-source">Source: Microsoft FY25 Q4 earnings, TechCrunch, Reuters (Apple/Gemini Jan 2026), xAI Grok 3 announcement, Reuters (SpaceX Jan 2026)</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="rabbit-hole anim-fade" style="margin-top:0.75rem">
-      <button class="rabbit-hole-toggle">
-        <span class="rabbit-hole-icon">&#128371;</span>
-        <span class="rabbit-hole-title">NVIDIA: The Arms Dealer's Playbook</span>
-        <span class="rabbit-hole-arrow">&#9656;</span>
-      </button>
-      <div class="rabbit-hole-content">
-        <div style="padding:1.5rem;display:flex;flex-direction:column;gap:1rem">
-          <div style="padding:0.85rem;background:rgba(255,255,255,0.02);border-radius:8px;border-left:3px solid #76B900">
-            <strong style="color:#76B900;font-size:0.85rem">Strategic Capital Deployment</strong>
-            <p style="color:#A0A8BC;font-size:0.82rem;margin:0.3rem 0 0;line-height:1.5">~$1B invested across 50 AI deals in 2024. By 2025: up to $100B committed to OpenAI, $10B to Anthropic, $2B to xAI. Total disclosed ecosystem financing: $33.8B in rounds NVIDIA participated in.</p>
-          </div>
-          <div style="padding:0.85rem;background:rgba(255,255,255,0.02);border-radius:8px;border-left:3px solid #F5C542">
-            <strong style="color:#F5C542;font-size:0.85rem">Barbell Strategy</strong>
-            <p style="color:#A0A8BC;font-size:0.82rem;margin:0.3rem 0 0;line-height:1.5">Back demand creators (model labs, apps) while also backing supply-side lock-in (infrastructure, networking, robotics). Foundation models: $20.9B in round sizes. Apps: $5.3B. Cloud/infra: $3.5B. Robotics: $3.3B. Even fusion energy (Commonwealth Fusion: $863M).</p>
-          </div>
-          <div style="padding:0.85rem;background:rgba(255,255,255,0.02);border-radius:8px;border-left:3px solid #4ECDC4">
-            <strong style="color:#4ECDC4;font-size:0.85rem">Groq Acquisition</strong>
-            <p style="color:#A0A8BC;font-size:0.82rem;margin:0.3rem 0 0;line-height:1.5">Groq LPU acquired for $20B tech license (Dec 2025). Now powers NVIDIA's inference architecture. The message: NVIDIA doesn't just sell the picks and shovels &mdash; it's buying the mine operators too.</p>
-          </div>
-          <span class="stat-source">Source: TechCrunch (Jan 2026), Financial Times, Reuters (NVIDIA/OpenAI Sep 2025), Crunchbase</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="rabbit-hole anim-fade" style="margin-top:0.75rem">
-      <button class="rabbit-hole-toggle">
-        <span class="rabbit-hole-icon">&#128371;</span>
-        <span class="rabbit-hole-title">Amazon: The Agent Commerce Threat</span>
-        <span class="rabbit-hole-arrow">&#9656;</span>
-      </button>
-      <div class="rabbit-hole-content">
-        <div style="padding:1.5rem;display:flex;flex-direction:column;gap:1rem">
-          <div style="padding:0.85rem;background:rgba(255,255,255,0.02);border-radius:8px;border-left:3px solid #FF8C42">
-            <strong style="color:#FF8C42;font-size:0.85rem">Two AI-Sensitive Profit Pools</strong>
-            <p style="color:#A0A8BC;font-size:0.82rem;margin:0.3rem 0 0;line-height:1.5">AWS: $128.7B revenue in 2025 (grew 24% in Q4). Advertising: $68.6B in 2025 (grew 22%). Combined: $197B of AI-exposed revenue. Amazon's ~$200B in 2026 CapEx is described as covering AI infrastructure and robotics as "seminal opportunities."</p>
-          </div>
-          <div style="padding:0.85rem;background:rgba(255,255,255,0.02);border-radius:8px;border-left:3px solid #E8837C">
-            <strong style="color:#E8837C;font-size:0.85rem">The Agent Shopping Threat</strong>
-            <p style="color:#A0A8BC;font-size:0.82rem;margin:0.3rem 0 0;line-height:1.5">If AI agents shop for users, they optimize for price/fit/speed &mdash; not for Amazon's sponsored placements. Amazon's $17.3B/quarter ad business is directly threatened. Amazon sent legal threats to Perplexity over agentic shopping, and is updating site code to deter outside AI agents.</p>
-          </div>
-          <div style="padding:0.85rem;background:rgba(255,255,255,0.02);border-radius:8px;border-left:3px solid #4ECDC4">
-            <strong style="color:#4ECDC4;font-size:0.85rem">Amazon's Response: Own the Agent Layer</strong>
-            <p style="color:#A0A8BC;font-size:0.82rem;margin:0.3rem 0 0;line-height:1.5">Rufus AI shopping assistant: 250M+ users, 60%+ higher conversion. Buy for Me: agentic purchasing across 500K products on other brands' sites. 1M+ robots across 300+ facilities. Strategy: internalize agentic commerce inside Amazon-controlled rails.</p>
-          </div>
-          <span class="stat-source">Source: Amazon FY2025 results, Reuters (Amazon vs Perplexity Nov 2025), The Verge, Amazon blog posts</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- ── Bottom Insight ── -->
-    <div class="inc-insight anim-slide-up" style="margin-top:2rem">
-      <p>No single giant owns the full stack. The innovator's dilemma is alive &mdash; and it's the reason <span class="accent-teal">startups can win</span>.</p>
-    </div>
-
-  </div>
-</section>
-
-<section class="section section--dark section--tall" id="sec-5">
+<section class="section section--dark section--tall" id="sec-4">
   <div class="container">
     <!-- Section Bridge -->
     <div class="section-bridge anim-fade">
@@ -1204,11 +966,11 @@
 
     <!-- ═══ JENSEN: SaaS → AaaS ═══ -->
     <div class="ar-aaas-callout anim-fade" style="margin:2.5rem 0;padding:1.5rem 2rem;background:linear-gradient(135deg,rgba(78,205,196,0.08),rgba(245,197,66,0.06));border:1px solid rgba(78,205,196,0.18);border-radius:14px;display:flex;align-items:flex-start;gap:1.25rem">
-      <span style="font-size:2rem;flex-shrink:0;margin-top:0.15rem">&#9889;</span>
+      <div style="flex-shrink:0;width:48px;height:48px;background:rgba(78,205,196,0.12);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.5rem">⚡</div>
       <div>
         <h4 style="color:#4ECDC4;margin:0 0 0.35rem;font-size:1rem;font-weight:700">THE INFERENCE INFLECTION POINT</h4>
-        <p style="color:#C8CCD4;font-size:0.9rem;margin:0 0 0.6rem;line-height:1.5">Jensen Huang declared the arrival of the <strong style="color:#F5C542">"inference inflection point"</strong> at GTC 2026: two exponentials colliding &mdash; demand for inference growing exponentially while cost per token falls exponentially. The question is no longer whether agents can work. It's whether the business models can sustain them.</p>
-        <p style="color:#A0A8BC;font-size:0.82rem;margin:0;font-style:italic">We unpack the full business model problem &mdash; pricing paradigms, margin squeeze, and why the economics are still unresolved &mdash; later in the presentation.</p>
+        <p style="color:#C8CCD4;font-size:0.9rem;margin:0 0 0.6rem;line-height:1.5">Jensen Huang declared the arrival of the <strong style="color:#F5C542">"inference inflection point"</strong> at GTC 2026: two exponentials colliding — demand for inference growing exponentially while cost per token falls exponentially. Every SaaS company becomes an <strong style="color:#4ECDC4">AaaS</strong> (Agentic AI as a Service) company — or gets disintermediated by an agent.</p>
+        <p style="color:#A0A8BC;font-size:0.82rem;margin:0;font-style:italic">"At last, AI can perform productive tasks. This is the inference turning point." — Jensen Huang, GTC 2026</p>
         <span class="stat-source" style="margin-top:0.5rem;display:block">Source: NVIDIA GTC 2026 keynote / Axios / CNBC, Mar 2026</span>
       </div>
     </div>
@@ -1610,7 +1372,7 @@
   </div>
 </section>
 
-<section class="section section--dark section--agent-anatomy" id="sec-6">
+<section class="section section--dark section--agent-anatomy" id="sec-5">
   <div class="container">
     <!-- Section Bridge -->
     <div class="section-bridge anim-fade">
@@ -2166,7 +1928,7 @@
   </div>
 </section>
 
-<section class="section section--dark" id="sec-7">
+<section class="section section--dark" id="sec-6">
   <div class="container">
     <!-- Section Bridge -->
     <div class="section-bridge anim-fade">
@@ -2317,11 +2079,111 @@
   </div>
 </section>
 
+<!-- ============================== -->
+<!-- THE FIVE-LAYER THESIS          -->
+<!-- ============================== -->
+<section class="section section--dark section--five-layers" id="sec-7">
+  <div class="container">
+
+    <!-- Section Bridge -->
+    <div class="section-bridge anim-fade">
+      <p>Infrastructure is scaling at historic speed and historic cost. That makes one question unavoidable: what actually separates the winners from the well-funded?</p>
+    </div>
+
+    <h2 class="section-headline anim-fade">THE <span class="accent-teal">FIVE-LAYER</span> THESIS</h2>
+    <p class="section-intro anim-fade" style="max-width:780px;color:#C8CCD4;font-size:1.05rem;line-height:1.65;margin:0 auto 3rem">
+      Everyone says AI is built on three pillars: <strong style="color:#E8E9ED">Data, Compute, and Talent.</strong> They are right — but incomplete. The conventional model describes the machinery. It does not describe what makes the machinery <em>work</em>.
+    </p>
+
+    <!-- THE BUILDING VISUAL -->
+    <div class="five-layer-building anim-fade" style="max-width:720px;margin:0 auto 3rem">
+
+      <!-- ROOF: Distribution -->
+      <div class="fl-roof" style="position:relative;background:linear-gradient(135deg,#4ECDC4 0%,#3DBDB5 100%);border-radius:14px 14px 0 0;padding:1.75rem 2rem;text-align:center;margin-bottom:2px">
+        <div style="position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:#4ECDC4;color:#1A1A2E;font-size:0.65rem;font-weight:800;letter-spacing:0.15em;padding:0.25rem 1rem;border-radius:20px;text-transform:uppercase">The Roof</div>
+        <h3 style="color:#1A1A2E;font-size:1.3rem;font-weight:800;margin:0.5rem 0 0.5rem;letter-spacing:-0.01em">DISTRIBUTION</h3>
+        <p style="color:rgba(26,26,46,0.8);font-size:0.88rem;margin:0;line-height:1.5">Without distribution, even the best model is a research paper. The companies that win are the ones that reach users at scale — through products, platforms, integrations, and network effects.</p>
+      </div>
+
+      <!-- THREE PILLARS: Data, Compute, Talent -->
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-bottom:2px">
+        
+        <!-- Data -->
+        <div class="fl-pillar" style="background:#383E52;padding:1.5rem;text-align:center">
+          <div style="font-size:1.8rem;margin-bottom:0.5rem">&#128202;</div>
+          <h4 style="color:#E8E9ED;font-size:0.95rem;font-weight:700;margin:0 0 0.5rem">DATA</h4>
+          <p style="color:#4ECDC4;font-size:0.78rem;font-weight:600;margin:0 0 0.75rem">Proprietary loops = moats</p>
+          <ul style="list-style:none;padding:0;margin:0;text-align:left">
+            <li style="color:#A0A8BC;font-size:0.78rem;line-height:1.5;margin-bottom:0.4rem;padding-left:0.8rem;position:relative"><span style="position:absolute;left:0;color:#4ECDC4">·</span>Synthetic data supplements but cannot replace domain-specific real data</li>
+            <li style="color:#A0A8BC;font-size:0.78rem;line-height:1.5;margin-bottom:0.4rem;padding-left:0.8rem;position:relative"><span style="position:absolute;left:0;color:#4ECDC4">·</span>Data quality > data quantity for fine-tuning</li>
+            <li style="color:#A0A8BC;font-size:0.78rem;line-height:1.5;padding-left:0.8rem;position:relative"><span style="position:absolute;left:0;color:#4ECDC4">·</span>Unique data flywheels build defensibility</li>
+          </ul>
+          <span class="stat-source" style="margin-top:0.75rem;display:block">Source: DVC Research, 2026</span>
+        </div>
+
+        <!-- Compute -->
+        <div class="fl-pillar" style="background:#383E52;padding:1.5rem;text-align:center">
+          <div style="font-size:1.8rem;margin-bottom:0.5rem">&#9889;</div>
+          <h4 style="color:#E8E9ED;font-size:0.95rem;font-weight:700;margin:0 0 0.5rem">COMPUTE</h4>
+          <p style="color:#F5C542;font-size:0.78rem;font-weight:600;margin:0 0 0.75rem">Inference overtaking training</p>
+          <p style="color:#E8E9ED;font-size:0.82rem;margin:0 0 0.75rem" class="tabnum">74% of startups report inference-dominant costs</p>
+          <ul style="list-style:none;padding:0;margin:0;text-align:left">
+            <li style="color:#A0A8BC;font-size:0.78rem;line-height:1.5;margin-bottom:0.4rem;padding-left:0.8rem;position:relative"><span style="position:absolute;left:0;color:#F5C542">·</span><strong style="color:#F5C542">Two exponentials colliding</strong> — demand grows exponentially while cost/token falls exponentially</li>
+            <li style="color:#A0A8BC;font-size:0.78rem;line-height:1.5;padding-left:0.8rem;position:relative"><span style="position:absolute;left:0;color:#F5C542">·</span>Vera Rubin + Groq LPU: 350× Hopper throughput</li>
+          </ul>
+          <span class="stat-source" style="margin-top:0.75rem;display:block">Source: Menlo Ventures 2025 / NVIDIA GTC 2026</span>
+        </div>
+
+        <!-- Talent -->
+        <div class="fl-pillar" style="background:#383E52;padding:1.5rem;text-align:center">
+          <div style="font-size:1.8rem;margin-bottom:0.5rem">&#129504;</div>
+          <h4 style="color:#E8E9ED;font-size:0.95rem;font-weight:700;margin:0 0 0.5rem">TALENT</h4>
+          <p style="color:#7C4DFF;font-size:0.78rem;font-weight:600;margin:0 0 0.75rem" class="tabnum">$10–20M/yr for top researchers</p>
+          <ul style="list-style:none;padding:0;margin:0;text-align:left">
+            <li style="color:#A0A8BC;font-size:0.78rem;line-height:1.5;margin-bottom:0.4rem;padding-left:0.8rem;position:relative"><span style="position:absolute;left:0;color:#7C4DFF">·</span>Talent diaspora from Big Tech → startups</li>
+            <li style="color:#A0A8BC;font-size:0.78rem;line-height:1.5;margin-bottom:0.4rem;padding-left:0.8rem;position:relative"><span style="position:absolute;left:0;color:#7C4DFF">·</span>Teams of 10 now match teams of 100</li>
+            <li style="color:#A0A8BC;font-size:0.78rem;line-height:1.5;padding-left:0.8rem;position:relative"><span style="position:absolute;left:0;color:#7C4DFF">·</span>Geography decentralizing — London, Paris, Tokyo</li>
+          </ul>
+          <span class="stat-source" style="margin-top:0.75rem;display:block">Source: The Information, Levels.fyi, 2026</span>
+        </div>
+      </div>
+
+      <!-- FOUNDATION: Culture -->
+      <div class="fl-foundation" style="position:relative;background:linear-gradient(135deg,#F5C542 0%,#E8B339 100%);border-radius:0 0 14px 14px;padding:1.75rem 2rem;text-align:center">
+        <div style="position:absolute;bottom:-12px;left:50%;transform:translateX(-50%);background:#F5C542;color:#1A1A2E;font-size:0.65rem;font-weight:800;letter-spacing:0.15em;padding:0.25rem 1rem;border-radius:20px;text-transform:uppercase">The Foundation</div>
+        <h3 style="color:#1A1A2E;font-size:1.3rem;font-weight:800;margin:0 0 0.5rem;letter-spacing:-0.01em">CULTURE</h3>
+        <p style="color:rgba(26,26,46,0.8);font-size:0.88rem;margin:0;line-height:1.5">Data, compute, and talent are inputs. Culture is what turns them into output. The speed at which a team ships, the willingness to cannibalize, the obsession with users over technology — that is the difference between a lab and a company.</p>
+      </div>
+    </div>
+
+    <!-- DVC THESIS CALLOUT -->
+    <div class="anim-fade" style="max-width:720px;margin:0 auto 2rem;padding:2rem;background:linear-gradient(135deg,rgba(78,205,196,0.08),rgba(245,197,66,0.06));border:1px solid rgba(78,205,196,0.18);border-radius:14px">
+      <h3 style="color:#4ECDC4;margin:0 0 1rem;font-size:1rem;font-weight:700;letter-spacing:0.06em">THE DVC VIEW</h3>
+      <div style="display:flex;gap:1.5rem;flex-wrap:wrap">
+        <div style="flex:1;min-width:260px">
+          <h4 style="color:#F5C542;font-size:0.85rem;font-weight:700;margin:0 0 0.5rem">↓ CULTURE (Foundation)</h4>
+          <p style="color:#C8CCD4;font-size:0.85rem;line-height:1.55;margin:0">Without the right culture, data rots in silos, compute gets wasted on vanity research, and talent leaves. The companies that ship fastest, iterate hardest, and stay closest to the user are the ones that convert resources into defensible advantage. Culture is not a perk — it is the conversion rate of everything above it.</p>
+        </div>
+        <div style="flex:1;min-width:260px">
+          <h4 style="color:#4ECDC4;font-size:0.85rem;font-weight:700;margin:0 0 0.5rem">↑ DISTRIBUTION (Roof)</h4>
+          <p style="color:#C8CCD4;font-size:0.85rem;line-height:1.55;margin:0">A model without users is a science project. Distribution — through products, APIs, partnerships, developer ecosystems, and network effects — is what turns capability into revenue. OpenAI has ChatGPT. Meta has 3 billion users. Google has Search. The companies that own the interface own the margin.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Callout -->
+    <div class="callout-box anim-fade" style="max-width:720px;margin:0 auto">
+      <p><strong>Three pillars are necessary. Five layers are sufficient.</strong> DVC invests across the full building — with a bias toward the culture and distribution layers where durable value concentrates.</p>
+    </div>
+
+  </div>
+</section>
+
 <section class="section section--dark section--biz-models" id="sec-8">
   <div class="container">
     <!-- Section Bridge -->
     <div class="section-bridge anim-fade">
-      <p>The infrastructure buildout is breathtaking. But even with $650B flowing in, the fundamental economics of AI are still being figured out.</p>
+      <p>The five-layer thesis describes what it takes to win. But even with all five layers aligned, the fundamental economics of AI are still being figured out.</p>
     </div>
 
     <h2 class="section-headline anim-fade">THE <span class="accent-gold">BUSINESS MODEL</span> PROBLEM</h2>
@@ -2331,73 +2193,70 @@
     
     
 
+    <div class="case-study anim-fade">
+      <h3>KLARNA — THE POSTER CHILD</h3>
+      <div class="klarna-stats">
+        <div class="klarna-stat">
+          <span class="klarna-num tabnum">+104%</span>
+          <span>Revenue growth</span>
+        </div>
+        <div class="klarna-stat">
+          <span class="klarna-num klarna-num--red tabnum">-49%</span>
+          <span>Headcount reduction</span>
+        </div>
+        <div class="klarna-stat">
+          <span class="klarna-num tabnum">3.6x</span>
+          <span>Revenue per employee</span>
+        </div>
+      </div>
+      <span class="stat-source">Source: Klarna earnings, 2025</span>
+    </div>
 
+
+    <div class="rollups anim-fade">
+      <h3>AI ROLLUPS</h3>
+      <p class="rollup-desc"><span class="tabnum">6M</span> SMBs face ownership transitions — <span class="tabnum">$5T</span> enterprise value at stake</p>
+      <div class="rollup-card">
+        <span class="badge badge-dvc">DVC PORTFOLIO</span>
+        <strong>Dwelly</strong>
+        <span>AI property management empire</span>
+        <span class="tabnum">£69M raised</span>
+        <span>Time-to-tenant: 3 weeks → &lt;2 days</span>
+        <span class="stat-source">Source: Dwelly, 2026</span>
+      </div>
+    </div>
+
+    <div class="democracy-grid anim-fade">
+      <h3>DEMOCRATIZATION AT SCALE</h3>
+      <div class="demo-cards">
+        <div class="demo-card">
+          <span class="demo-icon">&#127973;</span>
+          <strong>Healthcare</strong>
+          <span class="tabnum">$740B admin costs</span>
+          <span>AI automating billing, coding, documentation</span>
+          <span class="stat-source">Source: CMS, McKinsey 2025</span>
+        </div>
+        <div class="demo-card">
+          <span class="demo-icon">&#9878;</span>
+          <strong>Legal</strong>
+          <span class="tabnum">31% using AI</span>
+          <span>Contract review, research, drafting</span>
+          <span class="stat-source">Source: Thomson Reuters, 2025</span>
+        </div>
+        <div class="demo-card">
+          <span class="demo-icon">&#128200;</span>
+          <strong>Finance</strong>
+          <span class="tabnum">53% using AI</span>
+          <span>Trading, risk, compliance, advisory</span>
+          <span class="stat-source">Source: Deloitte, 2025</span>
+        </div>
+      </div>
+    </div>
   
 
     <!-- Business Models (from old sec-9, minus ARPU) -->
     
     
-
-    
-    <!-- ARPU Analysis (moved from $60B section) -->
-    <!-- ═══ THE ARPU PROBLEM ═══ -->
-    <div class="explosion-arpu anim-fade" style="margin-top:1rem">
-      <h3 class="subsection-title" style="margin-bottom:0.5rem">AI IS STILL EXPLORING BUSINESS MODELS</h3>
-      <p style="color:#A0A8BC;font-size:0.88rem;margin-bottom:1.5rem;max-width:680px;margin-left:auto;margin-right:auto;text-align:center">
-        OpenAI has <strong class="tabnum" style="color:#E8E9ED">900M</strong> weekly active users but only <strong class="tabnum" style="color:#E8E9ED">50M</strong> subscribers — a <strong class="tabnum" style="color:#E8837C">5.6%</strong> paid conversion rate. Compare the ad revenue per user:
-      </p>
-
-      <div style="max-width:620px;margin:0 auto;display:flex;flex-direction:column;gap:0.65rem">
-
-        <div style="display:flex;align-items:center;gap:0.75rem">
-          <span style="flex-shrink:0;width:120px;color:#A0A8BC;font-size:0.85rem;font-weight:600;text-align:right">Netflix (sub)</span>
-          <div style="flex:1;position:relative;height:30px;background:rgba(255,255,255,0.03);border-radius:8px;overflow:hidden">
-            <div style="height:100%;width:100%;background:linear-gradient(90deg,#F5C542,#D4A840);border-radius:8px;display:flex;align-items:center;justify-content:flex-end;padding-right:0.75rem">
-              <span class="tabnum" style="color:#1A1A2E;font-size:0.8rem;font-weight:700">$138/yr</span>
-            </div>
-          </div>
-        </div>
-
-        <div style="display:flex;align-items:center;gap:0.75rem">
-          <span style="flex-shrink:0;width:120px;color:#A0A8BC;font-size:0.85rem;font-weight:600;text-align:right">Meta (ads)</span>
-          <div style="flex:1;position:relative;height:30px;background:rgba(255,255,255,0.03);border-radius:8px;overflow:hidden">
-            <div style="height:100%;width:42%;background:linear-gradient(90deg,#4A90D9,#3A7CC4);border-radius:8px;display:flex;align-items:center;justify-content:flex-end;padding-right:0.75rem">
-              <span class="tabnum" style="color:#E8E9ED;font-size:0.8rem;font-weight:700">$58/yr</span>
-            </div>
-          </div>
-        </div>
-
-        <div style="display:flex;align-items:center;gap:0.75rem">
-          <span style="flex-shrink:0;width:120px;color:#A0A8BC;font-size:0.85rem;font-weight:600;text-align:right">Google (ads)</span>
-          <div style="flex:1;position:relative;height:30px;background:rgba(255,255,255,0.03);border-radius:8px;overflow:hidden">
-            <div style="height:100%;width:37%;background:linear-gradient(90deg,#4ECDC4,#3DB8B0);border-radius:8px;display:flex;align-items:center;justify-content:flex-end;padding-right:0.75rem">
-              <span class="tabnum" style="color:#E8E9ED;font-size:0.8rem;font-weight:700">$51/yr</span>
-            </div>
-          </div>
-        </div>
-
-        <div style="display:flex;align-items:center;gap:0.75rem">
-          <span style="flex-shrink:0;width:120px;color:#E8837C;font-size:0.85rem;font-weight:700;text-align:right">OpenAI (blended)</span>
-          <div style="flex:1;position:relative;height:30px;background:rgba(232,131,124,0.08);border:1px solid rgba(232,131,124,0.2);border-radius:8px;overflow:hidden">
-            <div style="height:100%;width:20%;background:linear-gradient(90deg,#E8837C,#D0706A);border-radius:8px;display:flex;align-items:center;justify-content:flex-end;padding-right:0.75rem">
-              <span class="tabnum" style="color:#E8E9ED;font-size:0.8rem;font-weight:700">~$28/yr</span>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      <p style="color:#C8CCD4;font-size:0.85rem;line-height:1.55;max-width:680px;margin:1.25rem auto 0;text-align:center">
-        OpenAI's $25B ARR blends to ~$28/user across 900M WAU — but 94% are free. Ad revenue alone is estimated at $500M–$800M in 2026, or <strong style="color:#E8837C">&lt;$1/yr per free user</strong> — a fraction of what Meta and Google extract. Subscriptions carry the economics; ads alone cannot fund inference at scale.
-      </p>
-      <span class="stat-source" style="display:block;text-align:center;margin-top:0.75rem">Source: OpenAI (Feb 2026), Statista (Meta ARPU 2025), Reuters (ad estimates), Netflix Q4 2025 earnings</span>
-    </div>
-
-    <!-- ═══ CLOSING CALLOUT ═══ -->
-    <div class="callout-box anim-fade" style="margin-top:3rem">
-      <div class="callout-icon">&#9889;</div>
-      <p><strong>The next trillion-dollar company might run on a business model we haven't seen yet.</strong> Subscriptions, usage-based pricing, ads, marketplaces, agent-to-agent payments — AI is still auditioning revenue models, and the winners may not look like any software company that came before.</p>
-    </div>
 
     <!-- Pricing Model Landscape -->
     <div class="biz-pricing-landscape anim-fade">
@@ -2787,10 +2646,23 @@
         <p>AI medical scribe & documentation</p>
         <span class="stat-source">Source: Abridge, 2026</span>
       </div>
-
+      <div class="physical-card physical-card--dvc">
+        <span class="badge badge-dvc badge-sm">DVC</span>
+        <h3>Dwelly</h3>
+        <div class="physical-stats">
+          <span class="tabnum">£69M raised</span>
+          <span>AI property empire</span>
+        </div>
+        <p>Time-to-tenant: 3 weeks → &lt;2 days</p>
+        <span class="stat-source">Source: Dwelly, 2026</span>
+      </div>
+    </div>
   </div>
 </section>
 
+<!-- ============================== -->
+<!-- SECTION 10: GEOPOLITICAL CHESSBOARD (EXPANDED) -->
+<!-- ============================== -->
 <section class="section section--dark" id="sec-11">
   <div class="container">
 
@@ -3226,7 +3098,155 @@
   </div>
 </section>
 
-<section class="section section--dark" id="sec-12">
+<!-- ═══════════════════════════════════════════════════════════════
+     SEC-12: THE INCUMBENTS' DILEMMA
+     ═══════════════════════════════════════════════════════════════ -->
+<section class="section section--dark section--incumbents" id="sec-12">
+  <div class="container">
+
+    <!-- Section Bridge -->
+    <div class="section-bridge anim-fade">
+      <p>Geopolitics shapes who can build. But even the strongest players have a critical gap in their stack.</p>
+    </div>
+
+    <h2 class="section-headline anim-fade">THE INCUMBENTS' <span class="accent-gold">DILEMMA</span></h2>
+    <p class="incumbents-sub anim-fade">Every giant has unmatched resources — and a critical vulnerability.<br>Startups win in the seams.</p>
+
+    <!-- ── Stack Matrix ── -->
+    <div class="inc-matrix anim-fade">
+      <div class="inc-matrix-header">
+        <div class="inc-matrix-corner"></div>
+        <div class="inc-col-header" data-company="google" style="--co-color:#4ECDC4">
+          <span class="inc-co-icon">G</span>
+          <span class="inc-co-name">Google</span>
+          <span class="inc-co-rank">#1</span>
+        </div>
+        <div class="inc-col-header" data-company="microsoft" style="--co-color:#7C4DFF">
+          <span class="inc-co-icon">M</span>
+          <span class="inc-co-name">Microsoft</span>
+          <span class="inc-co-rank">#2</span>
+        </div>
+        <div class="inc-col-header" data-company="meta" style="--co-color:#4A90D9">
+          <span class="inc-co-icon">m</span>
+          <span class="inc-co-name">Meta</span>
+          <span class="inc-co-rank">#3</span>
+        </div>
+        <div class="inc-col-header" data-company="apple" style="--co-color:#A0A8BC">
+          <span class="inc-co-icon">A</span>
+          <span class="inc-co-name">Apple</span>
+          <span class="inc-co-rank">#4</span>
+        </div>
+        <div class="inc-col-header" data-company="xai" style="--co-color:#E8837C">
+          <span class="inc-co-icon">x</span>
+          <span class="inc-co-name">xAI</span>
+          <span class="inc-co-rank">#5</span>
+        </div>
+        <div class="inc-col-header" data-company="nvidia" style="--co-color:#76B900">
+          <span class="inc-co-icon">N</span>
+          <span class="inc-co-name">NVIDIA</span>
+          <span class="inc-co-rank inc-co-rank--role">Arms Dealer</span>
+        </div>
+        <div class="inc-col-header" data-company="amazon" style="--co-color:#FF8C42">
+          <span class="inc-co-icon">a</span>
+          <span class="inc-co-name">Amazon</span>
+          <span class="inc-co-rank inc-co-rank--role">Threat</span>
+        </div>
+      </div>
+
+      <!-- Row: Distribution -->
+      <div class="inc-matrix-row" data-layer="distribution">
+        <div class="inc-row-label">Distribution</div>
+        <div class="inc-cell inc-cell--strong" data-company="google" style="--co-color:#4ECDC4"></div>
+        <div class="inc-cell inc-cell--strong" data-company="microsoft" style="--co-color:#7C4DFF"></div>
+        <div class="inc-cell inc-cell--strong" data-company="meta" style="--co-color:#4A90D9"></div>
+        <div class="inc-cell inc-cell--strong" data-company="apple" style="--co-color:#A0A8BC"></div>
+        <div class="inc-cell inc-cell--medium" data-company="xai" style="--co-color:#E8837C"></div>
+        <div class="inc-cell inc-cell--weak" data-company="nvidia" style="--co-color:#76B900"></div>
+        <div class="inc-cell inc-cell--strong" data-company="amazon" style="--co-color:#FF8C42"></div>
+      </div>
+
+      <!-- Row: Talent -->
+      <div class="inc-matrix-row" data-layer="talent">
+        <div class="inc-row-label">Talent</div>
+        <div class="inc-cell inc-cell--strong" data-company="google" style="--co-color:#4ECDC4"></div>
+        <div class="inc-cell inc-cell--medium" data-company="microsoft" style="--co-color:#7C4DFF"></div>
+        <div class="inc-cell inc-cell--medium" data-company="meta" style="--co-color:#4A90D9"></div>
+        <div class="inc-cell inc-cell--weak" data-company="apple" style="--co-color:#A0A8BC"></div>
+        <div class="inc-cell inc-cell--medium" data-company="xai" style="--co-color:#E8837C"></div>
+        <div class="inc-cell inc-cell--strong" data-company="nvidia" style="--co-color:#76B900"></div>
+        <div class="inc-cell inc-cell--medium" data-company="amazon" style="--co-color:#FF8C42"></div>
+      </div>
+
+      <!-- Row: Compute -->
+      <div class="inc-matrix-row" data-layer="compute">
+        <div class="inc-row-label">Compute</div>
+        <div class="inc-cell inc-cell--strong" data-company="google" style="--co-color:#4ECDC4"></div>
+        <div class="inc-cell inc-cell--strong" data-company="microsoft" style="--co-color:#7C4DFF"></div>
+        <div class="inc-cell inc-cell--strong" data-company="meta" style="--co-color:#4A90D9"></div>
+        <div class="inc-cell inc-cell--strong" data-company="apple" style="--co-color:#A0A8BC"></div>
+        <div class="inc-cell inc-cell--medium" data-company="xai" style="--co-color:#E8837C"></div>
+        <div class="inc-cell inc-cell--strong" data-company="nvidia" style="--co-color:#76B900"><span class="inc-cell-plus">+++</span></div>
+        <div class="inc-cell inc-cell--strong" data-company="amazon" style="--co-color:#FF8C42"></div>
+      </div>
+
+      <!-- Row: Data -->
+      <div class="inc-matrix-row" data-layer="data">
+        <div class="inc-row-label">Data</div>
+        <div class="inc-cell inc-cell--strong" data-company="google" style="--co-color:#4ECDC4"></div>
+        <div class="inc-cell inc-cell--medium" data-company="microsoft" style="--co-color:#7C4DFF"></div>
+        <div class="inc-cell inc-cell--strong" data-company="meta" style="--co-color:#4A90D9"></div>
+        <div class="inc-cell inc-cell--weak" data-company="apple" style="--co-color:#A0A8BC"></div>
+        <div class="inc-cell inc-cell--strong" data-company="xai" style="--co-color:#E8837C"></div>
+        <div class="inc-cell inc-cell--weak" data-company="nvidia" style="--co-color:#76B900"></div>
+        <div class="inc-cell inc-cell--strong" data-company="amazon" style="--co-color:#FF8C42"></div>
+      </div>
+
+      <!-- Row: Culture -->
+      <div class="inc-matrix-row" data-layer="culture">
+        <div class="inc-row-label">Culture</div>
+        <div class="inc-cell inc-cell--medium" data-company="google" style="--co-color:#4ECDC4"></div>
+        <div class="inc-cell inc-cell--strong" data-company="microsoft" style="--co-color:#7C4DFF"></div>
+        <div class="inc-cell inc-cell--weak" data-company="meta" style="--co-color:#4A90D9"></div>
+        <div class="inc-cell inc-cell--weak" data-company="apple" style="--co-color:#A0A8BC"></div>
+        <div class="inc-cell inc-cell--medium" data-company="xai" style="--co-color:#E8837C"></div>
+        <div class="inc-cell inc-cell--strong" data-company="nvidia" style="--co-color:#76B900"></div>
+        <div class="inc-cell inc-cell--strong" data-company="amazon" style="--co-color:#FF8C42"></div>
+      </div>
+    </div>
+
+    <!-- ── Detail Card (populated by JS) ── -->
+    <div class="inc-detail" id="incDetail" aria-hidden="true">
+      <div class="inc-detail-inner">
+        <div class="inc-detail-header">
+          <span class="inc-detail-name"></span>
+          <span class="inc-detail-rank"></span>
+        </div>
+        <div class="inc-detail-body">
+          <div class="inc-detail-row">
+            <span class="inc-detail-label">Superpower</span>
+            <span class="inc-detail-value inc-detail-super"></span>
+          </div>
+          <div class="inc-detail-row">
+            <span class="inc-detail-label">Achilles Heel</span>
+            <span class="inc-detail-value inc-detail-heel"></span>
+          </div>
+          <div class="inc-detail-row">
+            <span class="inc-detail-label">Key Stat</span>
+            <span class="inc-detail-value inc-detail-stat"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Bottom Insight ── -->
+    <div class="inc-insight anim-slide-up">
+      <p>No single giant owns the full stack. The innovator's dilemma is alive — and it's the reason <span class="accent-teal">startups can win</span>.</p>
+    </div>
+
+  </div>
+</section>
+
+<section class="section section--dark" id="sec-13">
   <div class="container">
     <!-- Section Bridge -->
     <div class="section-bridge anim-fade">
@@ -3335,93 +3355,110 @@
       <span class="stat-source">Source: DVC Research, historical market data</span>
     </div>
 
-    <!-- Capital Concentration (compressed into expandable) -->
+    <!-- ═══ CAPITAL CONCENTRATION: WHY MULTIPLES ARE INSANE ═══ -->
     <div class="cap-concentration anim-fade" style="margin-top:3rem">
       <h3 class="subsection-title">WHY ARE MULTIPLES SO CRAZY?</h3>
-      <p style="color:#A0A8BC;font-size:0.95rem;margin-bottom:1.25rem;max-width:720px">The answer isn't irrational exuberance &mdash; it's structural. <strong style="color:#F5C542">1.3% of asset managers control 66% of all capital</strong>, and they can't write $5M seed checks. So $147T in global AUM funnels into the few AI companies big enough to absorb it.</p>
-      
-      <div class="rabbit-hole anim-fade">
-        <button class="rabbit-hole-toggle">
-          <span class="rabbit-hole-icon">&#128371;</span>
-          <span class="rabbit-hole-title">The Valuation Cascade: Full Breakdown</span>
-          <span class="rabbit-hole-arrow">&#9656;</span>
-        </button>
-        <div class="rabbit-hole-content">
-          <div style="padding:1.5rem">
-            <!-- Top Asset Managers Bar Chart -->
-            <div style="margin-bottom:2rem">
-              <h4 style="color:#4ECDC4;font-size:0.85rem;font-weight:700;letter-spacing:0.1em;margin:0 0 1rem">TOP ASSET MANAGERS &mdash; $147T GLOBAL AUM</h4>
-              <div id="aumBars" style="display:flex;flex-direction:column;gap:0.5rem"></div>
-              <p style="color:#A0A8BC;font-size:0.78rem;margin-top:0.75rem">Top 10 manage <strong style="color:#E8E9ED">$62T</strong> &mdash; 42% of global AUM. They need to deploy billions per quarter. Early-stage VC is invisible to them.</p>
-              <span class="stat-source">Source: BlackRock Q4 2025 earnings, Vanguard, UBS, Fidelity filings</span>
-            </div>
+      <p style="color:#A0A8BC;font-size:0.95rem;margin-bottom:2rem;max-width:720px">The answer isn't irrational exuberance — it's structural. <strong style="color:#F5C542">1.3% of asset managers control 66% of all capital</strong>, and they can't write $5M seed checks. So $147T in global AUM funnels into the few AI companies big enough to absorb it.</p>
 
-            <!-- AI Deal Pareto Distribution -->
-            <div style="margin-bottom:2rem">
-              <h4 style="color:#E8837C;font-size:0.85rem;font-weight:700;letter-spacing:0.1em;margin:0 0 0.5rem">THE PARETO OF AI CHECKS</h4>
-              <p style="color:#A0A8BC;font-size:0.82rem;margin:0 0 1.25rem">AI captured <strong style="color:#E8E9ED">61%</strong> of all global VC in 2025 ($259B of $427B). But within AI, concentration is extreme:</p>
+      <!-- Top Asset Managers Bar Chart -->
+      <div style="margin-bottom:2.5rem">
+        <h4 style="color:#4ECDC4;font-size:0.85rem;font-weight:700;letter-spacing:0.1em;margin:0 0 1rem">TOP ASSET MANAGERS — $147T GLOBAL AUM</h4>
+        <div id="aumBars" style="display:flex;flex-direction:column;gap:0.5rem">
+        </div>
+        <p style="color:#A0A8BC;font-size:0.78rem;margin-top:0.75rem">Top 10 manage <strong style="color:#E8E9ED">$62T</strong> — 42% of global AUM. They need to deploy billions per quarter. Early-stage VC is invisible to them.</p>
+        <span class="stat-source">Source: BlackRock Q4 2025 earnings, Vanguard, UBS, Fidelity filings</span>
+      </div>
 
-              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-bottom:1.5rem">
-                <div style="background:rgba(232,131,124,0.08);border:1px solid rgba(232,131,124,0.2);border-radius:12px;padding:1.25rem;text-align:center">
-                  <span style="display:block;font-size:2.2rem;font-weight:800;color:#E8837C" class="tabnum">5</span>
-                  <span style="display:block;font-size:0.78rem;color:#A0A8BC;margin-top:0.25rem">companies raised</span>
-                  <span style="display:block;font-size:1.4rem;font-weight:700;color:#E8E9ED;margin-top:0.15rem" class="tabnum">$84B</span>
-                  <span style="display:block;font-size:0.72rem;color:#A0A8BC;margin-top:0.15rem">= 20% of ALL venture capital in 2025</span>
-                </div>
-                <div style="background:rgba(245,197,66,0.08);border:1px solid rgba(245,197,66,0.2);border-radius:12px;padding:1.25rem;text-align:center">
-                  <span style="display:block;font-size:2.2rem;font-weight:800;color:#F5C542" class="tabnum">10</span>
-                  <span style="display:block;font-size:0.78rem;color:#A0A8BC;margin-top:0.25rem">companies captured</span>
-                  <span style="display:block;font-size:1.4rem;font-weight:700;color:#E8E9ED;margin-top:0.15rem" class="tabnum">41%</span>
-                  <span style="display:block;font-size:0.72rem;color:#A0A8BC;margin-top:0.15rem">of all venture dollars in H1 2025</span>
-                </div>
-                <div style="background:rgba(78,205,196,0.08);border:1px solid rgba(78,205,196,0.2);border-radius:12px;padding:1.25rem;text-align:center">
-                  <span style="display:block;font-size:2.2rem;font-weight:800;color:#4ECDC4" class="tabnum">58%</span>
-                  <span style="display:block;font-size:0.78rem;color:#A0A8BC;margin-top:0.25rem">of AI funding was in</span>
-                  <span style="display:block;font-size:1.4rem;font-weight:700;color:#E8E9ED;margin-top:0.15rem">Mega-rounds</span>
-                  <span style="display:block;font-size:0.72rem;color:#A0A8BC;margin-top:0.15rem">deals of $500M or more</span>
-                </div>
-              </div>
+      <!-- AI Deal Pareto Distribution -->
+      <div style="margin-bottom:2.5rem">
+        <h4 style="color:#E8837C;font-size:0.85rem;font-weight:700;letter-spacing:0.1em;margin:0 0 0.5rem">THE PARETO OF AI CHECKS</h4>
+        <p style="color:#A0A8BC;font-size:0.82rem;margin:0 0 1.25rem">AI captured <strong style="color:#E8E9ED">61%</strong> of all global VC in 2025 ($259B of $427B). But within AI, concentration is extreme:</p>
 
-              <!-- Interactive Pareto Bars -->
-              <div style="background:rgba(255,255,255,0.02);border-radius:12px;padding:1.5rem;border:1px solid rgba(255,255,255,0.05)">
-                <h4 style="color:#E8E9ED;font-size:0.9rem;font-weight:700;margin:0 0 1rem">Largest AI Checks &mdash; 2025/2026</h4>
-                <div id="paretoDeals" style="display:flex;flex-direction:column;gap:0.6rem"></div>
-                <p style="color:#A0A8BC;font-size:0.72rem;margin:1rem 0 0;font-style:italic">Tap any bar for details. These 8 rounds alone total ~$250B+ &mdash; more than total global VC outside AI.</p>
-                <span class="stat-source" style="margin-top:0.5rem;display:block">Source: CNBC, Crunchbase, OECD, company announcements 2025&ndash;2026</span>
-              </div>
-            </div>
-
-            <!-- The Cascade Explanation -->
-            <div style="background:linear-gradient(135deg,rgba(245,197,66,0.06),rgba(232,131,124,0.04));border:1px solid rgba(245,197,66,0.15);border-radius:14px;padding:1.5rem 2rem;margin-bottom:1.5rem">
-              <h4 style="color:#F5C542;margin:0 0 0.75rem;font-size:0.95rem;font-weight:700">THE VALUATION CASCADE</h4>
-              <div style="display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap;margin-bottom:1rem">
-                <span style="background:rgba(78,205,196,0.12);color:#4ECDC4;padding:0.4rem 0.8rem;border-radius:8px;font-size:0.8rem;font-weight:600">$147T Global AUM</span>
-                <span style="color:#A0A8BC;font-size:1.2rem">&rarr;</span>
-                <span style="background:rgba(245,197,66,0.12);color:#F5C542;padding:0.4rem 0.8rem;border-radius:8px;font-size:0.8rem;font-weight:600">Can't do VC</span>
-                <span style="color:#A0A8BC;font-size:1.2rem">&rarr;</span>
-                <span style="background:rgba(232,131,124,0.12);color:#E8837C;padding:0.4rem 0.8rem;border-radius:8px;font-size:0.8rem;font-weight:600">Pile into ~20 AI names</span>
-                <span style="color:#A0A8BC;font-size:1.2rem">&rarr;</span>
-                <span style="background:rgba(74,144,217,0.12);color:#4A90D9;padding:0.4rem 0.8rem;border-radius:8px;font-size:0.8rem;font-weight:600">Late-stage 50&ndash;100x</span>
-                <span style="color:#A0A8BC;font-size:1.2rem">&rarr;</span>
-                <span style="background:rgba(255,255,255,0.08);color:#E8E9ED;padding:0.4rem 0.8rem;border-radius:8px;font-size:0.8rem;font-weight:600">Early-stage inherits</span>
-              </div>
-              <p style="color:#C8CCD4;font-size:0.88rem;margin:0;line-height:1.6">The vast majority of investors can't write small, high-risk VC checks. They need to deploy at scale. So they pile into the ~20 private AI companies large enough to absorb $100M+ checks. <strong style="color:#F5C542">Insane competition for a tiny number of deployable deals drives late-stage multiples up &mdash; which are then inherited by early-stage VCs.</strong></p>
-            </div>
-
-            <!-- SWF + Geographic -->
-            <div style="display:flex;gap:1rem;flex-wrap:wrap">
-              <div style="flex:1;min-width:250px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:1.25rem">
-                <h4 style="color:#4A90D9;font-size:0.82rem;font-weight:700;letter-spacing:0.08em;margin:0 0 0.5rem">NEW ENTRANT: SOVEREIGN WEALTH</h4>
-                <p style="color:#C8CCD4;font-size:0.85rem;margin:0">Sovereign Wealth Funds deployed <strong class="tabnum" style="color:#4A90D9">$46B</strong> into AI ventures in 2025. Saudi PIF, Abu Dhabi's Mubadala, Singapore's GIC and Temasek are now among the largest AI investors.</p>
-                <span class="stat-source" style="margin-top:0.5rem;display:block">Source: EY Global GenAI VC Report, Dec 2025</span>
-              </div>
-              <div style="flex:1;min-width:250px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:1.25rem">
-                <h4 style="color:#4ECDC4;font-size:0.82rem;font-weight:700;letter-spacing:0.08em;margin:0 0 0.5rem">THE GEOGRAPHIC FUNNEL</h4>
-                <p style="color:#C8CCD4;font-size:0.85rem;margin:0"><strong class="tabnum" style="color:#4ECDC4">97%</strong> of AI deal value went to North America. San Francisco Bay Area alone captured <strong class="tabnum" style="color:#4ECDC4">$122B</strong> &mdash; 75%+ of all US AI funding.</p>
-                <span class="stat-source" style="margin-top:0.5rem;display:block">Source: OECD, Crunchbase 2025 data</span>
-              </div>
-            </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-bottom:1.5rem">
+          <div style="background:rgba(232,131,124,0.08);border:1px solid rgba(232,131,124,0.2);border-radius:12px;padding:1.25rem;text-align:center">
+            <span style="display:block;font-size:2.2rem;font-weight:800;color:#E8837C" class="tabnum">5</span>
+            <span style="display:block;font-size:0.78rem;color:#A0A8BC;margin-top:0.25rem">companies raised</span>
+            <span style="display:block;font-size:1.4rem;font-weight:700;color:#E8E9ED;margin-top:0.15rem" class="tabnum">$84B</span>
+            <span style="display:block;font-size:0.72rem;color:#A0A8BC;margin-top:0.15rem">= 20% of ALL venture capital in 2025</span>
           </div>
+          <div style="background:rgba(245,197,66,0.08);border:1px solid rgba(245,197,66,0.2);border-radius:12px;padding:1.25rem;text-align:center">
+            <span style="display:block;font-size:2.2rem;font-weight:800;color:#F5C542" class="tabnum">10</span>
+            <span style="display:block;font-size:0.78rem;color:#A0A8BC;margin-top:0.25rem">companies captured</span>
+            <span style="display:block;font-size:1.4rem;font-weight:700;color:#E8E9ED;margin-top:0.15rem" class="tabnum">41%</span>
+            <span style="display:block;font-size:0.72rem;color:#A0A8BC;margin-top:0.15rem">of all venture dollars in H1 2025</span>
+          </div>
+          <div style="background:rgba(78,205,196,0.08);border:1px solid rgba(78,205,196,0.2);border-radius:12px;padding:1.25rem;text-align:center">
+            <span style="display:block;font-size:2.2rem;font-weight:800;color:#4ECDC4" class="tabnum">58%</span>
+            <span style="display:block;font-size:0.78rem;color:#A0A8BC;margin-top:0.25rem">of AI funding was in</span>
+            <span style="display:block;font-size:1.4rem;font-weight:700;color:#E8E9ED;margin-top:0.15rem">Mega-rounds</span>
+            <span style="display:block;font-size:0.72rem;color:#A0A8BC;margin-top:0.15rem">deals of $500M or more</span>
+          </div>
+        </div>
+
+        <!-- Interactive Pareto Bars -->
+        <div style="background:rgba(255,255,255,0.02);border-radius:12px;padding:1.5rem;border:1px solid rgba(255,255,255,0.05)">
+          <h4 style="color:#E8E9ED;font-size:0.9rem;font-weight:700;margin:0 0 1rem">Largest AI Checks — 2025/2026</h4>
+          <div id="paretoDeals" style="display:flex;flex-direction:column;gap:0.6rem"></div>
+          <p style="color:#A0A8BC;font-size:0.72rem;margin:1rem 0 0;font-style:italic">Tap any bar for details. These 8 rounds alone total ~$250B+ — more than total global VC outside AI.</p>
+          <span class="stat-source" style="margin-top:0.5rem;display:block">Source: CNBC, Crunchbase, OECD, company announcements 2025–2026</span>
+        </div>
+      </div>
+
+      <!-- The Cascade Explanation -->
+      <div style="background:linear-gradient(135deg,rgba(245,197,66,0.06),rgba(232,131,124,0.04));border:1px solid rgba(245,197,66,0.15);border-radius:14px;padding:1.5rem 2rem;margin-bottom:1.5rem">
+        <h4 style="color:#F5C542;margin:0 0 0.75rem;font-size:0.95rem;font-weight:700">THE VALUATION CASCADE</h4>
+        <div style="display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap;margin-bottom:1rem">
+          <span style="background:rgba(78,205,196,0.12);color:#4ECDC4;padding:0.4rem 0.8rem;border-radius:8px;font-size:0.8rem;font-weight:600">$147T Global AUM</span>
+          <span style="color:#A0A8BC;font-size:1.2rem">→</span>
+          <span style="background:rgba(245,197,66,0.12);color:#F5C542;padding:0.4rem 0.8rem;border-radius:8px;font-size:0.8rem;font-weight:600">Can't do VC</span>
+          <span style="color:#A0A8BC;font-size:1.2rem">→</span>
+          <span style="background:rgba(232,131,124,0.12);color:#E8837C;padding:0.4rem 0.8rem;border-radius:8px;font-size:0.8rem;font-weight:600">Pile into ~20 AI names</span>
+          <span style="color:#A0A8BC;font-size:1.2rem">→</span>
+          <span style="background:rgba(74,144,217,0.12);color:#4A90D9;padding:0.4rem 0.8rem;border-radius:8px;font-size:0.8rem;font-weight:600">Late-stage 50–100x</span>
+          <span style="color:#A0A8BC;font-size:1.2rem">→</span>
+          <span style="background:rgba(255,255,255,0.08);color:#E8E9ED;padding:0.4rem 0.8rem;border-radius:8px;font-size:0.8rem;font-weight:600">Early-stage inherits</span>
+        </div>
+        <p style="color:#C8CCD4;font-size:0.88rem;margin:0;line-height:1.6">The vast majority of investors can't write small, high-risk VC checks. They need to deploy at scale into liquid or semi-liquid assets. So they pile into public AI stocks (NVIDIA, the Mag 7), infrastructure plays, and the ~20 private AI companies large enough to absorb $100M+ checks. <strong style="color:#F5C542">Insane competition for a tiny number of deployable deals drives late-stage multiples up — which are then inherited by early-stage VCs.</strong></p>
+      </div>
+
+      <!-- The Mega-Deals: Oracle & Musk -->
+      <div style="margin-bottom:2rem">
+        <h4 style="color:#E8837C;font-size:0.85rem;font-weight:700;letter-spacing:0.1em;margin:0 0 1.25rem">THE DEALS THAT DEFINE THE ERA</h4>
+
+        <!-- Oracle / OpenAI -->
+        <div style="background:linear-gradient(135deg,rgba(232,131,124,0.06),rgba(74,144,217,0.04));border:1px solid rgba(232,131,124,0.18);border-radius:14px;padding:1.5rem 2rem;margin-bottom:1rem">
+          <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.75rem;flex-wrap:wrap">
+            <span style="color:#E8837C;font-size:1.1rem;font-weight:800">Oracle × OpenAI</span>
+            <span style="background:rgba(232,131,124,0.15);color:#E8837C;padding:0.25rem 0.65rem;border-radius:6px;font-size:0.72rem;font-weight:700;letter-spacing:0.05em" class="tabnum">$300B COMPUTE DEAL</span>
+          </div>
+          <p style="color:#C8CCD4;font-size:0.88rem;margin:0 0 0.75rem;line-height:1.6">In September 2025, OpenAI signed a <strong style="color:#E8E9ED">$300 billion, five-year</strong> compute contract with Oracle — one of the largest commercial deals in history. The commitment far exceeds OpenAI's current revenue. Separately, Oracle is raising <strong style="color:#E8E9ED">$50B</strong> in 2026 alone for AI infrastructure buildout, and the two are building <strong style="color:#E8E9ED">4.5 GW</strong> of Stargate data center capacity (over 2 million chips).</p>
+          <p style="color:#A0A8BC;font-size:0.82rem;margin:0;font-style:italic">Larry Ellison bet the entire company on AI infrastructure — and so far, the market is rewarding it.</p>
+          <span class="stat-source" style="margin-top:0.5rem;display:block">Source: WSJ, OpenAI blog, Oracle earnings, DataCenterKnowledge</span>
+        </div>
+
+        <!-- Musk's SpaceX + xAI -->
+        <div style="background:linear-gradient(135deg,rgba(74,144,217,0.06),rgba(78,205,196,0.04));border:1px solid rgba(74,144,217,0.18);border-radius:14px;padding:1.5rem 2rem;margin-bottom:1rem">
+          <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.75rem;flex-wrap:wrap">
+            <span style="color:#4A90D9;font-size:1.1rem;font-weight:800">SpaceX absorbs xAI</span>
+            <span style="background:rgba(74,144,217,0.15);color:#4A90D9;padding:0.25rem 0.65rem;border-radius:6px;font-size:0.72rem;font-weight:700;letter-spacing:0.05em" class="tabnum">$1.25T COMBINED</span>
+          </div>
+          <p style="color:#C8CCD4;font-size:0.88rem;margin:0 0 0.75rem;line-height:1.6">In February 2026, Musk merged xAI (Grok, $125B valuation) and X (formerly Twitter) into SpaceX, creating the <strong style="color:#E8E9ED">most valuable private company on Earth</strong> at ~$1.25T. The stated thesis: AI, rockets, space-based internet, and real-time data under one roof. SpaceX filed with the FCC for up to <strong style="color:#E8E9ED">1 million orbital data center satellites</strong>.</p>
+          <p style="color:#A0A8BC;font-size:0.82rem;margin:0;font-style:italic">The clever move: xAI alone was burning cash competing in frontier models. Folded into SpaceX, it becomes a long-term infrastructure play — de-risked by SpaceX's cash flow and oriented toward a ~$50B IPO.</p>
+          <span class="stat-source" style="margin-top:0.5rem;display:block">Source: NYT, BBC, CNBC, SpaceX blog, Feb 2026</span>
+        </div>
+      </div>
+
+      <!-- Sovereign Wealth Funds + Geographic -->
+      <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:1.5rem">
+        <div style="flex:1;min-width:250px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:1.25rem">
+          <h4 style="color:#4A90D9;font-size:0.82rem;font-weight:700;letter-spacing:0.08em;margin:0 0 0.5rem">NEW ENTRANT: SOVEREIGN WEALTH</h4>
+          <p style="color:#C8CCD4;font-size:0.85rem;margin:0">Sovereign Wealth Funds deployed <strong class="tabnum" style="color:#4A90D9">$46B</strong> into AI ventures in 2025. Saudi PIF, Abu Dhabi's Mubadala, Singapore's GIC and Temasek are now among the largest AI investors — writing checks too big for traditional VC.</p>
+          <span class="stat-source" style="margin-top:0.5rem;display:block">Source: EY Global GenAI VC Report, Dec 2025</span>
+        </div>
+        <div style="flex:1;min-width:250px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:1.25rem">
+          <h4 style="color:#4ECDC4;font-size:0.82rem;font-weight:700;letter-spacing:0.08em;margin:0 0 0.5rem">THE GEOGRAPHIC FUNNEL</h4>
+          <p style="color:#C8CCD4;font-size:0.85rem;margin:0"><strong class="tabnum" style="color:#4ECDC4">97%</strong> of AI deal value went to North America. San Francisco Bay Area alone captured <strong class="tabnum" style="color:#4ECDC4">$122B</strong> — 75%+ of all US AI funding. Capital concentration is geographic, not just financial.</p>
+          <span class="stat-source" style="margin-top:0.5rem;display:block">Source: OECD, Crunchbase 2025 data</span>
         </div>
       </div>
     </div>
@@ -3432,7 +3469,7 @@
   </div>
 </section>
 
-<section class="section section--dark section--portfolio" id="sec-13">
+<section class="section section--dark section--portfolio" id="sec-14">
   <div class="container">
     <!-- Section Bridge -->
     <div class="section-bridge anim-fade">
@@ -3440,16 +3477,6 @@
     </div>
 
     <h2 class="section-headline anim-fade">THE <span class="accent-gold">DVC</span> ECOSYSTEM</h2>
-
-    <!-- Startup Thesis -->
-    <div class="anim-fade" style="margin-bottom:3rem">
-      <div style="max-width:780px;margin:0 auto;padding:2rem 2.5rem;background:linear-gradient(135deg,rgba(78,205,196,0.06),rgba(245,197,66,0.04));border:1px solid rgba(78,205,196,0.15);border-radius:14px">
-        <h3 style="color:#4ECDC4;margin:0 0 0.75rem;font-size:1.05rem;font-weight:700;letter-spacing:0.04em">THE DVC THESIS</h3>
-        <p style="color:#C8CCD4;font-size:0.95rem;line-height:1.65;margin:0 0 1rem">The entire world's business is being rebuilt. Every industry &mdash; search, commerce, legal, healthcare, finance, property, video, code, robotics &mdash; is getting a new AI-native entrant. The incumbents have resources, but they can't do everything at once. They have organizational drag, legacy architectures, and cannibalization risk that slows them down.</p>
-        <p style="color:#C8CCD4;font-size:0.95rem;line-height:1.65;margin:0 0 1rem"><strong style="color:#F5C542">The opportunity for startups isn't to avoid competing with Google and OpenAI. It's to move faster in the seams they can't fill.</strong> Perplexity competes with Google Search. Cursor competes with GitHub Copilot. Higgsfield competes with Sora. In every case, the startup has the advantage of focus, speed, and a willingness to bet the company on a single wedge.</p>
-        <p style="color:#A0A8BC;font-size:0.88rem;line-height:1.55;margin:0;font-style:italic">DVC's portfolio is positioned across the stack because the winners won't cluster in one layer &mdash; they'll emerge wherever a startup can claim turf faster than an incumbent can defend it.</p>
-      </div>
-    </div>
 
     <div class="portfolio-pyramid anim-fade">
       <div class="pp-layer" style="--pp-color:#4ECDC4">
@@ -3550,119 +3577,208 @@
   </div>
 </section>
 
-<section class="section section--dark section--outlook" id="sec-14">
+<!-- ============================== -->
+<!-- SECTION 13: 10-YEAR OUTLOOK    -->
+<!-- ============================== -->
+<section class="section section--dark section--outlook" id="sec-15">
   <div class="container">
 
     <!-- Section Bridge -->
     <div class="section-bridge anim-fade">
-      <p>A portfolio is a point of view made concrete. From here, the only question that matters is where the forces already in motion take us.</p>
+      <p>A portfolio is a point of view made concrete. From here, the only question that matters is what this stack looks like a decade out.</p>
     </div>
 
-    <h2 class="section-headline anim-fade">5-YEAR <span class="accent-teal">OUTLOOK</span></h2>
-    <p class="outlook-intro anim-fade" style="max-width:780px;color:#C8CCD4;font-size:1.05rem;line-height:1.65;margin:0 auto 3rem">These are not predictions pulled from thin air. They are the logical consequences of every trend in this presentation &mdash; extrapolated five years forward. The pattern is clear: AI software moves fast, AI hardware moves slower, and AI adoption in large legacy industries moves slowest of all.</p>
+    <h2 class="section-headline anim-fade">10-YEAR <span class="accent-teal">OUTLOOK</span></h2>
+    <p class="outlook-intro anim-fade" style="max-width:780px;color:#C8CCD4;font-size:1.05rem;line-height:1.65;margin:0 auto 3rem">Everything so far describes the current map. The next decade will decide who captures the value, which layers consolidate, and where entirely new categories emerge. These predictions are not science fiction; they are the logical extension of forces already in motion.</p>
 
+    <!-- Prediction Grid -->
     <div class="outlook-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:1.5rem">
 
-      <!-- 1: Models commoditize, distribution wins -->
+      <!-- Prediction 1 -->
       <div class="outlook-card anim-fade" style="background:var(--bg-card);border:1px solid rgba(78,205,196,0.12);border-radius:var(--radius);padding:1.75rem;position:relative;overflow:hidden">
         <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1rem">
           <span style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:rgba(78,205,196,0.12);color:#4ECDC4;font-weight:800;font-size:0.95rem" class="tabnum">1</span>
-          <span style="background:rgba(78,205,196,0.15);color:#4ECDC4;padding:0.2rem 0.6rem;border-radius:4px;font-size:0.68rem;font-weight:700;letter-spacing:0.08em">FROM THE MODEL WARS</span>
+          <span style="background:rgba(78,205,196,0.15);color:#4ECDC4;padding:0.2rem 0.6rem;border-radius:4px;font-size:0.68rem;font-weight:700;letter-spacing:0.08em">HIGH</span>
         </div>
-        <h3 style="color:#E8E9ED;font-size:1.05rem;font-weight:700;margin:0 0 0.6rem;line-height:1.3">Models Commoditize. Distribution Wins.</h3>
-        <p style="color:#A0A8BC;font-size:0.85rem;line-height:1.55;margin:0">The lower end of the model market is already interchangeable. By 2030, frontier-grade reasoning will be a utility. The durable value shifts to the companies that own the user relationship: distribution, UX, data moats, and workflow integration. Winning the model race matters less than winning the surface race.</p>
+        <h3 style="color:#E8E9ED;font-size:1.05rem;font-weight:700;margin:0 0 0.6rem;line-height:1.3">$1.8 Trillion Market by 2030</h3>
+        <div style="background:rgba(78,205,196,0.06);border-radius:8px;padding:0.75rem 1rem;margin-bottom:0.75rem">
+          <span style="display:block;font-size:1.6rem;font-weight:800;color:#4ECDC4" class="tabnum">$1.8T → $3.5T</span>
+          <span style="display:block;font-size:0.75rem;color:#A0A8BC;margin-top:0.15rem">2030 → 2035 projected market</span>
+        </div>
+        <p style="color:#A0A8BC;font-size:0.85rem;line-height:1.55;margin:0 0 0.5rem">McKinsey estimates AI software and services grew from $85B in 2022 to a central $1.5T–$4.6T range by 2040, implying 17–25% CAGR. Statista shows machine learning alone at $528B in 2024. A low-trillion 2030 outcome is not heroic.</p>
+        <span class="stat-source">Source: McKinsey MGI, Statista 2024</span>
       </div>
 
-      <!-- 2: Inference costs collapse -->
+      <!-- Prediction 2 -->
       <div class="outlook-card anim-fade" style="background:var(--bg-card);border:1px solid rgba(245,197,66,0.12);border-radius:var(--radius);padding:1.75rem;position:relative;overflow:hidden">
         <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1rem">
           <span style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:rgba(245,197,66,0.12);color:#F5C542;font-weight:800;font-size:0.95rem" class="tabnum">2</span>
-          <span style="background:rgba(245,197,66,0.15);color:#F5C542;padding:0.2rem 0.6rem;border-radius:4px;font-size:0.68rem;font-weight:700;letter-spacing:0.08em">FROM THE INFRASTRUCTURE SPRINT</span>
+          <span style="background:rgba(78,205,196,0.15);color:#4ECDC4;padding:0.2rem 0.6rem;border-radius:4px;font-size:0.68rem;font-weight:700;letter-spacing:0.08em">HIGH</span>
         </div>
-        <h3 style="color:#E8E9ED;font-size:1.05rem;font-weight:700;margin:0 0 0.6rem;line-height:1.3">Inference Under $0.001/Query by 2028</h3>
-        <p style="color:#A0A8BC;font-size:0.85rem;line-height:1.55;margin:0">GPT-3.5-class queries fell from $20.00 to $0.07 per million tokens in 18 months. Hardware costs are dropping 30% annually, efficiency improving 40%. The bottleneck shifts from token cost to orchestration and verification. This unlocks entirely new use cases that were previously uneconomical.</p>
-        <span class="stat-source" style="margin-top:0.5rem;display:block">Source: Stanford HAI AI Index 2025</span>
+        <h3 style="color:#E8E9ED;font-size:1.05rem;font-weight:700;margin:0 0 0.6rem;line-height:1.3">Inference Under $0.001 per Query by 2028</h3>
+        <div style="background:rgba(245,197,66,0.06);border-radius:8px;padding:0.75rem 1rem;margin-bottom:0.75rem">
+          <span style="display:block;font-size:1.6rem;font-weight:800;color:#F5C542" class="tabnum">280×</span>
+          <span style="display:block;font-size:0.75rem;color:#A0A8BC;margin-top:0.15rem">cost drop in 18 months (GPT-3.5 level)</span>
+        </div>
+        <p style="color:#A0A8BC;font-size:0.85rem;line-height:1.55;margin:0 0 0.5rem">Stanford AI Index: GPT-3.5-class queries fell from $20.00 to $0.07 per million tokens in 18 months. Hardware costs dropping 30% annually, efficiency up 40% annually. By 2028, the bottleneck shifts from token cost to orchestration and verification.</p>
+        <span class="stat-source">Source: Stanford HAI AI Index 2025</span>
       </div>
 
-      <!-- 3: Business models still unsettled -->
-      <div class="outlook-card anim-fade" style="background:var(--bg-card);border:1px solid rgba(232,131,124,0.12);border-radius:var(--radius);padding:1.75rem;position:relative;overflow:hidden">
-        <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1rem">
-          <span style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:rgba(232,131,124,0.12);color:#E8837C;font-weight:800;font-size:0.95rem" class="tabnum">3</span>
-          <span style="background:rgba(232,131,124,0.15);color:#E8837C;padding:0.2rem 0.6rem;border-radius:4px;font-size:0.68rem;font-weight:700;letter-spacing:0.08em">FROM THE BUSINESS MODEL PROBLEM</span>
-        </div>
-        <h3 style="color:#E8E9ED;font-size:1.05rem;font-weight:700;margin:0 0 0.6rem;line-height:1.3">The Pricing Model Is Still Being Invented</h3>
-        <p style="color:#A0A8BC;font-size:0.85rem;line-height:1.55;margin:0">Tokens are commoditizing, ads can't fund inference, and outcome-based pricing is promising but unproven. The winner of the next cycle may not be the best model or the best distribution &mdash; it may be the company that cracks the revenue model. Expect 2&ndash;3 more years of experimentation before dominant business models stabilize.</p>
-      </div>
-
-      <!-- 4: Agents reshape knowledge work -->
+      <!-- Prediction 3 -->
       <div class="outlook-card anim-fade" style="background:var(--bg-card);border:1px solid rgba(124,77,255,0.12);border-radius:var(--radius);padding:1.75rem;position:relative;overflow:hidden">
         <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1rem">
-          <span style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:rgba(124,77,255,0.12);color:#7C4DFF;font-weight:800;font-size:0.95rem" class="tabnum">4</span>
-          <span style="background:rgba(124,77,255,0.15);color:#7C4DFF;padding:0.2rem 0.6rem;border-radius:4px;font-size:0.68rem;font-weight:700;letter-spacing:0.08em">FROM THE AGENT REVOLUTION</span>
+          <span style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:rgba(124,77,255,0.12);color:#7C4DFF;font-weight:800;font-size:0.95rem" class="tabnum">3</span>
+          <span style="background:rgba(124,77,255,0.15);color:#7C4DFF;padding:0.2rem 0.6rem;border-radius:4px;font-size:0.68rem;font-weight:700;letter-spacing:0.08em">MEDIUM-HIGH</span>
         </div>
-        <h3 style="color:#E8E9ED;font-size:1.05rem;font-weight:700;margin:0 0 0.6rem;line-height:1.3">~35% of Knowledge Work Agent-Mediated by 2030</h3>
-        <p style="color:#A0A8BC;font-size:0.85rem;line-height:1.55;margin:0">13% of employees already use gen AI for 30%+ of tasks; 34% expect to within a year. But agent-mediated does not mean fully autonomous. Workers still own judgment. The pattern is "modular, fluid, AI-mediated" work &mdash; not replacement. The biggest change is how tasks are packaged, not who does them.</p>
-        <span class="stat-source" style="margin-top:0.5rem;display:block">Source: McKinsey 2025, WEF 2030 Scenarios</span>
+        <h3 style="color:#E8E9ED;font-size:1.05rem;font-weight:700;margin:0 0 0.6rem;line-height:1.3">35% of Knowledge Work Agent-Mediated by 2030</h3>
+        <div style="background:rgba(124,77,255,0.06);border-radius:8px;padding:0.75rem 1rem;margin-bottom:0.75rem">
+          <span style="display:block;font-size:1.6rem;font-weight:800;color:#7C4DFF" class="tabnum">~1/3</span>
+          <span style="display:block;font-size:0.75rem;color:#A0A8BC;margin-top:0.15rem">of knowledge-work hours involve AI agents</span>
+        </div>
+        <p style="color:#A0A8BC;font-size:0.85rem;line-height:1.55;margin:0 0 0.5rem">McKinsey: 13% of employees already using gen AI for 30%+ of tasks; 34% expect to within a year. WEF describes human work becoming "modular, fluid and AI-mediated." Agent-mediated ≠ fully autonomous — workers still own judgment.</p>
+        <span class="stat-source">Source: McKinsey 2025, WEF 2030 Scenarios</span>
       </div>
 
-      <!-- 5: Physical AI is decades away -->
-      <div class="outlook-card anim-fade" style="background:var(--bg-card);border:1px solid rgba(245,197,66,0.12);border-radius:var(--radius);padding:1.75rem;position:relative;overflow:hidden">
+      <!-- Prediction 4 -->
+      <div class="outlook-card anim-fade" style="background:var(--bg-card);border:1px solid rgba(232,131,124,0.12);border-radius:var(--radius);padding:1.75rem;position:relative;overflow:hidden">
         <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1rem">
-          <span style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:rgba(245,197,66,0.12);color:#F5C542;font-weight:800;font-size:0.95rem" class="tabnum">5</span>
-          <span style="background:rgba(245,197,66,0.15);color:#F5C542;padding:0.2rem 0.6rem;border-radius:4px;font-size:0.68rem;font-weight:700;letter-spacing:0.08em">FROM PHYSICAL AI</span>
+          <span style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:rgba(232,131,124,0.12);color:#E8837C;font-weight:800;font-size:0.95rem" class="tabnum">4</span>
+          <span style="background:rgba(232,131,124,0.15);color:#E8837C;padding:0.2rem 0.6rem;border-radius:4px;font-size:0.68rem;font-weight:700;letter-spacing:0.08em">MEDIUM</span>
         </div>
-        <h3 style="color:#E8E9ED;font-size:1.05rem;font-weight:700;margin:0 0 0.6rem;line-height:1.3">Physical AI: Real but Slower Than You Think</h3>
-        <p style="color:#A0A8BC;font-size:0.85rem;line-height:1.55;margin:0">Humanoid robots: 250K+ shipments by 2030, almost all industrial. Manufacturing costs dropping fast. But consumer-ready humanoids are a decade away. The right near-term analogy is warehouse automation, not the smartphone. The $38B TAM by 2035 is real but front-loaded with controlled industrial environments, not open-world tasks.</p>
-        <span class="stat-source" style="margin-top:0.5rem;display:block">Source: Goldman Sachs, Morgan Stanley</span>
+        <h3 style="color:#E8E9ED;font-size:1.05rem;font-weight:700;margin:0 0 0.6rem;line-height:1.3">First Nuclear-Powered AI Campus ~2031</h3>
+        <div style="background:rgba(232,131,124,0.06);border-radius:8px;padding:0.75rem 1rem;margin-bottom:0.75rem">
+          <span style="display:block;font-size:1.6rem;font-weight:800;color:#E8837C" class="tabnum">160%</span>
+          <span style="display:block;font-size:0.75rem;color:#A0A8BC;margin-top:0.15rem">data center power demand increase by 2030</span>
+        </div>
+        <p style="color:#A0A8BC;font-size:0.85rem;line-height:1.55;margin:0 0 0.5rem">Google/Kairos targets first reactor by 2030, 500 MW fleet by 2035. Amazon X-energy: 320 MW initial, 5 GW by 2039. Meta: 1–4 GW new nuclear. Goldman: AI = 19% of data center power by 2028. The first campus will be symbolic but marks compute-meets-generation.</p>
+        <span class="stat-source">Source: Goldman Sachs, Utility Dive, X-energy</span>
       </div>
 
-      <!-- 6: Legacy industries transform slowly -->
+      <!-- Prediction 5 -->
+      <div class="outlook-card anim-fade" style="background:var(--bg-card);border:1px solid rgba(124,77,255,0.12);border-radius:var(--radius);padding:1.75rem;position:relative;overflow:hidden">
+        <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1rem">
+          <span style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:rgba(124,77,255,0.12);color:#7C4DFF;font-weight:800;font-size:0.95rem" class="tabnum">5</span>
+          <span style="background:rgba(124,77,255,0.15);color:#7C4DFF;padding:0.2rem 0.6rem;border-radius:4px;font-size:0.68rem;font-weight:700;letter-spacing:0.08em">MEDIUM-HIGH</span>
+        </div>
+        <h3 style="color:#E8E9ED;font-size:1.05rem;font-weight:700;margin:0 0 0.6rem;line-height:1.3">Humanoid Robots: $38B TAM by 2035</h3>
+        <div style="background:rgba(124,77,255,0.06);border-radius:8px;padding:0.75rem 1rem;margin-bottom:0.75rem">
+          <span style="display:block;font-size:1.6rem;font-weight:800;color:#7C4DFF" class="tabnum">1.4M units</span>
+          <span style="display:block;font-size:0.75rem;color:#A0A8BC;margin-top:0.15rem">annual humanoid shipments projected by 2035</span>
+        </div>
+        <p style="color:#A0A8BC;font-size:0.85rem;line-height:1.55;margin:0 0 0.5rem">Goldman base case: 250K+ shipments by 2030, almost all industrial. Manufacturing costs dropping from $50K–$250K to $30K–$150K in a single year. The right near-term analogy is warehouse automation, not the smartphone.</p>
+        <span class="stat-source">Source: Goldman Sachs, Morgan Stanley</span>
+      </div>
+
+      <!-- Prediction 6 -->
       <div class="outlook-card anim-fade" style="background:var(--bg-card);border:1px solid rgba(232,131,124,0.12);border-radius:var(--radius);padding:1.75rem;position:relative;overflow:hidden">
         <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1rem">
           <span style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:rgba(232,131,124,0.12);color:#E8837C;font-weight:800;font-size:0.95rem" class="tabnum">6</span>
-          <span style="background:rgba(232,131,124,0.15);color:#E8837C;padding:0.2rem 0.6rem;border-radius:4px;font-size:0.68rem;font-weight:700;letter-spacing:0.08em">FROM THE FULL STACK</span>
+          <span style="background:rgba(232,131,124,0.15);color:#E8837C;padding:0.2rem 0.6rem;border-radius:4px;font-size:0.68rem;font-weight:700;letter-spacing:0.08em">MEDIUM</span>
         </div>
-        <h3 style="color:#E8E9ED;font-size:1.05rem;font-weight:700;margin:0 0 0.6rem;line-height:1.3">Large Legacy Players Are the Hardest to Transform</h3>
-        <p style="color:#A0A8BC;font-size:0.85rem;line-height:1.55;margin:0">Healthcare ($740B admin costs), legal (31% adoption), finance (53% adoption) &mdash; adoption is underway but regulation, liability, and institutional inertia mean full transformation is a 10-15 year process, not 3-5. The biggest enterprises have the most data but the slowest approval cycles. This is why startups that target specific vertical wedges will outpace horizontal incumbents.</p>
+        <h3 style="color:#E8E9ED;font-size:1.05rem;font-weight:700;margin:0 0 0.6rem;line-height:1.3">AI-Designed Drug Approved by 2030</h3>
+        <div style="background:rgba(232,131,124,0.06);border-radius:8px;padding:0.75rem 1rem;margin-bottom:0.75rem">
+          <span style="display:block;font-size:1.6rem;font-weight:800;color:#E8837C" class="tabnum">2.2M</span>
+          <span style="display:block;font-size:0.75rem;color:#A0A8BC;margin-top:0.15rem">candidate crystal structures found by GNoME</span>
+        </div>
+        <p style="color:#A0A8BC;font-size:0.85rem;line-height:1.55;margin:0 0 0.5rem">Triple milestone: AI-designed drug approval, AI-guided materials synthesis, and km-scale climate digital twins. Isomorphic Labs human trials imminent. GNoME: 381K new stable materials, 736 experimentally verified. DestinE: 5 km global climate projections by 2030.</p>
+        <span class="stat-source">Source: Fortune, Nature, ECMWF DestinE</span>
       </div>
 
-      <!-- 7: Energy becomes the real bottleneck -->
+      <!-- Prediction 7 -->
       <div class="outlook-card anim-fade" style="background:var(--bg-card);border:1px solid rgba(78,205,196,0.12);border-radius:var(--radius);padding:1.75rem;position:relative;overflow:hidden">
         <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1rem">
           <span style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:rgba(78,205,196,0.12);color:#4ECDC4;font-weight:800;font-size:0.95rem" class="tabnum">7</span>
-          <span style="background:rgba(78,205,196,0.15);color:#4ECDC4;padding:0.2rem 0.6rem;border-radius:4px;font-size:0.68rem;font-weight:700;letter-spacing:0.08em">FROM THE $650B SPRINT</span>
+          <span style="background:rgba(78,205,196,0.15);color:#4ECDC4;padding:0.2rem 0.6rem;border-radius:4px;font-size:0.68rem;font-weight:700;letter-spacing:0.08em">HIGH</span>
         </div>
-        <h3 style="color:#E8E9ED;font-size:1.05rem;font-weight:700;margin:0 0 0.6rem;line-height:1.3">Energy, Not Chips, Becomes the Binding Constraint</h3>
-        <p style="color:#A0A8BC;font-size:0.85rem;line-height:1.55;margin:0">Data center power demand increases 160% by 2030. Google, Amazon, and Meta are all pursuing nuclear. The first nuclear-powered AI campus arrives ~2031. The US has the chips but is hitting energy bottlenecks. China has the electrons but is constrained on silicon. Whoever solves their bottleneck first wins the decade.</p>
-        <span class="stat-source" style="margin-top:0.5rem;display:block">Source: Goldman Sachs, Utility Dive, X-energy</span>
+        <h3 style="color:#E8E9ED;font-size:1.05rem;font-weight:700;margin:0 0 0.6rem;line-height:1.3">40% of Core Skills Changed by 2030</h3>
+        <div style="background:rgba(78,205,196,0.06);border-radius:8px;padding:0.75rem 1rem;margin-bottom:0.75rem">
+          <span style="display:block;font-size:1.6rem;font-weight:800;color:#4ECDC4" class="tabnum">+78M net</span>
+          <span style="display:block;font-size:0.75rem;color:#A0A8BC;margin-top:0.15rem">new jobs (170M created – 92M displaced)</span>
+        </div>
+        <p style="color:#A0A8BC;font-size:0.85rem;line-height:1.55;margin:0 0 0.5rem">WEF projects 22% structural labor-market churn by 2030. 39% of workers' core skills will change or become outdated. The story is job redesign, not mass disappearance: fewer pure coordinators, more AI supervisors, steeper premium on judgment.</p>
+        <span class="stat-source">Source: WEF Future of Jobs Report 2025</span>
       </div>
 
-      <!-- 8: Geopolitical bifurcation hardens -->
+      <!-- Prediction 8 -->
+      <div class="outlook-card anim-fade" style="background:var(--bg-card);border:1px solid rgba(78,205,196,0.12);border-radius:var(--radius);padding:1.75rem;position:relative;overflow:hidden">
+        <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1rem">
+          <span style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:rgba(78,205,196,0.12);color:#4ECDC4;font-weight:800;font-size:0.95rem" class="tabnum">8</span>
+          <span style="background:rgba(78,205,196,0.15);color:#4ECDC4;padding:0.2rem 0.6rem;border-radius:4px;font-size:0.68rem;font-weight:700;letter-spacing:0.08em">HIGH</span>
+        </div>
+        <h3 style="color:#E8E9ED;font-size:1.05rem;font-weight:700;margin:0 0 0.6rem;line-height:1.3">Risk-Based Regulation Across G20 by 2030</h3>
+        <div style="background:rgba(78,205,196,0.06);border-radius:8px;padding:0.75rem 1rem;margin-bottom:0.75rem">
+          <span style="display:block;font-size:1.6rem;font-weight:800;color:#4ECDC4">EU AI Act</span>
+          <span style="display:block;font-size:0.75rem;color:#A0A8BC;margin-top:0.15rem">setting the pace — broadly applicable Aug 2026</span>
+        </div>
+        <p style="color:#A0A8BC;font-size:0.85rem;line-height:1.55;margin:0 0 0.5rem">Convergence on one global shape: risk tiers, model/provider obligations, sector overlays, auditability. EU AI Act active, OECD as vocabulary layer, UN advisory for soft coordination. By 2030: enforceable rules in most G20 economies, cross-border patchwork — not one treaty.</p>
+        <span class="stat-source">Source: European Commission, OECD, UN Advisory 2024</span>
+      </div>
+
+      <!-- Prediction 9 -->
       <div class="outlook-card anim-fade" style="background:var(--bg-card);border:1px solid rgba(124,77,255,0.12);border-radius:var(--radius);padding:1.75rem;position:relative;overflow:hidden">
         <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1rem">
-          <span style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:rgba(124,77,255,0.12);color:#7C4DFF;font-weight:800;font-size:0.95rem" class="tabnum">8</span>
-          <span style="background:rgba(124,77,255,0.15);color:#7C4DFF;padding:0.2rem 0.6rem;border-radius:4px;font-size:0.68rem;font-weight:700;letter-spacing:0.08em">FROM THE GEOPOLITICAL CHESSBOARD</span>
+          <span style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:rgba(124,77,255,0.12);color:#7C4DFF;font-weight:800;font-size:0.95rem" class="tabnum">9</span>
+          <span style="background:rgba(124,77,255,0.15);color:#7C4DFF;padding:0.2rem 0.6rem;border-radius:4px;font-size:0.68rem;font-weight:700;letter-spacing:0.08em">MEDIUM-HIGH</span>
         </div>
-        <h3 style="color:#E8E9ED;font-size:1.05rem;font-weight:700;margin:0 0 0.6rem;line-height:1.3">Two AI Stacks, One Contested Middle</h3>
-        <p style="color:#A0A8BC;font-size:0.85rem;line-height:1.55;margin:0">By 2030: US-allied and China stacks are fully bifurcated. Tier 2 nations choose sides. Risk-based regulation spreads across the G20. The EU AI Act becomes the template. >90% of advanced AI chips still manufactured on a single island (Taiwan). The AI race is no longer a market contest &mdash; it's national strategy.</p>
+        <h3 style="color:#E8E9ED;font-size:1.05rem;font-weight:700;margin:0 0 0.6rem;line-height:1.3">Hundreds of Millions of Software Creators</h3>
+        <div style="background:rgba(124,77,255,0.06);border-radius:8px;padding:0.75rem 1rem;margin-bottom:0.75rem">
+          <span style="display:block;font-size:1.6rem;font-weight:800;color:#7C4DFF" class="tabnum">100M → ???</span>
+          <span style="display:block;font-size:0.75rem;color:#A0A8BC;margin-top:0.15rem">GitHub devs today → software creators by late 2030s</span>
+        </div>
+        <p style="color:#A0A8BC;font-size:0.85rem;line-height:1.55;margin:0 0 0.5rem">GitHub hit 100M developers in 2023, with 5.2B contributions across 518M projects in 2024. "1B developers" isn't realistic by 2030 for professionals — but several hundred million people using AI to produce scripts, workflows, and agents is. The term expands from "developer" to "software creator."</p>
+        <span class="stat-source">Source: GitHub Octoverse 2024, Evans Data</span>
       </div>
 
+      <!-- Prediction 10 -->
+      <div class="outlook-card anim-fade" style="background:var(--bg-card);border:1px solid rgba(245,197,66,0.12);border-radius:var(--radius);padding:1.75rem;position:relative;overflow:hidden">
+        <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1rem">
+          <span style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:rgba(245,197,66,0.12);color:#F5C542;font-weight:800;font-size:0.95rem" class="tabnum">10</span>
+          <span style="background:rgba(124,77,255,0.15);color:#7C4DFF;padding:0.2rem 0.6rem;border-radius:4px;font-size:0.68rem;font-weight:700;letter-spacing:0.08em">MEDIUM-HIGH</span>
+        </div>
+        <h3 style="color:#E8E9ED;font-size:1.05rem;font-weight:700;margin:0 0 0.6rem;line-height:1.3">AI Reshapes Capital Allocation</h3>
+        <div style="background:rgba(245,197,66,0.06);border-radius:8px;padding:0.75rem 1rem;margin-bottom:0.75rem">
+          <span style="display:block;font-size:1.6rem;font-weight:800;color:#F5C542" class="tabnum">$8T</span>
+          <span style="display:block;font-size:0.75rem;color:#A0A8BC;margin-top:0.15rem">capex required for AI data centers by 2030</span>
+        </div>
+        <p style="color:#A0A8BC;font-size:0.85rem;line-height:1.55;margin:0 0 0.5rem">Not magical trading alpha — a re-rating of infrastructure, utilities, semiconductors, and data-rich institutions. Goldman: $720B grid spend by 2030. BlackRock: AI infra surpassing $700B/year becomes core exposure. Advantage shifts to proprietary data, distribution, and physical bottlenecks.</p>
+        <span class="stat-source">Source: Goldman Sachs, McKinsey, BlackRock</span>
+      </div>
+
+    </div><!-- /.outlook-grid -->
+
+    <!-- Credibility Legend -->
+    <div class="anim-fade" style="display:flex;gap:1.25rem;justify-content:center;flex-wrap:wrap;margin:2.5rem 0 2rem;padding:1rem 1.5rem;background:rgba(255,255,255,0.02);border-radius:10px;border:1px solid rgba(255,255,255,0.05)">
+      <div style="display:flex;align-items:center;gap:0.5rem">
+        <span style="background:rgba(78,205,196,0.15);color:#4ECDC4;padding:0.2rem 0.55rem;border-radius:4px;font-size:0.65rem;font-weight:700;letter-spacing:0.08em">HIGH</span>
+        <span style="color:#A0A8BC;font-size:0.78rem">Strong multi-source evidence</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:0.5rem">
+        <span style="background:rgba(124,77,255,0.15);color:#7C4DFF;padding:0.2rem 0.55rem;border-radius:4px;font-size:0.65rem;font-weight:700;letter-spacing:0.08em">MEDIUM-HIGH</span>
+        <span style="color:#A0A8BC;font-size:0.78rem">Grounded trajectory, some uncertainty</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:0.5rem">
+        <span style="background:rgba(232,131,124,0.15);color:#E8837C;padding:0.2rem 0.55rem;border-radius:4px;font-size:0.65rem;font-weight:700;letter-spacing:0.08em">MEDIUM</span>
+        <span style="color:#A0A8BC;font-size:0.78rem">Plausible but timeline-dependent</span>
+      </div>
     </div>
 
     <!-- Bottom Line -->
-    <div class="anim-fade" style="margin:3rem auto 0;max-width:800px;padding:2rem 2.5rem;background:linear-gradient(135deg,rgba(78,205,196,0.06),rgba(245,197,66,0.04));border:1px solid rgba(78,205,196,0.15);border-radius:var(--radius-lg);text-align:center">
-      <p style="color:#E8E9ED;font-size:1.1rem;font-weight:500;line-height:1.65;margin:0;font-style:italic">"The 2026&ndash;2030 AI story is less about whether AI works, and more about whether institutions can absorb ultra-cheap intelligence into power-constrained, regulation-constrained, labor-constrained real systems quickly enough."</p>
+    <div class="anim-fade" style="margin:0 auto;max-width:800px;padding:2rem 2.5rem;background:linear-gradient(135deg,rgba(78,205,196,0.06),rgba(245,197,66,0.04));border:1px solid rgba(78,205,196,0.15);border-radius:var(--radius-lg);text-align:center">
+      <p style="color:#E8E9ED;font-size:1.1rem;font-weight:500;line-height:1.65;margin:0;font-style:italic">"The 2026–2030 AI story is less about whether AI works, and more about whether institutions can absorb ultra-cheap intelligence into power-constrained, regulation-constrained, labor-constrained real systems quickly enough."</p>
     </div>
 
   </div>
 </section>
 
-<section class="section section--hero section--closing" id="sec-15">
+<!-- ============================== -->
+<!-- SECTION 14: CLOSING            -->
+<!-- ============================== -->
+<section class="section section--hero section--closing" id="sec-16">
   <canvas id="particleCanvas2"></canvas>
 
   <!-- Section Bridge -->
   <div class="section-bridge anim-fade" style="position:relative;z-index:2;max-width:680px;margin:0 auto 2rem;text-align:center">
-    <p>The trends are clear. The question is who acts on them first.</p>
+    <p>Predictions are only useful if they sharpen action. The advantage goes to the people who can see the system early and move accordingly.</p>
   </div>
 
   <div class="closing-content">
