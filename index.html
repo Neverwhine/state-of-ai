@@ -492,9 +492,26 @@
   <div class="container">
 
     <h2 class="section-headline anim-fade">THE <span class="accent-gold">$60B</span> EXPLOSION</h2>
-    <p class="explosion-intro anim-fade" style="max-width:780px;color:#C8CCD4;font-size:1.05rem;line-height:1.65;margin:0 auto 2.5rem">
-      $60 billion sounds massive — but the number is misleading. When we count Cursor's $2B in revenue, we're double-counting money that's already flowing through Anthropic's API. Cursor survives on razor-thin margins; the bulk of every dollar it earns goes straight to the model provider. Stack the application layer's top-line and the foundation layer's top-line, and you're counting the same dollars twice. The real question isn't how big this number is — it's what it actually means after you strip out the overlap.
-    </p>
+
+    <!-- Revenue Split Callout -->
+    <div class="anim-fade" style="display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;margin:0 auto 2.5rem;max-width:820px">
+      <div style="flex:1;min-width:200px;padding:1.25rem;background:rgba(245,197,66,0.08);border:1px solid rgba(245,197,66,0.2);border-radius:12px;text-align:center">
+        <span class="tabnum" style="color:#F5C542;font-size:2rem;font-weight:800;display:block">~$35B</span>
+        <span style="color:#C8CCD4;font-size:0.82rem">flows to inference &amp; infra</span>
+        <span style="color:#A0A8BC;font-size:0.72rem;display:block;margin-top:0.25rem">30&ndash;75% of app revenue is consumed by compute</span>
+      </div>
+      <div style="flex:1;min-width:200px;padding:1.25rem;background:rgba(78,205,196,0.08);border:1px solid rgba(78,205,196,0.2);border-radius:12px;text-align:center">
+        <span class="tabnum" style="color:#4ECDC4;font-size:2rem;font-weight:800;display:block">~$5&ndash;8B</span>
+        <span style="color:#C8CCD4;font-size:0.82rem">pure application layer</span>
+        <span style="color:#A0A8BC;font-size:0.72rem;display:block;margin-top:0.25rem">Excluding OpenAI, Anthropic, Suno, Runway, ElevenLabs</span>
+      </div>
+      <div style="flex:1;min-width:200px;padding:1.25rem;background:rgba(124,77,255,0.08);border:1px solid rgba(124,77,255,0.2);border-radius:12px;text-align:center">
+        <span class="tabnum" style="color:#7C4DFF;font-size:2rem;font-weight:800;display:block">~$1.1B</span>
+        <span style="color:#C8CCD4;font-size:0.82rem">Suno + Runway + ElevenLabs</span>
+        <span style="color:#A0A8BC;font-size:0.72rem;display:block;margin-top:0.25rem">Generative media: music, video, voice</span>
+      </div>
+    </div>
+    <p style="color:#A0A8BC;font-size:0.78rem;text-align:center;margin:-1.5rem auto 2rem;max-width:600px">Source: company disclosures, press reports, DVC analysis. &ldquo;Pure application layer&rdquo; = companies with own distribution, excluding model providers and generative media.</p>
 
     <!-- ═══ THE SPEED RECORD ═══ -->
     <div class="explosion-speed anim-fade" style="margin-bottom:3rem">
@@ -551,66 +568,80 @@
       <div class="explosion-pill" style="position:relative;display:inline-flex;align-items:center;gap:0.6rem;padding:0.65rem 1.1rem;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;cursor:default;transition:all 0.25s ease" data-tooltip="80% app / 20% API, fastest to $25B ARR in AI history">
         <span style="color:#E8E9ED;font-weight:600;font-size:0.9rem">OpenAI</span>
         <span class="tabnum" style="color:#F5C542;font-weight:700;font-size:0.9rem">$25B</span>
+        <span style="font-size:0.6rem;color:#4ECDC4;background:rgba(78,205,196,0.1);padding:1px 5px;border-radius:3px">L5+L4</span>
       </div>
 
       <div class="explosion-pill" style="position:relative;display:inline-flex;align-items:center;gap:0.6rem;padding:0.65rem 1.1rem;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;cursor:default;transition:all 0.25s ease" data-tooltip="Revenue doubled in 3 months, 50K+ enterprises">
         <span style="color:#E8E9ED;font-weight:600;font-size:0.9rem">Cursor</span>
         <span class="tabnum" style="color:#FF8C42;font-weight:700;font-size:0.9rem">$2B+</span>
+        <span style="font-size:0.6rem;color:#A0A8BC;background:rgba(160,168,188,0.1);padding:1px 5px;border-radius:3px">L5</span>
       </div>
 
       <div class="explosion-pill" style="position:relative;display:inline-flex;align-items:center;gap:0.6rem;padding:0.65rem 1.1rem;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;cursor:default;transition:all 0.25s ease" data-tooltip="Includes GitHub Copilot Business + Individual tiers">
         <span style="color:#E8E9ED;font-weight:600;font-size:0.9rem">GitHub Copilot</span>
         <span class="tabnum" style="color:#FF8C42;font-weight:700;font-size:0.9rem">$2B+</span>
+        <span style="font-size:0.6rem;color:#A0A8BC;background:rgba(160,168,188,0.1);padding:1px 5px;border-radius:3px">L5</span>
       </div>
 
       <div class="explosion-pill" style="position:relative;display:inline-flex;align-items:center;gap:0.6rem;padding:0.65rem 1.1rem;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;cursor:default;transition:all 0.25s ease" data-tooltip="Salesforce Agentforce — enterprise AI at scale">
         <span style="color:#E8E9ED;font-weight:600;font-size:0.9rem">Salesforce AI</span>
         <span class="tabnum" style="color:#E8837C;font-weight:700;font-size:0.9rem">$800M</span>
+        <span style="font-size:0.6rem;color:#A0A8BC;background:rgba(160,168,188,0.1);padding:1px 5px;border-radius:3px">L5</span>
       </div>
 
       <div class="explosion-pill" style="position:relative;display:inline-flex;align-items:center;gap:0.6rem;padding:0.65rem 1.1rem;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;cursor:default;transition:all 0.25s ease" data-tooltip="AI writing assistant, 30M+ DAU">
         <span style="color:#E8E9ED;font-weight:600;font-size:0.9rem">Grammarly</span>
         <span class="tabnum" style="color:#E8837C;font-weight:700;font-size:0.9rem">$700M</span>
+        <span style="font-size:0.6rem;color:#A0A8BC;background:rgba(160,168,188,0.1);padding:1px 5px;border-radius:3px">L5</span>
       </div>
 
       <div class="explosion-pill" style="position:relative;display:inline-flex;align-items:center;gap:0.6rem;padding:0.65rem 1.1rem;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;cursor:default;transition:all 0.25s ease" data-tooltip="$400M ARR with only 2 founders — TechCrunch Mar 2026">
         <span style="color:#E8E9ED;font-weight:600;font-size:0.9rem">Lovable</span>
         <span class="tabnum" style="color:#E8837C;font-weight:700;font-size:0.9rem">$400M</span>
+        <span style="font-size:0.6rem;color:#A0A8BC;background:rgba(160,168,188,0.1);padding:1px 5px;border-radius:3px">L5</span>
       </div>
 
       <div class="explosion-pill" style="position:relative;display:inline-flex;align-items:center;gap:0.6rem;padding:0.65rem 1.1rem;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;cursor:default;transition:all 0.25s ease" data-tooltip="AI voice synthesis and audio, fastest growing in voice AI">
         <span style="color:#E8E9ED;font-weight:600;font-size:0.9rem">ElevenLabs</span>
         <span class="tabnum" style="color:#E8837C;font-weight:700;font-size:0.9rem">$330M</span>
+        <span style="font-size:0.6rem;color:#4ECDC4;background:rgba(78,205,196,0.1);padding:1px 5px;border-radius:3px">L5+L4</span>
       </div>
 
       <div class="explosion-pill" style="position:relative;display:inline-flex;align-items:center;gap:0.6rem;padding:0.65rem 1.1rem;background:rgba(78,205,196,0.08);border:1px solid rgba(78,205,196,0.25);border-radius:10px;cursor:default;transition:all 0.25s ease" data-tooltip="AI-native answer engine, $20B+ valuation — DVC Portfolio">
         <span style="color:#E8E9ED;font-weight:600;font-size:0.9rem">Perplexity</span>
         <span class="tabnum" style="color:#4ECDC4;font-weight:700;font-size:0.9rem">~$300M</span>
         <span class="badge badge-dvc badge-sm">DVC</span>
+        <span style="font-size:0.6rem;color:#A0A8BC;background:rgba(160,168,188,0.1);padding:1px 5px;border-radius:3px">L5</span>
       </div>
 
       <div class="explosion-pill" style="position:relative;display:inline-flex;align-items:center;gap:0.6rem;padding:0.65rem 1.1rem;background:rgba(78,205,196,0.08);border:1px solid rgba(78,205,196,0.25);border-radius:10px;cursor:default;transition:all 0.25s ease" data-tooltip="AI video generation, $4B+ valuation — DVC Portfolio">
         <span style="color:#E8E9ED;font-weight:600;font-size:0.9rem">Higgsfield</span>
         <span class="tabnum" style="color:#4ECDC4;font-weight:700;font-size:0.9rem">~$300M</span>
         <span class="badge badge-dvc badge-sm">DVC</span>
+        <span style="font-size:0.6rem;color:#4ECDC4;background:rgba(78,205,196,0.1);padding:1px 5px;border-radius:3px">L5+L4</span>
       </div>
 
       <div class="explosion-pill" style="position:relative;display:inline-flex;align-items:center;gap:0.6rem;padding:0.65rem 1.1rem;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;cursor:default;transition:all 0.25s ease" data-tooltip="AI music generation, consumer creative tools">
         <span style="color:#E8E9ED;font-weight:600;font-size:0.9rem">Suno</span>
         <span class="tabnum" style="color:#A0A8BC;font-weight:700;font-size:0.9rem">$300M</span>
+        <span style="font-size:0.6rem;color:#4ECDC4;background:rgba(78,205,196,0.1);padding:1px 5px;border-radius:3px">L5+L4</span>
       </div>
 
       <div class="explosion-pill" style="position:relative;display:inline-flex;align-items:center;gap:0.6rem;padding:0.65rem 1.1rem;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;cursor:default;transition:all 0.25s ease" data-tooltip="AI video generation, professional-grade">
         <span style="color:#E8E9ED;font-weight:600;font-size:0.9rem">Runway</span>
         <span class="tabnum" style="color:#A0A8BC;font-weight:700;font-size:0.9rem">~$300M</span>
+        <span style="font-size:0.6rem;color:#4ECDC4;background:rgba(78,205,196,0.1);padding:1px 5px;border-radius:3px">L5+L4</span>
       </div>
 
       <div class="explosion-pill" style="position:relative;display:inline-flex;align-items:center;gap:0.6rem;padding:0.65rem 1.1rem;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;cursor:default;transition:all 0.25s ease" data-tooltip="AI-first dev environment, vibe coding platform">
         <span style="color:#E8E9ED;font-weight:600;font-size:0.9rem">Replit</span>
         <span class="tabnum" style="color:#A0A8BC;font-weight:700;font-size:0.9rem">$253M</span>
+        <span style="font-size:0.6rem;color:#A0A8BC;background:rgba(160,168,188,0.1);padding:1px 5px;border-radius:3px">L5</span>
       </div>
 
     </div>
+
+    <p style="color:#A0A8BC;font-size:0.72rem;text-align:center;margin-top:0.5rem"><strong style="color:#4ECDC4">L5</strong> = Application layer only &nbsp;|&nbsp; <strong style="color:#4ECDC4">L5+L4</strong> = Trains own models + serves applications</p>
 
 
 
@@ -627,70 +658,112 @@
     </div>
 
     <h2 class="section-headline anim-fade">THE <span class="accent-teal">MODEL WARS</span></h2>
-    <p class="section-intro anim-fade" style="max-width:780px;color:#C8CCD4;font-size:1.05rem;line-height:1.65;margin:0 auto 2.5rem">For the first time, more than eight companies are operating at the frontier at once. The lower end of the model market is rapidly becoming interchangeable even as the top end gets more expensive, more strategic, and harder to catch. That split will define where value concentrates and where it leaks away.</p>
-    <div class="model-grid anim-fade">
+    <p class="section-intro anim-fade" style="max-width:780px;color:#C8CCD4;font-size:1.05rem;line-height:1.65;margin:0 auto 2.5rem">10+ companies at the frontier simultaneously. The bottom is commoditizing; the top is getting more expensive and more strategic. Open-source models now match proprietary ones on most benchmarks.</p>
+    <!-- PROPRIETARY TIER -->
+    <h3 class="subsection-title anim-fade" style="margin-bottom:1rem;font-size:0.85rem;color:#A0A8BC;letter-spacing:0.12em">PROPRIETARY FRONTIER</h3>
+    <div class="model-grid anim-fade" style="grid-template-columns:repeat(auto-fit,minmax(150px,1fr));margin-bottom:2rem">
       <div class="model-card">
         <div class="model-logo" style="background:#10A37F">O</div>
         <h3>OpenAI</h3>
-        <p class="model-name">GPT-5 / o3</p>
+        <p class="model-name">GPT-5.4 / o3</p>
         <p class="model-stat tabnum">$25B ARR</p>
-        <span class="stat-source">Source: OpenAI, 2026</span>
       </div>
       <div class="model-card">
         <div class="model-logo" style="background:#D4A574">A</div>
         <h3>Anthropic</h3>
         <p class="model-name">Claude Opus 4.6</p>
-        <p class="model-stat tabnum">$8B+ ARR</p>
-        <span class="stat-source">Source: WSJ, 2026</span>
+        <p class="model-stat tabnum">#1 Chatbot Arena</p>
       </div>
       <div class="model-card">
         <div class="model-logo" style="background:#4285F4">G</div>
         <h3>Google</h3>
-        <p class="model-name">Gemini 2.5 Pro</p>
-        <p class="model-stat tabnum">480T tokens/mo</p>
-        <span class="stat-source">Source: Google, 2026</span>
-      </div>
-      <div class="model-card">
-        <div class="model-logo" style="background:#1877F2">M</div>
-        <h3>Meta</h3>
-        <p class="model-name">Llama 4</p>
-        <p class="model-stat">Open-weight leader</p>
-        <span class="stat-source">Source: Meta AI, 2026</span>
+        <p class="model-name">Gemini 3.1 Pro</p>
+        <p class="model-stat tabnum">#2 Chatbot Arena</p>
       </div>
       <div class="model-card">
         <div class="model-logo" style="background:#1DA1F2">x</div>
         <h3>xAI</h3>
         <p class="model-name">Grok 3</p>
-        <p class="model-stat tabnum">$75B valuation</p>
-        <span class="stat-source">Source: xAI, 2026</span>
+        <p class="model-stat tabnum">$75B val</p>
       </div>
       <div class="model-card">
-        <div class="model-logo" style="background:#0066FF">D</div>
-        <h3>DeepSeek</h3>
-        <p class="model-name">DeepSeek-R1</p>
-        <p class="model-stat">China's frontier</p>
-        <span class="stat-source">Source: DeepSeek, 2025</span>
-      </div>
-      <div class="model-card">
-        <div class="model-logo" style="background:#76B900">N</div>
-        <h3>NVIDIA</h3>
-        <p class="model-name">Nemotron 3 Family</p>
-        <p class="model-stat">Open agentic AI models</p>
-        <span class="stat-source">Source: NVIDIA, Mar 2026</span>
-      </div>
-      <div class="model-card">
-        <div class="model-logo" style="background:#FF7000">Mi</div>
-        <h3>Mistral</h3>
-        <p class="model-name">Mistral Large 2</p>
-        <p class="model-stat">EU sovereign AI</p>
-        <span class="stat-source">Source: Mistral, 2026</span>
+        <div class="model-logo" style="background:#FF8C42">a</div>
+        <h3>Amazon</h3>
+        <p class="model-name">Nova 2 Pro</p>
+        <p class="model-stat">Bedrock-native</p>
       </div>
     </div>
 
-    <div class="chart-container anim-fade">
-      <h3 class="chart-title">Reasoning Model Usage Share</h3>
-      <canvas id="reasoningChart"></canvas>
-      <span class="stat-source">Source: DVC analysis of API usage data, 2024–2026</span>
+    <!-- OPEN SOURCE/WEIGHT TIER -->
+    <h3 class="subsection-title anim-fade" style="margin-bottom:1rem;font-size:0.85rem;color:#4ECDC4;letter-spacing:0.12em">OPEN SOURCE / OPEN WEIGHT &#128275;</h3>
+    <div class="model-grid anim-fade" style="grid-template-columns:repeat(auto-fit,minmax(150px,1fr));margin-bottom:2rem">
+      <div class="model-card" style="border:1px solid rgba(78,205,196,0.25)">
+        <div class="model-logo" style="background:#1877F2">M</div>
+        <h3>Meta</h3>
+        <p class="model-name">Llama 4 Maverick</p>
+        <p class="model-stat" style="color:#4ECDC4">Open Weight</p>
+      </div>
+      <div class="model-card" style="border:1px solid rgba(78,205,196,0.25)">
+        <div class="model-logo" style="background:#0066FF">D</div>
+        <h3>DeepSeek</h3>
+        <p class="model-name">V3.2 / R1</p>
+        <p class="model-stat" style="color:#4ECDC4">MIT License</p>
+      </div>
+      <div class="model-card" style="border:1px solid rgba(78,205,196,0.25)">
+        <div class="model-logo" style="background:#6F42C1">Q</div>
+        <h3>Qwen <small style="color:#A0A8BC">(Alibaba)</small></h3>
+        <p class="model-name">Qwen 3.5 397B</p>
+        <p class="model-stat" style="color:#4ECDC4">Apache 2.0</p>
+      </div>
+      <div class="model-card" style="border:1px solid rgba(78,205,196,0.25)">
+        <div class="model-logo" style="background:#E74C3C">Z</div>
+        <h3>Zhipu AI</h3>
+        <p class="model-name">GLM-5 744B</p>
+        <p class="model-stat" style="color:#4ECDC4">#1 OS leaderboard</p>
+      </div>
+      <div class="model-card" style="border:1px solid rgba(78,205,196,0.25)">
+        <div class="model-logo" style="background:#2D9CDB">K</div>
+        <h3>Moonshot</h3>
+        <p class="model-name">Kimi K2.5 1T</p>
+        <p class="model-stat" style="color:#4ECDC4">99.0 HumanEval</p>
+      </div>
+      <div class="model-card" style="border:1px solid rgba(78,205,196,0.25)">
+        <div class="model-logo" style="background:#FF7000">Mi</div>
+        <h3>Mistral</h3>
+        <p class="model-name">Mistral Large 2</p>
+        <p class="model-stat" style="color:#4ECDC4">EU Sovereign AI</p>
+      </div>
+      <div class="model-card" style="border:1px solid rgba(78,205,196,0.25)">
+        <div class="model-logo" style="background:#76B900">N</div>
+        <h3>NVIDIA</h3>
+        <p class="model-name">Nemotron 3</p>
+        <p class="model-stat" style="color:#4ECDC4">Open Agentic</p>
+      </div>
+      <div class="model-card" style="border:1px solid rgba(78,205,196,0.25)">
+        <div class="model-logo" style="background:#10A37F">O</div>
+        <h3>OpenAI</h3>
+        <p class="model-name">GPT-oss 120B</p>
+        <p class="model-stat" style="color:#4ECDC4">Apache 2.0</p>
+      </div>
+      <div class="model-card" style="border:1px solid rgba(78,205,196,0.25)">
+        <div class="model-logo" style="background:#F56040">S</div>
+        <h3>StepFun</h3>
+        <p class="model-name">Step-3.5-Flash</p>
+        <p class="model-stat" style="color:#4ECDC4">97.3 AIME</p>
+      </div>
+      <div class="model-card" style="border:1px solid rgba(78,205,196,0.25)">
+        <div class="model-logo" style="background:#9B59B6">Mx</div>
+        <h3>MiniMax</h3>
+        <p class="model-name">M2.5 230B</p>
+        <p class="model-stat" style="color:#4ECDC4">80.2 SWE-bench</p>
+      </div>
+    </div>
+    <span class="stat-source anim-fade" style="display:block;text-align:center;margin-bottom:1.5rem">Source: LLM Stats, Chatbot Arena, Open LLM Leaderboard, company announcements &mdash; Mar 2026</span>
+
+    <div class="chart-container anim-fade" style="max-width:600px;margin:0 auto">
+      <h3 class="chart-title" style="font-size:0.9rem">Reasoning Model Usage Share</h3>
+      <canvas id="reasoningChart" style="max-height:250px"></canvas>
+      <span class="stat-source">Source: DVC analysis based on Menlo Ventures State of Gen AI (2025), Chatbot Arena ELO data, API pricing benchmarks, LLM Stats leaderboard (Mar 2026)</span>
     </div>
 
     <!-- Three Scaling Laws -->
@@ -718,7 +791,7 @@
     </div>
 
     <div class="callout-box anim-fade">
-      <p><strong>Base text generation is commoditizing.</strong> But the Three Scaling Laws mean the frontier keeps moving — from pre-training to post-training to test-time compute. Value migrates to orchestration, inference optimization, and proprietary data.</p>
+      <p><strong>Base generation is commoditizing.</strong> Value migrates to orchestration, inference optimization, and proprietary data.</p>
     </div>
   </div>
 </section>
@@ -741,38 +814,54 @@
       <!-- DISTRIBUTION (Roof) -->
       <div style="background:rgba(78,205,196,0.1);border:2px solid rgba(78,205,196,0.3);border-radius:12px 12px 0 0;padding:1rem 1.5rem;text-align:center;margin-bottom:2px">
         <h4 style="color:#4ECDC4;font-size:0.85rem;font-weight:700;margin:0 0 0.5rem">&uarr; DISTRIBUTION (Roof)</h4>
-        <p style="color:#A0A8BC;font-size:0.82rem;margin:0">Without distribution, the best model in the world is a science project. The companies that control the surface &mdash; search, devices, social, enterprise workflows &mdash; choose which models users actually touch.</p>
+        <p style="color:#A0A8BC;font-size:0.82rem;margin:0">Without distribution, the best model is a science project. Whoever controls the surface &mdash; search, devices, social, enterprise &mdash; chooses which models users touch.</p>
       </div>
 
-      <!-- THREE PILLARS: Data, Compute, Talent -->
+      <!-- THREE PILLARS: Data, Compute, Talent — with sourced data -->
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-bottom:2px">
         <div style="background:#383E52;padding:1.5rem;text-align:center">
-          <span style="font-size:2rem;display:block;margin-bottom:0.5rem">&#128202;</span>
-          <h4 style="color:#4A90D9;margin:0 0 0.5rem;font-size:0.95rem;font-weight:700">Data</h4>
-          <p style="color:#A0A8BC;font-size:0.8rem;margin:0;line-height:1.45">Models plateau without proprietary data. The winners will have data nobody else can buy.</p>
+          <div style="font-size:1.8rem;margin-bottom:0.5rem">&#128202;</div>
+          <h4 style="color:#4A90D9;font-size:0.95rem;font-weight:700;margin:0 0 0.5rem">DATA</h4>
+          <p style="color:#4ECDC4;font-size:0.78rem;font-weight:600;margin:0 0 0.75rem">Proprietary loops = moats</p>
+          <ul style="list-style:none;padding:0;margin:0;text-align:left">
+            <li style="color:#A0A8BC;font-size:0.78rem;line-height:1.5;margin-bottom:0.4rem;padding-left:0.8rem;position:relative"><span style="position:absolute;left:0;color:#4A90D9">&middot;</span>Synthetic data supplements but cannot replace domain-specific real data</li>
+            <li style="color:#A0A8BC;font-size:0.78rem;line-height:1.5;margin-bottom:0.4rem;padding-left:0.8rem;position:relative"><span style="position:absolute;left:0;color:#4A90D9">&middot;</span>Data quality &gt; data quantity for fine-tuning</li>
+            <li style="color:#A0A8BC;font-size:0.78rem;line-height:1.5;padding-left:0.8rem;position:relative"><span style="position:absolute;left:0;color:#4A90D9">&middot;</span>Unique data flywheels build defensibility</li>
+          </ul>
+          <span class="stat-source" style="margin-top:0.75rem;display:block">Source: DVC Research, 2026</span>
         </div>
         <div style="background:#383E52;padding:1.5rem;text-align:center">
-          <span style="font-size:2rem;display:block;margin-bottom:0.5rem">&#9889;</span>
-          <h4 style="color:#4ECDC4;margin:0 0 0.5rem;font-size:0.95rem;font-weight:700">Compute</h4>
-          <p style="color:#A0A8BC;font-size:0.8rem;margin:0;line-height:1.45">$650B+ in CapEx. Silicon and cloud access are still the primary bottleneck for frontier performance.</p>
+          <div style="font-size:1.8rem;margin-bottom:0.5rem">&#9889;</div>
+          <h4 style="color:#4ECDC4;font-size:0.95rem;font-weight:700;margin:0 0 0.5rem">COMPUTE</h4>
+          <p style="color:#F5C542;font-size:0.78rem;font-weight:600;margin:0 0 0.75rem">Inference overtaking training</p>
+          <p style="color:#E8E9ED;font-size:0.82rem;margin:0 0 0.75rem" class="tabnum">74% of startups report inference-dominant costs</p>
+          <ul style="list-style:none;padding:0;margin:0;text-align:left">
+            <li style="color:#A0A8BC;font-size:0.78rem;line-height:1.5;margin-bottom:0.4rem;padding-left:0.8rem;position:relative"><span style="position:absolute;left:0;color:#F5C542">&middot;</span><strong style="color:#F5C542">Two exponentials colliding</strong> &mdash; demand grows exponentially while cost/token falls exponentially</li>
+            <li style="color:#A0A8BC;font-size:0.78rem;line-height:1.5;padding-left:0.8rem;position:relative"><span style="position:absolute;left:0;color:#F5C542">&middot;</span>Vera Rubin + Groq LPU: 350&times; Hopper throughput</li>
+          </ul>
+          <span class="stat-source" style="margin-top:0.75rem;display:block">Source: Menlo Ventures 2025 / NVIDIA GTC 2026</span>
         </div>
         <div style="background:#383E52;padding:1.5rem;text-align:center">
-          <span style="font-size:2rem;display:block;margin-bottom:0.5rem">&#129504;</span>
-          <h4 style="color:#7C4DFF;margin:0 0 0.5rem;font-size:0.95rem;font-weight:700">Talent</h4>
-          <p style="color:#A0A8BC;font-size:0.8rem;margin:0;line-height:1.45">Frontier researchers are the scarcest resource in AI. Single hires can be worth billions.</p>
+          <div style="font-size:1.8rem;margin-bottom:0.5rem">&#129504;</div>
+          <h4 style="color:#7C4DFF;font-size:0.95rem;font-weight:700;margin:0 0 0.5rem">TALENT</h4>
+          <p style="color:#7C4DFF;font-size:0.78rem;font-weight:600;margin:0 0 0.75rem" class="tabnum">$10&ndash;20M/yr for top researchers</p>
+          <ul style="list-style:none;padding:0;margin:0;text-align:left">
+            <li style="color:#A0A8BC;font-size:0.78rem;line-height:1.5;margin-bottom:0.4rem;padding-left:0.8rem;position:relative"><span style="position:absolute;left:0;color:#7C4DFF">&middot;</span>Talent diaspora from Big Tech &rarr; startups</li>
+            <li style="color:#A0A8BC;font-size:0.78rem;line-height:1.5;margin-bottom:0.4rem;padding-left:0.8rem;position:relative"><span style="position:absolute;left:0;color:#7C4DFF">&middot;</span>Teams of 10 now match teams of 100</li>
+            <li style="color:#A0A8BC;font-size:0.78rem;line-height:1.5;padding-left:0.8rem;position:relative"><span style="position:absolute;left:0;color:#7C4DFF">&middot;</span>Geography decentralizing &mdash; London, Paris, Tokyo</li>
+          </ul>
+          <span class="stat-source" style="margin-top:0.75rem;display:block">Source: The Information, Levels.fyi, 2026</span>
         </div>
       </div>
 
       <!-- CULTURE (Foundation) -->
       <div style="background:rgba(245,197,66,0.1);border:2px solid rgba(245,197,66,0.3);border-radius:0 0 12px 12px;padding:1rem 1.5rem;text-align:center">
         <h4 style="color:#F5C542;font-size:0.85rem;font-weight:700;margin:0 0 0.5rem">&darr; CULTURE (Foundation)</h4>
-        <p style="color:#A0A8BC;font-size:0.82rem;margin:0">The company that builds the best model but ships it slowly, that has the best data but no internal speed to act on it, that has the talent but can't keep them &mdash; loses. Speed of execution is the secret ingredient.</p>
+        <p style="color:#A0A8BC;font-size:0.82rem;margin:0">Best model + slow shipping = loss. Culture is the conversion rate of every other input. Speed of execution is the secret ingredient.</p>
       </div>
     </div>
 
-    <div class="callout-box anim-fade" style="margin-bottom:3rem">
-      <p><strong>Three pillars are necessary. Five layers are sufficient.</strong> DVC invests across the full building &mdash; with a bias toward the culture and distribution layers where durable value concentrates.</p>
-    </div>
+
 
     <!-- ═══ INCUMBENTS' DILEMMA ═══ -->
     <h2 class="section-headline anim-fade" style="margin-top:2rem">THE INCUMBENTS' <span class="accent-coral">DILEMMA</span></h2>
