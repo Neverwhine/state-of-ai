@@ -4799,19 +4799,9 @@ canvas {
 }
 
 
-/* ═══ Scroll Snap: High-end landing page feel ═══ */
+/* ═══ Smooth Scrolling (snap removed — too janky on long sections) ═══ */
 html {
-  scroll-snap-type: y proximity;
   scroll-behavior: smooth;
-}
-
-.section {
-  scroll-snap-align: start;
-}
-
-/* Don't snap inside the money-flow sticky section */
-.section--money-flow {
-  scroll-snap-align: none;
 }
 
 /* Smooth all section transitions */
