@@ -976,57 +976,57 @@
         name: 'Google',
         rank: '#1 Best Positioned',
         color: '#4ECDC4',
-        superpower: 'Search + TPU cost moat + Gemini 750M MAU',
-        heel: 'Every AI answer cannibalizes ad revenue',
-        stat: '$350B rev · Perplexity doing 200M queries/day on its turf'
+        superpower: 'Owns search (90%), cloud ($70B+ run rate), custom TPUs, 750M Gemini MAU, and the Anthropic relationship',
+        heel: 'Every AI answer that replaces a search link cannibalizes $200B in ad revenue. AI Overviews compress ad inventory.',
+        stat: 'Perplexity: 30M daily queries (~0.2% of Google\'s 15B/day). Small but the fastest-growing search threat since Bing.'
       },
       microsoft: {
         name: 'Microsoft',
-        rank: '#2',
+        rank: '#2 Enterprise King',
         color: '#7C4DFF',
-        superpower: 'Enterprise distribution king · 100M Copilot MAU',
-        heel: 'Consumer identity crisis — 2.4M daily web visits vs ChatGPT',
-        stat: 'Multi-model platform = brand weakness'
+        superpower: 'Deepest enterprise distribution: Office 365, Azure, GitHub, LinkedIn. 100M+ Copilot MAU. Multi-model (OpenAI, Anthropic, Mistral).',
+        heel: 'Consumer AI is invisible — 2.4M daily Copilot web visits vs. ChatGPT\'s 400M+. No consumer identity. Bing AI never broke through.',
+        stat: 'M365 Copilot drives real ARPU uplift. But OpenAI dependency is a strategic risk if OpenAI builds its own cloud.'
       },
       meta: {
         name: 'Meta',
-        rank: '#3',
+        rank: '#3 Brute Force',
         color: '#4A90D9',
-        superpower: '3.58B daily users · $196B ads · brute-force distribution',
-        heel: '4 AI reorgs in 6 months · Llama 4 flopped',
-        stat: 'Paid up to $1.5B for a single researcher'
+        superpower: '3.58B daily users across Facebook/Instagram/WhatsApp. $201B revenue. Can embed AI into every surface without asking.',
+        heel: 'Four AI reorgs in 6 months. Llama 4 flopped on benchmarks. Open-source lead lost to DeepSeek.',
+        stat: '$14.3B invested in Scale AI (49% stake). Hired co-founder Andrew Tulloch — reportedly offered $1.5B comp package over 6 years.'
       },
       apple: {
         name: 'Apple',
-        rank: '#4',
+        rank: '#4 Sleeping Giant',
         color: '#A0A8BC',
-        superpower: 'Best silicon · 2B+ devices · trust moat',
-        heel: 'Worst execution — outsourced Siri brain to Google',
-        stat: 'OpenAI → Gemini: couldn\'t ship its own intelligence'
+        superpower: 'Best on-device silicon (M-series, A-series). 2B+ active devices. Unmatched privacy trust. On-device inference is the future.',
+        heel: 'Apple Intelligence was "mostly underwhelming." Siri overhaul delayed a year. Switched from OpenAI to Google Gemini for Siri backend (Jan 2026).',
+        stat: 'Has the chips but can\'t ship the product. Privacy-first AI could be a moat — if they ever execute.'
       },
       xai: {
-        name: 'xAI',
-        rank: '#5 Wildcard',
+        name: 'xAI / SpaceX',
+        rank: 'Merged · $1.25T',
         color: '#E8837C',
-        superpower: 'X data flywheel · SpaceX capital adjacency',
-        heel: 'Unproven at enterprise scale',
-        stat: 'SpaceX: $8B profit in 2025 as financial backstop'
+        superpower: 'X\'s 500M tweets/day as real-time data. SpaceX profit ($8B in 2025) funds AI. Merged Feb 2026 into $1.25T entity — largest merger ever.',
+        heel: 'No enterprise playbook. Grok consumer traction is unclear. Orbital data centers are years away from reality.',
+        stat: 'Grok 3: 93.3% AIME 2025. Plans for orbital AI data centers via SpaceX Starlink constellation (1M+ satellites filed with FCC).'
       },
       nvidia: {
         name: 'NVIDIA',
         rank: 'Arms Dealer',
         color: '#76B900',
-        superpower: 'Invested $1B across 50 deals · $113B committed',
-        heel: 'Everyone building custom silicon alternatives',
-        stat: 'Shaping both demand creation & supply-side lock-in'
+        superpower: '$113B committed across ecosystem: OpenAI, Anthropic, xAI, robotics. Acquired Groq for $20B. Vera Rubin ships 2026.',
+        heel: 'Google TPU, Amazon Trainium, Microsoft Maia — every hyperscaler building custom silicon to reduce NVIDIA dependency.',
+        stat: 'Ironically: NVIDIA\'s biggest risk is its own customers becoming competitors. But switching costs are enormous (CUDA moat).'
       },
       amazon: {
         name: 'Amazon',
         rank: 'Unique Threat',
         color: '#FF8C42',
-        superpower: 'AWS $129B · $69B ads · 1M+ robots',
-        heel: '$69B ad business at risk from agent commerce',
-        stat: 'Sued Perplexity · Built Rufus + Buy for Me defensively'
+        superpower: 'AWS $129B rev. $69B ads. 1M+ robots across 300+ facilities. Trainium custom chips. Nova 2 Pro reasoning model on Bedrock.',
+        heel: 'AI shopping agents threaten $69B ad business — if agents optimize for price, not sponsored placements. Amazon knows it.',
+        stat: 'Response: Rufus AI (250M+ users, 60% higher conversion) and Buy for Me (agentic purchasing on 500K+ external sites).'
       }
     };
 
