@@ -801,24 +801,8 @@
   }
 
   // --- ANATOMY OF AI AGENT (sec-5) ---
-  function initAnatomyLayers() {
-    const sec = document.getElementById('sec-5');
-    if (!sec) return;
-
-    // Layer expand/collapse
-    sec.querySelectorAll('.aa-layer').forEach((layer) => {
-      const bar = layer.querySelector('.aa-layer-bar');
-      if (!bar) return;
-      bar.addEventListener('click', () => {
-        const wasExpanded = layer.classList.contains('aa-layer--expanded');
-        // collapse all
-        sec.querySelectorAll('.aa-layer--expanded').forEach((l) =>
-          l.classList.remove('aa-layer--expanded')
-        );
-        if (!wasExpanded) layer.classList.add('aa-layer--expanded');
-      });
-    });
-  }
+  // Handled by sec3.js — do not duplicate listeners here
+  function initAnatomyLayers() { }
 
   // --- AUTONOMOUS REVOLUTION (sec-4) ---
   function initAutonomousRevolution() {
