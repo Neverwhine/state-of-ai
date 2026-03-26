@@ -1221,9 +1221,57 @@
     }
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
+  /* ═══ Great Reallocation Toggle ═══ */
+  function initGreatReallocation() {
+    const toggleBtns = document.querySelectorAll('.gr-toggle-btn');
+    const panelFear = document.getElementById('grPanelFear');
+    const panelData = document.getElementById('grPanelData');
+    if (!toggleBtns.length || !panelFear || !panelData) return;
+
+    toggleBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        toggleBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const panel = btn.dataset.panel;
+        panelFear.classList.toggle('active', panel === 'fear');
+        panelData.classList.toggle('active', panel === 'data');
+        // Animate bars when data panel opens
+        if (panel === 'data') animateGrBars();
+      });
+    });
+
+    // Animate bars on scroll if data panel is already active
+    const barsEl = document.getElementById('grBars');
+    if (barsEl) {
+      const barsObs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting && panelData.classList.contains('active')) {
+            animateGrBars();
+            barsObs.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.3 });
+      barsObs.observe(barsEl);
+    }
+  }
+
+  function animateGrBars() {
+    document.querySelectorAll('.gr-bar-fill[data-target]').forEach(fill => {
+      const target = fill.dataset.target;
+      requestAnimationFrame(() => {
+        fill.style.width = target + '%';
+      });
+    });
+  }
+
+  function initAll() {
     init();
+    initGreatReallocation();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAll);
+  } else {
+    initAll();
   }
 })();
