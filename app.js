@@ -285,6 +285,8 @@
     initReasoningChart();
     // 2. Hyperscaler Capex Chart
     initCapexChart();
+    // 2b. FCF Ring animations
+    initFCFRings();
     // 3. Energy Chart
     initEnergyChart();
   }
@@ -353,66 +355,279 @@
     if (!canvas || typeof Chart === 'undefined') return;
 
     let chart = null;
+    let showGap = false;
 
+    // Annual capex data by company ($B) — SEC filings, earnings, analyst estimates
+    const YEARS = ['2020', '2021', '2022', '2023', '2024', '2025', '2026E'];
+    const COMPANIES = {
+      amazon:   { label: 'Amazon',   color: '#FF9900', data: [40, 61, 63, 54, 83, 131, 200] },
+      alphabet: { label: 'Alphabet', color: '#4285F4', data: [22, 29, 31, 32, 52, 91, 180] },
+      microsoft:{ label: 'Microsoft',color: '#7FBA00', data: [20, 27, 32, 35, 56, 80, 145] },
+      meta:     { label: 'Meta',     color: '#0668E1', data: [16, 19, 32, 28, 39, 72, 125] },
+      oracle:   { label: 'Oracle',   color: '#C74634', data: [9, 7, 9, 9, 13, 35, 50] },
+    };
+
+    // AI enterprise revenue estimates ($B) for gap overlay
+    const AI_REVENUE = [2, 5, 10, 20, 40, 100, 180];
+
+    const activeCompanies = new Set(Object.keys(COMPANIES));
+
+    function buildDatasets() {
+      const datasets = [];
+      const keys = Object.keys(COMPANIES);
+      keys.forEach((key, i) => {
+        const c = COMPANIES[key];
+        datasets.push({
+          label: c.label,
+          data: activeCompanies.has(key) ? [...c.data] : c.data.map(() => 0),
+          backgroundColor: activeCompanies.has(key)
+            ? c.color + '55'
+            : 'transparent',
+          borderColor: activeCompanies.has(key) ? c.color : 'transparent',
+          borderWidth: activeCompanies.has(key) ? 1.5 : 0,
+          fill: true,
+          tension: 0.35,
+          pointRadius: 0,
+          pointHoverRadius: 5,
+          pointHoverBackgroundColor: c.color,
+          order: keys.length - i,
+        });
+      });
+
+      if (showGap) {
+        datasets.push({
+          label: 'AI Revenue',
+          data: [...AI_REVENUE],
+          backgroundColor: 'rgba(232,131,124,0.08)',
+          borderColor: '#E8837C',
+          borderWidth: 2.5,
+          borderDash: [6, 3],
+          fill: 'origin',
+          tension: 0.35,
+          pointRadius: 4,
+          pointBackgroundColor: '#E8837C',
+          pointBorderColor: '#2D3142',
+          pointBorderWidth: 1.5,
+          yAxisID: 'yRevenue',
+          order: -1,
+        });
+      }
+      return datasets;
+    }
+
+    function updateTotalBadge() {
+      const el = document.getElementById('capexTotalNum');
+      if (!el) return;
+      const total = Object.keys(COMPANIES).reduce((sum, key) => {
+        return sum + (activeCompanies.has(key) ? COMPANIES[key].data[6] : 0);
+      }, 0);
+      el.textContent = '$' + total + 'B';
+    }
+
+    // GPT-4 annotation plugin
+    const gpt4Plugin = {
+      id: 'gpt4Line',
+      afterDraw(chart) {
+        const xScale = chart.scales.x;
+        const yScale = chart.scales.y;
+        // GPT-4 launched Mar 2023 — between index 2 (2022) and 3 (2023), closer to 3
+        const x2022 = xScale.getPixelForValue(2);
+        const x2023 = xScale.getPixelForValue(3);
+        const xPos = x2022 + (x2023 - x2022) * 0.21; // ~Mar in the year
+        const ctx = chart.ctx;
+        ctx.save();
+        ctx.strokeStyle = 'rgba(245,197,66,0.5)';
+        ctx.lineWidth = 1;
+        ctx.setLineDash([4, 4]);
+        ctx.beginPath();
+        ctx.moveTo(xPos, yScale.top);
+        ctx.lineTo(xPos, yScale.bottom);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        // Label
+        ctx.fillStyle = '#F5C542';
+        ctx.font = '600 10px Inter, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('GPT-4', xPos, yScale.top + 14);
+        ctx.fillStyle = 'rgba(245,197,66,0.6)';
+        ctx.font = '9px Inter, sans-serif';
+        ctx.fillText('Mar 2023', xPos, yScale.top + 26);
+        ctx.restore();
+      },
+    };
+
+    function createChart() {
+      chart = new Chart(canvas, {
+        type: 'line',
+        data: { labels: YEARS, datasets: buildDatasets() },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: { mode: 'index', intersect: false },
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              backgroundColor: 'rgba(45,49,66,0.95)',
+              borderColor: 'rgba(78,205,196,0.2)',
+              borderWidth: 1,
+              padding: 12,
+              titleFont: { size: 13, weight: '600' },
+              bodyFont: { size: 12 },
+              callbacks: {
+                label: function(ctx) {
+                  if (ctx.raw === 0) return null;
+                  return ' ' + ctx.dataset.label + ': $' + ctx.raw + 'B';
+                },
+                afterBody: function(items) {
+                  const total = items.reduce((s, i) => s + (i.raw || 0), 0);
+                  return '\n Total: $' + total + 'B';
+                },
+              },
+            },
+          },
+          scales: {
+            x: {
+              grid: { color: 'rgba(255,255,255,0.03)' },
+              ticks: { color: '#A0A8BC', font: { size: 11 } },
+            },
+            y: {
+              stacked: true,
+              beginAtZero: true,
+              ticks: {
+                callback: (v) => '$' + v + 'B',
+                color: '#A0A8BC',
+                font: { size: 11 },
+                maxTicksLimit: 8,
+              },
+              grid: { color: 'rgba(255,255,255,0.04)' },
+            },
+            yRevenue: {
+              display: false,
+              beginAtZero: true,
+              min: 0,
+              // Match the main y-axis max so the revenue line is properly scaled
+              afterDataLimits(axis) {
+                const mainMax = axis.chart.scales.y.max;
+                if (mainMax) axis.max = mainMax;
+              },
+            },
+          },
+          elements: { line: { borderJoinStyle: 'round' } },
+        },
+        plugins: [gpt4Plugin],
+      });
+    }
+
+    // Toggle company visibility
+    const toggleContainer = document.getElementById('capexToggles');
+    if (toggleContainer) {
+      toggleContainer.addEventListener('click', (e) => {
+        const btn = e.target.closest('.capex-tog');
+        if (!btn) return;
+        const key = btn.dataset.company;
+        if (activeCompanies.has(key)) {
+          if (activeCompanies.size === 1) return; // keep at least one
+          activeCompanies.delete(key);
+          btn.classList.remove('active');
+        } else {
+          activeCompanies.add(key);
+          btn.classList.add('active');
+        }
+        if (chart) {
+          chart.data.datasets = buildDatasets();
+          chart.update('active');
+        }
+        updateTotalBadge();
+      });
+    }
+
+    // Gap toggle
+    const gapToggle = document.getElementById('gapToggle');
+    if (gapToggle) {
+      gapToggle.addEventListener('change', () => {
+        showGap = gapToggle.checked;
+        if (chart) {
+          chart.data.datasets = buildDatasets();
+          chart.update('active');
+        }
+      });
+    }
+
+    // Intersection observer — init chart when visible
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting && !chart) {
-          chart = new Chart(canvas, {
-            type: 'bar',
-            data: {
-              labels: ['Microsoft', 'Amazon', 'Alphabet', 'Meta', 'Oracle'],
-              datasets: [
-                {
-                  label: '2024',
-                  data: [55, 48, 52, 37, 11],
-                  backgroundColor: 'rgba(74, 144, 217, 0.5)',
-                  borderColor: '#4A90D9',
-                  borderWidth: 1,
-                  borderRadius: 4,
-                },
-                {
-                  label: '2025',
-                  data: [80, 75, 75, 60, 25],
-                  backgroundColor: 'rgba(78, 205, 196, 0.6)',
-                  borderColor: '#4ECDC4',
-                  borderWidth: 1,
-                  borderRadius: 4,
-                },
-                {
-                  label: '2026E',
-                  data: [95, 90, 85, 72, 40],
-                  backgroundColor: 'rgba(245, 197, 66, 0.6)',
-                  borderColor: '#F5C542',
-                  borderWidth: 1,
-                  borderRadius: 4,
-                },
-              ],
-            },
-            options: {
-              responsive: true,
-              maintainAspectRatio: true,
-              plugins: {
-                legend: {
-                  position: 'top',
-                  labels: { padding: 16, usePointStyle: true, pointStyleWidth: 10 },
-                },
-              },
-              scales: {
-                x: { grid: { display: false } },
-                y: {
-                  ticks: { callback: (v) => '$' + v + 'B' },
-                  grid: { color: 'rgba(255,255,255,0.04)' },
-                },
-              },
-            },
-          });
+          createChart();
           observer.unobserve(canvas);
         }
       },
       { threshold: 0.3 }
     );
-
     observer.observe(canvas);
+  }
+
+  // FCF ring animation
+  function initFCFRings() {
+    const rings = document.querySelectorAll('.fcf-ring');
+    if (!rings.length) return;
+
+    rings.forEach((canvas) => {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          if (entries[0].isIntersecting) {
+            animateRing(canvas);
+            observer.unobserve(canvas);
+          }
+        },
+        { threshold: 0.5 }
+      );
+      observer.observe(canvas);
+    });
+
+    function animateRing(canvas) {
+      const pct = parseInt(canvas.dataset.pct) || 0;
+      const color = canvas.dataset.color || '#E8837C';
+      const ctx = canvas.getContext('2d');
+      const size = 64;
+      canvas.width = size * 2;
+      canvas.height = size * 2;
+      canvas.style.width = size + 'px';
+      canvas.style.height = size + 'px';
+      ctx.scale(2, 2);
+      const cx = size / 2, cy = size / 2, r = 24, lw = 5;
+      let progress = 0;
+      const target = pct / 100;
+
+      function draw() {
+        ctx.clearRect(0, 0, size, size);
+        // Background ring
+        ctx.beginPath();
+        ctx.arc(cx, cy, r, 0, Math.PI * 2);
+        ctx.strokeStyle = 'rgba(255,255,255,0.06)';
+        ctx.lineWidth = lw;
+        ctx.stroke();
+        // Progress arc
+        ctx.beginPath();
+        ctx.arc(cx, cy, r, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * progress);
+        ctx.strokeStyle = color;
+        ctx.lineWidth = lw;
+        ctx.lineCap = 'round';
+        ctx.stroke();
+        // Center text
+        ctx.fillStyle = '#E8ECF2';
+        ctx.font = '600 12px Inter, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        const displayPct = pct >= 100 ? '!!!' : '-' + Math.round(progress * 100) + '%';
+        ctx.fillText(displayPct, cx, cy);
+
+        if (progress < target) {
+          progress = Math.min(progress + 0.02, target);
+          requestAnimationFrame(draw);
+        }
+      }
+      draw();
+    }
   }
 
   function initEnergyChart() {

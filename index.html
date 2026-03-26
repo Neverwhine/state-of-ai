@@ -1985,13 +1985,104 @@
       <p>That software stack still runs on steel, silicon, and electricity. The more capable AI becomes, the more brutally physical the system underneath it gets.</p>
     </div>
 
-    <h2 class="section-headline anim-fade">THE <span class="accent-coral">$650 BILLION</span> SPRINT</h2>
+    <h2 class="section-headline anim-fade">THE <span class="accent-coral">$700 BILLION</span> SPRINT</h2>
     <p class="section-intro anim-fade" style="max-width:780px;color:#C8CCD4;font-size:1.05rem;line-height:1.65;margin:0 auto 2.5rem">Every breakthrough at the application layer is paid for in chips, data centers, cooling, and power. AI is driving the largest infrastructure buildout since the interstate highway system, with capital racing ahead of certainty. The bottleneck is no longer just compute; it is whether the physical world can support the pace.</p>
 
-    <div class="chart-container chart-wide anim-fade">
-      <h3 class="chart-title">Hyperscaler Capital Expenditure ($B)</h3>
-      <canvas id="capexChart"></canvas>
-      <span class="stat-source">Source: Company earnings reports, analyst estimates 2024–2026</span>
+    <!-- ═══ INTERACTIVE CAPEX EXPLORER ═══ -->
+    <div class="capex-explorer anim-fade">
+      <div class="capex-header">
+        <h3 class="chart-title">Hyperscaler Capital Expenditure</h3>
+        <div class="capex-total-badge"><span class="tabnum" id="capexTotalNum">$700B</span><span class="capex-total-label">2026 GUIDANCE</span></div>
+      </div>
+
+      <!-- Company toggles -->
+      <div class="capex-toggles" id="capexToggles">
+        <button class="capex-tog active" data-company="amazon" style="--tog-color:#FF9900"><span class="tog-dot"></span>Amazon<span class="tog-val tabnum">$200B</span></button>
+        <button class="capex-tog active" data-company="alphabet" style="--tog-color:#4285F4"><span class="tog-dot"></span>Alphabet<span class="tog-val tabnum">$180B</span></button>
+        <button class="capex-tog active" data-company="microsoft" style="--tog-color:#7FBA00"><span class="tog-dot"></span>Microsoft<span class="tog-val tabnum">$145B</span></button>
+        <button class="capex-tog active" data-company="meta" style="--tog-color:#0668E1"><span class="tog-dot"></span>Meta<span class="tog-val tabnum">$125B</span></button>
+        <button class="capex-tog active" data-company="oracle" style="--tog-color:#C74634"><span class="tog-dot"></span>Oracle<span class="tog-val tabnum">$50B</span></button>
+      </div>
+
+      <!-- Stacked area chart -->
+      <div class="capex-chart-wrap">
+        <canvas id="capexChart"></canvas>
+        <!-- GPT-4 annotation rendered by JS -->
+      </div>
+
+      <!-- The Gap toggle -->
+      <div class="capex-gap-toggle">
+        <label class="gap-switch">
+          <input type="checkbox" id="gapToggle">
+          <span class="gap-slider"></span>
+        </label>
+        <span class="gap-label">Show AI Revenue vs CapEx gap</span>
+      </div>
+
+      <span class="stat-source">Source: SEC filings, company earnings, Goldman Sachs, Epoch AI, CNBC, Introl &mdash; 2026 figures are guidance midpoints</span>
+    </div>
+
+    <!-- ═══ FCF CRUNCH + DEBT ═══ -->
+    <div class="capex-crunch anim-fade">
+      <h3 class="subsection-title">THE CASH CRUNCH</h3>
+      <p style="color:#A0A8BC;font-size:0.88rem;margin:0 0 1.25rem;max-width:680px">2026 CapEx will consume <strong style="color:#E8837C" class="tabnum">~94%</strong> of operating cash flows — vs a 10-year average of 40%. For the first time, hyperscalers collectively hold more debt than cash.</p>
+
+      <div class="fcf-cards">
+        <div class="fcf-card">
+          <div class="fcf-ring-wrap"><canvas class="fcf-ring" data-pct="100" data-color="#FF9900"></canvas></div>
+          <span class="fcf-company">Amazon</span>
+          <span class="fcf-from tabnum">$11.2B</span>
+          <span class="fcf-arrow">&darr;</span>
+          <span class="fcf-to tabnum" style="color:#E8837C">&minus;$17B</span>
+          <span class="fcf-delta">NEGATIVE</span>
+        </div>
+        <div class="fcf-card">
+          <div class="fcf-ring-wrap"><canvas class="fcf-ring" data-pct="89" data-color="#4285F4"></canvas></div>
+          <span class="fcf-company">Alphabet</span>
+          <span class="fcf-from tabnum">$73.3B</span>
+          <span class="fcf-arrow">&darr;</span>
+          <span class="fcf-to tabnum" style="color:#E8837C">$8.2B</span>
+          <span class="fcf-delta">&minus;89%</span>
+        </div>
+        <div class="fcf-card">
+          <div class="fcf-ring-wrap"><canvas class="fcf-ring" data-pct="90" data-color="#0668E1"></canvas></div>
+          <span class="fcf-company">Meta</span>
+          <span class="fcf-from tabnum">$43.6B</span>
+          <span class="fcf-arrow">&darr;</span>
+          <span class="fcf-to tabnum" style="color:#E8837C">$4.4B</span>
+          <span class="fcf-delta">&minus;90%</span>
+        </div>
+        <div class="fcf-card">
+          <div class="fcf-ring-wrap"><canvas class="fcf-ring" data-pct="28" data-color="#7FBA00"></canvas></div>
+          <span class="fcf-company">Microsoft</span>
+          <span class="fcf-from tabnum">$57B</span>
+          <span class="fcf-arrow">&darr;</span>
+          <span class="fcf-to tabnum" style="color:#F5C542">$41B</span>
+          <span class="fcf-delta">&minus;28%</span>
+        </div>
+      </div>
+      <span class="stat-source">Source: Morgan Stanley, BofA, Pivotal Research, Barclays &mdash; 2025 actual vs 2026 projected FCF</span>
+    </div>
+
+    <!-- Debt ticker -->
+    <div class="debt-ticker anim-fade">
+      <div class="debt-ticker-inner">
+        <div class="debt-stat">
+          <span class="debt-num tabnum">$121B+</span>
+          <span class="debt-label">New tech debt raised in 2025</span>
+        </div>
+        <div class="debt-divider"></div>
+        <div class="debt-stat">
+          <span class="debt-num tabnum">$1.5T</span>
+          <span class="debt-label">Projected tech debt issuance ahead</span>
+        </div>
+        <div class="debt-divider"></div>
+        <div class="debt-stat">
+          <span class="debt-num tabnum">$12.6B</span>
+          <span class="debt-label">Q4 buybacks — lowest since 2018</span>
+        </div>
+      </div>
+      <span class="stat-source">Source: JP Morgan, Morgan Stanley, Wolf Street, 2025–2026</span>
     </div>
 
     <div class="neocloud-grid anim-fade">
@@ -2019,7 +2110,7 @@
     <!-- AI Factory Concept -->
     <div class="anim-fade" style="margin:2.5rem 0;padding:1.75rem 2rem;background:linear-gradient(135deg,rgba(245,197,66,0.06),rgba(78,205,196,0.04));border:1px solid rgba(245,197,66,0.15);border-radius:14px">
       <h3 style="color:#F5C542;margin:0 0 0.5rem;font-size:1.05rem;font-weight:700;letter-spacing:0.06em">THE AI FACTORY</h3>
-      <p style="color:#C8CCD4;font-size:0.92rem;margin:0 0 0.75rem;line-height:1.55">Jensen's core reframe: data centers aren't storage facilities anymore. <strong style="color:#F5C542">"Electrons go in, tokens come out."</strong> The $650B CapEx sprint is building the world's first generation of AI factories — purpose-built for inference at scale.</p>
+      <p style="color:#C8CCD4;font-size:0.92rem;margin:0 0 0.75rem;line-height:1.55">Jensen's core reframe: data centers aren't storage facilities anymore. <strong style="color:#F5C542">"Electrons go in, tokens come out."</strong> The $700B CapEx sprint is building the world's first generation of AI factories — purpose-built for inference at scale.</p>
       <div style="display:flex;gap:0.75rem;flex-wrap:wrap">
         <span style="display:inline-block;padding:0.4rem 0.85rem;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:6px;color:#A0A8BC;font-size:0.8rem"><strong style="color:#4ECDC4">Omniverse DSX</strong> — Gigascale factory blueprint</span>
         <span style="display:inline-block;padding:0.4rem 0.85rem;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:6px;color:#A0A8BC;font-size:0.8rem"><strong style="color:#4ECDC4">DSX Flex</strong> — Modular scaling</span>
