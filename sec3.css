@@ -133,42 +133,12 @@
   max-width: 520px;
 }
 
-/* --- Detail Tracks (OSS / Funded) --- */
-.aa-detail-tracks {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-bottom: 14px;
-}
-
-.aa-track {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.aa-track-label {
-  font-family: var(--font);
-  font-size: 0.65rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  padding: 0;
-}
-
-.aa-track--oss .aa-track-label {
-  color: var(--accent-teal);
-}
-
-.aa-track--funded .aa-track-label {
-  color: var(--accent-gold);
-}
-
 /* --- Detail: Tool Chips --- */
 .aa-detail-tools {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+  margin-bottom: 14px;
 }
 
 .aa-tool-chip {
