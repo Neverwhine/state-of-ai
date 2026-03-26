@@ -43,6 +43,7 @@
 .aa-layer--expanded {
   background: var(--bg-card-hover);
   box-shadow: var(--shadow);
+  overflow: visible;
 }
 
 .aa-layer-bar {
@@ -116,9 +117,51 @@
 }
 
 .aa-layer--expanded .aa-layer-detail {
-  max-height: 300px;
+  max-height: 600px;
   padding: 16px 18px 20px;
   border-top-color: rgba(255, 255, 255, 0.06);
+  overflow: visible;
+}
+
+/* --- Stack Sub-heading --- */
+.aa-stack-sub {
+  font-family: var(--font);
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  text-align: center;
+  margin: -0.75rem auto 1.5rem;
+  max-width: 520px;
+}
+
+/* --- Detail Tracks (OSS / Funded) --- */
+.aa-detail-tracks {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.aa-track {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.aa-track-label {
+  font-family: var(--font);
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0;
+}
+
+.aa-track--oss .aa-track-label {
+  color: var(--accent-teal);
+}
+
+.aa-track--funded .aa-track-label {
+  color: var(--accent-gold);
 }
 
 /* --- Detail: Tool Chips --- */
@@ -126,7 +169,6 @@
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin-bottom: 14px;
 }
 
 .aa-tool-chip {
@@ -137,6 +179,57 @@
   padding: 5px 12px;
   border-radius: 20px;
   white-space: nowrap;
+  position: relative;
+}
+
+/* --- Download count inside chip --- */
+.aa-chip-dl {
+  color: var(--text-secondary);
+  font-size: 0.68rem;
+  margin-left: 4px;
+  opacity: 0.8;
+}
+
+/* --- Funded company chip --- */
+.aa-tool-chip--funded {
+  border: 1px solid rgba(245, 197, 66, 0.25);
+  background: rgba(245, 197, 66, 0.06);
+  cursor: default;
+}
+
+.aa-tool-chip--funded:hover {
+  background: rgba(245, 197, 66, 0.12);
+  border-color: rgba(245, 197, 66, 0.4);
+}
+
+/* --- Funded tooltip --- */
+.aa-fund-tip {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1a1e2e;
+  border: 1px solid rgba(245, 197, 66, 0.3);
+  border-radius: 8px;
+  padding: 10px 14px;
+  min-width: 220px;
+  max-width: 320px;
+  white-space: normal;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  z-index: 100;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  pointer-events: none;
+}
+
+.aa-fund-tip strong {
+  color: var(--accent-gold);
+}
+
+.aa-tool-chip--funded:hover .aa-fund-tip {
+  display: block;
 }
 
 .aa-tool-chip--dvc {

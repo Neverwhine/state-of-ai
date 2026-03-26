@@ -1401,8 +1401,15 @@
     <h2 class="section-headline anim-fade">ANATOMY OF AN <span class="accent-teal">AI AGENT</span></h2>
     <p class="aa-section-sub anim-fade">Every agentic product — from Cursor to Harvey to Glean — is built on the same fundamental layers.</p>
 
-    <!-- ═══ BLOCK 1: THE 7-LAYER AGENT STACK ═══ -->
+    <!-- ═══ THE AGENT STACK: Architecture × Ecosystem × Funding ═══ -->
+    <div class="asc-hero-stat anim-fade">
+      <div class="asc-hero-num"><span class="big tabnum">$1B+</span><span class="label">Combined funding across agent primitives</span></div>
+      <div class="asc-hero-num" style="--accent: #F5C542"><span class="big tabnum" style="color:#F5C542">18 mo</span><span class="label">Most of this infrastructure didn't exist before</span></div>
+      <div class="asc-hero-num" style="--accent: #4A90D9"><span class="big tabnum" style="color:#4A90D9">88%</span><span class="label">of Fortune 100 use E2B sandboxes</span></div>
+    </div>
+
     <h3 class="subsection-title anim-fade">THE 7-LAYER AGENT STACK</h3>
+    <p class="aa-stack-sub anim-fade">Click any layer to explore open-source tools, funded companies, and key data.</p>
     <div class="aa-stack anim-fade">
 
       <!-- Layer 1: UI / Frontend -->
@@ -1420,17 +1427,22 @@
           </svg>
         </div>
         <div class="aa-layer-detail">
-          <div class="aa-detail-tools">
-            <span class="aa-tool-chip aa-tool-chip--dvc">CopilotKit / AG-UI <span class="aa-dvc-badge">DVC</span></span>
-            <span class="aa-tool-chip">Vercel AI SDK</span>
-            <span class="aa-tool-chip">Streamlit</span>
-            <span class="aa-tool-chip">Gradio</span>
+          <div class="aa-detail-tracks">
+            <div class="aa-track aa-track--oss">
+              <span class="aa-track-label">Open Source</span>
+              <div class="aa-detail-tools">
+                <span class="aa-tool-chip aa-tool-chip--dvc">CopilotKit <span class="aa-stars tabnum">29.3K ★</span> <span class="aa-chip-dl tabnum">515K npm/mo</span> <span class="aa-dvc-badge">DVC</span></span>
+                <span class="aa-tool-chip">Vercel AI SDK <span class="aa-stars tabnum">22.6K ★</span> <span class="aa-chip-dl tabnum">36.5M npm/mo</span></span>
+                <span class="aa-tool-chip aa-tool-chip--dvc">AG-UI <span class="aa-stars tabnum">12.4K ★</span> <span class="aa-chip-dl tabnum">1.21M npm/mo</span> <span class="aa-dvc-badge">DVC</span></span>
+                <span class="aa-tool-chip">Streamlit</span>
+                <span class="aa-tool-chip">Gradio</span>
+              </div>
+            </div>
           </div>
           <div class="aa-detail-stat">
             <span class="aa-stat-number tabnum">12.4K</span>
-            <span class="aa-stat-label">GitHub ★ in &lt;1 year — AG-UI</span>
+            <span class="aa-stat-label">GitHub ★ in &lt;1 year — AG-UI is becoming the standard event protocol for agent-to-user interaction.</span>
           </div>
-          <p class="aa-detail-note">AG-UI is becoming the standard event protocol for agent-to-user interaction.</p>
         </div>
       </div>
 
@@ -1451,17 +1463,32 @@
           </svg>
         </div>
         <div class="aa-layer-detail">
-          <div class="aa-detail-tools">
-            <span class="aa-tool-chip">LangGraph <span class="aa-stars tabnum">129K ★</span></span>
-            <span class="aa-tool-chip">CrewAI</span>
-            <span class="aa-tool-chip">AutoGen</span>
-            <span class="aa-tool-chip">Semantic Kernel</span>
-            <span class="aa-tool-chip">Pydantic AI</span>
+          <div class="aa-detail-tracks">
+            <div class="aa-track aa-track--oss">
+              <span class="aa-track-label">Open Source</span>
+              <div class="aa-detail-tools">
+                <span class="aa-tool-chip">LangGraph <span class="aa-stars tabnum">129K ★</span> <span class="aa-chip-dl tabnum">223.6M PyPI/mo</span></span>
+                <span class="aa-tool-chip">CrewAI</span>
+                <span class="aa-tool-chip">AutoGen</span>
+                <span class="aa-tool-chip">Semantic Kernel</span>
+                <span class="aa-tool-chip">Pydantic AI</span>
+              </div>
+            </div>
+            <div class="aa-track aa-track--funded">
+              <span class="aa-track-label">Funded Companies</span>
+              <div class="aa-detail-tools">
+                <span class="aa-tool-chip aa-tool-chip--funded">Sixtyfour
+                  <span class="aa-fund-tip">Multi-agent orchestration startup</span>
+                </span>
+                <span class="aa-tool-chip aa-tool-chip--funded">Kapso
+                  <span class="aa-fund-tip">Enterprise agent workflow platform</span>
+                </span>
+              </div>
+            </div>
           </div>
           <div class="aa-detail-stat">
-            <span class="aa-stat-label">Most serious startups eventually build proprietary orchestration</span>
+            <span class="aa-stat-label">ReAct loops → multi-agent systems with planners, workers, verifiers. Most serious startups eventually build proprietary orchestration.</span>
           </div>
-          <p class="aa-detail-note">ReAct loops → multi-agent systems with planners, workers, verifiers.</p>
         </div>
       </div>
 
@@ -1481,16 +1508,31 @@
           </svg>
         </div>
         <div class="aa-layer-detail">
-          <div class="aa-detail-tools">
-            <span class="aa-tool-chip aa-tool-chip--dvc">mem0 <span class="aa-stars tabnum">49.6K ★</span> <span class="aa-dvc-badge">DVC</span></span>
-            <span class="aa-tool-chip">Zep</span>
-            <span class="aa-tool-chip">Letta / MemGPT</span>
+          <div class="aa-detail-tracks">
+            <div class="aa-track aa-track--oss">
+              <span class="aa-track-label">Open Source</span>
+              <div class="aa-detail-tools">
+                <span class="aa-tool-chip aa-tool-chip--dvc">mem0 <span class="aa-stars tabnum">49.6K ★</span> <span class="aa-chip-dl tabnum">2.19M PyPI/mo</span> <span class="aa-dvc-badge">DVC</span></span>
+                <span class="aa-tool-chip">Letta / MemGPT</span>
+                <span class="aa-tool-chip">Zep</span>
+              </div>
+            </div>
+            <div class="aa-track aa-track--funded">
+              <span class="aa-track-label">Funded Companies</span>
+              <div class="aa-detail-tools">
+                <span class="aa-tool-chip aa-tool-chip--funded aa-tool-chip--dvc">Mem0 <span class="aa-dvc-badge">DVC</span>
+                  <span class="aa-fund-tip"><strong>$24M raised</strong> &middot; YC, Peak XV, GitHub Fund<br>186M API calls/Q3 (5&times; in 6 months). AWS exclusive memory provider for Agent SDK.</span>
+                </span>
+                <span class="aa-tool-chip aa-tool-chip--funded">Kite
+                  <span class="aa-fund-tip">Memory &amp; context management for AI agents</span>
+                </span>
+              </div>
+            </div>
           </div>
           <div class="aa-detail-stat">
             <span class="aa-stat-number tabnum">+26%</span>
-            <span class="aa-stat-label">accuracy over OpenAI Memory, 90% less tokens</span>
+            <span class="aa-stat-label">accuracy over OpenAI Memory, 90% less tokens. mem0 externalizes memory — works with any stack.</span>
           </div>
-          <p class="aa-detail-note">mem0 externalizes memory from the agent framework — works with any stack.</p>
         </div>
       </div>
 
@@ -1508,17 +1550,39 @@
           </svg>
         </div>
         <div class="aa-layer-detail">
-          <div class="aa-detail-tools">
-            <span class="aa-tool-chip">MCP <span class="aa-stars tabnum">110.8M</span> monthly PyPI</span>
-            <span class="aa-tool-chip">A2A <span class="aa-stars tabnum">22.5K ★</span></span>
-            <span class="aa-tool-chip">Function Calling</span>
-            <span class="aa-tool-chip">Browser Use</span>
-            <span class="aa-tool-chip">Composio</span>
+          <div class="aa-detail-tracks">
+            <div class="aa-track aa-track--oss">
+              <span class="aa-track-label">Protocols &amp; Tools</span>
+              <div class="aa-detail-tools">
+                <span class="aa-tool-chip">MCP <span class="aa-chip-dl tabnum">110.8M PyPI/mo</span> <span class="aa-chip-dl tabnum">85.6M npm/mo</span></span>
+                <span class="aa-tool-chip">A2A <span class="aa-stars tabnum">22.5K ★</span> <span class="aa-chip-dl tabnum">4.36M PyPI/mo</span></span>
+                <span class="aa-tool-chip">Function Calling</span>
+                <span class="aa-tool-chip">Browser Use</span>
+              </div>
+            </div>
+            <div class="aa-track aa-track--funded">
+              <span class="aa-track-label">Funded Companies</span>
+              <div class="aa-detail-tools">
+                <span class="aa-tool-chip aa-tool-chip--funded">Browserbase
+                  <span class="aa-fund-tip"><strong>$67.5M raised</strong> &middot; $300M val at 16 months<br>1,000+ customers, 50M sessions. Angels: Patrick Collison (Stripe), Jeff Lawson (Twilio).</span>
+                </span>
+                <span class="aa-tool-chip aa-tool-chip--funded">Composio
+                  <span class="aa-fund-tip"><strong>$29M raised</strong> &middot; 100K+ developers<br>200+ paying companies. Universal MCP Gateway with reinforcement learning.</span>
+                </span>
+                <span class="aa-tool-chip aa-tool-chip--funded">Firecrawl
+                  <span class="aa-fund-tip"><strong>$14.5M raised</strong><br>AI web data extraction. Shopify CEO invested personally after being a user.</span>
+                </span>
+                <span class="aa-tool-chip aa-tool-chip--funded">Exa</span>
+                <span class="aa-tool-chip aa-tool-chip--funded">Browser Use</span>
+                <span class="aa-tool-chip aa-tool-chip--funded">Hyperbrowser</span>
+                <span class="aa-tool-chip aa-tool-chip--funded">Sponge</span>
+                <span class="aa-tool-chip aa-tool-chip--funded">Orthogonal</span>
+              </div>
+            </div>
           </div>
           <div class="aa-detail-stat">
-            <span class="aa-stat-label">"MCP is becoming the REST of the AI era"</span>
+            <span class="aa-stat-label">"MCP is becoming the REST of the AI era" — MCP for tools, A2A for agent-to-agent, AG-UI for agent-to-user.</span>
           </div>
-          <p class="aa-detail-note">MCP for tools, A2A for agent-to-agent, AG-UI for agent-to-user.</p>
         </div>
       </div>
 
@@ -1538,21 +1602,25 @@
           </svg>
         </div>
         <div class="aa-layer-detail">
-          <div class="aa-detail-tools">
-            <span class="aa-tool-chip">OpenAI</span>
-            <span class="aa-tool-chip">Anthropic</span>
-            <span class="aa-tool-chip">Google</span>
-            <span class="aa-tool-chip">xAI</span>
-            <span class="aa-tool-chip">Meta / Llama</span>
-            <span class="aa-tool-chip">DeepSeek</span>
-            <span class="aa-tool-chip">Mistral</span>
+          <div class="aa-detail-tracks">
+            <div class="aa-track aa-track--oss">
+              <span class="aa-track-label">Major Providers</span>
+              <div class="aa-detail-tools">
+                <span class="aa-tool-chip">OpenAI</span>
+                <span class="aa-tool-chip">Anthropic</span>
+                <span class="aa-tool-chip">Google</span>
+                <span class="aa-tool-chip">xAI</span>
+                <span class="aa-tool-chip">Meta / Llama</span>
+                <span class="aa-tool-chip">DeepSeek</span>
+                <span class="aa-tool-chip">Mistral</span>
+              </div>
+            </div>
           </div>
           <div class="aa-detail-stat">
             <span class="aa-stat-number tabnum">37%</span>
-            <span class="aa-stat-label">of enterprises use 5+ models in production</span>
+            <span class="aa-stat-label">of enterprises use 5+ models in production. Multi-model routing is standard — Harvey uses 6+ providers.</span>
             <span class="stat-source">Source: a16z</span>
           </div>
-          <p class="aa-detail-note">Multi-model routing is now standard — Harvey uses 6+ providers.</p>
         </div>
       </div>
 
@@ -1571,50 +1639,86 @@
           </svg>
         </div>
         <div class="aa-layer-detail">
-          <div class="aa-detail-tools">
-            <span class="aa-tool-chip">E2B</span>
-            <span class="aa-tool-chip">Daytona</span>
-            <span class="aa-tool-chip">WebContainers</span>
-            <span class="aa-tool-chip">Cloud VMs</span>
-            <span class="aa-tool-chip">Local Runtime</span>
-            <span class="aa-tool-chip">Modal</span>
-            <span class="aa-tool-chip" style="border-color:#76B947">Dynamo <span class="aa-stars" style="color:#76B947">NVIDIA OSS</span></span>
+          <div class="aa-detail-tracks">
+            <div class="aa-track aa-track--oss">
+              <span class="aa-track-label">Open Source</span>
+              <div class="aa-detail-tools">
+                <span class="aa-tool-chip">E2B</span>
+                <span class="aa-tool-chip">Daytona</span>
+                <span class="aa-tool-chip">WebContainers</span>
+                <span class="aa-tool-chip">Modal</span>
+                <span class="aa-tool-chip" style="border-color:#76B947">Dynamo <span class="aa-stars" style="color:#76B947">NVIDIA OSS</span></span>
+              </div>
+            </div>
+            <div class="aa-track aa-track--funded">
+              <span class="aa-track-label">Funded Companies</span>
+              <div class="aa-detail-tools">
+                <span class="aa-tool-chip aa-tool-chip--funded">E2B
+                  <span class="aa-fund-tip"><strong>$32M raised</strong> &middot; Insight Partners<br>88% of Fortune 100 signed up. Cloud sandboxes — the de facto standard.</span>
+                </span>
+                <span class="aa-tool-chip aa-tool-chip--funded">Daytona
+                  <span class="aa-fund-tip">Open-source standardized dev environments &amp; sandboxes for AI agents</span>
+                </span>
+              </div>
+            </div>
           </div>
           <div class="aa-detail-stat">
-            <span class="aa-stat-label">3 patterns: local, cloud sandbox, browser-native</span>
+            <span class="aa-stat-label">3 patterns: local, cloud sandbox, browser-native. Cursor = local, Devin = cloud, Bolt = browser. <strong>Dynamo</strong> (NVIDIA OSS): 30&times; inference throughput.</span>
           </div>
-          <p class="aa-detail-note">The execution choice defines the product: Cursor = local, Devin = cloud, Bolt = browser. <strong>Dynamo</strong> (NVIDIA, open-source): inference framework delivering 30× throughput, supports DeepSeek-R1 — Jensen's infrastructure play for the inference era.</p>
         </div>
       </div>
 
-      <!-- Layer 7: Evaluation / Monitoring -->
+      <!-- Layer 7: Voice, Communication & Monitoring -->
       <div class="aa-layer" data-layer="7" style="--layer-color: #95A5A6">
         <div class="aa-layer-bar">
           <span class="aa-layer-num">7</span>
           <svg class="aa-layer-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path d="M22 12h-4l-3 9L9 3l-3 9H2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          <span class="aa-layer-name">Evaluation / Monitoring</span>
-          <span class="aa-layer-tagline">Observability and quality</span>
+          <span class="aa-layer-name">Eval, Voice &amp; Communication</span>
+          <span class="aa-layer-tagline">Observability, quality, and agent output</span>
           <svg class="aa-layer-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
             <path d="M6 8l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </div>
         <div class="aa-layer-detail">
-          <div class="aa-detail-tools">
-            <span class="aa-tool-chip">LangSmith</span>
-            <span class="aa-tool-chip">Phoenix / Arize</span>
-            <span class="aa-tool-chip">OpenTelemetry</span>
-            <span class="aa-tool-chip">Braintrust</span>
+          <div class="aa-detail-tracks">
+            <div class="aa-track aa-track--oss">
+              <span class="aa-track-label">Observability</span>
+              <div class="aa-detail-tools">
+                <span class="aa-tool-chip">LangSmith</span>
+                <span class="aa-tool-chip">Phoenix / Arize</span>
+                <span class="aa-tool-chip">OpenTelemetry</span>
+                <span class="aa-tool-chip">Braintrust</span>
+              </div>
+            </div>
+            <div class="aa-track aa-track--funded">
+              <span class="aa-track-label">Voice &amp; Communication</span>
+              <div class="aa-detail-tools">
+                <span class="aa-tool-chip aa-tool-chip--funded">ElevenLabs
+                  <span class="aa-fund-tip"><strong>$781M raised</strong> &middot; $11B val<br>$330M ARR (20→10→5 months per $100M). Faster to $330M than Twilio in 8 years. Sequoia-backed.</span>
+                </span>
+                <span class="aa-tool-chip aa-tool-chip--funded">Vapi
+                  <span class="aa-fund-tip"><strong>$20M raised</strong> &middot; $130M val &middot; 20 employees<br>$8M ARR &middot; $400K rev/employee. 500K+ developers. Bessemer-backed.</span>
+                </span>
+                <span class="aa-tool-chip aa-tool-chip--funded">AgentPhone</span>
+                <span class="aa-tool-chip aa-tool-chip--funded">AgentMail</span>
+              </div>
+            </div>
           </div>
           <div class="aa-detail-stat">
-            <span class="aa-stat-label">Best startups treat eval as product, not afterthought</span>
+            <span class="aa-stat-label">Best startups treat eval as product, not afterthought. Harvey: BigLaw Bench. Perplexity: search_evals.</span>
           </div>
-          <p class="aa-detail-note">Harvey: BigLaw Bench. Perplexity: search_evals. Sierra: provider health monitoring.</p>
         </div>
       </div>
 
     </div>
+
+    <div class="asc-quote anim-fade">
+      &ldquo;Stitch all of these primitives together, and what emerges isn&rsquo;t a chatbot &mdash; it&rsquo;s a digital coworker more human than AI.&rdquo;
+      <cite>&mdash; @shivsakhuja</cite>
+    </div>
+    <span class="stat-source" style="display:block;margin-top:0.5rem;text-align:center">Sources: Crunchbase, TechCrunch, company announcements, GitHub, npm, PyPI &middot; 2025&ndash;2026</span>
 
     <!-- ═══ BLOCK 2: STARTUP VS ENTERPRISE ═══ -->
     <h3 class="subsection-title anim-fade">HOW THEY BUILD DIFFERENTLY</h3>
@@ -1672,185 +1776,8 @@
       </div>
     </div>
 
-    <!-- ═══ BLOCK 3: OSS AGENT ECOSYSTEM ═══ -->
-    <h3 class="subsection-title anim-fade">THE OSS AGENT ECOSYSTEM</h3>
-    <div class="aa-oss-grid anim-fade">
 
-      <!-- Orchestration -->
-      <div class="aa-oss-card">
-        <div class="aa-oss-header">
-          <h4 class="aa-oss-name">LangChain / LangGraph</h4>
-          <span class="aa-oss-group">Orchestration</span>
-        </div>
-        <div class="aa-oss-badges">
-          <span class="aa-badge aa-badge--stars"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 1l1.5 3.1L11 4.5 8.5 7l.6 3.5L6 8.8 2.9 10.5l.6-3.5L1 4.5l3.5-.4L6 1z" fill="var(--accent-gold)"/></svg> <span class="tabnum">129K</span></span>
-          <span class="aa-badge aa-badge--dl"><span class="tabnum">223.6M</span> PyPI/mo</span>
-        </div>
-        <p class="aa-oss-desc">The dominant orchestration framework — graph-based agent workflows.</p>
-      </div>
-
-      <div class="aa-oss-card">
-        <div class="aa-oss-header">
-          <h4 class="aa-oss-name">CrewAI</h4>
-          <span class="aa-oss-group">Orchestration</span>
-        </div>
-        <div class="aa-oss-badges">
-          <span class="aa-badge aa-badge--stars"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 1l1.5 3.1L11 4.5 8.5 7l.6 3.5L6 8.8 2.9 10.5l.6-3.5L1 4.5l3.5-.4L6 1z" fill="var(--accent-gold)"/></svg> Popular</span>
-        </div>
-        <p class="aa-oss-desc">Role-based multi-agent orchestration with simple abstractions.</p>
-      </div>
-
-      <div class="aa-oss-card">
-        <div class="aa-oss-header">
-          <h4 class="aa-oss-name">AutoGen</h4>
-          <span class="aa-oss-group">Orchestration</span>
-        </div>
-        <div class="aa-oss-badges">
-          <span class="aa-badge aa-badge--stars"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 1l1.5 3.1L11 4.5 8.5 7l.6 3.5L6 8.8 2.9 10.5l.6-3.5L1 4.5l3.5-.4L6 1z" fill="var(--accent-gold)"/></svg> Popular</span>
-        </div>
-        <p class="aa-oss-desc">Microsoft's multi-agent conversation framework.</p>
-      </div>
-
-      <!-- Memory -->
-      <div class="aa-oss-card aa-oss-card--dvc">
-        <div class="aa-oss-header">
-          <h4 class="aa-oss-name">mem0</h4>
-          <span class="aa-oss-group">Memory</span>
-          <span class="aa-dvc-badge">DVC Portfolio</span>
-        </div>
-        <div class="aa-oss-badges">
-          <span class="aa-badge aa-badge--stars"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 1l1.5 3.1L11 4.5 8.5 7l.6 3.5L6 8.8 2.9 10.5l.6-3.5L1 4.5l3.5-.4L6 1z" fill="var(--accent-gold)"/></svg> <span class="tabnum">49.6K</span></span>
-          <span class="aa-badge aa-badge--dl"><span class="tabnum">2.19M</span> PyPI/mo</span>
-          <span class="aa-badge aa-badge--raised"><span class="tabnum">$25.5M</span> raised</span>
-        </div>
-        <p class="aa-oss-desc">Intelligent memory layer for AI agents — works with any stack.</p>
-      </div>
-
-      <div class="aa-oss-card">
-        <div class="aa-oss-header">
-          <h4 class="aa-oss-name">Letta / MemGPT</h4>
-          <span class="aa-oss-group">Memory</span>
-        </div>
-        <div class="aa-oss-badges">
-          <span class="aa-badge aa-badge--stars"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 1l1.5 3.1L11 4.5 8.5 7l.6 3.5L6 8.8 2.9 10.5l.6-3.5L1 4.5l3.5-.4L6 1z" fill="var(--accent-gold)"/></svg> Popular</span>
-        </div>
-        <p class="aa-oss-desc">Long-term memory management via virtual context windows.</p>
-      </div>
-
-      <!-- Protocols -->
-      <div class="aa-oss-card">
-        <div class="aa-oss-header">
-          <h4 class="aa-oss-name">MCP</h4>
-          <span class="aa-oss-group">Protocol</span>
-        </div>
-        <div class="aa-oss-badges">
-          <span class="aa-badge aa-badge--stars"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 1l1.5 3.1L11 4.5 8.5 7l.6 3.5L6 8.8 2.9 10.5l.6-3.5L1 4.5l3.5-.4L6 1z" fill="var(--accent-gold)"/></svg> <span class="tabnum">7.5K</span></span>
-          <span class="aa-badge aa-badge--dl"><span class="tabnum">110.8M</span> PyPI/mo</span>
-          <span class="aa-badge aa-badge--dl"><span class="tabnum">85.6M</span> npm/mo</span>
-        </div>
-        <p class="aa-oss-desc">Model Context Protocol — the REST of AI. Agent ↔ Tools standard.</p>
-      </div>
-
-      <div class="aa-oss-card">
-        <div class="aa-oss-header">
-          <h4 class="aa-oss-name">A2A</h4>
-          <span class="aa-oss-group">Protocol</span>
-        </div>
-        <div class="aa-oss-badges">
-          <span class="aa-badge aa-badge--stars"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 1l1.5 3.1L11 4.5 8.5 7l.6 3.5L6 8.8 2.9 10.5l.6-3.5L1 4.5l3.5-.4L6 1z" fill="var(--accent-gold)"/></svg> <span class="tabnum">22.5K</span></span>
-          <span class="aa-badge aa-badge--dl"><span class="tabnum">4.36M</span> PyPI/mo</span>
-        </div>
-        <p class="aa-oss-desc">Agent-to-Agent protocol — cross-org agent collaboration. Google-led.</p>
-      </div>
-
-      <div class="aa-oss-card aa-oss-card--dvc">
-        <div class="aa-oss-header">
-          <h4 class="aa-oss-name">AG-UI</h4>
-          <span class="aa-oss-group">Protocol</span>
-          <span class="aa-dvc-badge">DVC Portfolio</span>
-        </div>
-        <div class="aa-oss-badges">
-          <span class="aa-badge aa-badge--stars"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 1l1.5 3.1L11 4.5 8.5 7l.6 3.5L6 8.8 2.9 10.5l.6-3.5L1 4.5l3.5-.4L6 1z" fill="var(--accent-gold)"/></svg> <span class="tabnum">12.4K</span></span>
-          <span class="aa-badge aa-badge--dl"><span class="tabnum">1.21M</span> npm/mo</span>
-        </div>
-        <p class="aa-oss-desc">Agent-to-User Interface protocol — CopilotKit-led open standard.</p>
-      </div>
-
-      <!-- UI / Frontend -->
-      <div class="aa-oss-card aa-oss-card--dvc">
-        <div class="aa-oss-header">
-          <h4 class="aa-oss-name">CopilotKit</h4>
-          <span class="aa-oss-group">UI / Frontend</span>
-          <span class="aa-dvc-badge">DVC Portfolio</span>
-        </div>
-        <div class="aa-oss-badges">
-          <span class="aa-badge aa-badge--stars"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 1l1.5 3.1L11 4.5 8.5 7l.6 3.5L6 8.8 2.9 10.5l.6-3.5L1 4.5l3.5-.4L6 1z" fill="var(--accent-gold)"/></svg> <span class="tabnum">29.3K</span></span>
-          <span class="aa-badge aa-badge--dl"><span class="tabnum">515K</span> npm/mo</span>
-        </div>
-        <p class="aa-oss-desc">Open-source framework for building AI copilots into any app.</p>
-      </div>
-
-      <div class="aa-oss-card">
-        <div class="aa-oss-header">
-          <h4 class="aa-oss-name">Vercel AI SDK</h4>
-          <span class="aa-oss-group">UI / Frontend</span>
-        </div>
-        <div class="aa-oss-badges">
-          <span class="aa-badge aa-badge--stars"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 1l1.5 3.1L11 4.5 8.5 7l.6 3.5L6 8.8 2.9 10.5l.6-3.5L1 4.5l3.5-.4L6 1z" fill="var(--accent-gold)"/></svg> <span class="tabnum">22.6K</span></span>
-          <span class="aa-badge aa-badge--dl"><span class="tabnum">36.5M</span> npm/mo</span>
-        </div>
-        <p class="aa-oss-desc">Streaming AI UI components for React, Next.js, and Svelte.</p>
-      </div>
-
-      <!-- Execution -->
-      <div class="aa-oss-card">
-        <div class="aa-oss-header">
-          <h4 class="aa-oss-name">E2B</h4>
-          <span class="aa-oss-group">Execution</span>
-        </div>
-        <div class="aa-oss-badges">
-          <span class="aa-badge aa-badge--stars"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 1l1.5 3.1L11 4.5 8.5 7l.6 3.5L6 8.8 2.9 10.5l.6-3.5L1 4.5l3.5-.4L6 1z" fill="var(--accent-gold)"/></svg> Popular</span>
-        </div>
-        <p class="aa-oss-desc">Secure cloud sandboxes for AI-generated code execution.</p>
-      </div>
-
-      <div class="aa-oss-card">
-        <div class="aa-oss-header">
-          <h4 class="aa-oss-name">Daytona</h4>
-          <span class="aa-oss-group">Execution</span>
-        </div>
-        <div class="aa-oss-badges">
-          <span class="aa-badge aa-badge--stars"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 1l1.5 3.1L11 4.5 8.5 7l.6 3.5L6 8.8 2.9 10.5l.6-3.5L1 4.5l3.5-.4L6 1z" fill="var(--accent-gold)"/></svg> Popular</span>
-        </div>
-        <p class="aa-oss-desc">Open-source standardized development environments and sandboxes.</p>
-      </div>
-
-      <!-- Observability -->
-      <div class="aa-oss-card">
-        <div class="aa-oss-header">
-          <h4 class="aa-oss-name">LangSmith</h4>
-          <span class="aa-oss-group">Observability</span>
-        </div>
-        <div class="aa-oss-badges">
-          <span class="aa-badge aa-badge--stars">Commercial</span>
-        </div>
-        <p class="aa-oss-desc">End-to-end observability and evaluation platform for LLM apps.</p>
-      </div>
-
-      <div class="aa-oss-card">
-        <div class="aa-oss-header">
-          <h4 class="aa-oss-name">Phoenix / Arize</h4>
-          <span class="aa-oss-group">Observability</span>
-        </div>
-        <div class="aa-oss-badges">
-          <span class="aa-badge aa-badge--stars">OTel-native</span>
-        </div>
-        <p class="aa-oss-desc">OpenTelemetry-native LLM tracing and evaluation.</p>
-      </div>
-
-    </div>
-
-    <!-- ═══ BLOCK 4: THREE PROTOCOLS ═══ -->
+        <!-- ═══ BLOCK 4: THREE PROTOCOLS ═══ -->
     <h3 class="subsection-title anim-fade">THE THREE PROTOCOLS</h3>
     <div class="aa-protocols anim-fade">
 
@@ -1937,152 +1864,8 @@
 
     </div>
 
-  
-    <!-- ═══ BLOCK: THE AGENT SUPPLY CHAIN ═══ -->
-    <div class="asc-wrap anim-fade">
-      <h3 class="subsection-title">THE AGENT SUPPLY CHAIN</h3>
-      <p style="color:#A0A8BC;font-size:0.85rem;text-align:center;margin-bottom:1.5rem;max-width:640px;margin-left:auto;margin-right:auto">Real companies, real funding — mapped to each layer of the agent stack. Hover for details.</p>
 
-      <div class="asc-hero-stat">
-        <div class="asc-hero-num"><span class="big tabnum">$1B+</span><span class="label">Combined funding across top 10 primitives</span></div>
-        <div class="asc-hero-num" style="--accent: #F5C542"><span class="big tabnum" style="color:#F5C542">18 mo</span><span class="label">Most of this infrastructure didn't exist before</span></div>
-        <div class="asc-hero-num" style="--accent: #4A90D9"><span class="big tabnum" style="color:#4A90D9">88%</span><span class="label">of Fortune 100 use E2B sandboxes</span></div>
-      </div>
-
-      <div class="asc-grid">
-        <!-- Row 1: Voice & Communication -->
-        <div class="asc-row" style="--row-color: #E8837C">
-          <div class="asc-layer-label"><div class="asc-layer-icon"></div>Voice &amp; Comm</div>
-          <div class="asc-chips">
-            <div class="asc-chip" style="--row-color:#E8837C">
-              <span class="asc-chip-dot"></span>ElevenLabs
-              <div class="asc-tooltip">
-                <div class="tt-name">ElevenLabs</div>
-                <div class="tt-stat tabnum">$781M raised &middot; $11B valuation</div>
-                <div class="tt-stat tabnum">$330M ARR (20→10→5 months per $100M)</div>
-                <div class="tt-desc">Voice AI platform. Faster to $330M ARR than Twilio reached in 8 years. Sequoia led Series D.</div>
-              </div>
-            </div>
-            <div class="asc-chip" style="--row-color:#E8837C">
-              <span class="asc-chip-dot"></span>Vapi
-              <div class="asc-tooltip">
-                <div class="tt-name">Vapi</div>
-                <div class="tt-stat tabnum">$20M raised &middot; $130M val &middot; 20 employees</div>
-                <div class="tt-stat tabnum">$8M ARR &middot; $400K rev/employee</div>
-                <div class="tt-desc">Voice AI agent platform. 500K+ developers. Bessemer-backed.</div>
-              </div>
-            </div>
-            <div class="asc-chip" style="--row-color:#E8837C"><span class="asc-chip-dot"></span>AgentPhone</div>
-            <div class="asc-chip" style="--row-color:#E8837C"><span class="asc-chip-dot"></span>AgentMail</div>
-          </div>
-        </div>
-
-        <!-- Row 2: Browser & Web -->
-        <div class="asc-row" style="--row-color: #4A90D9">
-          <div class="asc-layer-label"><div class="asc-layer-icon"></div>Browser &amp; Web</div>
-          <div class="asc-chips">
-            <div class="asc-chip" style="--row-color:#4A90D9">
-              <span class="asc-chip-dot"></span>Browserbase
-              <div class="asc-tooltip">
-                <div class="tt-name">Browserbase</div>
-                <div class="tt-stat tabnum">$67.5M raised &middot; $300M val at 16 months</div>
-                <div class="tt-stat tabnum">1,000+ customers &middot; 50M sessions</div>
-                <div class="tt-desc">Headless browsers for AI agents. Angels: Patrick Collison (Stripe), Jeff Lawson (Twilio), Guillermo Rauch (Vercel).</div>
-              </div>
-            </div>
-            <div class="asc-chip" style="--row-color:#4A90D9"><span class="asc-chip-dot"></span>Browser Use</div>
-            <div class="asc-chip" style="--row-color:#4A90D9"><span class="asc-chip-dot"></span>Hyperbrowser</div>
-          </div>
-        </div>
-
-        <!-- Row 3: Data Extraction -->
-        <div class="asc-row" style="--row-color: #F5C542">
-          <div class="asc-layer-label"><div class="asc-layer-icon"></div>Data Layer</div>
-          <div class="asc-chips">
-            <div class="asc-chip" style="--row-color:#F5C542">
-              <span class="asc-chip-dot"></span>Firecrawl
-              <div class="asc-tooltip">
-                <div class="tt-name">Firecrawl</div>
-                <div class="tt-stat tabnum">$14.5M raised</div>
-                <div class="tt-desc">AI web data extraction. Shopify CEO Tobias L&uuml;tke invested personally after being a user.</div>
-              </div>
-            </div>
-            <div class="asc-chip" style="--row-color:#F5C542"><span class="asc-chip-dot"></span>Exa</div>
-          </div>
-        </div>
-
-        <!-- Row 4: Memory & Context -->
-        <div class="asc-row" style="--row-color: #4ECDC4">
-          <div class="asc-layer-label"><div class="asc-layer-icon"></div>Memory</div>
-          <div class="asc-chips">
-            <div class="asc-chip asc-chip--dvc" style="--row-color:#4ECDC4">
-              <span class="asc-chip-dot"></span>Mem0 <span class="badge badge-dvc badge-sm" style="font-size:0.55rem;padding:0.1rem 0.35rem;margin-left:0.15rem">DVC</span>
-              <div class="asc-tooltip">
-                <span class="tt-badge">DVC PORTFOLIO</span>
-                <div class="tt-name">Mem0</div>
-                <div class="tt-stat tabnum">$24M raised &middot; YC, Peak XV, GitHub Fund</div>
-                <div class="tt-stat tabnum">186M API calls/Q3 (5&times; in 6 months)</div>
-                <div class="tt-desc">Memory infrastructure for AI. AWS exclusive memory provider for Agent SDK. The "memory passport" for agents.</div>
-              </div>
-            </div>
-            <div class="asc-chip" style="--row-color:#4ECDC4"><span class="asc-chip-dot"></span>Kite</div>
-          </div>
-        </div>
-
-        <!-- Row 5: Compute / Sandboxes -->
-        <div class="asc-row" style="--row-color: #7C4DFF">
-          <div class="asc-layer-label"><div class="asc-layer-icon"></div>Compute</div>
-          <div class="asc-chips">
-            <div class="asc-chip" style="--row-color:#7C4DFF">
-              <span class="asc-chip-dot"></span>E2B
-              <div class="asc-tooltip">
-                <div class="tt-name">E2B</div>
-                <div class="tt-stat tabnum">$32M raised &middot; Insight Partners</div>
-                <div class="tt-stat tabnum">88% of Fortune 100 signed up</div>
-                <div class="tt-desc">Cloud sandboxes for AI agents. De facto open-source standard. Hundreds of millions of sessions.</div>
-              </div>
-            </div>
-            <div class="asc-chip" style="--row-color:#7C4DFF"><span class="asc-chip-dot"></span>Daytona</div>
-          </div>
-        </div>
-
-        <!-- Row 6: Tool Integration -->
-        <div class="asc-row" style="--row-color: #4ECDC4">
-          <div class="asc-layer-label"><div class="asc-layer-icon"></div>Integration</div>
-          <div class="asc-chips">
-            <div class="asc-chip" style="--row-color:#4ECDC4">
-              <span class="asc-chip-dot"></span>Composio
-              <div class="asc-tooltip">
-                <div class="tt-name">Composio</div>
-                <div class="tt-stat tabnum">$29M raised &middot; 100K+ developers</div>
-                <div class="tt-stat tabnum">200+ paying companies &middot; Universal MCP Gateway</div>
-                <div class="tt-desc">AI agent integration layer with reinforcement learning. Agents improve from real-world experience.</div>
-              </div>
-            </div>
-            <div class="asc-chip" style="--row-color:#4ECDC4"><span class="asc-chip-dot"></span>Sponge</div>
-            <div class="asc-chip" style="--row-color:#4ECDC4"><span class="asc-chip-dot"></span>Orthogonal</div>
-          </div>
-        </div>
-
-        <!-- Row 7: Orchestration -->
-        <div class="asc-row" style="--row-color: #F5C542">
-          <div class="asc-layer-label"><div class="asc-layer-icon"></div>Orchestration</div>
-          <div class="asc-chips">
-            <div class="asc-chip" style="--row-color:#F5C542"><span class="asc-chip-dot"></span>Sixtyfour</div>
-            <div class="asc-chip" style="--row-color:#F5C542"><span class="asc-chip-dot"></span>Kapso</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="asc-quote anim-fade">
-        &ldquo;Stitch all of these primitives together, and what emerges isn&rsquo;t a chatbot &mdash; it&rsquo;s a digital coworker more human than AI.&rdquo;
-        <cite>&mdash; @shivsakhuja</cite>
-      </div>
-      <span class="stat-source" style="display:block;margin-top:0.75rem">Sources: Crunchbase, TechCrunch, company announcements, 2025&ndash;2026</span>
-    </div>
-
-
-    <!-- So What -->
+        <!-- So What -->
     <div class="so-what-box anim-fade" style="margin-top:3rem;padding:2rem;background:linear-gradient(135deg,rgba(78,205,196,0.08),rgba(74,144,217,0.05));border:1px solid rgba(78,205,196,0.18);border-radius:14px">
       <h3 style="color:#4ECDC4;margin:0 0 0.75rem;font-size:1.05rem;font-weight:700;letter-spacing:0.04em">SO WHAT?</h3>
       <p style="color:#C8CCD4;font-size:0.95rem;line-height:1.6;margin:0 0 0.75rem">The enduring advantage in agents will not come from having a model. It will come from orchestrating the full system around the model: memory, tools, workflows, reliability, and distribution. <strong style="color:#F5C542">We have moved from prompt engineering to context engineering.</strong></p>
