@@ -1,0 +1,395 @@
+/* ============================================
+   SEC-13: DVC ECOSYSTEM — Logo Cloud
+   ============================================ */
+
+/* --- Filter Bar --- */
+.eco-filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.eco-filter-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1rem;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 100px;
+  color: #A0A8BC;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  white-space: nowrap;
+}
+
+.eco-filter-btn:hover {
+  background: rgba(255,255,255,0.08);
+  color: #E8E9ED;
+  border-color: rgba(255,255,255,0.15);
+}
+
+.eco-filter-btn.active {
+  background: rgba(78,205,196,0.12);
+  border-color: rgba(78,205,196,0.3);
+  color: #4ECDC4;
+}
+
+.eco-filter-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 5px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.08);
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #A0A8BC;
+  font-variant-numeric: tabular-nums;
+}
+
+.eco-filter-btn.active .eco-filter-badge {
+  background: rgba(78,205,196,0.2);
+  color: #4ECDC4;
+}
+
+/* --- Logo Cloud Grid --- */
+.eco-cloud {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 3rem;
+}
+
+/* --- Company Card Base --- */
+.eco-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem 0.5rem 0.85rem;
+  background: #383E52;
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 12px;
+  cursor: default;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.eco-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.eco-card:hover {
+  background: #3F4560;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+  border-color: rgba(255,255,255,0.12);
+}
+
+.eco-card:hover::before {
+  opacity: 1;
+}
+
+/* Hidden cards during filter */
+.eco-card.eco-hidden {
+  display: none;
+}
+
+/* --- Logo Circle --- */
+.eco-logo {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 0.9rem;
+  color: #fff;
+  margin-bottom: 0.6rem;
+  flex-shrink: 0;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.eco-card:hover .eco-logo {
+  transform: scale(1.08);
+}
+
+/* --- Company Name --- */
+.eco-name {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #E8E9ED;
+  text-align: center;
+  line-height: 1.25;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+/* --- FEATURED CARDS — Visually Prominent --- */
+.eco-card.eco-featured {
+  grid-column: span 2;
+  grid-row: span 1;
+  padding: 1.25rem 1rem 1.1rem;
+  background: linear-gradient(135deg, #383E52 0%, #3a4158 100%);
+  border-color: rgba(245,197,66,0.3);
+  box-shadow: 0 0 20px rgba(245,197,66,0.06);
+}
+
+.eco-card.eco-featured::before {
+  background: linear-gradient(135deg, rgba(245,197,66,0.04), rgba(78,205,196,0.03));
+}
+
+.eco-card.eco-featured:hover {
+  border-color: rgba(245,197,66,0.5);
+  box-shadow: 0 8px 32px rgba(245,197,66,0.12), 0 4px 16px rgba(0,0,0,0.3);
+  transform: translateY(-4px);
+}
+
+.eco-card.eco-featured .eco-logo {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  font-size: 1.15rem;
+  margin-bottom: 0.75rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.eco-card.eco-featured .eco-name {
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+.eco-card.eco-featured .eco-desc {
+  display: block;
+  font-size: 0.72rem;
+  color: #A0A8BC;
+  text-align: center;
+  margin-top: 0.3rem;
+  line-height: 1.35;
+}
+
+/* Featured star badge */
+.eco-star {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.eco-star svg {
+  width: 12px;
+  height: 12px;
+  fill: #F5C542;
+  opacity: 0.6;
+}
+
+/* --- Tooltip --- */
+.eco-tooltip {
+  position: fixed;
+  padding: 0.5rem 0.75rem;
+  background: #1a1d2b;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 8px;
+  color: #E8E9ED;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  max-width: 220px;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  z-index: 1000;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+}
+
+.eco-tooltip.eco-tooltip-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.eco-tooltip-name {
+  font-weight: 700;
+  color: #F5C542;
+  margin-bottom: 2px;
+}
+
+.eco-tooltip-cat {
+  font-size: 0.65rem;
+  color: #A0A8BC;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* --- Stats Bar --- */
+.eco-stats-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5rem;
+  padding: 1.5rem 2rem;
+  background: linear-gradient(135deg, rgba(78,205,196,0.05), rgba(245,197,66,0.03));
+  border: 1px solid rgba(78,205,196,0.1);
+  border-radius: 14px;
+  margin-top: 0;
+  flex-wrap: wrap;
+}
+
+.eco-stat {
+  text-align: center;
+}
+
+.eco-stat-num {
+  display: block;
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #4ECDC4;
+  line-height: 1;
+  margin-bottom: 0.3rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.eco-stat-label {
+  font-size: 0.72rem;
+  color: #A0A8BC;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.eco-stat-tagline {
+  font-size: 0.88rem;
+  color: #C8CCD4;
+  font-style: italic;
+  text-align: center;
+  margin-top: 0;
+  line-height: 1.5;
+}
+
+/* --- Category Dividers --- */
+.eco-category-label {
+  grid-column: 1 / -1;
+  padding: 0.5rem 0 0.25rem;
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.eco-category-label:first-child {
+  margin-top: 0;
+}
+
+.eco-category-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.eco-category-text {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #A0A8BC;
+}
+
+.eco-category-line {
+  flex: 1;
+  height: 1px;
+  background: rgba(255,255,255,0.06);
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+  .eco-cloud {
+    grid-template-columns: repeat(auto-fill, minmax(95px, 1fr));
+    gap: 0.5rem;
+  }
+
+  .eco-card {
+    padding: 0.75rem 0.35rem 0.65rem;
+  }
+
+  .eco-card.eco-featured {
+    padding: 1rem 0.65rem 0.85rem;
+  }
+
+  .eco-card.eco-featured .eco-logo {
+    width: 48px;
+    height: 48px;
+    font-size: 1rem;
+  }
+
+  .eco-card.eco-featured .eco-name {
+    font-size: 0.8rem;
+  }
+
+  .eco-logo {
+    width: 38px;
+    height: 38px;
+    font-size: 0.8rem;
+  }
+
+  .eco-name {
+    font-size: 0.65rem;
+  }
+
+  .eco-filters {
+    gap: 0.35rem;
+  }
+
+  .eco-filter-btn {
+    padding: 0.4rem 0.7rem;
+    font-size: 0.7rem;
+  }
+
+  .eco-stats-bar {
+    gap: 1.5rem;
+    padding: 1.25rem 1.25rem;
+  }
+
+  .eco-stat-num {
+    font-size: 1.4rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .eco-cloud {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.4rem;
+  }
+
+  .eco-card.eco-featured {
+    grid-column: span 2;
+  }
+
+  .eco-stats-bar {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}

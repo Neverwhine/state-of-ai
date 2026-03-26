@@ -134,6 +134,14 @@
   box-shadow: 0 8px 32px rgba(0,0,0,0.3);
 }
 
+.pai-brain-card--dvc {
+  border-color: rgba(245,197,66,0.3);
+}
+.pai-brain-card--dvc:hover {
+  border-color: rgba(245,197,66,0.5);
+  box-shadow: 0 8px 32px rgba(245,197,66,0.1);
+}
+
 .pai-brain-card::after {
   content: attr(data-tooltip);
   position: absolute;

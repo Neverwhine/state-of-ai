@@ -27,6 +27,7 @@
 <link rel="stylesheet" href="sec2.css">
   <link rel="stylesheet" href="sec3.css">
   <link rel="stylesheet" href="sec8.css">
+  <link rel="stylesheet" href="sec13.css">
 </head>
 <body>
 
@@ -2313,6 +2314,18 @@
           <span class="stat-source">Source: Google DeepMind, 2024</span>
         </div>
 
+        <div class="pai-brain-card pai-brain-card--dvc" data-tooltip="Rhoda AI (DVC portfolio): Uses video generation models to give robots 'imagination' — the ability to predict outcomes before acting. Two-arm platform with the most advanced brain in robotics. $1.7B valuation.">
+          <div class="pai-brain-icon" style="color:var(--accent-gold)">R</div>
+          <span class="badge badge-dvc badge-sm">DVC</span>
+          <strong>Rhoda AI</strong>
+          <span class="pai-brain-model">Video Models → Robot Imagination</span>
+          <div class="pai-brain-stats">
+            <span class="tabnum">$1.7B val</span>
+            <span class="tabnum">$450M raised</span>
+          </div>
+          <span class="stat-source">Source: DVC, 2026</span>
+        </div>
+
         <div class="pai-brain-card" data-tooltip="OpenAI invested in Figure AI and is exploring how large language models can be applied to robot reasoning and planning.">
           <div class="pai-brain-icon" style="color:var(--accent-coral)">⊕</div>
           <strong>OpenAI</strong>
@@ -2365,10 +2378,11 @@
             <span class="pai-tier-val">$5.3B val</span>
             <span class="stat-source">Source: TechCrunch, 2025</span>
           </div>
-          <div class="pai-tier-card pai-tier-card--dvc" data-tooltip="Rhoda AI: DVC portfolio company. Building next-gen humanoid robots with advanced dexterity. $450M raised.">
+          <div class="pai-tier-card pai-tier-card--dvc" data-tooltip="Rhoda AI: DVC portfolio. Two-arm robotic platform with the most advanced AI brain — uses video models for 'imagination'. Not a humanoid (yet). $1.7B valuation.">
             <span class="badge badge-dvc badge-sm">DVC</span>
             <strong>Rhoda AI</strong>
             <span class="pai-tier-val" style="color:var(--accent-gold)">$1.7B val</span>
+            <span style="font-size:0.72rem;color:var(--text-secondary)">2-arm platform · AI brain</span>
             <span class="stat-source">Source: DVC, 2026</span>
           </div>
           <div class="pai-tier-card" data-tooltip="Apptronik: NASA partnership, Apollo humanoid. $935M+ raised. Focused on logistics and manufacturing.">
@@ -4191,7 +4205,7 @@
 
     <h2 class="section-headline anim-fade">THE <span class="accent-gold">DVC</span> ECOSYSTEM</h2>
 
-    <!-- Startup Thesis -->
+    <!-- DVC Thesis Box (preserved) -->
     <div class="anim-fade" style="margin-bottom:3rem">
       <div style="max-width:780px;margin:0 auto;padding:2rem 2.5rem;background:linear-gradient(135deg,rgba(78,205,196,0.06),rgba(245,197,66,0.04));border:1px solid rgba(78,205,196,0.15);border-radius:14px">
         <h3 style="color:#4ECDC4;margin:0 0 0.75rem;font-size:1.05rem;font-weight:700;letter-spacing:0.04em">THE DVC THESIS</h3>
@@ -4201,104 +4215,44 @@
       </div>
     </div>
 
-    <div class="portfolio-pyramid anim-fade">
-      <div class="pp-layer" style="--pp-color:#4ECDC4">
-        <span class="pp-label">APPLICATIONS & AGENTS</span>
-        <div class="pp-companies">
-          <span class="pp-company">Perplexity <small class="tabnum">$20B+</small></span>
-          <span class="pp-company">Higgsfield <small class="tabnum">$4B+</small></span>
-          <span class="pp-company">Wabi</span>
-          <span class="pp-company">Generative Alpha</span>
-          <span class="pp-company">mem0</span>
-          <span class="pp-company">CopilotKit / AGUI</span>
-        </div>
-      </div>
-      
-      <div class="pp-layer" style="--pp-color:#4A90D9">
-        <span class="pp-label">AI CLOUD & INFRA</span>
-        <div class="pp-companies">
-          <span class="pp-company">BIOPTIC</span>
-        </div>
-      </div>
-      <div class="pp-layer" style="--pp-color:#FF8C42">
-        <span class="pp-label">SILICON & COMPUTE</span>
-        <div class="pp-companies">
-          <span class="pp-company">Etched</span>
-        </div>
-      </div>
-      <div class="pp-layer" style="--pp-color:#F5C542">
-        <span class="pp-label">PHYSICAL AI</span>
-        <div class="pp-companies">
-          <span class="pp-company">Rhoda AI <small class="tabnum">$1.7B</small></span>
-          <span class="pp-company">Dwelly <small class="tabnum">£69M raised</small></span>
-        </div>
+    <!-- Filter Buttons -->
+    <div class="eco-filters anim-fade">
+      <button class="eco-filter-btn active" data-group="all">All <span class="eco-filter-badge">89</span></button>
+      <button class="eco-filter-btn" data-group="apps-consumer">Apps & Consumer <span class="eco-filter-badge">16</span></button>
+      <button class="eco-filter-btn" data-group="enterprise-saas">Enterprise & SaaS <span class="eco-filter-badge">30</span></button>
+      <button class="eco-filter-btn" data-group="health-biotech">Health & Biotech <span class="eco-filter-badge">13</span></button>
+      <button class="eco-filter-btn" data-group="ai-infra">AI Infra & DevTools <span class="eco-filter-badge">25</span></button>
+      <button class="eco-filter-btn" data-group="physical-ai">Physical AI <span class="eco-filter-badge">3</span></button>
+      <button class="eco-filter-btn" data-group="research-frontier">Research <span class="eco-filter-badge">2</span></button>
+    </div>
+
+    <!-- Logo Cloud Container -->
+    <div id="eco-cloud-container">
+      <div class="eco-cloud">
+        <!-- Cards rendered by sec13.js -->
       </div>
     </div>
 
-    <div class="portfolio-grid anim-fade">
-      <div class="pf-card">
-        <div class="pf-logo" style="background:#4ECDC4">P</div>
-        <strong>Perplexity</strong>
-        <span>AI-native answer engine</span>
-        <span class="tabnum pf-val">$20B+ valuation</span>
+    <!-- Stats Bar -->
+    <div class="eco-stats-bar anim-fade">
+      <div class="eco-stat">
+        <span class="eco-stat-num" id="eco-total-count">89</span>
+        <span class="eco-stat-label">Portfolio Companies</span>
       </div>
-      <div class="pf-card">
-        <div class="pf-logo" style="background:#7C4DFF">H</div>
-        <strong>Higgsfield</strong>
-        <span>AI video generation</span>
-        <span class="tabnum pf-val">$4B+ valuation</span>
+      <div class="eco-stat">
+        <span class="eco-stat-num">6</span>
+        <span class="eco-stat-label">Categories</span>
       </div>
-      <div class="pf-card">
-        <div class="pf-logo" style="background:#F5C542">W</div>
-        <strong>Wabi</strong>
-        <span>Vibe coding platform</span>
-        <span class="tabnum pf-val">$20M pre-seed</span>
+      <div class="eco-stat">
+        <span class="eco-stat-num">16</span>
+        <span class="eco-stat-label">Sub-Verticals</span>
       </div>
-      <div class="pf-card">
-        <div class="pf-logo" style="background:#FF8C42">E</div>
-        <strong>Etched</strong>
-        <span>Transformer-specific ASICs</span>
-        <span class="tabnum pf-val">AI silicon</span>
-      </div>
-      <div class="pf-card">
-        <div class="pf-logo" style="background:#4A90D9">B</div>
-        <strong>BIOPTIC</strong>
-        <span>AI biotech infrastructure</span>
-        <span class="tabnum pf-val">Deep tech</span>
-      </div>
-      <div class="pf-card">
-        <div class="pf-logo" style="background:#E8837C">D</div>
-        <strong>Dwelly</strong>
-        <span>AI property management</span>
-        <span class="tabnum pf-val">£69M raised</span>
-      </div>
-      <div class="pf-card">
-        <div class="pf-logo" style="background:#4ECDC4">GA</div>
-        <strong>Generative Alpha</strong>
-        <span>AI-native investing</span>
-        <span class="tabnum pf-val">Portfolio</span>
-      </div>
-      <div class="pf-card">
-        <div class="pf-logo" style="background:#F5C542">R</div>
-        <strong>Rhoda AI</strong>
-        <span>Humanoid robotics</span>
-        <span class="tabnum pf-val">$1.7B valuation</span>
-      </div>
-          <div class="pf-card">
-        <div class="pf-logo" style="background:#7C4DFF">m0</div>
-        <strong>mem0</strong>
-        <span>Memory layer for AI agents</span>
-        <span class="tabnum pf-val">Agent infrastructure</span>
-      </div>
-      <div class="pf-card">
-        <div class="pf-logo" style="background:#4A90D9">CK</div>
-        <strong>CopilotKit / AGUI</strong>
-        <span>Agent-native UI framework</span>
-        <span class="tabnum pf-val">Agent infrastructure</span>
-      </div>
+      <div class="eco-stat-tagline">Across the full AI stack &mdash; from silicon to consumer apps</div>
     </div>
+
   </div>
 </section>
+
 
 
 <section class="section section--dark section--outlook" id="sec-14">
@@ -4452,5 +4406,6 @@
 <script src="sec2.js"></script>
   <script src="sec3.js"></script>
   <script src="sec8.js"></script>
+  <script src="sec13.js"></script>
 </body>
 </html>
