@@ -2607,6 +2607,27 @@
           </div>
           <span class="stat-source">Source: Wayve, 2026</span>
         </div>
+
+        <div class="pai-av-card" data-company="avride">
+          <div class="pai-av-header">
+            <h4>Avride</h4>
+            <span class="pai-av-badge">Nebius · Uber</span>
+          </div>
+          <div class="pai-av-stats-grid">
+            <div class="pai-av-stat">
+              <span class="pai-av-stat-num">$375M</span>
+              <span class="pai-av-stat-label">raised</span>
+            </div>
+            <div class="pai-av-stat">
+              <span class="pai-av-stat-num">Dallas</span>
+              <span class="pai-av-stat-label">robotaxi live</span>
+            </div>
+          </div>
+          <div class="pai-av-details">
+            <p>Nebius subsidiary (ex-Yandex SDC). Live robotaxi on Uber in Dallas. Delivery robots on Uber Eats in 3 cities. Building both AV and last-mile delivery.</p>
+          </div>
+          <span class="stat-source">Source: Nebius, TechCrunch, Dec 2025</span>
+        </div>
       </div>
 
       <!-- 4b: Tesla FSD Miles Chart -->
@@ -2618,56 +2639,91 @@
         </div>
       </div>
 
-      <!-- 4c: Robotaxi Economics -->
-      <div class="pai-econ-block anim-fade">
-        <h4 class="pai-econ-title">ROBOTAXI ECONOMICS — COST PER MILE</h4>
-        <div class="pai-econ-bars" id="pai-econ-bars">
-          <div class="pai-econ-row" data-value="1.90" data-max="2.50">
-            <span class="pai-econ-label">Uber / Lyft</span>
-            <div class="pai-econ-bar-track">
-              <div class="pai-econ-bar" style="--bar-color:var(--accent-coral)"></div>
-            </div>
-            <span class="pai-econ-val">~$1.90</span>
-          </div>
-          <div class="pai-econ-row" data-value="2.08" data-max="2.50">
-            <span class="pai-econ-label">Waymo</span>
-            <div class="pai-econ-bar-track">
-              <div class="pai-econ-bar" style="--bar-color:var(--accent-blue)"></div>
-            </div>
-            <span class="pai-econ-val">$1.66–2.50</span>
-          </div>
-          <div class="pai-econ-row" data-value="1.40" data-max="2.50">
-            <span class="pai-econ-label">Tesla Robotaxi</span>
-            <div class="pai-econ-bar-track">
-              <div class="pai-econ-bar" style="--bar-color:var(--accent-teal)"></div>
-            </div>
-            <span class="pai-econ-val">$1.40</span>
-          </div>
-          <div class="pai-econ-row" data-value="0.25" data-max="2.50">
-            <span class="pai-econ-label">ARK at-scale</span>
-            <div class="pai-econ-bar-track">
-              <div class="pai-econ-bar" style="--bar-color:var(--accent-gold)"></div>
-            </div>
-            <span class="pai-econ-val">$0.25</span>
-          </div>
+      <!-- Compact AV Economics -->
+      <div class="pai-av-economics anim-fade" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin:1.5rem 0;padding:1.25rem;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:10px">
+        <div style="text-align:center">
+          <span class="tabnum" style="color:#E8837C;font-size:1.1rem;font-weight:700;display:block">~$1.90</span>
+          <span style="color:#A0A8BC;font-size:0.72rem">Uber/Lyft per mile</span>
         </div>
-        <span class="stat-source">Source: ARK Invest, Waymo, Tesla, 2025–2026</span>
+        <div style="text-align:center">
+          <span class="tabnum" style="color:#4A90D9;font-size:1.1rem;font-weight:700;display:block">$1.66–2.50</span>
+          <span style="color:#A0A8BC;font-size:0.72rem">Waymo per mile</span>
+        </div>
+        <div style="text-align:center">
+          <span class="tabnum" style="color:#4ECDC4;font-size:1.1rem;font-weight:700;display:block">$1.40</span>
+          <span style="color:#A0A8BC;font-size:0.72rem">Tesla Robotaxi per mile</span>
+        </div>
+        <div style="text-align:center">
+          <span class="tabnum" style="color:#F5C542;font-size:1.1rem;font-weight:700;display:block">$0.25</span>
+          <span style="color:#A0A8BC;font-size:0.72rem">ARK at-scale projection</span>
+        </div>
+        <div style="text-align:center">
+          <span class="tabnum" style="color:#E8E9ED;font-size:1.1rem;font-weight:700;display:block">$1.3B → $158.7B</span>
+          <span style="color:#A0A8BC;font-size:0.72rem">AV market 2024→2032 (78.5% CAGR)</span>
+        </div>
+      </div>
+      <span class="stat-source" style="display:block;text-align:center;margin-bottom:1.5rem">Source: ARK Invest, Waymo, Tesla, Grand View Research, 2025–2026</span>
 
-        <div class="pai-econ-footer">
-          <div class="pai-econ-metric">
-            <span class="pai-econ-metric-label">Break-even (US)</span>
-            <span class="pai-econ-metric-val">~160K km (~3 yrs)</span>
+      <!-- 4d: Autonomous Trucking -->
+      <h4 style="color:#A0A8BC;font-size:0.8rem;letter-spacing:0.12em;margin:1.5rem 0 1rem;text-transform:uppercase">AUTONOMOUS TRUCKING</h4>
+      <p style="color:#A0A8BC;font-size:0.85rem;margin:0 0 1rem;max-width:680px">Self-driving trucks are commercially hauling freight on US highways. The $1T US trucking industry is the first autonomous market generating real contracted revenue.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-bottom:1.5rem">
+        <div class="pai-av-card" data-company="aurora" style="padding:1.25rem">
+          <div class="pai-av-header">
+            <h4>Aurora</h4>
+            <span class="pai-av-badge">NASDAQ: AUR</span>
           </div>
-          <div class="pai-econ-metric">
-            <span class="pai-econ-metric-label">Break-even (China)</span>
-            <span class="pai-econ-metric-val">~110K km (~3.5 yrs)</span>
+          <div class="pai-av-stats-grid">
+            <div class="pai-av-stat">
+              <span class="pai-av-stat-num">200+</span>
+              <span class="pai-av-stat-label">trucks by end 2026</span>
+            </div>
+            <div class="pai-av-stat">
+              <span class="pai-av-stat-num">250K</span>
+              <span class="pai-av-stat-label">driverless miles</span>
+            </div>
           </div>
-          <div class="pai-econ-metric">
-            <span class="pai-econ-metric-label">Market (2024→2032)</span>
-            <span class="pai-econ-metric-val">$1.3B → $158.7B <small>78.5% CAGR</small></span>
+          <div class="pai-av-details">
+            <p>1,000-mile Fort Worth→Phoenix route. Partners: Volvo, PACCAR, FedEx, Uber Freight, Werner. Targeting ~$1B rev by 2030.</p>
           </div>
+          <span class="stat-source">Source: Aurora, S&P Global, Feb 2026</span>
         </div>
-        <span class="stat-source">Source: Grand View Research, ARK Invest, 2025</span>
+        <div class="pai-av-card" data-company="gatik" style="padding:1.25rem">
+          <div class="pai-av-header">
+            <h4>Gatik</h4>
+            <span class="pai-av-badge" style="background:rgba(78,205,196,0.15);color:#4ECDC4">First at Scale</span>
+          </div>
+          <div class="pai-av-stats-grid">
+            <div class="pai-av-stat">
+              <span class="pai-av-stat-num">$600M</span>
+              <span class="pai-av-stat-label">contracted revenue</span>
+            </div>
+            <div class="pai-av-stat">
+              <span class="pai-av-stat-num">5</span>
+              <span class="pai-av-stat-label">states + Canada</span>
+            </div>
+          </div>
+          <div class="pai-av-details">
+            <p>First US company with fully driverless trucks at commercial scale (Jan 2026). Fortune 50 retail customers. Partners: Isuzu, NVIDIA, Ryder.</p>
+          </div>
+          <span class="stat-source">Source: Gatik, Reuters, Jan 2026</span>
+        </div>
+        <div class="pai-av-card" data-company="kodiak" style="padding:1.25rem">
+          <div class="pai-av-header">
+            <h4>Kodiak</h4>
+            <span class="pai-av-badge">Interstate Freight</span>
+          </div>
+          <div class="pai-av-stats-grid">
+            <div class="pai-av-stat">
+              <span class="pai-av-stat-num">15</span>
+              <span class="pai-av-stat-label">trucks in operation</span>
+            </div>
+          </div>
+          <div class="pai-av-details">
+            <p>Interstate runs from Texas hub. Customers: J.B. Hunt, Werner Enterprises. Also developing autonomous defense vehicles for US military.</p>
+          </div>
+          <span class="stat-source">Source: Entrepreneur, Mar 2026</span>
+        </div>
       </div>
     </div>
 
