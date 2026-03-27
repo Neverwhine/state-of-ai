@@ -18,7 +18,7 @@
     {n:"BerryApp",d:"Multiplayer Chrome extension",c:"apps",g:"apps-consumer",f:false},
     {n:"Beacons",d:"Creator business tools",c:"commerce",g:"apps-consumer",f:false},
     {n:"GPU Audio",d:"Cloud collaboration for audio",c:"media",g:"apps-consumer",f:false},
-    {n:"Dwelly",d:"AI-powered property management",c:"commerce",g:"apps-consumer",f:false},
+    {n:"Dwelly",d:"AI-powered property management",c:"commerce",g:"apps-consumer",f:true},
 
     {n:"PermitFlow",d:"AI construction permitting",c:"enterprise",g:"enterprise-saas",f:true},
     {n:"Humand",d:"All-in-one HR & internal comms",c:"enterprise",g:"enterprise-saas",f:true},
@@ -30,16 +30,15 @@
     {n:"Docdraft",d:"AI-assisted legal drafting",c:"legal",g:"enterprise-saas",f:false},
     {n:"The Forecasting Company",d:"Foundation model for time series",c:"enterprise",g:"enterprise-saas",f:false},
     {n:"Keye",d:"AI due diligence for PE investors",c:"fintech",g:"enterprise-saas",f:false},
-    {n:"Avoc",d:"AI communications for SMBs",c:"enterprise",g:"enterprise-saas",f:false},
+    {n:"Avoca",d:"AI communications for SMBs",c:"enterprise",g:"enterprise-saas",f:true},
     {n:"Realytics",d:"Consumer intelligence & benchmarking",c:"marketing",g:"enterprise-saas",f:false},
-    {n:"Cofactory AI",d:"AI-based value creation",c:"enterprise",g:"enterprise-saas",f:false},
     {n:"tely.ai",d:"AI agent for B2B content marketing",c:"marketing",g:"enterprise-saas",f:false},
     {n:"Aglide",d:"SaaS account management",c:"enterprise",g:"enterprise-saas",f:false},
-    {n:"FleetWorks",d:"AI voice for freight industry",c:"logistics",g:"enterprise-saas",f:false},
+    {n:"FleetWorks",d:"AI voice for freight industry",c:"logistics",g:"enterprise-saas",f:true},
     {n:"Docsum",d:"AI sales contract negotiation",c:"legal",g:"enterprise-saas",f:false},
     {n:"Generative Alpha",d:"AI financial investment agent",c:"fintech",g:"enterprise-saas",f:false},
     {n:"Pangeam",d:"Workplace intelligence platform",c:"enterprise",g:"enterprise-saas",f:false},
-    {n:"Solve Intelligence",d:"AI editor for patent writers",c:"legal",g:"enterprise-saas",f:false},
+    {n:"Solve Intelligence",d:"AI editor for patent writers",c:"legal",g:"enterprise-saas",f:true},
     {n:"Aviary AI",d:"AI credit rebuilding & defi lending",c:"fintech",g:"enterprise-saas",f:false},
     {n:"JustPaid.io",d:"AI-powered financial controller",c:"fintech",g:"enterprise-saas",f:false},
     {n:"Vasco",d:"Growth platform for startups",c:"enterprise",g:"enterprise-saas",f:false},
@@ -54,7 +53,7 @@
     {n:"Qualified Health",d:"Generative AI at the Speed of Trust",c:"health",g:"health-biotech",f:true},
     {n:"Bioptic",d:"Molecular search engine (DNN)",c:"health",g:"health-biotech",f:true},
     {n:"Lovi",d:"AI-driven skincare app",c:"health",g:"health-biotech",f:false},
-    {n:"Doctronic",d:"AI medical consultation",c:"health",g:"health-biotech",f:false},
+    {n:"Doctronic",d:"AI medical consultation",c:"health",g:"health-biotech",f:true},
     {n:"FitWise",d:"3D pose estimation for fitness",c:"health",g:"health-biotech",f:false},
     {n:"Kerna Laboratorie",d:"ML for genetic medicines",c:"health",g:"health-biotech",f:false},
     {n:"Hona AI",d:"Health Records AI for clinical notes",c:"health",g:"health-biotech",f:false},
@@ -70,7 +69,7 @@
     {n:"Wabi",d:"Generative interfaces for AI age",c:"devtools",g:"ai-infra",f:true},
     {n:"DoubleFifth",d:"Account linking & insights API",c:"infra",g:"ai-infra",f:false},
     {n:"superglu",d:"Self-healing data connectors",c:"infra",g:"ai-infra",f:false},
-    {n:"CopilotKit",d:"Agent-native UI framework (AGUI)",c:"agents",g:"ai-infra",f:false},
+    {n:"CopilotKit",d:"Agent-native UI framework (AGUI)",c:"agents",g:"ai-infra",f:true},
     {n:"Zencoder",d:"AI-driven code tools (Repo Grokking)",c:"devtools",g:"ai-infra",f:false},
     {n:"The Stage AI",d:"Model optimization platform",c:"infra",g:"ai-infra",f:false},
     {n:"HackerPulse",d:"Developer analytics platform",c:"devtools",g:"ai-infra",f:false},
@@ -78,7 +77,7 @@
     {n:"Eternis Labs",d:"Infrastructure for AI agent identity",c:"agents",g:"ai-infra",f:false},
     {n:"Paradigm",d:"Agent swarms for data & action",c:"agents",g:"ai-infra",f:false},
     {n:"Sutro",d:"AI-powered software compiler",c:"devtools",g:"ai-infra",f:false},
-    {n:"mem0",d:"Memory layer for AI agents",c:"agents",g:"ai-infra",f:false},
+    {n:"mem0",d:"Memory layer for AI agents",c:"agents",g:"ai-infra",f:true},
     {n:"Datachain",d:"Open-source data-centric MLOps",c:"infra",g:"ai-infra",f:false},
     {n:"LightBeam.ai",d:"Automated data governance & security",c:"infra",g:"ai-infra",f:false},
     {n:"Zero",d:"OS for enterprise AI applications",c:"infra",g:"ai-infra",f:false},
@@ -88,15 +87,16 @@
     {n:"Strong Compute",d:"10x\u20131000x faster neural network training",c:"compute",g:"ai-infra",f:false},
     {n:"evidently.ai",d:"Open-source ML model monitoring",c:"infra",g:"ai-infra",f:false},
     {n:"Alter Labs",d:"Zero-trust identity for AI agents",c:"agents",g:"ai-infra",f:false},
-    {n:"Archetype",d:"World-descriptor AI for IoT/sensors",c:"infra",g:"ai-infra",f:false},
+    {n:"Archetype",d:"World-descriptor AI for IoT/sensors",c:"infra",g:"ai-infra",f:true},
     {n:"DeepFlow AI",d:"Agentic workflow orchestration",c:"agents",g:"ai-infra",f:false},
 
     {n:"Rhoda AI",d:"Foundational model for robotics",c:"physical-ai",g:"physical-ai",f:true},
-    {n:"Embodix",d:"Foundation model for industrial robots",c:"physical-ai",g:"physical-ai",f:false},
+    {n:"Matic Robots",d:"Autonomous home robots",c:"physical-ai",g:"physical-ai",f:false},
     {n:"Abagy Robotics",d:"AI for welding robots",c:"physical-ai",g:"physical-ai",f:false},
 
     {n:"Thinking Machines Lab",d:"AI research & product company",c:"research",g:"research-frontier",f:true},
-    {n:"SentientWave",d:"AGI in a pocket",c:"research",g:"research-frontier",f:false}
+    {n:"SentientWave",d:"AGI in a pocket",c:"research",g:"research-frontier",f:false},
+    {n:"Stealth Mode",d:"Pre-launch research company",c:"research",g:"research-frontier",f:false}
   ];
 
   /* === Color Maps === */
@@ -133,12 +133,12 @@
       'Alter Labs':'AL','Eternis Labs':'EL','Unreal Labs':'UL',
       'Rhoda AI':'R','Abagy Robotics':'AR','Strong Compute':'SC',
       'GPU Audio':'GP','Bina School':'BS','DeepFlow AI':'DF',
-      'Kerna Laboratorie':'KL','Qualified Health':'QH','Cofactory AI':'Co',
+      'Kerna Laboratorie':'KL','Qualified Health':'QH',
       'Pervasive App':'Pv','FitWise':'FW','Asylia Dx':'AD',
-      'NutriSense':'NS','NewHomesMate':'NH','FleetWorks':'FW',
+      'NutriSense':'NS','NewHomesMate':'NH','FleetWorks':'FL',
       'BerryApp':'BA','HyperC':'HC','HackerPulse':'HP',
       'Eloquent AI':'EA','SentientWave':'SW','Agentnoon':'An',
-      'PermitFlow':'PF','RemoFirst':'RF','DoubleFifth':'DF','Embodix':'Em'
+      'PermitFlow':'PF','RemoFirst':'RF','DoubleFifth':'DF','Matic Robots':'MR','Stealth Mode':'?','Avoca':'Ac'
     };
     return map[name] || name[0].toUpperCase();
   }
