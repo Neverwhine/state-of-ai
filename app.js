@@ -596,7 +596,7 @@
       ctx.scale(2, 2);
       const cx = size / 2, cy = size / 2, r = 24, lw = 5;
       let progress = 0;
-      const target = pct / 100;
+      const target = Math.min(pct / 100, 1); // Cap visual arc at full circle
 
       function draw() {
         ctx.clearRect(0, 0, size, size);
@@ -608,7 +608,7 @@
         ctx.stroke();
         // Progress arc
         ctx.beginPath();
-        ctx.arc(cx, cy, r, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * progress);
+        ctx.arc(cx, cy, r, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * Math.min(progress, 1));
         ctx.strokeStyle = color;
         ctx.lineWidth = lw;
         ctx.lineCap = 'round';
@@ -618,7 +618,14 @@
         ctx.font = '600 12px Inter, sans-serif';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        const displayPct = pct >= 100 ? '!!!' : '-' + Math.round(progress * 100) + '%';
+        var displayPct;
+        if (pct > 100) {
+          // FCF went negative (e.g. Amazon: positive FCF → negative)
+          displayPct = '-' + pct + '%';
+          ctx.font = '600 9px Inter, sans-serif';
+        } else {
+          displayPct = '-' + Math.round(progress * 100) + '%';
+        }
         ctx.fillText(displayPct, cx, cy);
 
         if (progress < target) {
