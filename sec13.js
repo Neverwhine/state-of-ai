@@ -65,7 +65,7 @@
     {n:"Denti.ai",d:"AI diagnostics for dental X-rays",c:"health",g:"health-biotech",f:false},
     {n:"Asylia Dx",d:"Diagnostics for safer immunotherapy",c:"health",g:"health-biotech",f:false},
 
-    {n:"Higgsfield",d:"AI agents via self-play + GPU framework",c:"compute",g:"ai-infra",f:true},
+    {n:"Higgsfield",d:"AI video generation",c:"media",g:"apps-consumer",f:true},
     {n:"Etched",d:"Chips for transformer inference",c:"compute",g:"ai-infra",f:true},
     {n:"Wabi",d:"Generative interfaces for AI age",c:"devtools",g:"ai-infra",f:true},
     {n:"DoubleFifth",d:"Account linking & insights API",c:"infra",g:"ai-infra",f:false},
