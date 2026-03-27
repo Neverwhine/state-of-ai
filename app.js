@@ -715,10 +715,15 @@
 
     // Layer expand/collapse
     const layers = section.querySelectorAll('.mf-layer');
+    const interactHint = document.getElementById('interactHint');
     layers.forEach((layer) => {
       const header = layer.querySelector('.mf-layer-header');
       if (!header) return;
       header.addEventListener('click', () => {
+        // Dismiss the interaction hint on first click
+        if (interactHint && !interactHint.classList.contains('dismissed')) {
+          interactHint.classList.add('dismissed');
+        }
         const wasExpanded = layer.classList.contains('expanded');
         layers.forEach((l) => l.classList.remove('expanded'));
         if (!wasExpanded) {

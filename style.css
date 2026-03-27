@@ -311,6 +311,48 @@
   gap: 24px;
 }
 
+/* ── Interaction Hint Tooltip ── */
+.interact-hint {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+  animation: hintFadeIn 0.6s ease 1.5s both;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.interact-hint.dismissed {
+  opacity: 0;
+  transform: translateY(-8px);
+  pointer-events: none;
+}
+
+.interact-hint-pulse {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent-teal);
+  animation: hintPulse 2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+.interact-hint-text {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--accent-teal);
+  letter-spacing: 0.03em;
+}
+
+@keyframes hintPulse {
+  0%, 100% { opacity: 0.4; transform: scale(1); box-shadow: 0 0 0 0 rgba(78,205,196,0.4); }
+  50% { opacity: 1; transform: scale(1.2); box-shadow: 0 0 0 8px rgba(78,205,196,0); }
+}
+
+@keyframes hintFadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 /* DVC hero override — higher specificity to beat .hero-content */
 .section--hero-dvc .hero-content--dvc {
   position: absolute;
