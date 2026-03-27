@@ -231,6 +231,28 @@
   font-size: 0.7rem;
 }
 
+/* --- Model card tooltip modifier --- */
+.aa-tip-popup.aa-tip-popup--model {
+  border-color: rgba(74, 144, 217, 0.3);
+  max-width: 360px;
+}
+
+.aa-tip-popup.aa-tip-popup--model strong {
+  color: #4A90D9;
+  font-weight: 700;
+}
+
+/* Hover hint for model cards with tooltip */
+.model-card[data-tip] {
+  cursor: pointer;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.model-card[data-tip]:hover {
+  border-color: rgba(74, 144, 217, 0.4) !important;
+  box-shadow: 0 0 16px rgba(74, 144, 217, 0.12);
+}
+
 /* Legacy fund-tip — hide (replaced by data-tip system) */
 .aa-fund-tip {
   display: none !important;

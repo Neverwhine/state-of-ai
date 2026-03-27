@@ -6,12 +6,102 @@
 (function () {
   'use strict';
 
-  function init() {
-    var sec = document.getElementById('sec-5');
-    if (!sec || !sec.classList.contains('section--agent-anatomy')) return;
+  /* Shared tooltip popup (singleton) */
+  var popup = null;
+  var hideTimer = null;
+  var activeEl = null;
+  var isTouchDevice = 'ontouchstart' in window;
 
-    initAccordion(sec);
-    initChipTooltips(sec);
+  function getPopup() {
+    if (!popup) {
+      popup = document.createElement('div');
+      popup.className = 'aa-tip-popup';
+      document.body.appendChild(popup);
+
+      // Dismiss on outside tap (mobile)
+      document.addEventListener('click', function () {
+        if (isTouchDevice && activeEl) {
+          popup.classList.remove('aa-tip-popup--visible');
+          activeEl = null;
+        }
+      });
+      // Dismiss on scroll
+      window.addEventListener('scroll', function () {
+        if (activeEl) {
+          popup.classList.remove('aa-tip-popup--visible');
+          activeEl = null;
+        }
+      }, { passive: true });
+    }
+    return popup;
+  }
+
+  function showTip(el, modifier) {
+    var p = getPopup();
+    clearTimeout(hideTimer);
+    activeEl = el;
+    p.innerHTML = el.getAttribute('data-tip');
+
+    // Modifier classes
+    p.classList.remove('aa-tip-popup--funded', 'aa-tip-popup--model');
+    if (modifier) p.classList.add(modifier);
+
+    // Position: measure first
+    p.style.visibility = 'hidden';
+    p.style.display = 'block';
+    p.classList.remove('aa-tip-popup--visible');
+
+    var rect = el.getBoundingClientRect();
+    var popW = p.offsetWidth;
+    var popH = p.offsetHeight;
+
+    var left = rect.left + rect.width / 2 - popW / 2;
+    var top = rect.bottom + 10;
+
+    if (top + popH > window.innerHeight - 10) {
+      top = rect.top - popH - 10;
+    }
+    if (left < 10) left = 10;
+    if (left + popW > window.innerWidth - 10) left = window.innerWidth - popW - 10;
+
+    p.style.left = left + 'px';
+    p.style.top = top + 'px';
+    p.style.visibility = '';
+    p.style.display = '';
+
+    requestAnimationFrame(function () {
+      p.classList.add('aa-tip-popup--visible');
+    });
+  }
+
+  function hideTip() {
+    hideTimer = setTimeout(function () {
+      if (popup) popup.classList.remove('aa-tip-popup--visible');
+      activeEl = null;
+    }, 150);
+  }
+
+  function bindTipEvents(el, modifier) {
+    el.addEventListener('mouseenter', function () {
+      if (!isTouchDevice) showTip(el, modifier);
+    });
+    el.addEventListener('mouseleave', function () {
+      if (!isTouchDevice) hideTip();
+    });
+    el.addEventListener('click', function (e) {
+      if (!isTouchDevice) return;
+      e.stopPropagation();
+      if (activeEl === el) { hideTip(); } else { showTip(el, modifier); }
+    });
+  }
+
+  function init() {
+    var sec5 = document.getElementById('sec-5');
+    if (sec5 && sec5.classList.contains('section--agent-anatomy')) {
+      initAccordion(sec5);
+      initChipTooltips(sec5);
+    }
+    initModelCardTooltips();
   }
 
   /* --- Layer Stack Accordion --- */
@@ -39,108 +129,29 @@
     });
   }
 
-  /* --- Chip Tooltips (data-tip) --- */
+  /* --- Chip Tooltips (data-tip) for sec-5 --- */
   function initChipTooltips(sec) {
     var chips = sec.querySelectorAll('.aa-tool-chip--has-tip[data-tip]');
     if (!chips.length) return;
 
-    // Create single tooltip element
-    var popup = document.createElement('div');
-    popup.className = 'aa-tip-popup';
-    document.body.appendChild(popup);
-
-    var hideTimer = null;
-    var activeChip = null;
-    var isTouchDevice = 'ontouchstart' in window;
-
-    function showTip(chip) {
-      clearTimeout(hideTimer);
-      activeChip = chip;
-      popup.innerHTML = chip.getAttribute('data-tip');
-
-      // Add funded modifier
-      if (chip.classList.contains('aa-tool-chip--funded') || chip.classList.contains('aa-tool-chip--dvc')) {
-        popup.classList.add('aa-tip-popup--funded');
-      } else {
-        popup.classList.remove('aa-tip-popup--funded');
-      }
-
-      // Position: show it first to measure
-      popup.style.visibility = 'hidden';
-      popup.style.display = 'block';
-      popup.classList.remove('aa-tip-popup--visible');
-
-      var rect = chip.getBoundingClientRect();
-      var popW = popup.offsetWidth;
-      var popH = popup.offsetHeight;
-
-      // Default: below the chip, centered
-      var left = rect.left + rect.width / 2 - popW / 2;
-      var top = rect.bottom + 10;
-
-      // If goes off bottom, show above
-      if (top + popH > window.innerHeight - 10) {
-        top = rect.top - popH - 10;
-      }
-
-      // Clamp horizontal
-      if (left < 10) left = 10;
-      if (left + popW > window.innerWidth - 10) left = window.innerWidth - popW - 10;
-
-      popup.style.left = left + 'px';
-      popup.style.top = top + 'px';
-      popup.style.visibility = '';
-      popup.style.display = '';
-
-      // Animate in
-      requestAnimationFrame(function () {
-        popup.classList.add('aa-tip-popup--visible');
-      });
-    }
-
-    function hideTip() {
-      hideTimer = setTimeout(function () {
-        popup.classList.remove('aa-tip-popup--visible');
-        activeChip = null;
-      }, 150);
-    }
-
-    // Desktop: hover
     chips.forEach(function (chip) {
-      chip.addEventListener('mouseenter', function () {
-        if (!isTouchDevice) showTip(chip);
-      });
-      chip.addEventListener('mouseleave', function () {
-        if (!isTouchDevice) hideTip();
-      });
-
-      // Mobile: tap to toggle
-      chip.addEventListener('click', function (e) {
-        if (!isTouchDevice) return;
-        e.stopPropagation();
-        if (activeChip === chip) {
-          hideTip();
-        } else {
-          showTip(chip);
-        }
-      });
+      var mod = (chip.classList.contains('aa-tool-chip--funded') || chip.classList.contains('aa-tool-chip--dvc'))
+        ? 'aa-tip-popup--funded' : null;
+      bindTipEvents(chip, mod);
     });
+  }
 
-    // Dismiss on outside tap (mobile)
-    document.addEventListener('click', function () {
-      if (isTouchDevice && activeChip) {
-        popup.classList.remove('aa-tip-popup--visible');
-        activeChip = null;
-      }
+  /* --- Model Card Tooltips (data-tip) for sec-3 --- */
+  function initModelCardTooltips() {
+    var sec3 = document.getElementById('sec-3');
+    if (!sec3) return;
+    var cards = sec3.querySelectorAll('.model-card[data-tip]');
+    if (!cards.length) return;
+
+    cards.forEach(function (card) {
+      card.style.cursor = 'pointer';
+      bindTipEvents(card, 'aa-tip-popup--model');
     });
-
-    // Dismiss on scroll
-    window.addEventListener('scroll', function () {
-      if (activeChip) {
-        popup.classList.remove('aa-tip-popup--visible');
-        activeChip = null;
-      }
-    }, { passive: true });
   }
 
   /* --- Boot --- */
