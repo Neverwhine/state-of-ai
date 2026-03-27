@@ -311,6 +311,21 @@
   gap: 24px;
 }
 
+/* DVC hero override — higher specificity to beat .hero-content */
+.section--hero-dvc .hero-content--dvc {
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  top: 0;
+  width: 55%;
+  height: 55%;
+  justify-content: flex-end;
+  align-items: flex-start;
+  text-align: left;
+  gap: 12px;
+  padding: 0 60px 40px;
+}
+
 .dvc-logo {
   display: flex;
   align-items: center;

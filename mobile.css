@@ -1,0 +1,480 @@
+/* ═══════════════════════════════════════════════════════════════
+   MOBILE OPTIMIZATIONS — 390px-first, layered at 480px / 768px
+   Loaded AFTER all other stylesheets.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── HERO (sec-0) — Mobile restructure ── */
+@media (max-width: 768px) {
+  .section--hero-dvc {
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+
+  /* Re-grid the color blocks for portrait layout */
+  .hero-blocks {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 50% 22% 14% 14%;
+  }
+
+  /* Content overlay — stays absolute but takes full width */
+  .section--hero-dvc .hero-content--dvc {
+    width: 100%;
+    height: 50%;
+    padding: 48px 24px 24px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  .hero-content--dvc .hero-title {
+    font-size: clamp(40px, 11vw, 56px);
+    text-align: center;
+    line-height: 0.92;
+  }
+
+  .hero-content--dvc .hero-subtitle {
+    font-size: 14px;
+    text-align: center;
+  }
+
+  .hero-content--dvc .hero-tension {
+    text-align: center !important;
+    font-size: 0.78rem !important;
+    max-width: 300px !important;
+    margin: 0.25rem auto 0.5rem !important;
+    color: #555B6E !important;
+  }
+
+  .hero-content--dvc .scroll-indicator {
+    align-items: center;
+    margin-top: 8px;
+  }
+
+  .hero-wordmark {
+    top: 14px;
+    left: 14px;
+    font-size: 10px;
+    z-index: 4;
+  }
+
+  .hero-dvc-url {
+    bottom: 10px;
+    right: 14px;
+    font-size: 10px;
+  }
+}
+
+/* ── SIDEBAR NAV — hide on mobile ── */
+@media (max-width: 768px) {
+  .sidebar {
+    display: none !important;
+  }
+}
+
+/* ── GLOBAL SECTION SPACING ── */
+@media (max-width: 480px) {
+  .section {
+    padding: 48px 16px;
+  }
+
+  .container {
+    padding: 0;
+  }
+
+  .section-headline {
+    font-size: clamp(22px, 7vw, 32px) !important;
+    margin-bottom: 20px !important;
+    line-height: 1.1;
+  }
+
+  .section-bridge p,
+  .section-intro {
+    font-size: 0.88rem !important;
+    line-height: 1.55 !important;
+    padding: 0 4px;
+  }
+
+  .subsection-title {
+    font-size: 0.82rem !important;
+  }
+}
+
+/* ── FOLLOW THE MONEY (sec-1) ── */
+@media (max-width: 480px) {
+  .money-flow-container {
+    padding: 1.5rem 12px 0.5rem !important;
+  }
+
+  .money-flow-subtitle {
+    font-size: 0.82rem !important;
+  }
+
+  .mf-controls {
+    gap: 8px;
+  }
+
+  .mf-toggle-btn {
+    font-size: 0.72rem;
+    padding: 6px 10px;
+  }
+
+  .mf-journey-btn {
+    font-size: 0.72rem !important;
+    padding: 6px 12px !important;
+  }
+
+  .mf-margin-sidebar {
+    display: none !important;
+  }
+
+  .mf-layer-label {
+    font-size: 0.7rem !important;
+  }
+
+  .mf-layer-name {
+    font-size: 0.82rem !important;
+  }
+}
+
+/* ── $60B EXPLOSION (sec-2) ── */
+@media (max-width: 480px) {
+  .explosion-pill {
+    padding: 0.5rem 0.75rem !important;
+    font-size: 0.78rem !important;
+  }
+}
+
+/* ── MODEL WARS (sec-3) ── */
+@media (max-width: 480px) {
+  .model-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px;
+  }
+}
+
+/* ── AGENT REVOLUTION (sec-4) ── */
+@media (max-width: 480px) {
+  .agent-cards-scroll {
+    grid-template-columns: 1fr !important;
+    gap: 12px;
+  }
+}
+
+/* ── AGENT ANATOMY (sec-5) — 7-layer stack ── */
+@media (max-width: 480px) {
+  .aa-stack-layer {
+    padding: 12px !important;
+  }
+
+  .aa-layer-title {
+    font-size: 0.78rem !important;
+  }
+
+  .aa-expanded-content {
+    padding: 8px !important;
+  }
+
+  .aa-company-chip {
+    font-size: 0.65rem !important;
+    padding: 3px 8px !important;
+  }
+}
+
+/* ── AGENT ECONOMY (sec-6) ── */
+@media (max-width: 480px) {
+  .ae-protocol-card {
+    padding: 16px !important;
+  }
+
+  .ae-protocol-title {
+    font-size: 0.82rem !important;
+  }
+}
+
+/* ── $700B SPRINT (sec-7) ── */
+@media (max-width: 480px) {
+  .capex-chart-wrap {
+    margin: 0 -8px;
+  }
+
+  .neocloud-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ── PHYSICAL AI (sec-8) — AV cards, treemap ── */
+@media (max-width: 480px) {
+  .pai-av-stats-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 6px !important;
+  }
+
+  .pai-av-stat-num {
+    font-size: 1.1rem !important;
+  }
+
+  .pai-av-stat-label {
+    font-size: 0.62rem !important;
+  }
+
+  .pai-treemap {
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  .pai-treemap-cell {
+    padding: 14px 10px !important;
+    min-height: 70px !important;
+  }
+
+  .pai-treemap-cell strong {
+    font-size: 0.72rem !important;
+  }
+
+  .pai-econ-row {
+    grid-template-columns: 70px 1fr 50px !important;
+    gap: 6px !important;
+    padding: 8px 0 !important;
+  }
+
+  .pai-econ-label {
+    font-size: 0.65rem !important;
+  }
+
+  .pai-econ-val {
+    font-size: 0.65rem !important;
+  }
+
+  .pai-fsd-chart {
+    margin: 0 -4px;
+  }
+}
+
+/* ── BUSINESS MODEL (sec-9) ── */
+@media (max-width: 480px) {
+  .bm-revenue-bars {
+    padding: 0 4px;
+  }
+}
+
+/* ── THREE PILLARS & INCUMBENTS (sec-10) ── */
+@media (max-width: 480px) {
+  /* Force the 3-column Data/Compute/Talent grid to stack */
+  .section:nth-of-type(11) div[style*="grid-template-columns:repeat(3,1fr)"] {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+  }
+
+  /* Incumbent matrix — make horizontally scrollable */
+  .inc-matrix {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .inc-matrix-header,
+  .inc-matrix-row {
+    min-width: 500px;
+  }
+
+  .inc-detail-inner {
+    width: calc(100vw - 32px) !important;
+    max-width: 340px;
+  }
+}
+
+/* ── GEOPOLITICS (sec-11) ── */
+@media (max-width: 480px) {
+  .geo-map {
+    margin: 0 -8px 24px;
+  }
+
+  .geo-map svg {
+    min-height: 200px;
+  }
+
+  .sovereign-cards {
+    grid-template-columns: 1fr !important;
+    gap: 10px;
+  }
+
+  .geo-event {
+    padding: 10px 0 10px 16px;
+  }
+}
+
+/* ── RISKS / NOT A BUBBLE (sec-12) ── */
+@media (max-width: 480px) {
+  .ew-split-big {
+    font-size: 2.5rem !important;
+  }
+
+  .risk-zones {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Bubble anatomy table — horizontal scroll */
+  .bubble-table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin: 0 -8px;
+    padding: 0 8px;
+  }
+
+  .bubble-table-wrap table {
+    min-width: 580px;
+  }
+}
+
+/* ── DVC ECOSYSTEM (sec-13) ── */
+@media (max-width: 480px) {
+  .eco-thesis {
+    padding: 1.25rem !important;
+    margin-bottom: 1.5rem !important;
+  }
+
+  .eco-thesis p {
+    font-size: 0.82rem !important;
+    line-height: 1.55 !important;
+  }
+
+  .eco-cat-header {
+    font-size: 0.72rem !important;
+  }
+}
+
+/* ── 5-YEAR OUTLOOK (sec-14) ── */
+@media (max-width: 768px) {
+  .outlook-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .outlook-card {
+    padding: 1.25rem !important;
+  }
+
+  .outlook-card h3 {
+    font-size: 0.95rem !important;
+  }
+
+  .outlook-card p {
+    font-size: 0.8rem !important;
+    line-height: 1.5 !important;
+  }
+}
+
+/* ── CLOSING (sec-15) ── */
+@media (max-width: 480px) {
+  .closing-line {
+    font-size: 1.25rem !important;
+    padding: 0 8px;
+  }
+
+  .closing-line-2 {
+    font-size: 1.1rem !important;
+  }
+
+  .closing-line-3 {
+    font-size: 0.88rem !important;
+  }
+
+  .closing-line-4 {
+    font-size: 0.82rem !important;
+  }
+
+  .dvc-logo--closing {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .dvc-logo--closing .logo-grid {
+    width: 40px;
+    height: 40px;
+  }
+
+  .dvc-logo--closing .logo-text {
+    font-size: 16px;
+  }
+}
+
+/* ── FOOTER ── */
+@media (max-width: 480px) {
+  .site-footer {
+    padding: 24px 16px;
+  }
+
+  .footer-inner {
+    gap: 8px;
+    font-size: 0.75rem;
+  }
+}
+
+/* ── GLOBAL TOUCH IMPROVEMENTS ── */
+@media (max-width: 768px) {
+  /* Increase tap targets */
+  button, .mf-toggle-btn, .eco-filter-btn, .mf-journey-btn {
+    min-height: 40px;
+  }
+
+  /* Smoother scrolling */
+  html {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Prevent horizontal overflow */
+  body {
+    overflow-x: hidden;
+  }
+
+  /* Bottom-line quote in outlook */
+  #sec-14 > .container > div:last-child p {
+    font-size: 0.92rem !important;
+    line-height: 1.55 !important;
+    padding: 0 4px;
+  }
+
+  /* Make all inline stat-source smaller */
+  .stat-source {
+    font-size: 0.62rem !important;
+  }
+}
+
+/* ── TABLES — global overflow fix ── */
+@media (max-width: 600px) {
+  table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  td, th {
+    white-space: nowrap;
+    font-size: 0.72rem;
+  }
+}
+
+/* ── Inline-styled grid overrides that need !important ── */
+@media (max-width: 480px) {
+  /* Three Pillars 3-col grid */
+  [style*="grid-template-columns:repeat(3,1fr)"] {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+  }
+
+  /* Outlook grid (also inline) */
+  .outlook-grid,
+  [style*="grid-template-columns:repeat(auto-fit,minmax(340px,1fr))"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Force any wide inline chart containers to fit */
+  [style*="max-width:800px"],
+  [style*="max-width:780px"],
+  [style*="max-width:700px"],
+  [style*="max-width:640px"] {
+    max-width: 100% !important;
+    padding-left: 4px !important;
+    padding-right: 4px !important;
+  }
+}
