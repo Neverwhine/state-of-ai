@@ -1130,7 +1130,7 @@
         rank: '#3 Brute Force',
         color: '#4A90D9',
         superpower: '3.58B daily users across Facebook/Instagram/WhatsApp. $201B revenue. Can embed AI into every surface without asking.',
-        heel: 'Four AI reorgs in 6 months. Llama 4 flopped on benchmarks. Open-source lead lost to DeepSeek. Planning 20% workforce reduction — shift to AI-driven operations.',
+        heel: 'Four AI reorgs in 6 months. Llama 4 flopped on benchmarks. Open-source lead lost to DeepSeek. Cut ~15,000 jobs (20% workforce) while projecting $115–135B AI CapEx for 2026 — betting everything on scale over stability.',
         stat: 'Started using Claude Code internally. $14.3B invested in Scale AI (49% stake). Hired Andrew Tulloch with $1.5B comp package. Cutting humans, adding AI.'
       },
       apple: {
