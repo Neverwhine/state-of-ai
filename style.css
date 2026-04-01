@@ -2358,7 +2358,9 @@ canvas {
   padding: 1px 5px;
 }
 
-/* Tooltip */
+/* Tooltip — only show CSS tooltips on devices with real hover (mouse) */
+/* On touch devices, JS popup system in sec3.js handles tap-to-show */
+@media (hover: hover) {
 .mf-pill[data-tooltip]:hover::after {
   content: attr(data-tooltip);
   position: absolute;
@@ -2379,6 +2381,7 @@ canvas {
   white-space: normal;
   min-width: 200px;
 }
+} /* end @media (hover: hover) for mf-pill tooltips */
 
 /* Margin Detail rows */
 .mf-margin-detail {
@@ -4200,7 +4203,8 @@ canvas {
   transform: translateY(-1px);
 }
 
-/* Tooltip for explosion pills */
+/* Tooltip for explosion pills — hover-only (touch uses JS popup) */
+@media (hover: hover) {
 .explosion-pill[data-tooltip]:hover::after {
   content: attr(data-tooltip);
   position: absolute;
@@ -4230,6 +4234,7 @@ canvas {
   z-index: 11;
   pointer-events: none;
 }
+} /* end @media (hover: hover) for explosion-pill tooltips */
 
 /* ============================================
    HERO TENSION LINE
@@ -4282,7 +4287,7 @@ canvas {
 /* ============================================
    NEW SECTIONS — Responsive
    ============================================ */
-@media (max-width: 768px) {
+@media (max-width: 768px) and (hover: hover) {
   .explosion-pill[data-tooltip]:hover::after {
     white-space: normal;
     max-width: 220px;
