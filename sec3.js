@@ -154,10 +154,25 @@
     });
   }
 
+  /* --- Generic data-tip Tooltips (any element with data-tip outside sec-3/sec-5) --- */
+  function initGenericTooltips() {
+    var els = document.querySelectorAll('[data-tip]');
+    if (!els.length) return;
+
+    els.forEach(function (el) {
+      // Skip already-bound elements (sec-3 model cards, sec-5 chips)
+      if (el.classList.contains('model-card') || el.classList.contains('aa-tool-chip--has-tip')) return;
+      if (el._tipBound) return;
+      el._tipBound = true;
+      bindTipEvents(el, null);
+    });
+  }
+
   /* --- Boot --- */
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
+    document.addEventListener('DOMContentLoaded', function() { init(); initGenericTooltips(); });
   } else {
     init();
+    initGenericTooltips();
   }
 })();
