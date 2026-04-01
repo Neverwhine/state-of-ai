@@ -168,11 +168,31 @@
     });
   }
 
+  /* --- Mobile tap-to-show for CSS-only tooltips (data-tooltip) --- */
+  function initMobileDataTooltips() {
+    if (!isTouchDevice) return; // Desktop uses CSS :hover — no JS needed
+
+    var els = document.querySelectorAll('[data-tooltip]');
+    if (!els.length) return;
+
+    els.forEach(function (el) {
+      if (el._tipBound) return;
+      el._tipBound = true;
+      // Copy data-tooltip text into data-tip so the shared popup system works
+      el.setAttribute('data-tip', el.getAttribute('data-tooltip'));
+      el.addEventListener('click', function (e) {
+        e.stopPropagation();
+        if (activeEl === el) { hideTip(); } else { showTip(el, null); }
+      });
+    });
+  }
+
   /* --- Boot --- */
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function() { init(); initGenericTooltips(); });
+    document.addEventListener('DOMContentLoaded', function() { init(); initGenericTooltips(); initMobileDataTooltips(); });
   } else {
     init();
     initGenericTooltips();
+    initMobileDataTooltips();
   }
 })();
