@@ -1131,7 +1131,7 @@
         color: '#4A90D9',
         superpower: '3.58B daily users across Facebook/Instagram/WhatsApp. $201B revenue. Can embed AI into every surface without asking.',
         heel: 'Four AI reorgs in 6 months. Llama 4 flopped on benchmarks. Open-source lead lost to DeepSeek. Cut ~15,000 jobs (20% workforce) while projecting $115–135B AI CapEx for 2026 — betting everything on scale over stability.',
-        stat: 'Started using Claude Code internally. $14.3B invested in Scale AI (49% stake). Hired Andrew Tulloch with $1.5B comp package. Cutting humans, adding AI.'
+        stat: 'Launched Muse Spark (Apr 2026) — first model from Meta Superintelligence Labs. Banned external AI agents from WhatsApp, building own assistant for 2B+ users. $14.3B invested in Scale AI (49% stake). Cutting humans, adding AI.'
       },
       apple: {
         name: 'Apple',
