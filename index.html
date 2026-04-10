@@ -586,6 +586,12 @@
         <span style="font-size:0.55rem;color:#7C4DFF;opacity:0.8">&#9679; mixed</span>
       </div>
 
+      <div class="explosion-pill" style="position:relative;display:inline-flex;align-items:center;gap:0.6rem;padding:0.65rem 1.1rem;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;cursor:default;transition:all 0.25s ease" data-tooltip="$30B run-rate (Apr 2026) — 3x in 4 months. 1,000+ enterprise customers at $1M+/yr. Claude Code ~$2.5B run-rate alone. $0 ad revenue. Anti-ads stance is the brand.">
+        <span style="color:#E8E9ED;font-weight:600;font-size:0.9rem">Claude</span>
+        <span class="tabnum" style="color:#F5C542;font-weight:700;font-size:0.9rem">$30B</span>
+        <span style="font-size:0.55rem;color:#7C4DFF;opacity:0.8">&#9679; mixed</span>
+      </div>
+
       <div class="explosion-pill" style="position:relative;display:inline-flex;align-items:center;gap:0.6rem;padding:0.65rem 1.1rem;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;cursor:default;transition:all 0.25s ease" data-tooltip="$2B+ ARR — 100% end-user (IDE seats). Doubled revenue in 3 months">
         <span style="color:#E8E9ED;font-weight:600;font-size:0.9rem">Cursor</span>
         <span class="tabnum" style="color:#FF8C42;font-weight:700;font-size:0.9rem">$2B+</span>
@@ -708,15 +714,21 @@
         <p class="model-name">Nova 2 Pro</p>
         <p class="model-stat">Top reasoning on Bedrock</p>
       </div>
+      <div class="model-card" data-tip="<strong>Meta Muse Spark (NEW)</strong><br><span style='color:#A0A8BC'>Released:</span> Apr 8, 2026<br><span style='color:#A0A8BC'>Codename:</span> Avocado<br><span style='color:#A0A8BC'>Lab:</span> Meta Superintelligence Labs (Alexandr Wang)<br><span style='color:#E8837C;font-size:0.82em;margin-top:3px;display:inline-block'>Closed-source. Multi-mode: quick answers vs deep analysis (legal docs, nutrition from photos). Shopping mode leveraging creator content. Rolling out across FB, IG, WhatsApp, Messenger, Ray-Ban glasses.</span><br><span style='color:#F5C542;font-size:0.82em;margin-top:3px;display:inline-block'>&starf; Meta banned external AI agents from WhatsApp API (Jan 2026) &mdash; now building own assistant for 2B+ users. Distribution as a weapon.</span>">
+        <div class="model-logo" style="background:#1877F2">M</div>
+        <h3>Meta</h3>
+        <p class="model-name">Muse Spark</p>
+        <p class="model-stat">Closed &middot; 3.6B DAU</p>
+      </div>
     </div>
 
     <!-- OPEN SOURCE/WEIGHT TIER -->
     <h3 class="subsection-title anim-fade" style="margin-bottom:1rem;font-size:0.85rem;color:#4ECDC4;letter-spacing:0.12em">OPEN SOURCE / OPEN WEIGHT &#128275;</h3>
     <div class="model-grid anim-fade" style="grid-template-columns:repeat(auto-fit,minmax(150px,1fr));margin-bottom:2rem">
-      <div class="model-card" data-tip="<strong>Llama 4 Maverick + Muse Spark (NEW)</strong><br><span style='color:#A0A8BC'>Maverick:</span> 17B active / 400B total (128 experts) &middot; 1M context &middot; MMLU 85.5%<br><span style='color:#E8837C;font-size:0.82em;margin-top:3px;display:inline-block'><strong>Muse Spark (Apr 8, 2026):</strong> First model from Meta Superintelligence Labs (Alexandr Wang). Codenamed &lsquo;Avocado.&rsquo; Multi-mode: quick answers vs deep analysis (legal docs, nutrition from photos). Shopping mode. Rolling out across FB, IG, WhatsApp, Messenger, Ray-Ban glasses.</span><br><span style='color:#F5C542;font-size:0.82em;margin-top:3px;display:inline-block'>&starf; Meta banned external AI agents from WhatsApp API (Jan 2026) &mdash; now building its own assistant for 2B+ users. Also developing &lsquo;Mango&rsquo; (video/image gen) and open-source versions of both.</span>" style="border:1px solid rgba(78,205,196,0.25)">
+      <div class="model-card" data-tip="<strong>Llama 4 Maverick</strong><br><span style='color:#A0A8BC'>Released:</span> Apr 2025<br><span style='color:#A0A8BC'>Params:</span> 17B active / 400B total (128 experts)<br><span style='color:#A0A8BC'>Context:</span> 1M tokens<br><span style='color:#A0A8BC'>Benchmarks:</span> MMLU 85.5% &middot; MMLU-Pro 80.5% &middot; GPQA 69.8%<br><span style='color:#F5C542;font-size:0.82em;margin-top:3px;display:inline-block'>&starf; First open-weight natively multimodal MoE from Meta &mdash; early fusion for text/image/video. Community License.</span>" style="border:1px solid rgba(78,205,196,0.25)">
         <div class="model-logo" style="background:#1877F2">M</div>
         <h3>Meta</h3>
-        <p class="model-name">Llama 4 / Muse Spark</p>
+        <p class="model-name">Llama 4 Maverick</p>
         <p class="model-stat" style="color:#F5C542">Community License</p>
       </div>
       <div class="model-card" data-tip="<strong>DeepSeek-V3.2</strong><br><span style='color:#A0A8BC'>Released:</span> Dec 2025<br><span style='color:#A0A8BC'>Params:</span> 685B total (37B active, MoE)<br><span style='color:#A0A8BC'>Context:</span> 128K tokens<br><span style='color:#A0A8BC'>Benchmarks:</span> MMLU-Pro 85.0 &middot; AIME 2025 93.1 &middot; SWE-bench 73.1 &middot; HMMT 92.5<br><span style='color:#F5C542;font-size:0.82em;margin-top:3px;display:inline-block'>&starf; DeepSeek Sparse Attention for efficient long-context; first model with integrated thinking in tool-use</span>" style="border:1px solid rgba(78,205,196,0.25)">
