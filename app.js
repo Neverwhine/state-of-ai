@@ -1131,7 +1131,7 @@
         color: '#4A90D9',
         superpower: '3.58B daily users across Facebook/Instagram/WhatsApp. $201B revenue. Can embed AI into every surface without asking.',
         heel: 'Four AI reorgs in 6 months. Llama 4 flopped on benchmarks. Open-source lead lost to DeepSeek. Cut ~15,000 jobs (20% workforce) while projecting $115–135B AI CapEx for 2026 — betting everything on scale over stability.',
-        stat: 'Launched Muse Spark (Apr 2026) — first model from Meta Superintelligence Labs. Banned external AI agents from WhatsApp, building own assistant for 2B+ users. $14.3B invested in Scale AI (49% stake). Cutting humans, adding AI.'
+        stat: 'Launched Muse Spark (Apr 2026) — first model from Meta Superintelligence Labs. Banned external AI agents from WhatsApp, building own assistant for 2B+ users. $14.3B invested in Scale AI (49% stake). Cutting humans, adding AI. Partnered with Broadcom (Apr 15) to co-develop custom AI silicon.'
       },
       apple: {
         name: 'Apple',
@@ -1143,11 +1143,11 @@
       },
       xai: {
         name: 'xAI / SpaceX',
-        rank: 'Merged · $1.25T',
+        rank: '#5 Arms Dealer',
         color: '#E8837C',
-        superpower: 'X\'s 500M tweets/day as real-time data. SpaceX profit ($8B in 2025) funds AI. Merged Feb 2026 into $1.25T entity — largest merger ever.',
-        heel: 'No enterprise playbook. Grok consumer traction is unclear. Orbital data centers are years away from reality.',
-        stat: 'Grok 3: 93.3% AIME 2025. Plans for orbital AI data centers via SpaceX Starlink constellation (1M+ satellites filed with FCC).'
+        superpower: 'Absorbed into SpaceX. $1.25T combined valuation. Colossus supercomputer. Now using compute as acquisition currency — $60B option to buy Cursor, or $10B for the partnership.',
+        heel: 'Lost all 11 original cofounders. Elon rebuilding team from scratch. Grok 5 targeting Q2 release but consistently behind OpenAI/Anthropic on benchmarks.',
+        stat: 'April 2026: Signed Cursor deal giving SpaceX option to acquire at $60B. Cursor gets Colossus access — "bottlenecked by compute" no more. SpaceX IPO expected June 2026.'
       },
       nvidia: {
         name: 'NVIDIA',

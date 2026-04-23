@@ -95,6 +95,7 @@
     {n:"Abagy Robotics",d:"AI for welding robots",c:"physical-ai",g:"physical-ai",f:false},
 
     {n:"Thinking Machines Lab",d:"AI research & product company",c:"research",g:"research-frontier",f:true},
+    {n:"Sooth Labs",d:"AI forecasting geopolitical and market events",c:"research",g:"research-frontier",f:true},
     {n:"SentientWave",d:"AGI in a pocket",c:"research",g:"research-frontier",f:false},
     {n:"Stealth Mode",d:"Pre-launch research company",c:"research",g:"research-frontier",f:false}
   ];
