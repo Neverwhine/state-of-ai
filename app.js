@@ -1130,16 +1130,16 @@
         rank: '#3 Brute Force',
         color: '#4A90D9',
         superpower: '3.58B daily users across Facebook/Instagram/WhatsApp. $201B revenue. Can embed AI into every surface without asking.',
-        heel: 'Four AI reorgs in 6 months. Llama 4 flopped on benchmarks. Open-source lead lost to DeepSeek. Cut ~15,000 jobs (20% workforce) while projecting $115–135B AI CapEx for 2026 — betting everything on scale over stability.',
+        heel: 'Four AI reorgs in 6 months. Llama 4 flopped on benchmarks. Open-source lead lost to DeepSeek. Cut ~15,000 jobs (20% workforce) while raising 2026 AI CapEx to $125–145B (late Apr) — stock dropped 7% on the news. Even Meta is testing investor patience.',
         stat: 'Launched Muse Spark (Apr 2026) — first model from Meta Superintelligence Labs. Banned external AI agents from WhatsApp, building own assistant for 2B+ users. $14.3B invested in Scale AI (49% stake). Cutting humans, adding AI. Partnered with Broadcom (Apr 15) to co-develop custom AI silicon.'
       },
       apple: {
         name: 'Apple',
-        rank: '#4 Sleeping Giant',
+        rank: '#4 Disciplined',
         color: '#A0A8BC',
-        superpower: 'Best on-device silicon (M-series, A-series). 2B+ active devices. Unmatched privacy trust. On-device inference is the future.',
-        heel: 'Apple Intelligence was "mostly underwhelming." Siri overhaul delayed a year. Switched from OpenAI to Google Gemini for Siri backend (Jan 2026).',
-        stat: 'Has the chips but can\'t ship the product. Privacy-first AI could be a moat — if they ever execute.'
+        superpower: 'Best on-device silicon (M-series, A-series). 2B+ active devices. Unmatched privacy trust. On-device inference is the future. CapEx discipline while everyone else burns cash.',
+        heel: 'Apple Intelligence still underwhelming. Siri overhaul delayed a year. Switched from OpenAI to Google Gemini for Siri backend (Jan 2026) — outsourcing the hardest part.',
+        stat: 'Bloomberg (May 2026): &ldquo;Apple is winning the AI spending game by not playing it.&rdquo; Strong Q2 earnings, no AI CapEx blowout. Pick-and-shovel strategy: take a cut on every AI service running on iPhone, no infrastructure bet of their own. Gemini-powered Siri ships with iOS 26.4.'
       },
       xai: {
         name: 'xAI / SpaceX',
