@@ -305,24 +305,23 @@
     <a class="dive-deeper" data-slide-link="12">→ Dive deeper</a>
   </section>
 
-  <!-- ============== SLIDE 13: Business Models + Pricing (was 10) ============== -->
-  <section class="slide" data-slide="13" id="slide-13">
-    <div class="slide-inner slide-13">
-      <p class="slide-eyebrow">Business models</p>
-      <h1 class="slide-headline">The pricing models all broke. One didn't.</h1>
-      <p class="slide-sub">Anthropic extracts <strong>7×</strong> more per user than OpenAI. The next $100B company will solve pricing — not training.</p>
-
-      <div class="pricing-row">
+  <!-- ============== SLIDE 13: Business Models + ARPU (iframes report) ============== -->
+  <section class="slide slide--has-iframe" data-slide="13" id="slide-13">
+    <div class="slide-inner slide-iframe-layout">
+      <div class="iframe-headline">
+        <p class="slide-eyebrow">Business models · the unsolved frontier</p>
+        <h1 class="slide-headline">$25B ARR. 900M users. 5.6% pay.</h1>
+        <p class="slide-sub">Per-seat broke. Per-token broke. Subscriptions barely cover inference. Ads earn pennies. The next $100B company will solve pricing — not training.</p>
+      </div>
+      <div class="pricing-row pricing-row--compact">
         <div class="pricing-icon pricing-icon--cracked"><div class="pricing-glyph">👤</div><span class="pricing-label">Per-seat</span></div>
         <div class="pricing-icon pricing-icon--cracked"><div class="pricing-glyph">≡</div><span class="pricing-label">Per-token</span></div>
         <div class="pricing-icon pricing-icon--cracked"><div class="pricing-glyph">∞</div><span class="pricing-label">Per-subscription</span></div>
         <div class="pricing-icon pricing-icon--cracked"><div class="pricing-glyph">◉</div><span class="pricing-label">Per-ad</span></div>
         <div class="pricing-icon pricing-icon--glow"><div class="pricing-glyph">✓</div><span class="pricing-label pricing-label--teal">Per-outcome (AaaS)</span></div>
       </div>
-
-      <div class="chart-wrap chart-wrap--arpu">
-        <p class="inline-chart-title">ARPU · monthly per active user</p>
-        <canvas id="arpuChart"></canvas>
+      <div class="slide-iframe-container slide-iframe-container--medium">
+        <iframe class="slide-iframe" data-iframe-embed="sec-9:arpu-block" loading="lazy" title="ARPU & business models"></iframe>
       </div>
     </div>
     <a class="dive-deeper" data-slide-link="13">→ Dive deeper</a>

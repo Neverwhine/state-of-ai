@@ -870,60 +870,14 @@
     }
   };
 
-  // ─── SLIDE 13 — Pricing + ARPU bar chart (was 10) ───
-  let arpuChart = null;
+  // ─── SLIDE 13 — Pricing + ARPU iframe (live report bars) ───
   ANIMATIONS[13] = function () {
-    if (arpuChart) return;
-    const ctx = document.getElementById('arpuChart');
-    if (!ctx || !window.Chart) return;
-    const labels = D.arpu.map(a => a.name);
-    const values = D.arpu.map(a => a.value);
-    const colors = D.arpu.map(a => a.color);
-
-    arpuChart = new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels,
-        datasets: [{
-          label: 'ARPU ($/mo)',
-          data: values,
-          backgroundColor: colors,
-          borderRadius: 4,
-          borderWidth: 0
-        }]
-      },
-      options: {
-        indexAxis: 'y',
-        responsive: true, maintainAspectRatio: false,
-        animation: { duration: 1100, easing: 'easeOutQuart' },
-        plugins: {
-          legend: { display: false },
-          tooltip: { backgroundColor: '#1f2433', borderColor: '#4ECDC4', borderWidth: 1,
-            callbacks: { label: c => '$' + c.parsed.x.toFixed(2) + ' / mo' } }
-        },
-        scales: {
-          x: { beginAtZero: true,
-            grid: { color: 'rgba(160,168,188,0.08)' },
-            ticks: { color: '#A0A8BC', callback: v => '$' + v } },
-          y: { grid: { display: false }, ticks: { color: '#E8ECEF', font: { weight: '700' } } }
-        }
-      },
-      plugins: [{
-        id: 'arpuLabels',
-        afterDatasetsDraw(chart) {
-          const { ctx } = chart;
-          const meta = chart.getDatasetMeta(0);
-          ctx.save();
-          ctx.font = '800 13px Inter';
-          ctx.fillStyle = '#E8ECEF';
-          ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
-          meta.data.forEach((bar, i) => {
-            ctx.fillText('$' + values[i].toFixed(2), bar.x + 8, bar.y);
-          });
-          ctx.restore();
-        }
-      }]
-    });
+    loadIframe(document.getElementById('slide-13'));
+    // Reveal pricing-row icons
+    const icons = document.querySelectorAll('#slide-13 .pricing-icon');
+    if (icons.length && window.gsap) {
+      gsap.from(icons, { y: 14, opacity: 0, duration: 0.45, stagger: 0.07, ease: 'power2.out' });
+    }
   };
 
   // ─── SLIDE 14 — Sequoia services matrix (iframe) ───
