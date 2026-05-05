@@ -34,6 +34,73 @@
   <link rel="stylesheet" href="sec8.css">
   <link rel="stylesheet" href="sec13.css">
   <link rel="stylesheet" href="mobile.css">
+<!-- ===== EMBED MODE (used by slides.html iframes) =====
+     URL: index.html?embed=sec-7  →  shows ONLY #sec-7, hides nav, hero, footer, slideshow link.
+     Multiple sections: ?embed=sec-7,sec-5
+-->
+<style id="embed-mode-style">
+body.embed-mode { background:#2D3142 !important; }
+body.embed-mode .sidebar,
+body.embed-mode .scroll-progress,
+body.embed-mode #stickyHeader,
+body.embed-mode .top-banner,
+body.embed-mode footer,
+body.embed-mode .footer,
+body.embed-mode .floating-toc,
+body.embed-mode a[href="slides.html"] { display:none !important; }
+body.embed-mode .section { display:none !important; padding-top: 1.5rem !important; padding-bottom: 1.5rem !important; min-height: 0 !important; }
+body.embed-mode .section.embed-visible { display:block !important; }
+body.embed-mode .section.embed-visible .section-bridge,
+body.embed-mode .section.embed-visible .section-headline,
+body.embed-mode .section.embed-visible .section-intro { display:none !important; }
+/* Focus mode: hide all section children except .embed-focus and its ancestors */
+body.embed-focus-mode .section.embed-visible > .container > *:not(.embed-focus-ancestor):not(.embed-focus) { display:none !important; }
+body.embed-focus-mode .section.embed-visible > .container > .embed-focus { display:block !important; }
+body.embed-mode { padding: 0 !important; margin: 0 !important; }
+</style>
+<script>
+(function(){
+  try {
+    var p = new URLSearchParams(window.location.search);
+    var embed = p.get('embed');
+    if (!embed) return;
+    document.documentElement.classList.add('is-embed');
+    document.addEventListener('DOMContentLoaded', function(){
+      document.body.classList.add('embed-mode');
+      var ids = embed.split(',').map(function(s){return s.trim();}).filter(Boolean);
+      ids.forEach(function(spec){
+        // Format: 'sec-9' OR 'sec-9:seq-matrix-block' (focus on a child)
+        var parts = spec.split(':');
+        var sectionId = parts[0];
+        var focusId = parts[1];
+        var sec = document.getElementById(sectionId);
+        if (sec) sec.classList.add('embed-visible');
+        if (focusId) {
+          document.body.classList.add('embed-focus-mode');
+          var focusEl = document.getElementById(focusId);
+          if (focusEl) {
+            focusEl.classList.add('embed-focus');
+            // Mark direct ancestors inside the container so they remain visible
+            var node = focusEl.parentElement;
+            while (node && node !== document.body) {
+              node.classList.add('embed-focus-ancestor');
+              node = node.parentElement;
+            }
+          }
+        }
+      });
+      // anim-fade elements normally rely on intersection-observer reveal; force-reveal them
+      setTimeout(function(){
+        document.querySelectorAll('.embed-visible .anim-fade').forEach(function(e){
+          e.classList.add('is-visible','revealed','active');
+          e.style.opacity = '1';
+          e.style.transform = 'none';
+        });
+      }, 50);
+    });
+  } catch(e) { console.warn('embed mode failed', e); }
+})();
+</script>
 </head>
 <body>
 
@@ -3262,7 +3329,7 @@
     </div>
 
     <!-- ═══ SEQUOIA SERVICES DISRUPTION MATRIX ═══ -->
-    <div class="anim-fade" style="margin:2.5rem 0">
+    <div class="anim-fade" id="seq-matrix-block" style="margin:2.5rem 0">
       <h3 class="subsection-title" style="margin-bottom:0.25rem">WHERE AGENTS EAT <span style="color:#4ECDC4">SERVICES</span> FIRST</h3>
       <p style="color:#A0A8BC;font-size:0.88rem;margin:0 0 1.5rem;text-align:center">$1.5T+ in professional services mapped by automation readiness. Tap any category for AI contenders.</p>
       <div style="position:relative;margin:0 auto;max-width:1100px">

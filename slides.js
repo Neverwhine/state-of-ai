@@ -305,8 +305,29 @@
     });
   };
 
-  // ─── SLIDE 6 — Funnel (GSAP) ───
+  // ─── IFRAME LAZY-LOAD HELPER ───
+  // Sets the iframe src to index.html?embed=<sec-id> on first slide entry.
+  function loadIframe(slideEl) {
+    if (!slideEl) return;
+    const f = slideEl.querySelector('iframe[data-iframe-embed]');
+    if (!f || f.dataset.loaded === '1') return;
+    const target = f.getAttribute('data-iframe-embed');
+    if (!target) return;
+    // Use absolute root path. Dev server strips queries on /index.html → /index 301;
+    // /?embed=... avoids the redirect. Firebase Hosting serves index.html at / by default.
+    // If target uses 'section:focus' syntax, jump the iframe to the focus element.
+    var hashId = target.indexOf(':') > -1 ? target.split(':')[1] : target;
+    f.src = '/?embed=' + encodeURIComponent(target) + '#' + hashId;
+    f.dataset.loaded = '1';
+  }
+
+  // ─── SLIDE 6 — Infrastructure & Energy (CapEx iframe) ───
   ANIMATIONS[6] = function () {
+    loadIframe(document.getElementById('slide-6'));
+  };
+
+  // ─── SLIDE 7 — Funnel (was slide 6 — GSAP) ───
+  ANIMATIONS[7] = function () {
     const dotsG  = document.getElementById('funnelDots');
     const appsG  = document.getElementById('funnelApps');
     const modsG  = document.getElementById('funnelModels');
@@ -397,7 +418,7 @@
       modelTick++;
     }, 2200);
     // stash so we can clear later if needed
-    document.getElementById('slide-6')._modelTimer = modelTimer;
+    document.getElementById('slide-7')._modelTimer = modelTimer;
 
     // ── 4. animate dots flowing top → app layer → models ──
     if (window.gsap) {
@@ -424,8 +445,8 @@
     }
   };
 
-  // ─── SLIDE 7 — Model cluster dissolve ───
-  ANIMATIONS[7] = function () {
+  // ─── SLIDE 8 — Model cluster dissolve (was 7) ───
+  ANIMATIONS[8] = function () {
     const svg = document.getElementById('clusterSvg');
     if (!svg || svg.children.length) return;
     const SVG_NS = 'http://www.w3.org/2000/svg';
@@ -562,9 +583,9 @@
     }
   };
 
-  // ─── SLIDE 8 — Smarter AND cheaper dual axis ───
+  // ─── SLIDE 9 — Smarter AND cheaper dual axis (was 8) ───
   let smarterChart = null;
-  ANIMATIONS[8] = function () {
+  ANIMATIONS[9] = function () {
     if (smarterChart) return;
     const ctx = document.getElementById('smarterChart');
     if (!ctx || !window.Chart) return;
@@ -649,29 +670,209 @@
     });
   };
 
-  // ─── SLIDE 9 — Physical AI map ───
-  ANIMATIONS[9] = function () {
-    const pins = document.querySelectorAll('#slide-9 .map-pin');
-    const routes = document.querySelectorAll('#slide-9 .route');
-    pins.forEach((p, i) => setTimeout(() => p.classList.add('is-active'), 150 + i * 120));
-    setTimeout(() => routes.forEach(r => r.classList.add('is-active')), 600);
-
-    // numbers
-    const map = {
-      physWaymo:   D.physicalAI.waymoWeeklyRides,
-      physTAM:     D.physicalAI.laborMarketTAM,
-      physTesla:   D.physicalAI.teslaFSDMiles,
-      physAurora:  D.physicalAI.auroraTrucks
-    };
-    Object.keys(map).forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.textContent = map[id];
-    });
+  // ─── SLIDE 10 — Agent anatomy (iframe of 7-layer stack) ───
+  ANIMATIONS[10] = function () {
+    loadIframe(document.getElementById('slide-10'));
+    // Animate KPI cards in
+    const cards = document.querySelectorAll('#slide-10 .kpi-card');
+    if (window.gsap && cards.length) {
+      gsap.fromTo(cards,
+        { opacity: 0, y: 14 },
+        { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out', stagger: 0.12 }
+      );
+    }
   };
 
-  // ─── SLIDE 10 — Pricing + ARPU bar chart ───
+  // ─── SLIDE 11 — Vibe coding cards ───
+  ANIMATIONS[11] = function () {
+    const grid = document.getElementById('vibeGrid');
+    if (!grid || grid.children.length) return;
+    (D.vibeCoding || []).forEach(c => {
+      const card = document.createElement('div');
+      card.className = 'vibe-card' + (c.dvc ? ' vibe-card--dvc' : '');
+      card.innerHTML = `
+        <div class="vibe-logo" style="--logo-color:${c.color}">${c.letter}</div>
+        <div class="vibe-body">
+          <div class="vibe-head">
+            <span class="vibe-name">${c.name}</span>
+            ${c.dvc ? '<span class="vibe-dvc">DVC</span>' : ''}
+          </div>
+          <span class="vibe-stat">${c.stat}</span>
+          <span class="vibe-desc">${c.desc}</span>
+        </div>`;
+      grid.appendChild(card);
+    });
+    if (window.gsap) {
+      gsap.fromTo(grid.children,
+        { opacity: 0, y: 18, scale: 0.96 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: 'power2.out', stagger: 0.07 }
+      );
+    }
+  };
+
+  // ─── SLIDE 12 — Physical AI: 3 motion tiles + stat strip (REBUILT) ───
+  ANIMATIONS[12] = function () {
+    const tilesC = document.getElementById('physTiles');
+    const stripC = document.getElementById('physStatsStrip');
+    if (!tilesC || tilesC.children.length) return;
+
+    const SVG_NS = 'http://www.w3.org/2000/svg';
+
+    function buildTileIcon(kind, color) {
+      const svg = document.createElementNS(SVG_NS, 'svg');
+      svg.setAttribute('viewBox', '0 0 240 120');
+      svg.setAttribute('class', 'phys-tile-svg');
+      svg.setAttribute('aria-hidden', 'true');
+      // dashed road / route line
+      const road = document.createElementNS(SVG_NS, 'line');
+      road.setAttribute('x1', 0); road.setAttribute('y1', 100);
+      road.setAttribute('x2', 240); road.setAttribute('y2', 100);
+      road.setAttribute('stroke', color); road.setAttribute('stroke-width', 2);
+      road.setAttribute('stroke-dasharray', '10 8');
+      road.setAttribute('opacity', '0.55');
+      road.setAttribute('class', 'phys-road');
+      svg.appendChild(road);
+
+      if (kind === 'car') {
+        // Stylized autonomous car w/ sensor dome
+        const body = document.createElementNS(SVG_NS, 'path');
+        body.setAttribute('d', 'M 70 86 L 80 64 Q 90 56 120 56 L 160 56 Q 175 56 180 64 L 188 86 Z');
+        body.setAttribute('fill', 'none'); body.setAttribute('stroke', color); body.setAttribute('stroke-width', 2.4);
+        body.setAttribute('stroke-linejoin', 'round');
+        svg.appendChild(body);
+        // sensor dome on top
+        const dome = document.createElementNS(SVG_NS, 'ellipse');
+        dome.setAttribute('cx', 130); dome.setAttribute('cy', 54); dome.setAttribute('rx', 14); dome.setAttribute('ry', 6);
+        dome.setAttribute('fill', 'none'); dome.setAttribute('stroke', color); dome.setAttribute('stroke-width', 2);
+        svg.appendChild(dome);
+        const ping = document.createElementNS(SVG_NS, 'circle');
+        ping.setAttribute('cx', 130); ping.setAttribute('cy', 54); ping.setAttribute('r', 3);
+        ping.setAttribute('fill', color);
+        ping.setAttribute('class', 'phys-ping');
+        svg.appendChild(ping);
+        // wheels
+        [95, 165].forEach(cx => {
+          const w = document.createElementNS(SVG_NS, 'circle');
+          w.setAttribute('cx', cx); w.setAttribute('cy', 90); w.setAttribute('r', 8);
+          w.setAttribute('fill', '#2D3142'); w.setAttribute('stroke', color); w.setAttribute('stroke-width', 2);
+          svg.appendChild(w);
+        });
+      } else if (kind === 'truck') {
+        // freight truck — cab + trailer, no driver
+        const trailer = document.createElementNS(SVG_NS, 'rect');
+        trailer.setAttribute('x', 60); trailer.setAttribute('y', 50);
+        trailer.setAttribute('width', 90); trailer.setAttribute('height', 36); trailer.setAttribute('rx', 3);
+        trailer.setAttribute('fill', 'none'); trailer.setAttribute('stroke', color); trailer.setAttribute('stroke-width', 2.4);
+        svg.appendChild(trailer);
+        const cab = document.createElementNS(SVG_NS, 'path');
+        cab.setAttribute('d', 'M 152 60 L 175 60 Q 188 60 188 72 L 188 86 L 152 86 Z');
+        cab.setAttribute('fill', 'none'); cab.setAttribute('stroke', color); cab.setAttribute('stroke-width', 2.4);
+        cab.setAttribute('stroke-linejoin', 'round');
+        svg.appendChild(cab);
+        // sensor on cab roof
+        const sensor = document.createElementNS(SVG_NS, 'rect');
+        sensor.setAttribute('x', 165); sensor.setAttribute('y', 52); sensor.setAttribute('width', 12); sensor.setAttribute('height', 6);
+        sensor.setAttribute('fill', color); sensor.setAttribute('opacity', 0.7);
+        sensor.setAttribute('class', 'phys-ping');
+        svg.appendChild(sensor);
+        // wheels
+        [78, 130, 175].forEach(cx => {
+          const w = document.createElementNS(SVG_NS, 'circle');
+          w.setAttribute('cx', cx); w.setAttribute('cy', 90); w.setAttribute('r', 7);
+          w.setAttribute('fill', '#2D3142'); w.setAttribute('stroke', color); w.setAttribute('stroke-width', 2);
+          svg.appendChild(w);
+        });
+      } else if (kind === 'robotarm') {
+        // robotic arm reaching towards target with particle arc
+        const base = document.createElementNS(SVG_NS, 'rect');
+        base.setAttribute('x', 70); base.setAttribute('y', 88); base.setAttribute('width', 30); base.setAttribute('height', 12); base.setAttribute('rx', 2);
+        base.setAttribute('fill', 'none'); base.setAttribute('stroke', color); base.setAttribute('stroke-width', 2);
+        svg.appendChild(base);
+        // upper arm
+        const arm1 = document.createElementNS(SVG_NS, 'line');
+        arm1.setAttribute('x1', 85); arm1.setAttribute('y1', 88); arm1.setAttribute('x2', 130); arm1.setAttribute('y2', 50);
+        arm1.setAttribute('stroke', color); arm1.setAttribute('stroke-width', 4); arm1.setAttribute('stroke-linecap', 'round');
+        svg.appendChild(arm1);
+        // forearm
+        const arm2 = document.createElementNS(SVG_NS, 'line');
+        arm2.setAttribute('x1', 130); arm2.setAttribute('y1', 50); arm2.setAttribute('x2', 175); arm2.setAttribute('y2', 70);
+        arm2.setAttribute('stroke', color); arm2.setAttribute('stroke-width', 4); arm2.setAttribute('stroke-linecap', 'round');
+        svg.appendChild(arm2);
+        // joint pivots
+        [[85,88],[130,50],[175,70]].forEach(([cx,cy]) => {
+          const j = document.createElementNS(SVG_NS, 'circle');
+          j.setAttribute('cx', cx); j.setAttribute('cy', cy); j.setAttribute('r', 4);
+          j.setAttribute('fill', '#2D3142'); j.setAttribute('stroke', color); j.setAttribute('stroke-width', 2);
+          svg.appendChild(j);
+        });
+        // gripper
+        const grip = document.createElementNS(SVG_NS, 'path');
+        grip.setAttribute('d', 'M 175 70 L 184 64 M 175 70 L 184 76');
+        grip.setAttribute('stroke', color); grip.setAttribute('stroke-width', 2.5); grip.setAttribute('stroke-linecap', 'round');
+        svg.appendChild(grip);
+        // particle arc target
+        const arc = document.createElementNS(SVG_NS, 'path');
+        arc.setAttribute('d', 'M 195 60 Q 210 80 200 96');
+        arc.setAttribute('fill', 'none'); arc.setAttribute('stroke', color); arc.setAttribute('stroke-width', 1.5);
+        arc.setAttribute('stroke-dasharray', '3 5'); arc.setAttribute('opacity', '0.6');
+        arc.setAttribute('class', 'phys-arc');
+        svg.appendChild(arc);
+        const target = document.createElementNS(SVG_NS, 'circle');
+        target.setAttribute('cx', 200); target.setAttribute('cy', 96); target.setAttribute('r', 4);
+        target.setAttribute('fill', color); target.setAttribute('class', 'phys-ping');
+        svg.appendChild(target);
+      }
+      return svg;
+    }
+
+    (D.physicalAITiles || []).forEach(tile => {
+      const el = document.createElement('div');
+      el.className = 'phys-tile' + (tile.dvc ? ' phys-tile--dvc' : '');
+      el.style.setProperty('--tile-color', tile.color);
+      const cat = document.createElement('div');
+      cat.className = 'phys-tile-cat';
+      cat.textContent = tile.category;
+      el.appendChild(cat);
+      el.appendChild(buildTileIcon(tile.icon, tile.color));
+      const cap = document.createElement('div');
+      cap.className = 'phys-tile-caption';
+      const cName = document.createElement('span');
+      cName.className = 'phys-tile-company';
+      cName.textContent = tile.company + (tile.dvc ? ' (DVC)' : '');
+      const cDet = document.createElement('span');
+      cDet.className = 'phys-tile-detail';
+      cDet.textContent = tile.detail;
+      cap.appendChild(cName); cap.appendChild(cDet);
+      el.appendChild(cap);
+      tilesC.appendChild(el);
+    });
+
+    // Stats strip (4 horizontal cards)
+    if (stripC && !stripC.children.length) {
+      (D.physicalAIStats || []).forEach(s => {
+        const card = document.createElement('div');
+        card.className = 'phys-strip-card';
+        card.style.setProperty('--strip-color', s.accent);
+        card.innerHTML = `<span class="phys-strip-num">${s.num}</span><span class="phys-strip-label">${s.label}</span>`;
+        stripC.appendChild(card);
+      });
+    }
+
+    if (window.gsap) {
+      gsap.fromTo('#physTiles .phys-tile',
+        { opacity: 0, y: 22, scale: 0.95 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: 'back.out(1.4)', stagger: 0.14 }
+      );
+      gsap.fromTo('#physStatsStrip .phys-strip-card',
+        { opacity: 0, y: 12 },
+        { opacity: 1, y: 0, duration: 0.45, ease: 'power2.out', stagger: 0.08, delay: 0.4 }
+      );
+    }
+  };
+
+  // ─── SLIDE 13 — Pricing + ARPU bar chart (was 10) ───
   let arpuChart = null;
-  ANIMATIONS[10] = function () {
+  ANIMATIONS[13] = function () {
     if (arpuChart) return;
     const ctx = document.getElementById('arpuChart');
     if (!ctx || !window.Chart) return;
@@ -725,9 +926,14 @@
     });
   };
 
-  // ─── SLIDE 11 — Close (cycles + you-are-here) ───
-  ANIMATIONS[11] = function () {
-    const curves = document.querySelectorAll('#slide-11 .cycle-curve');
+  // ─── SLIDE 14 — Sequoia services matrix (iframe) ───
+  ANIMATIONS[14] = function () {
+    loadIframe(document.getElementById('slide-14'));
+  };
+
+  // ─── SLIDE 15 — Close (cycles + you-are-here) ───
+  ANIMATIONS[15] = function () {
+    const curves = document.querySelectorAll('#slide-15 .cycle-curve');
     curves.forEach((c, i) => {
       const len = c.getTotalLength ? c.getTotalLength() : 1200;
       c.style.strokeDasharray = len;
