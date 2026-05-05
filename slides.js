@@ -159,270 +159,154 @@
     });
   };
 
-  // ─── SLIDES 3 / 4 — Stack chart + Margin morph ───
-  let stackChart = null, marginChart = null;
+  // ─── STACK VISUAL HELPERS (slides 3, 4, 5) ───
+  // Build a single-column stack of 5 layer cards into a container element.
+  // mode: 'full' | 'revenue' | 'margin' | 'small'
+  function buildStackViz(container, mode) {
+    if (!container || container.children.length) return [];
+    const layers = D.stackLayers || [];
+    const cards = [];
+    layers.forEach(layer => {
+      const card = document.createElement('div');
+      card.className = 'stack-layer';
+      card.style.setProperty('--accent', layer.accent);
 
-  ANIMATIONS[3] = function () {
-    if (stackChart) return;
-    const ctx = document.getElementById('stackChart');
-    if (!ctx || !window.Chart) return;
-    const labels = D.stackRevenue.map(r => r.layer);
-    const y2024  = D.stackRevenue.map(r => r.y2024);
-    const y2026  = D.stackRevenue.map(r => r.y2026);
-    const growth = D.stackRevenue.map(r => r.growth);
+      const badge = document.createElement('span');
+      badge.className = 'stack-badge';
+      badge.textContent = layer.badge;
 
-    stackChart = new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels,
-        datasets: [
-          {
-            label: '2024 ($B)',
-            data: y2024,
-            backgroundColor: 'rgba(160,168,188,0.45)',
-            borderColor: 'rgba(160,168,188,0.7)',
-            borderWidth: 1,
-            borderRadius: 4
-          },
-          {
-            label: '2026 ($B)',
-            data: y2026,
-            backgroundColor: '#4ECDC4',
-            borderColor: '#4ECDC4',
-            borderWidth: 0,
-            borderRadius: 4
-          }
-        ]
-      },
-      options: {
-        indexAxis: 'y',
-        responsive: true,
-        maintainAspectRatio: false,
-        animation: { duration: 1100, easing: 'easeOutQuart' },
-        plugins: {
-          legend: {
-            position: 'top', align: 'end',
-            labels: { color: '#E8ECEF', boxWidth: 10, boxHeight: 10, font: { size: 11, weight: '600' } }
-          },
-          tooltip: {
-            backgroundColor: '#1f2433', borderColor: '#4ECDC4', borderWidth: 1,
-            titleColor: '#E8ECEF', bodyColor: '#A0A8BC',
-            callbacks: {
-              afterLabel: ctx => ctx.datasetIndex === 1 ? `Growth: ${growth[ctx.dataIndex]}` : ''
-            }
-          }
-        },
-        scales: {
-          x: {
-            beginAtZero: true,
-            max: 240,
-            grid: { color: 'rgba(160,168,188,0.08)' },
-            ticks: { color: '#A0A8BC', callback: v => '$' + v + 'B' }
-          },
-          y: {
-            grid: { display: false },
-            ticks: { color: '#E8ECEF', font: { weight: '600' } }
-          }
-        }
-      },
-      plugins: [growthLabelPlugin(growth)]
-    });
-  };
+      const title = document.createElement('span');
+      title.className = 'stack-title';
+      title.textContent = layer.title;
 
-  // Custom plugin: paint growth % at end of each row
-  function growthLabelPlugin(growthArr) {
-    return {
-      id: 'growthLabels',
-      afterDatasetsDraw(chart) {
-        const { ctx, scales } = chart;
-        const ds = chart.data.datasets[1]; // 2026 dataset
-        if (!ds) return;
-        const meta = chart.getDatasetMeta(1);
-        ctx.save();
-        ctx.font = '700 11px Inter';
-        ctx.fillStyle = '#F5C542';
-        ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
-        meta.data.forEach((bar, i) => {
-          const v = growthArr[i];
-          if (v == null) return;
-          ctx.fillText(v, bar.x + 8, bar.y);
-        });
-        ctx.restore();
+      const value = document.createElement('span');
+      value.className = 'stack-value';
+
+      const label = document.createElement('span');
+      label.className = 'stack-label';
+
+      if (mode === 'margin') {
+        // Margin lens: width-proportional bar, semantic coloring
+        value.textContent = layer.marginPct + '%';
+        label.textContent = layer.marginRange;
+        // semantic color: high (>=40) teal, mid (20-39) gold, low (<20) coral
+        const m = layer.marginPct;
+        const semantic = m >= 40 ? '#4ECDC4' : (m < 20 ? '#E8837C' : '#F5C542');
+        card.style.setProperty('--accent', semantic);
+        card.classList.add('stack-layer--margin');
+        // store target width pct for animation
+        card.dataset.marginPct = m;
+      } else if (mode === 'revenue') {
+        value.textContent = layer.revenue2026;
+        label.textContent = layer.growth + ' · ' + layer.revenueLabel;
+      } else {
+        // 'full' or 'small'
+        value.textContent = layer.revenue2026;
+        label.textContent = layer.revenueLabel;
       }
-    };
+
+      card.appendChild(badge);
+      card.appendChild(title);
+      card.appendChild(value);
+      card.appendChild(label);
+      container.appendChild(card);
+      cards.push(card);
+    });
+    return cards;
   }
 
-  ANIMATIONS[4] = function () {
-    if (marginChart) return;
-    const ctx = document.getElementById('marginChart');
-    if (!ctx || !window.Chart) return;
-    const labels  = D.stackMargins.map(r => r.layer);
-    const margins = D.stackMargins.map(r => r.margin);
-    const ranges  = D.stackMargins.map(r => r.range);
-
-    // color: high (>=40%) teal, low (<25%) coral, mid gold
-    const colors = margins.map(m => m >= 40 ? '#4ECDC4' : (m < 20 ? '#E8837C' : '#F5C542'));
-
-    marginChart = new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels,
-        datasets: [{
-          label: 'Margin (%)',
-          data: margins,
-          backgroundColor: colors,
-          borderColor: colors,
-          borderWidth: 0,
-          borderRadius: 4
-        }]
-      },
-      options: {
-        indexAxis: 'y',
-        responsive: true,
-        maintainAspectRatio: false,
-        animation: { duration: 1100, easing: 'easeOutQuart' },
-        plugins: {
-          legend: { display: false },
-          tooltip: {
-            backgroundColor: '#1f2433', borderColor: '#4ECDC4', borderWidth: 1,
-            callbacks: {
-              label: ctx => `Margin: ${ctx.parsed.x}%  (${ranges[ctx.dataIndex]})`
-            }
-          }
-        },
-        scales: {
-          x: {
-            beginAtZero: true, max: 80,
-            grid: { color: 'rgba(160,168,188,0.08)' },
-            ticks: { color: '#A0A8BC', callback: v => v + '%' }
-          },
-          y: {
-            grid: { display: false },
-            ticks: { color: '#E8ECEF', font: { weight: '600' } }
-          }
-        }
-      },
-      plugins: [{
-        id: 'rangeLabels',
-        afterDatasetsDraw(chart) {
-          const { ctx } = chart;
-          const meta = chart.getDatasetMeta(0);
-          ctx.save();
-          ctx.font = '700 11px Inter';
-          ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
-          meta.data.forEach((bar, i) => {
-            ctx.fillStyle = colors[i];
-            ctx.fillText(margins[i] + '%', bar.x + 8, bar.y);
-          });
-          ctx.restore();
-        }
-      }]
-    });
-  };
-
-  // ─── SLIDE 5 — Industrial layers reveal bottom-up ───
-  ANIMATIONS[5] = function () {
-    const layers = Array.from(document.querySelectorAll('#slide-5 .industrial-layer'));
-    // bottom-up: reverse order
-    const sorted = layers.slice().sort((a, b) => parseInt(b.dataset.layer) - parseInt(a.dataset.layer));
-    sorted.forEach((el, i) => {
-      setTimeout(() => el.classList.add('is-revealed'), i * 220);
-    });
-
-    // CapEx number count-up
-    const c2024 = document.getElementById('capex2024');
-    const c2026 = document.getElementById('capex2026');
-    if (c2024) animateNumber(c2024, 0, D.hyperscalerCapex.y2024, 1100, v => '$' + Math.round(v) + 'B');
-    if (c2026) animateNumber(c2026, 0, D.hyperscalerCapex.y2026, 1500, v => '$' + Math.round(v) + 'B');
-  };
-
-  function animateNumber(el, from, to, dur, fmt) {
-    const start = performance.now();
-    function tick(t) {
-      const p = Math.min(1, (t - start) / dur);
-      const eased = 1 - Math.pow(1 - p, 3);
-      const v = from + (to - from) * eased;
-      el.textContent = fmt ? fmt(v) : Math.round(v);
-      if (p < 1) requestAnimationFrame(tick);
+  // ─── SLIDE 3 — The Stack: stagger reveal of 5 layers ───
+  ANIMATIONS[3] = function () {
+    const container = document.getElementById('stackViz3');
+    const cards = buildStackViz(container, 'full');
+    if (!cards.length) return;
+    if (window.gsap) {
+      gsap.fromTo(cards,
+        { opacity: 0, y: -16 },
+        { opacity: 1, y: 0, duration: 0.55, ease: 'power2.out', stagger: 0.12 }
+      );
+    } else {
+      cards.forEach((c, i) => setTimeout(() => c.classList.add('is-revealed'), i * 120));
     }
-    requestAnimationFrame(tick);
-  }
+  };
 
-  // ─── SLIDE 6 — Spoons (CSS-driven, no JS needed) ───
-  ANIMATIONS[6] = function () { /* purely CSS animations */ };
+  // ─── SLIDE 4 — Same stack, two lenses (revenue vs margin) ───
+  ANIMATIONS[4] = function () {
+    const revContainer = document.getElementById('stackVizRev');
+    const marContainer = document.getElementById('stackVizMar');
+    const revCards = buildStackViz(revContainer, 'revenue');
+    const marCards = buildStackViz(marContainer, 'margin');
+    if (!revCards.length || !marCards.length) return;
 
-  // ─── SLIDE 7 — Two forces + mini stack + inference chart ───
-  let inferenceChart = null;
-  ANIMATIONS[7] = function () {
-    // Build mini stack from data
-    const mini = document.getElementById('miniStack');
-    if (mini && !mini.children.length) {
-      // Top of stack first
-      const stackOrder = D.stackRevenue.map(r => r.layer); // already top→bottom
-      stackOrder.forEach((label, i) => {
-        const row = document.createElement('div');
-        row.className = 'mini-stack-row';
-        // top 2 are app/model (teal), bottom 3 (cloud, silicon, power) coral, orchestration mid
-        if (i < 2) row.classList.add('mini-stack-row--teal');
-        else if (i === 2) row.classList.add('mini-stack-row--mid');
-        else row.classList.add('mini-stack-row--coral');
-        row.innerHTML = `<span>${label}</span><span>${D.stackRevenue[i].growth}</span>`;
-        mini.appendChild(row);
+    if (window.gsap) {
+      const tl = gsap.timeline();
+      // 1. Reveal left (revenue) stack
+      tl.fromTo(revCards,
+        { opacity: 0, y: -10 },
+        { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out', stagger: 0.08 }
+      );
+      // 2. Fade in right (margin) stack background cards
+      tl.fromTo(marCards,
+        { opacity: 0 },
+        { opacity: 1, duration: 0.4, ease: 'power2.out', stagger: 0.06 },
+        '+=0.2'
+      );
+      // 3. Animate margin bars: width 0% → marginPct (using CSS custom property width)
+      marCards.forEach(card => {
+        const pct = parseFloat(card.dataset.marginPct) || 0;
+        // initialize width to 0, then animate
+        card.style.setProperty('--bar-width', '0%');
+        tl.to(card, {
+          duration: 0.7, ease: 'power2.out',
+          onUpdate: function() {
+            const p = this.progress();
+            card.style.setProperty('--bar-width', (pct * p) + '%');
+          }
+        }, '<0.05');
+      });
+    } else {
+      revCards.forEach((c, i) => setTimeout(() => c.classList.add('is-revealed'), i * 80));
+      marCards.forEach((c, i) => {
+        setTimeout(() => {
+          c.classList.add('is-revealed');
+          c.style.setProperty('--bar-width', (parseFloat(c.dataset.marginPct) || 0) + '%');
+        }, 500 + i * 80);
       });
     }
+  };
 
-    // Cost drop %
-    const dropEl = document.getElementById('costDropPct');
-    if (dropEl) dropEl.textContent = D.inferenceCostDrop;
+  // ─── SLIDE 5 — Two forces: stack + arrows reveal ───
+  ANIMATIONS[5] = function () {
+    const container = document.getElementById('stackViz5');
+    const cards = buildStackViz(container, 'small');
+    const paths = document.querySelectorAll('#slide-5 .force-path');
 
-    if (inferenceChart) return;
-    const ctx = document.getElementById('inferenceChart');
-    if (!ctx || !window.Chart) return;
+    if (window.gsap) {
+      const tl = gsap.timeline();
+      tl.fromTo(cards,
+        { opacity: 0, y: -10 },
+        { opacity: 1, y: 0, duration: 0.45, ease: 'power2.out', stagger: 0.09 }
+      );
+    } else {
+      cards.forEach((c, i) => setTimeout(() => c.classList.add('is-revealed'), i * 90));
+    }
 
-    inferenceChart = new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: D.inferenceCost.map(p => p.date),
-        datasets: [{
-          label: '$ / M tokens',
-          data: D.inferenceCost.map(p => p.cost),
-          borderColor: '#E8837C',
-          backgroundColor: 'rgba(232,131,124,0.10)',
-          fill: true, tension: 0.35,
-          pointBackgroundColor: '#E8837C',
-          pointBorderColor: '#fff',
-          pointBorderWidth: 1,
-          pointRadius: 4,
-          borderWidth: 2.5
-        }]
-      },
-      options: {
-        responsive: true, maintainAspectRatio: false,
-        animation: { duration: 1500, easing: 'easeOutQuart' },
-        plugins: {
-          legend: { display: false },
-          tooltip: {
-            backgroundColor: '#1f2433', borderColor: '#E8837C', borderWidth: 1,
-            callbacks: { label: ctx => '$' + ctx.parsed.y.toFixed(2) + ' / M tokens' }
-          }
-        },
-        scales: {
-          x: {
-            grid: { display: false },
-            ticks: { color: '#A0A8BC', font: { size: 10 }, maxRotation: 35, minRotation: 0 }
-          },
-          y: {
-            type: 'logarithmic',
-            grid: { color: 'rgba(160,168,188,0.08)' },
-            ticks: { color: '#A0A8BC', callback: v => '$' + (v < 1 ? v : v.toFixed(0)) }
-          }
-        }
-      }
+    // SVG arrow stroke-dashoffset reveal
+    paths.forEach((p, i) => {
+      const len = p.getTotalLength ? p.getTotalLength() : 600;
+      p.style.strokeDasharray = len;
+      p.style.strokeDashoffset = len;
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          p.style.transition = 'stroke-dashoffset 1100ms ease-out';
+          p.style.strokeDashoffset = '0';
+        }, 600 + i * 250);
+      });
     });
   };
 
-  // ─── SLIDE 8 — Funnel (GSAP) ───
-  ANIMATIONS[8] = function () {
+  // ─── SLIDE 6 — Funnel (GSAP) ───
+  ANIMATIONS[6] = function () {
     const dotsG  = document.getElementById('funnelDots');
     const appsG  = document.getElementById('funnelApps');
     const modsG  = document.getElementById('funnelModels');
@@ -513,7 +397,7 @@
       modelTick++;
     }, 2200);
     // stash so we can clear later if needed
-    document.getElementById('slide-8')._modelTimer = modelTimer;
+    document.getElementById('slide-6')._modelTimer = modelTimer;
 
     // ── 4. animate dots flowing top → app layer → models ──
     if (window.gsap) {
@@ -540,8 +424,8 @@
     }
   };
 
-  // ─── SLIDE 9 — Model cluster dissolve ───
-  ANIMATIONS[9] = function () {
+  // ─── SLIDE 7 — Model cluster dissolve ───
+  ANIMATIONS[7] = function () {
     const svg = document.getElementById('clusterSvg');
     if (!svg || svg.children.length) return;
     const SVG_NS = 'http://www.w3.org/2000/svg';
@@ -678,9 +562,9 @@
     }
   };
 
-  // ─── SLIDE 10 — Smarter AND cheaper dual axis ───
+  // ─── SLIDE 8 — Smarter AND cheaper dual axis ───
   let smarterChart = null;
-  ANIMATIONS[10] = function () {
+  ANIMATIONS[8] = function () {
     if (smarterChart) return;
     const ctx = document.getElementById('smarterChart');
     if (!ctx || !window.Chart) return;
@@ -765,10 +649,10 @@
     });
   };
 
-  // ─── SLIDE 11 — Physical AI map ───
-  ANIMATIONS[11] = function () {
-    const pins = document.querySelectorAll('#slide-11 .map-pin');
-    const routes = document.querySelectorAll('#slide-11 .route');
+  // ─── SLIDE 9 — Physical AI map ───
+  ANIMATIONS[9] = function () {
+    const pins = document.querySelectorAll('#slide-9 .map-pin');
+    const routes = document.querySelectorAll('#slide-9 .route');
     pins.forEach((p, i) => setTimeout(() => p.classList.add('is-active'), 150 + i * 120));
     setTimeout(() => routes.forEach(r => r.classList.add('is-active')), 600);
 
@@ -785,9 +669,9 @@
     });
   };
 
-  // ─── SLIDE 12 — Pricing + ARPU bar chart ───
+  // ─── SLIDE 10 — Pricing + ARPU bar chart ───
   let arpuChart = null;
-  ANIMATIONS[12] = function () {
+  ANIMATIONS[10] = function () {
     if (arpuChart) return;
     const ctx = document.getElementById('arpuChart');
     if (!ctx || !window.Chart) return;
@@ -841,9 +725,9 @@
     });
   };
 
-  // ─── SLIDE 13 — Close (cycles + you-are-here) ───
-  ANIMATIONS[13] = function () {
-    const curves = document.querySelectorAll('#slide-13 .cycle-curve');
+  // ─── SLIDE 11 — Close (cycles + you-are-here) ───
+  ANIMATIONS[11] = function () {
+    const curves = document.querySelectorAll('#slide-11 .cycle-curve');
     curves.forEach((c, i) => {
       const len = c.getTotalLength ? c.getTotalLength() : 1200;
       c.style.strokeDasharray = len;

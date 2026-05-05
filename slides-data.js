@@ -2,35 +2,48 @@
 // Update numbers here; the slideshow auto-updates.
 
 window.SLIDES_DATA = {
-  // Stack revenue by layer ($B), 2024 vs 2026 — bars in slides 3-4
-  stackRevenue: [
-    { layer: 'Application',   y2024: 10,  y2026: 60,  growth: '+500%' },
-    { layer: 'Model',         y2024: 4,   y2026: 30,  growth: '+650%' },
-    { layer: 'Orchestration', y2024: 0.2, y2026: 1.5, growth: '+650%' },
-    { layer: 'Cloud (AI)',    y2024: 35,  y2026: 130, growth: '+270%' },
-    { layer: 'Silicon (AI)',  y2024: 60,  y2026: 200, growth: '+230%' },
-    { layer: 'Power & DC',    y2024: 30,  y2026: 90,  growth: '+200%' }
+  // ─── THE STACK — 5 layers, single source of truth (slides 3-5) ───
+  // Top→bottom order: APPLICATIONS → FOUNDATION MODELS → CLOUD & INFRA → SILICON → ENERGY
+  stackLayers: [
+    {
+      badge: 'LAYER 5', title: 'APPLICATIONS', accent: '#4ECDC4',
+      revenue2026: '$60-70B', revenueLabel: 'app revenue',
+      revenue2024Num: 13, revenue2026Num: 65,
+      growth: '+400%',
+      marginPct: 50, marginRange: '25-60%'
+    },
+    {
+      badge: 'LAYER 4', title: 'FOUNDATION MODELS', accent: '#7C4DFF',
+      revenue2026: '$35-40B', revenueLabel: 'API revenue',
+      revenue2024Num: 9, revenue2026Num: 37,
+      growth: '+311%',
+      marginPct: 50, marginRange: '33-70%'
+    },
+    {
+      badge: 'LAYER 3', title: 'CLOUD & INFRA', accent: '#4A90D9',
+      revenue2026: '$18-22B', revenueLabel: 'AI cloud rev (+ $224B CapEx)',
+      revenue2024Num: 8, revenue2026Num: 20,
+      growth: '+150%',
+      marginPct: 28, marginRange: '20-35%'
+    },
+    {
+      badge: 'LAYER 2', title: 'SILICON', accent: '#E8837C',
+      revenue2026: '$130B', revenueLabel: 'AI silicon revenue',
+      revenue2024Num: 60, revenue2026Num: 130,
+      growth: '+117%',
+      marginPct: 60, marginRange: '45-75% (NVIDIA)'
+    },
+    {
+      badge: 'LAYER 1', title: 'ENERGY', accent: '#F5C542',
+      revenue2026: '460 TWh', revenueLabel: 'data-center power',
+      revenue2024Num: 240, revenue2026Num: 460,
+      growth: '+92%',
+      marginPct: 12, marginRange: '8-15% (utility)'
+    }
   ],
 
-  // Margins by layer (%) — slide 4 morph target
-  stackMargins: [
-    { layer: 'Application',   margin: 50, range: '40-65%' },
-    { layer: 'Model',         margin: 25, range: '15-35%' },
-    { layer: 'Orchestration', margin: 60, range: '50-70%' },
-    { layer: 'Cloud (AI)',    margin: 28, range: '20-35%' },
-    { layer: 'Silicon (AI)',  margin: 50, range: '45-75% NVIDIA outlier' },
-    { layer: 'Power & DC',    margin: 12, range: '8-15% utility' }
-  ],
-
-  // Application layer companies (slide 8)
-  appLayer: [
-    { name: 'OpenAI',     val: '$25B',   color: '#10A37F' },
-    { name: 'Anthropic',  val: '$30B',   color: '#D4A574' },
-    { name: 'Cursor',     val: '$2B',    color: '#A0A8BC' },
-    { name: 'Perplexity', val: '$420M',  color: '#4ECDC4', dvc: true },
-    { name: 'ElevenLabs', val: '$330M',  color: '#A0A8BC' },
-    { name: 'Higgsfield', val: '$300M',  color: '#4ECDC4', dvc: true }
-  ],
+  // Hyperscaler CapEx ($B)
+  hyperscalerCapex: { y2024: 224, y2026: 700, ratio: '$12 infra : $1 app revenue' },
 
   // Inference cost collapse — log scale. Cost per million tokens (USD).
   inferenceCost: [
@@ -42,8 +55,15 @@ window.SLIDES_DATA = {
   ],
   inferenceCostDrop: '99.6%',
 
-  // Hyperscaler CapEx ($B)
-  hyperscalerCapex: { y2024: 224, y2026: 700, ratio: '$12 infra : $1 app revenue' },
+  // Application layer companies (slide 6, formerly slide 8)
+  appLayer: [
+    { name: 'OpenAI',     val: '$25B',   color: '#10A37F' },
+    { name: 'Anthropic',  val: '$30B',   color: '#D4A574' },
+    { name: 'Cursor',     val: '$2B',    color: '#A0A8BC' },
+    { name: 'Perplexity', val: '$420M',  color: '#4ECDC4', dvc: true },
+    { name: 'ElevenLabs', val: '$330M',  color: '#A0A8BC' },
+    { name: 'Higgsfield', val: '$300M',  color: '#4ECDC4', dvc: true }
+  ],
 
   // Model layer
   frontierModelCount: 15,
@@ -51,7 +71,7 @@ window.SLIDES_DATA = {
     commodity:   ['DeepSeek V3.2', 'Qwen 3', 'GLM-5', 'Kimi K2.5', 'Gemma 4', 'Llama 4'],
     specialist:  ['Cursor (code)', 'ElevenLabs (voice)', 'Veo 3.1 (video)', 'Imagen 4 (image)'],
     govOnly:     ['Mythos', 'GPT-5.5-Cyber'],
-    deprecated:  ['Sora 2'] // crossed out
+    deprecated:  ['Sora 2']
   },
 
   // Smarter + Cheaper diverging curves
@@ -78,24 +98,22 @@ window.SLIDES_DATA = {
     { name: 'Google',    value: 1.10,  color: '#4285F4' }
   ],
 
-  // Tech cycle phases (slide 13)
+  // Tech cycle phases (slide 11)
   cyclePhases: ['Infrastructure buildout', 'Platform consolidation', 'Application dominance'],
   weAreHere:   'Infrastructure buildout',
 
   // Section anchors for "Dive deeper" links to index.html
   diveDeeperAnchors: {
-    1:  'index.html#sec-0',   // opening
-    2:  'index.html#sec-1',   // tech cycles
-    3:  'index.html#sec-1',   // stack
-    4:  'index.html#sec-1',   // margin morph
-    5:  'index.html#sec-7',   // industrial / infrastructure
-    6:  'index.html#sec-9',   // spoons / business models
-    7:  'index.html#sec-1',   // two forces
-    8:  'index.html#sec-2',   // application layer
-    9:  'index.html#sec-3',   // model wars
-    10: 'index.html#sec-3',   // smarter + cheaper
-    11: 'index.html#sec-8',   // physical AI
-    12: 'index.html#sec-9',   // business models
-    13: 'index.html#sec-15'   // closing
+    1:  'index.html#sec-0',
+    2:  'index.html#sec-1',
+    3:  'index.html#sec-1',  // stack
+    4:  'index.html#sec-1',  // revenue/margin
+    5:  'index.html#sec-1',  // two forces
+    6:  'index.html#sec-2',  // app layer (was 8)
+    7:  'index.html#sec-3',  // model wars (was 9)
+    8:  'index.html#sec-3',  // smarter+cheaper (was 10)
+    9:  'index.html#sec-8',  // physical AI (was 11)
+    10: 'index.html#sec-9',  // business models (was 12)
+    11: 'index.html#sec-15'  // close (was 13)
   }
 };

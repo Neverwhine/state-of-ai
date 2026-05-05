@@ -24,7 +24,7 @@
 <a class="back-link" href="index.html">← Full Report</a>
 
 <!-- Top-right: slide counter -->
-<div class="slide-counter"><span id="slideNum">1</span> / <span id="slideTotal">13</span></div>
+<div class="slide-counter"><span id="slideNum">1</span> / <span id="slideTotal">11</span></div>
 
 <!-- Click zones (overlay) -->
 <div class="click-zone click-zone--prev" id="zonePrev" aria-label="Previous slide"></div>
@@ -116,228 +116,97 @@
     <a class="dive-deeper" data-slide-link="2">→ Dive deeper</a>
   </section>
 
-  <!-- ============== SLIDE 3: The Stack — Revenue Bars ============== -->
+  <!-- ============== SLIDE 3: The Stack ============== -->
   <section class="slide" data-slide="3" id="slide-3">
     <div class="slide-inner slide-3">
-      <p class="slide-eyebrow">The Stack · Revenue ($B)</p>
-      <h1 class="slide-headline">Everything is growing — but unevenly.</h1>
-      <p class="slide-sub">Even infra grows 200–270%. Application grows 500%+.</p>
-      <div class="chart-wrap chart-wrap--stack">
-        <canvas id="stackChart"></canvas>
-      </div>
+      <p class="slide-eyebrow">The Stack</p>
+      <h1 class="slide-headline">Five layers. One economy.</h1>
+      <p class="slide-sub">$60B at the top generates $700B of buildout below.</p>
+      <div class="stack-viz" id="stackViz3"></div>
     </div>
     <a class="dive-deeper" data-slide-link="3">→ Dive deeper</a>
   </section>
 
-  <!-- ============== SLIDE 4: Margin Transform ============== -->
+  <!-- ============== SLIDE 4: Same stack, two lenses ============== -->
   <section class="slide" data-slide="4" id="slide-4">
     <div class="slide-inner slide-4">
-      <p class="slide-eyebrow">The Stack · Margin (%)</p>
-      <h1 class="slide-headline">Same stack. Different lens.</h1>
-      <p class="slide-sub">$1 of app revenue requires $12 of infrastructure spend. Top earns software margins. Bottom earns utility margins.</p>
-      <div class="chart-wrap chart-wrap--stack">
-        <canvas id="marginChart"></canvas>
+      <p class="slide-eyebrow">Revenue vs Margin</p>
+      <h1 class="slide-headline">Same stack. Two lenses.</h1>
+      <p class="slide-sub">Revenue grew everywhere. Margins didn't follow. The top earns software economics. The bottom earns utility.</p>
+      <div class="stack-compare">
+        <div class="stack-compare-col">
+          <p class="stack-col-head">REVENUE</p>
+          <div class="stack-viz stack-viz--revenue" id="stackVizRev"></div>
+        </div>
+        <div class="stack-compare-col">
+          <p class="stack-col-head">MARGIN</p>
+          <div class="stack-viz stack-viz--margin" id="stackVizMar"></div>
+        </div>
       </div>
     </div>
     <a class="dive-deeper" data-slide-link="4">→ Dive deeper</a>
   </section>
 
-  <!-- ============== SLIDE 5: Industrial Complex ============== -->
+  <!-- ============== SLIDE 5: Two forces ============== -->
   <section class="slide" data-slide="5" id="slide-5">
     <div class="slide-inner slide-5">
-      <p class="slide-eyebrow">Industrial complex</p>
-      <h1 class="slide-headline">Software demand. Industrial buildout.</h1>
-      <p class="slide-sub">Microsoft restarts Three Mile Island. Google builds nuclear reactors. Amazon $20B+ in nuclear.</p>
+      <p class="slide-eyebrow">Forces on the Stack</p>
+      <h1 class="slide-headline">Two forces. One stack.</h1>
+      <p class="slide-sub">Going down: commodity. Going up: behavior. The moat moved up.</p>
 
-      <div class="industrial-stack">
-        <div class="industrial-layer industrial-layer--1" data-layer="1">
-          <svg viewBox="0 0 200 60" class="ind-svg">
-            <rect x="40" y="10" width="120" height="36" rx="4" fill="none" stroke="#FFFFFF" stroke-width="1.5"/>
-            <line x1="60" y1="50" x2="140" y2="50" stroke="#FFFFFF" stroke-width="1.5"/>
-            <line x1="80" y1="46" x2="120" y2="46" stroke="#FFFFFF" stroke-width="1.5"/>
+      <div class="forces-layout">
+        <!-- Down arrow on left of stack -->
+        <div class="force-side force-side--down">
+          <svg viewBox="0 0 60 360" class="force-arrow force-arrow--down" aria-hidden="true">
+            <defs>
+              <filter id="glowCoral" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur stdDeviation="3" result="b"/>
+                <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+            </defs>
+            <path class="force-path force-path--down" d="M 30 20 L 30 320 M 12 295 L 30 330 L 48 295" fill="none" stroke="#E8837C" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" filter="url(#glowCoral)"/>
           </svg>
-          <span class="ind-label">Software (laptop)</span>
+          <div class="force-side-label force-side-label--coral">
+            <span class="force-side-title">COMMODITIZATION</span>
+            <span class="force-side-sub">Inference fell 99.6% in 24 months.</span>
+          </div>
         </div>
-        <div class="industrial-layer industrial-layer--2" data-layer="2">
-          <svg viewBox="0 0 240 60" class="ind-svg">
-            <g fill="none" stroke="#4ECDC4" stroke-width="1.5">
-              <rect x="10"  y="10" width="40" height="40"/>
-              <rect x="60"  y="10" width="40" height="40"/>
-              <rect x="110" y="10" width="40" height="40"/>
-              <rect x="160" y="10" width="40" height="40"/>
-              <line x1="10" y1="22" x2="50" y2="22"/>
-              <line x1="60" y1="22" x2="100" y2="22"/>
-              <line x1="110" y1="22" x2="150" y2="22"/>
-              <line x1="160" y1="22" x2="200" y2="22"/>
-              <line x1="10" y1="36" x2="50" y2="36"/>
-              <line x1="60" y1="36" x2="100" y2="36"/>
-              <line x1="110" y1="36" x2="150" y2="36"/>
-              <line x1="160" y1="36" x2="200" y2="36"/>
-            </g>
+
+        <!-- Center stack -->
+        <div class="stack-viz stack-viz--small" id="stackViz5"></div>
+
+        <!-- Up arrow on right of stack -->
+        <div class="force-side force-side--up">
+          <svg viewBox="0 0 60 360" class="force-arrow force-arrow--up" aria-hidden="true">
+            <defs>
+              <filter id="glowTeal" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur stdDeviation="3" result="b"/>
+                <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+            </defs>
+            <path class="force-path force-path--up" d="M 30 340 L 30 40 M 12 65 L 30 30 L 48 65" fill="none" stroke="#4ECDC4" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" filter="url(#glowTeal)"/>
           </svg>
-          <span class="ind-label">Data centers</span>
-        </div>
-        <div class="industrial-layer industrial-layer--3" data-layer="3">
-          <svg viewBox="0 0 240 60" class="ind-svg">
-            <g fill="none" stroke="#F5C542" stroke-width="1.5">
-              <rect x="20" y="20" width="60" height="30"/>
-              <path d="M 20 20 L 50 5 L 80 20"/>
-              <ellipse cx="130" cy="35" rx="14" ry="22"/>
-              <ellipse cx="170" cy="35" rx="14" ry="22"/>
-              <line x1="116" y1="20" x2="184" y2="20"/>
-            </g>
-          </svg>
-          <span class="ind-label">Foundry &amp; cooling</span>
-        </div>
-        <div class="industrial-layer industrial-layer--4" data-layer="4">
-          <svg viewBox="0 0 240 60" class="ind-svg">
-            <g fill="none" stroke="#E8837C" stroke-width="1.5">
-              <ellipse cx="60" cy="40" rx="28" ry="14"/>
-              <path d="M 60 12 L 60 26 M 50 18 L 70 18"/>
-              <circle cx="60" cy="40" r="6"/>
-              <line x1="100" y1="50" x2="230" y2="50"/>
-              <line x1="120" y1="50" x2="120" y2="20"/>
-              <line x1="160" y1="50" x2="160" y2="20"/>
-              <line x1="200" y1="50" x2="200" y2="20"/>
-              <line x1="120" y1="22" x2="200" y2="22"/>
-            </g>
-          </svg>
-          <span class="ind-label">Nuclear &amp; grid</span>
+          <div class="force-side-label force-side-label--teal">
+            <span class="force-side-title">PERSONALIZATION</span>
+            <span class="force-side-sub">User behavior, habits, identity.</span>
+          </div>
         </div>
       </div>
 
-      <div class="capex-callout">
-        <div class="capex-pair">
-          <span class="capex-year">2024</span>
-          <span class="capex-num" id="capex2024">$224B</span>
-        </div>
-        <span class="capex-arrow">→</span>
-        <div class="capex-pair capex-pair--big">
-          <span class="capex-year">2026</span>
-          <span class="capex-num capex-num--big" id="capex2026">$700B</span>
-        </div>
-        <span class="capex-tag">hyperscaler CapEx</span>
+      <div class="forces-keystat">
+        <span class="keystat-num">$60B</span><span class="keystat-tag">revenue</span>
+        <span class="keystat-sep">·</span>
+        <span class="keystat-num">$700B</span><span class="keystat-tag">infrastructure</span>
+        <span class="keystat-sep">·</span>
+        <span class="keystat-num keystat-num--accent">12:1</span><span class="keystat-tag">ratio</span>
       </div>
     </div>
     <a class="dive-deeper" data-slide-link="5">→ Dive deeper</a>
   </section>
 
-  <!-- ============== SLIDE 6: The Spoons Factory ============== -->
+  <!-- ============== SLIDE 6: Application Layer Controls the Game ============== -->
   <section class="slide" data-slide="6" id="slide-6">
     <div class="slide-inner slide-6">
-      <p class="slide-eyebrow">Manufacturing economics under a software UI</p>
-      <h1 class="slide-headline">AI is not selling spoons. It runs the factory.</h1>
-      <p class="slide-sub">Each output is custom-fabricated for each user, on demand, in real-time, at marginal cost.</p>
-
-      <div class="spoons-split">
-        <!-- Left: SaaS dashboard -->
-        <div class="spoons-left">
-          <div class="spoons-pill">STANDARD PRODUCT</div>
-          <div class="saas-mock">
-            <div class="saas-mock-header">
-              <span class="saas-dot"></span><span class="saas-dot"></span><span class="saas-dot"></span>
-            </div>
-            <div class="saas-mock-body">
-              <div class="saas-row saas-row--1"></div>
-              <div class="saas-row saas-row--2"></div>
-              <div class="saas-row saas-row--3"></div>
-              <div class="saas-bars">
-                <div class="saas-bar" style="height:40%"></div>
-                <div class="saas-bar" style="height:62%"></div>
-                <div class="saas-bar" style="height:55%"></div>
-                <div class="saas-bar" style="height:78%"></div>
-                <div class="saas-bar" style="height:48%"></div>
-                <div class="saas-bar" style="height:88%"></div>
-              </div>
-            </div>
-          </div>
-          <p class="spoons-caption">High margin · mass-produced · same SKU for everyone</p>
-        </div>
-
-        <!-- Right: factory -->
-        <div class="spoons-right">
-          <div class="spoons-pill spoons-pill--teal">BESPOKE OUTPUT</div>
-          <svg class="factory-svg" viewBox="0 0 520 320" aria-hidden="true">
-            <!-- factory roof -->
-            <path d="M 30 80 L 60 50 L 90 80 L 120 50 L 150 80 L 180 50 L 210 80 L 240 50 L 270 80 L 300 50 L 330 80 L 360 50 L 390 80" fill="none" stroke="#A0A8BC" stroke-width="2" opacity="0.7"/>
-            <!-- factory body -->
-            <rect x="30" y="80" width="460" height="160" fill="none" stroke="#A0A8BC" stroke-width="2" opacity="0.7"/>
-            <!-- conveyor belt -->
-            <line class="conveyor-line" x1="0" y1="280" x2="520" y2="280" stroke="#4ECDC4" stroke-width="2"/>
-            <line class="conveyor-line" x1="0" y1="290" x2="520" y2="290" stroke="#4ECDC4" stroke-width="1" opacity="0.4"/>
-            <!-- diverging spoons (each different) -->
-            <g class="spoon" transform="translate(80,260)">
-              <ellipse cx="0" cy="0" rx="12" ry="8" fill="none" stroke="#F5C542" stroke-width="1.5"/>
-              <line x1="-12" y1="0" x2="-30" y2="0" stroke="#F5C542" stroke-width="1.5"/>
-            </g>
-            <g class="spoon" transform="translate(160,260) rotate(15)">
-              <ellipse cx="0" cy="0" rx="14" ry="6" fill="none" stroke="#4ECDC4" stroke-width="1.5"/>
-              <line x1="-14" y1="0" x2="-34" y2="0" stroke="#4ECDC4" stroke-width="1.5"/>
-            </g>
-            <g class="spoon" transform="translate(240,260) rotate(-10)">
-              <ellipse cx="0" cy="0" rx="10" ry="10" fill="none" stroke="#E8837C" stroke-width="1.5"/>
-              <line x1="-10" y1="0" x2="-26" y2="0" stroke="#E8837C" stroke-width="1.5"/>
-            </g>
-            <g class="spoon" transform="translate(320,260)">
-              <path d="M 0 -8 Q 12 0 0 8 Q -12 0 0 -8 Z" fill="none" stroke="#4ECDC4" stroke-width="1.5"/>
-              <line x1="0" y1="0" x2="-22" y2="4" stroke="#4ECDC4" stroke-width="1.5"/>
-            </g>
-            <g class="spoon" transform="translate(400,260) rotate(20)">
-              <ellipse cx="0" cy="0" rx="16" ry="5" fill="none" stroke="#F5C542" stroke-width="1.5"/>
-              <line x1="-16" y1="0" x2="-32" y2="0" stroke="#F5C542" stroke-width="1.5"/>
-            </g>
-            <g class="spoon" transform="translate(470,260) rotate(-25)">
-              <circle cx="0" cy="0" r="9" fill="none" stroke="#7C4DFF" stroke-width="1.5"/>
-              <line x1="-9" y1="0" x2="-26" y2="0" stroke="#7C4DFF" stroke-width="1.5"/>
-            </g>
-          </svg>
-          <p class="spoons-caption">Custom · per-user · per-call · marginal cost</p>
-        </div>
-      </div>
-    </div>
-    <a class="dive-deeper" data-slide-link="6">→ Dive deeper</a>
-  </section>
-
-  <!-- ============== SLIDE 7: Two Forces ============== -->
-  <section class="slide" data-slide="7" id="slide-7">
-    <div class="slide-inner slide-7">
-      <p class="slide-eyebrow">Two forces</p>
-      <h1 class="slide-headline">Going down: commodity. Going up: behavior.</h1>
-      <p class="slide-sub">Inference cost fell <strong id="costDropPct">99.6%</strong> in 24 months. The moat moved up.</p>
-
-      <div class="two-forces-grid">
-        <!-- mini stack on left -->
-        <div class="mini-stack" id="miniStack" aria-label="Mini stack diagram"></div>
-
-        <!-- two arrows -->
-        <div class="forces-arrows">
-          <div class="force force--down">
-            <svg viewBox="0 0 60 200" class="force-arrow">
-              <path d="M 30 10 L 30 170 M 12 150 L 30 180 L 48 150" fill="none" stroke="#E8837C" stroke-width="3"/>
-            </svg>
-            <span class="force-label force-label--coral">COMMODITIZATION</span>
-          </div>
-          <div class="force force--up">
-            <svg viewBox="0 0 60 200" class="force-arrow">
-              <path d="M 30 190 L 30 30 M 12 50 L 30 20 L 48 50" fill="none" stroke="#4ECDC4" stroke-width="3"/>
-            </svg>
-            <span class="force-label force-label--teal">PERSONALIZATION</span>
-          </div>
-        </div>
-
-        <!-- inference cost line chart -->
-        <div class="inference-chart-wrap">
-          <p class="inline-chart-title">Inference cost · per million tokens</p>
-          <canvas id="inferenceChart"></canvas>
-        </div>
-      </div>
-    </div>
-    <a class="dive-deeper" data-slide-link="7">→ Dive deeper</a>
-  </section>
-
-  <!-- ============== SLIDE 8: Application Layer Controls the Game ============== -->
-  <section class="slide" data-slide="8" id="slide-8">
-    <div class="slide-inner slide-8">
       <p class="slide-eyebrow">Application layer</p>
       <h1 class="slide-headline">The user never sees the model.</h1>
       <p class="slide-sub">Whoever owns the application picks the model. Distribution &gt; intelligence.</p>
@@ -364,12 +233,12 @@
         </svg>
       </div>
     </div>
-    <a class="dive-deeper" data-slide-link="8">→ Dive deeper</a>
+    <a class="dive-deeper" data-slide-link="6">→ Dive deeper</a>
   </section>
 
-  <!-- ============== SLIDE 9: Model Cluster Dissolve ============== -->
-  <section class="slide" data-slide="9" id="slide-9">
-    <div class="slide-inner slide-9">
+  <!-- ============== SLIDE 7: Model Cluster Dissolve ============== -->
+  <section class="slide" data-slide="7" id="slide-7">
+    <div class="slide-inner slide-7">
       <p class="slide-eyebrow">Model layer · 15 frontier models</p>
       <h1 class="slide-headline">Frontier broke into three races.</h1>
       <p class="slide-sub">Commodity. Specialist. Restricted.</p>
@@ -382,12 +251,12 @@
         <svg id="clusterSvg" viewBox="0 0 1200 520" aria-hidden="true"></svg>
       </div>
     </div>
-    <a class="dive-deeper" data-slide-link="9">→ Dive deeper</a>
+    <a class="dive-deeper" data-slide-link="7">→ Dive deeper</a>
   </section>
 
-  <!-- ============== SLIDE 10: Smarter AND Cheaper ============== -->
-  <section class="slide" data-slide="10" id="slide-10">
-    <div class="slide-inner slide-10">
+  <!-- ============== SLIDE 8: Smarter AND Cheaper ============== -->
+  <section class="slide" data-slide="8" id="slide-8">
+    <div class="slide-inner slide-8">
       <p class="slide-eyebrow">Capability vs. cost</p>
       <h1 class="slide-headline">Smarter AND cheaper.</h1>
       <p class="slide-sub">Every prior cycle: more power = more cost. AI inverted that. Embed intelligence everywhere.</p>
@@ -395,12 +264,12 @@
         <canvas id="smarterChart"></canvas>
       </div>
     </div>
-    <a class="dive-deeper" data-slide-link="10">→ Dive deeper</a>
+    <a class="dive-deeper" data-slide-link="8">→ Dive deeper</a>
   </section>
 
-  <!-- ============== SLIDE 11: Physical AI ============== -->
-  <section class="slide" data-slide="11" id="slide-11">
-    <div class="slide-inner slide-11">
+  <!-- ============== SLIDE 9: Physical AI ============== -->
+  <section class="slide" data-slide="9" id="slide-9">
+    <div class="slide-inner slide-9">
       <p class="slide-eyebrow">Physical AI</p>
       <h1 class="slide-headline">It already left the screen.</h1>
       <p class="slide-sub">$38 trillion labor market in play. Slower than software people think. Faster than industrial incumbents hope.</p>
@@ -473,12 +342,12 @@
         </div>
       </div>
     </div>
-    <a class="dive-deeper" data-slide-link="11">→ Dive deeper</a>
+    <a class="dive-deeper" data-slide-link="9">→ Dive deeper</a>
   </section>
 
-  <!-- ============== SLIDE 12: The Business Model Problem ============== -->
-  <section class="slide" data-slide="12" id="slide-12">
-    <div class="slide-inner slide-12">
+  <!-- ============== SLIDE 10: The Business Model Problem ============== -->
+  <section class="slide" data-slide="10" id="slide-10">
+    <div class="slide-inner slide-10">
       <p class="slide-eyebrow">Business models</p>
       <h1 class="slide-headline">The pricing models all broke. One didn't.</h1>
       <p class="slide-sub">Anthropic extracts <strong>7×</strong> more per user than OpenAI. The next $100B company will solve pricing — not training.</p>
@@ -511,12 +380,12 @@
         <canvas id="arpuChart"></canvas>
       </div>
     </div>
-    <a class="dive-deeper" data-slide-link="12">→ Dive deeper</a>
+    <a class="dive-deeper" data-slide-link="10">→ Dive deeper</a>
   </section>
 
-  <!-- ============== SLIDE 13: Close — The Pattern ============== -->
-  <section class="slide" data-slide="13" id="slide-13">
-    <div class="slide-inner slide-13">
+  <!-- ============== SLIDE 11: Close — The Pattern ============== -->
+  <section class="slide" data-slide="11" id="slide-11">
+    <div class="slide-inner slide-11">
       <p class="slide-eyebrow">The pattern repeats</p>
       <h1 class="slide-headline">Toy → Tool → Infrastructure.</h1>
       <p class="slide-sub">Then it's too late to build the competing version. Stay curious. Stay aggressive.</p>
@@ -544,7 +413,7 @@
         </g>
       </svg>
     </div>
-    <a class="dive-deeper" data-slide-link="13">→ Dive deeper</a>
+    <a class="dive-deeper" data-slide-link="11">→ Dive deeper</a>
   </section>
 
 </main>
