@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>State of AI — Slideshow | DVC</title>
+<meta name="description" content="A 20-minute compressed presentation of DVC's State of AI">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="slides.css">
+<!-- Chart.js 4.x -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<!-- GSAP 3.12 -->
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+</head>
+<body>
+
+<!-- Top progress bar -->
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+<!-- Top-left: back to full report -->
+<a class="back-link" href="index.html">← Full Report</a>
+
+<!-- Top-right: slide counter -->
+<div class="slide-counter"><span id="slideNum">1</span> / <span id="slideTotal">13</span></div>
+
+<!-- Click zones (overlay) -->
+<div class="click-zone click-zone--prev" id="zonePrev" aria-label="Previous slide"></div>
+<div class="click-zone click-zone--next" id="zoneNext" aria-label="Next slide"></div>
+
+<!-- Slides container -->
+<main class="deck" id="deck">
+
+  <!-- ============== SLIDE 1: Opening (OpenClaw family) ============== -->
+  <section class="slide" data-slide="1" id="slide-1">
+    <div class="slide-inner slide-1">
+      <svg class="house-svg" viewBox="0 0 800 500" aria-hidden="true">
+        <!-- ground -->
+        <line x1="40" y1="430" x2="760" y2="430" stroke="#4ECDC4" stroke-width="2" opacity="0.4"/>
+        <!-- house outline -->
+        <path d="M 100 430 L 100 220 L 400 80 L 700 220 L 700 430 Z" fill="none" stroke="#A0A8BC" stroke-width="2" opacity="0.7"/>
+        <!-- roof line -->
+        <path d="M 100 220 L 400 80 L 700 220" fill="none" stroke="#F5C542" stroke-width="2"/>
+        <!-- internal walls -->
+        <line x1="280" y1="430" x2="280" y2="220" stroke="#A0A8BC" stroke-width="1" opacity="0.4" stroke-dasharray="4 4"/>
+        <line x1="520" y1="430" x2="520" y2="220" stroke="#A0A8BC" stroke-width="1" opacity="0.4" stroke-dasharray="4 4"/>
+        <line x1="100" y1="320" x2="700" y2="320" stroke="#A0A8BC" stroke-width="1" opacity="0.4" stroke-dasharray="4 4"/>
+
+        <!-- icons (revealed sequentially) -->
+        <g class="house-icon" data-time="6:40am" data-label="Email">
+          <circle cx="180" cy="270" r="28" fill="#383E52" stroke="#4ECDC4" stroke-width="2"/>
+          <path d="M 165 263 L 195 263 L 195 280 L 165 280 Z M 165 263 L 180 273 L 195 263" fill="none" stroke="#4ECDC4" stroke-width="1.8"/>
+          <text x="180" y="320" text-anchor="middle" fill="#E8ECEF" font-size="11" font-weight="600">6:40am · Email</text>
+        </g>
+        <g class="house-icon" data-time="6:45am" data-label="Calendar">
+          <circle cx="400" cy="270" r="28" fill="#383E52" stroke="#F5C542" stroke-width="2"/>
+          <rect x="386" y="258" width="28" height="22" rx="2" fill="none" stroke="#F5C542" stroke-width="1.8"/>
+          <line x1="386" y1="265" x2="414" y2="265" stroke="#F5C542" stroke-width="1.8"/>
+          <text x="400" y="320" text-anchor="middle" fill="#E8ECEF" font-size="11" font-weight="600">6:45am · Calendar</text>
+        </g>
+        <g class="house-icon" data-time="7:15am" data-label="Telegram">
+          <circle cx="620" cy="270" r="28" fill="#383E52" stroke="#4ECDC4" stroke-width="2"/>
+          <path d="M 608 270 L 632 262 L 628 282 L 620 276 L 614 280 Z" fill="none" stroke="#4ECDC4" stroke-width="1.8"/>
+          <text x="620" y="320" text-anchor="middle" fill="#E8ECEF" font-size="11" font-weight="600">7:15am · Telegram</text>
+        </g>
+        <g class="house-icon" data-time="7:20am" data-label="Amazon">
+          <circle cx="280" cy="380" r="28" fill="#383E52" stroke="#F5C542" stroke-width="2"/>
+          <rect x="266" y="368" width="28" height="20" rx="1" fill="none" stroke="#F5C542" stroke-width="1.8"/>
+          <path d="M 268 388 Q 280 396 292 388" fill="none" stroke="#F5C542" stroke-width="1.8"/>
+          <text x="280" y="420" text-anchor="middle" fill="#E8ECEF" font-size="11" font-weight="600">7:20am · Amazon</text>
+        </g>
+        <g class="house-icon" data-time="3:10pm" data-label="Waymo">
+          <circle cx="520" cy="380" r="28" fill="#383E52" stroke="#E8837C" stroke-width="2"/>
+          <rect x="504" y="372" width="32" height="14" rx="3" fill="none" stroke="#E8837C" stroke-width="1.8"/>
+          <circle cx="512" cy="388" r="3" fill="none" stroke="#E8837C" stroke-width="1.5"/>
+          <circle cx="528" cy="388" r="3" fill="none" stroke="#E8837C" stroke-width="1.5"/>
+          <text x="520" y="420" text-anchor="middle" fill="#E8ECEF" font-size="11" font-weight="600">3:10pm · Waymo</text>
+        </g>
+      </svg>
+
+      <h1 class="slide-headline slide-headline--xl">This runs today.</h1>
+      <p class="slide-eyebrow">A day in the life — already automated</p>
+    </div>
+    <a class="dive-deeper" data-slide-link="1">→ Dive deeper</a>
+  </section>
+
+  <!-- ============== SLIDE 2: Tech Cycles ============== -->
+  <section class="slide" data-slide="2" id="slide-2">
+    <div class="slide-inner slide-2">
+      <p class="slide-eyebrow">Tech cycles</p>
+      <h1 class="slide-headline">Same playbook. Different tech.</h1>
+      <p class="slide-sub">Infrastructure → Platform → Application. Always.</p>
+
+      <svg class="cycles-svg" viewBox="0 0 1100 420" aria-hidden="true">
+        <!-- baseline -->
+        <line x1="60" y1="380" x2="1040" y2="380" stroke="#A0A8BC" stroke-width="1" opacity="0.3"/>
+
+        <!-- Printing Press curve -->
+        <path class="cycle-curve" id="curve-print" d="M 60 380 C 200 380 280 360 360 280 C 440 200 500 100 600 80" fill="none" stroke="#A0A8BC" stroke-width="3" opacity="0.5"/>
+        <text x="60" y="405" fill="#A0A8BC" font-size="13" font-weight="600">Printing Press · 1450</text>
+
+        <!-- Internet curve -->
+        <path class="cycle-curve" id="curve-net" d="M 360 380 C 480 380 540 350 600 280 C 670 200 730 110 820 90" fill="none" stroke="#F5C542" stroke-width="3" opacity="0.7"/>
+        <text x="360" y="405" fill="#F5C542" font-size="13" font-weight="600">Internet · 1995</text>
+
+        <!-- AI curve (shortest, steepest) -->
+        <path class="cycle-curve" id="curve-ai" d="M 720 380 C 780 380 810 370 850 320 C 890 270 920 200 960 160" fill="none" stroke="#4ECDC4" stroke-width="4"/>
+        <text x="720" y="405" fill="#4ECDC4" font-size="13" font-weight="700">AI · 2023</text>
+
+        <!-- phase markers underneath -->
+        <text x="550" y="40" fill="#E8ECEF" font-size="11" opacity="0.6" font-weight="500">Infrastructure → Platform → Application</text>
+      </svg>
+    </div>
+    <a class="dive-deeper" data-slide-link="2">→ Dive deeper</a>
+  </section>
+
+  <!-- ============== SLIDE 3: The Stack — Revenue Bars ============== -->
+  <section class="slide" data-slide="3" id="slide-3">
+    <div class="slide-inner slide-3">
+      <p class="slide-eyebrow">The Stack · Revenue ($B)</p>
+      <h1 class="slide-headline">Everything is growing — but unevenly.</h1>
+      <p class="slide-sub">Even infra grows 200–270%. Application grows 500%+.</p>
+      <div class="chart-wrap chart-wrap--stack">
+        <canvas id="stackChart"></canvas>
+      </div>
+    </div>
+    <a class="dive-deeper" data-slide-link="3">→ Dive deeper</a>
+  </section>
+
+  <!-- ============== SLIDE 4: Margin Transform ============== -->
+  <section class="slide" data-slide="4" id="slide-4">
+    <div class="slide-inner slide-4">
+      <p class="slide-eyebrow">The Stack · Margin (%)</p>
+      <h1 class="slide-headline">Same stack. Different lens.</h1>
+      <p class="slide-sub">$1 of app revenue requires $12 of infrastructure spend. Top earns software margins. Bottom earns utility margins.</p>
+      <div class="chart-wrap chart-wrap--stack">
+        <canvas id="marginChart"></canvas>
+      </div>
+    </div>
+    <a class="dive-deeper" data-slide-link="4">→ Dive deeper</a>
+  </section>
+
+  <!-- ============== SLIDE 5: Industrial Complex ============== -->
+  <section class="slide" data-slide="5" id="slide-5">
+    <div class="slide-inner slide-5">
+      <p class="slide-eyebrow">Industrial complex</p>
+      <h1 class="slide-headline">Software demand. Industrial buildout.</h1>
+      <p class="slide-sub">Microsoft restarts Three Mile Island. Google builds nuclear reactors. Amazon $20B+ in nuclear.</p>
+
+      <div class="industrial-stack">
+        <div class="industrial-layer industrial-layer--1" data-layer="1">
+          <svg viewBox="0 0 200 60" class="ind-svg">
+            <rect x="40" y="10" width="120" height="36" rx="4" fill="none" stroke="#FFFFFF" stroke-width="1.5"/>
+            <line x1="60" y1="50" x2="140" y2="50" stroke="#FFFFFF" stroke-width="1.5"/>
+            <line x1="80" y1="46" x2="120" y2="46" stroke="#FFFFFF" stroke-width="1.5"/>
+          </svg>
+          <span class="ind-label">Software (laptop)</span>
+        </div>
+        <div class="industrial-layer industrial-layer--2" data-layer="2">
+          <svg viewBox="0 0 240 60" class="ind-svg">
+            <g fill="none" stroke="#4ECDC4" stroke-width="1.5">
+              <rect x="10"  y="10" width="40" height="40"/>
+              <rect x="60"  y="10" width="40" height="40"/>
+              <rect x="110" y="10" width="40" height="40"/>
+              <rect x="160" y="10" width="40" height="40"/>
+              <line x1="10" y1="22" x2="50" y2="22"/>
+              <line x1="60" y1="22" x2="100" y2="22"/>
+              <line x1="110" y1="22" x2="150" y2="22"/>
+              <line x1="160" y1="22" x2="200" y2="22"/>
+              <line x1="10" y1="36" x2="50" y2="36"/>
+              <line x1="60" y1="36" x2="100" y2="36"/>
+              <line x1="110" y1="36" x2="150" y2="36"/>
+              <line x1="160" y1="36" x2="200" y2="36"/>
+            </g>
+          </svg>
+          <span class="ind-label">Data centers</span>
+        </div>
+        <div class="industrial-layer industrial-layer--3" data-layer="3">
+          <svg viewBox="0 0 240 60" class="ind-svg">
+            <g fill="none" stroke="#F5C542" stroke-width="1.5">
+              <rect x="20" y="20" width="60" height="30"/>
+              <path d="M 20 20 L 50 5 L 80 20"/>
+              <ellipse cx="130" cy="35" rx="14" ry="22"/>
+              <ellipse cx="170" cy="35" rx="14" ry="22"/>
+              <line x1="116" y1="20" x2="184" y2="20"/>
+            </g>
+          </svg>
+          <span class="ind-label">Foundry &amp; cooling</span>
+        </div>
+        <div class="industrial-layer industrial-layer--4" data-layer="4">
+          <svg viewBox="0 0 240 60" class="ind-svg">
+            <g fill="none" stroke="#E8837C" stroke-width="1.5">
+              <ellipse cx="60" cy="40" rx="28" ry="14"/>
+              <path d="M 60 12 L 60 26 M 50 18 L 70 18"/>
+              <circle cx="60" cy="40" r="6"/>
+              <line x1="100" y1="50" x2="230" y2="50"/>
+              <line x1="120" y1="50" x2="120" y2="20"/>
+              <line x1="160" y1="50" x2="160" y2="20"/>
+              <line x1="200" y1="50" x2="200" y2="20"/>
+              <line x1="120" y1="22" x2="200" y2="22"/>
+            </g>
+          </svg>
+          <span class="ind-label">Nuclear &amp; grid</span>
+        </div>
+      </div>
+
+      <div class="capex-callout">
+        <div class="capex-pair">
+          <span class="capex-year">2024</span>
+          <span class="capex-num" id="capex2024">$224B</span>
+        </div>
+        <span class="capex-arrow">→</span>
+        <div class="capex-pair capex-pair--big">
+          <span class="capex-year">2026</span>
+          <span class="capex-num capex-num--big" id="capex2026">$700B</span>
+        </div>
+        <span class="capex-tag">hyperscaler CapEx</span>
+      </div>
+    </div>
+    <a class="dive-deeper" data-slide-link="5">→ Dive deeper</a>
+  </section>
+
+  <!-- ============== SLIDE 6: The Spoons Factory ============== -->
+  <section class="slide" data-slide="6" id="slide-6">
+    <div class="slide-inner slide-6">
+      <p class="slide-eyebrow">Manufacturing economics under a software UI</p>
+      <h1 class="slide-headline">AI is not selling spoons. It runs the factory.</h1>
+      <p class="slide-sub">Each output is custom-fabricated for each user, on demand, in real-time, at marginal cost.</p>
+
+      <div class="spoons-split">
+        <!-- Left: SaaS dashboard -->
+        <div class="spoons-left">
+          <div class="spoons-pill">STANDARD PRODUCT</div>
+          <div class="saas-mock">
+            <div class="saas-mock-header">
+              <span class="saas-dot"></span><span class="saas-dot"></span><span class="saas-dot"></span>
+            </div>
+            <div class="saas-mock-body">
+              <div class="saas-row saas-row--1"></div>
+              <div class="saas-row saas-row--2"></div>
+              <div class="saas-row saas-row--3"></div>
+              <div class="saas-bars">
+                <div class="saas-bar" style="height:40%"></div>
+                <div class="saas-bar" style="height:62%"></div>
+                <div class="saas-bar" style="height:55%"></div>
+                <div class="saas-bar" style="height:78%"></div>
+                <div class="saas-bar" style="height:48%"></div>
+                <div class="saas-bar" style="height:88%"></div>
+              </div>
+            </div>
+          </div>
+          <p class="spoons-caption">High margin · mass-produced · same SKU for everyone</p>
+        </div>
+
+        <!-- Right: factory -->
+        <div class="spoons-right">
+          <div class="spoons-pill spoons-pill--teal">BESPOKE OUTPUT</div>
+          <svg class="factory-svg" viewBox="0 0 520 320" aria-hidden="true">
+            <!-- factory roof -->
+            <path d="M 30 80 L 60 50 L 90 80 L 120 50 L 150 80 L 180 50 L 210 80 L 240 50 L 270 80 L 300 50 L 330 80 L 360 50 L 390 80" fill="none" stroke="#A0A8BC" stroke-width="2" opacity="0.7"/>
+            <!-- factory body -->
+            <rect x="30" y="80" width="460" height="160" fill="none" stroke="#A0A8BC" stroke-width="2" opacity="0.7"/>
+            <!-- conveyor belt -->
+            <line class="conveyor-line" x1="0" y1="280" x2="520" y2="280" stroke="#4ECDC4" stroke-width="2"/>
+            <line class="conveyor-line" x1="0" y1="290" x2="520" y2="290" stroke="#4ECDC4" stroke-width="1" opacity="0.4"/>
+            <!-- diverging spoons (each different) -->
+            <g class="spoon" transform="translate(80,260)">
+              <ellipse cx="0" cy="0" rx="12" ry="8" fill="none" stroke="#F5C542" stroke-width="1.5"/>
+              <line x1="-12" y1="0" x2="-30" y2="0" stroke="#F5C542" stroke-width="1.5"/>
+            </g>
+            <g class="spoon" transform="translate(160,260) rotate(15)">
+              <ellipse cx="0" cy="0" rx="14" ry="6" fill="none" stroke="#4ECDC4" stroke-width="1.5"/>
+              <line x1="-14" y1="0" x2="-34" y2="0" stroke="#4ECDC4" stroke-width="1.5"/>
+            </g>
+            <g class="spoon" transform="translate(240,260) rotate(-10)">
+              <ellipse cx="0" cy="0" rx="10" ry="10" fill="none" stroke="#E8837C" stroke-width="1.5"/>
+              <line x1="-10" y1="0" x2="-26" y2="0" stroke="#E8837C" stroke-width="1.5"/>
+            </g>
+            <g class="spoon" transform="translate(320,260)">
+              <path d="M 0 -8 Q 12 0 0 8 Q -12 0 0 -8 Z" fill="none" stroke="#4ECDC4" stroke-width="1.5"/>
+              <line x1="0" y1="0" x2="-22" y2="4" stroke="#4ECDC4" stroke-width="1.5"/>
+            </g>
+            <g class="spoon" transform="translate(400,260) rotate(20)">
+              <ellipse cx="0" cy="0" rx="16" ry="5" fill="none" stroke="#F5C542" stroke-width="1.5"/>
+              <line x1="-16" y1="0" x2="-32" y2="0" stroke="#F5C542" stroke-width="1.5"/>
+            </g>
+            <g class="spoon" transform="translate(470,260) rotate(-25)">
+              <circle cx="0" cy="0" r="9" fill="none" stroke="#7C4DFF" stroke-width="1.5"/>
+              <line x1="-9" y1="0" x2="-26" y2="0" stroke="#7C4DFF" stroke-width="1.5"/>
+            </g>
+          </svg>
+          <p class="spoons-caption">Custom · per-user · per-call · marginal cost</p>
+        </div>
+      </div>
+    </div>
+    <a class="dive-deeper" data-slide-link="6">→ Dive deeper</a>
+  </section>
+
+  <!-- ============== SLIDE 7: Two Forces ============== -->
+  <section class="slide" data-slide="7" id="slide-7">
+    <div class="slide-inner slide-7">
+      <p class="slide-eyebrow">Two forces</p>
+      <h1 class="slide-headline">Going down: commodity. Going up: behavior.</h1>
+      <p class="slide-sub">Inference cost fell <strong id="costDropPct">99.6%</strong> in 24 months. The moat moved up.</p>
+
+      <div class="two-forces-grid">
+        <!-- mini stack on left -->
+        <div class="mini-stack" id="miniStack" aria-label="Mini stack diagram"></div>
+
+        <!-- two arrows -->
+        <div class="forces-arrows">
+          <div class="force force--down">
+            <svg viewBox="0 0 60 200" class="force-arrow">
+              <path d="M 30 10 L 30 170 M 12 150 L 30 180 L 48 150" fill="none" stroke="#E8837C" stroke-width="3"/>
+            </svg>
+            <span class="force-label force-label--coral">COMMODITIZATION</span>
+          </div>
+          <div class="force force--up">
+            <svg viewBox="0 0 60 200" class="force-arrow">
+              <path d="M 30 190 L 30 30 M 12 50 L 30 20 L 48 50" fill="none" stroke="#4ECDC4" stroke-width="3"/>
+            </svg>
+            <span class="force-label force-label--teal">PERSONALIZATION</span>
+          </div>
+        </div>
+
+        <!-- inference cost line chart -->
+        <div class="inference-chart-wrap">
+          <p class="inline-chart-title">Inference cost · per million tokens</p>
+          <canvas id="inferenceChart"></canvas>
+        </div>
+      </div>
+    </div>
+    <a class="dive-deeper" data-slide-link="7">→ Dive deeper</a>
+  </section>
+
+  <!-- ============== SLIDE 8: Application Layer Controls the Game ============== -->
+  <section class="slide" data-slide="8" id="slide-8">
+    <div class="slide-inner slide-8">
+      <p class="slide-eyebrow">Application layer</p>
+      <h1 class="slide-headline">The user never sees the model.</h1>
+      <p class="slide-sub">Whoever owns the application picks the model. Distribution &gt; intelligence.</p>
+
+      <div class="funnel-wrap">
+        <svg class="funnel-svg" viewBox="0 0 900 500" aria-hidden="true">
+          <!-- funnel walls -->
+          <path d="M 60 40 L 840 40 L 620 240 L 280 240 Z" fill="rgba(78, 205, 196, 0.04)" stroke="#4ECDC4" stroke-width="1" opacity="0.5"/>
+          <path d="M 280 240 L 620 240 L 600 460 L 300 460 Z" fill="rgba(245, 197, 66, 0.04)" stroke="#F5C542" stroke-width="1" opacity="0.5"/>
+
+          <!-- user dots layer (animated) -->
+          <g id="funnelDots"></g>
+
+          <!-- app layer band -->
+          <g id="funnelApps"></g>
+
+          <!-- model logos band (rotating) -->
+          <g id="funnelModels"></g>
+
+          <!-- labels -->
+          <text x="80" y="32" fill="#A0A8BC" font-size="12" font-weight="600">USERS →</text>
+          <text x="80" y="180" fill="#4ECDC4" font-size="13" font-weight="700">APPLICATION LAYER</text>
+          <text x="80" y="455" fill="#A0A8BC" font-size="12" font-weight="600">MODELS (fungible)</text>
+        </svg>
+      </div>
+    </div>
+    <a class="dive-deeper" data-slide-link="8">→ Dive deeper</a>
+  </section>
+
+  <!-- ============== SLIDE 9: Model Cluster Dissolve ============== -->
+  <section class="slide" data-slide="9" id="slide-9">
+    <div class="slide-inner slide-9">
+      <p class="slide-eyebrow">Model layer · 15 frontier models</p>
+      <h1 class="slide-headline">Frontier broke into three races.</h1>
+      <p class="slide-sub">Commodity. Specialist. Restricted.</p>
+      <div class="cluster-stage" id="clusterStage">
+        <!-- group labels -->
+        <div class="cluster-label cluster-label--left"  id="labelCommodity">COMMODITY · OPEN SOURCE</div>
+        <div class="cluster-label cluster-label--center" id="labelSpecialist">SPECIALIZED · VERTICAL</div>
+        <div class="cluster-label cluster-label--right" id="labelGov">GOVERNMENT ONLY</div>
+        <!-- circles get injected here -->
+        <svg id="clusterSvg" viewBox="0 0 1200 520" aria-hidden="true"></svg>
+      </div>
+    </div>
+    <a class="dive-deeper" data-slide-link="9">→ Dive deeper</a>
+  </section>
+
+  <!-- ============== SLIDE 10: Smarter AND Cheaper ============== -->
+  <section class="slide" data-slide="10" id="slide-10">
+    <div class="slide-inner slide-10">
+      <p class="slide-eyebrow">Capability vs. cost</p>
+      <h1 class="slide-headline">Smarter AND cheaper.</h1>
+      <p class="slide-sub">Every prior cycle: more power = more cost. AI inverted that. Embed intelligence everywhere.</p>
+      <div class="chart-wrap chart-wrap--smarter">
+        <canvas id="smarterChart"></canvas>
+      </div>
+    </div>
+    <a class="dive-deeper" data-slide-link="10">→ Dive deeper</a>
+  </section>
+
+  <!-- ============== SLIDE 11: Physical AI ============== -->
+  <section class="slide" data-slide="11" id="slide-11">
+    <div class="slide-inner slide-11">
+      <p class="slide-eyebrow">Physical AI</p>
+      <h1 class="slide-headline">It already left the screen.</h1>
+      <p class="slide-sub">$38 trillion labor market in play. Slower than software people think. Faster than industrial incumbents hope.</p>
+
+      <div class="physical-grid">
+        <svg class="world-map" viewBox="0 0 800 380" aria-hidden="true">
+          <!-- highly stylized continents (rounded rectangles) -->
+          <g fill="none" stroke="#A0A8BC" stroke-width="1.2" opacity="0.4">
+            <path d="M 60 120 Q 90 80 150 90 Q 220 100 230 150 Q 240 200 180 220 Q 110 230 80 200 Q 50 170 60 120 Z"/> <!-- N America -->
+            <path d="M 200 230 Q 230 220 250 270 Q 260 320 220 340 Q 190 350 180 310 Q 175 270 200 230 Z"/> <!-- S America -->
+            <path d="M 340 110 Q 380 90 430 110 Q 470 140 460 180 Q 430 200 380 190 Q 340 170 340 110 Z"/> <!-- Europe -->
+            <path d="M 360 200 Q 400 200 430 240 Q 460 290 420 330 Q 380 340 360 300 Q 340 260 360 200 Z"/> <!-- Africa -->
+            <path d="M 480 110 Q 580 90 660 130 Q 700 170 670 210 Q 590 220 510 200 Q 470 170 480 110 Z"/> <!-- Asia -->
+            <path d="M 640 270 Q 690 260 720 290 Q 730 320 690 330 Q 650 320 640 270 Z"/> <!-- Australia -->
+          </g>
+          <!-- pins (animated) -->
+          <g id="worldPins">
+            <g class="map-pin" transform="translate(140,160)" data-label="Waymo · SF">
+              <circle r="6" fill="#4ECDC4"/>
+              <circle r="14" fill="none" stroke="#4ECDC4" stroke-width="1.5" opacity="0.5"/>
+            </g>
+            <g class="map-pin" transform="translate(170,170)" data-label="Waymo · LA">
+              <circle r="6" fill="#4ECDC4"/>
+              <circle r="14" fill="none" stroke="#4ECDC4" stroke-width="1.5" opacity="0.5"/>
+            </g>
+            <g class="map-pin" transform="translate(195,165)" data-label="Waymo · Phoenix">
+              <circle r="6" fill="#4ECDC4"/>
+            </g>
+            <g class="map-pin" transform="translate(160,190)" data-label="Aurora trucks">
+              <rect x="-8" y="-4" width="16" height="8" rx="1" fill="#F5C542"/>
+            </g>
+            <g class="map-pin" transform="translate(400,150)" data-label="EU robotics">
+              <circle r="6" fill="#E8837C"/>
+            </g>
+            <g class="map-pin" transform="translate(560,150)" data-label="China robotics">
+              <circle r="6" fill="#E8837C"/>
+            </g>
+            <g class="map-pin" transform="translate(610,170)" data-label="Asia logistics">
+              <rect x="-8" y="-4" width="16" height="8" rx="1" fill="#F5C542"/>
+            </g>
+            <g class="map-pin" transform="translate(680,300)" data-label="AU mining">
+              <circle r="5" fill="#4ECDC4"/>
+            </g>
+          </g>
+          <!-- route lines -->
+          <g id="worldRoutes" stroke="#F5C542" stroke-width="1.2" fill="none" opacity="0.6" stroke-dasharray="4 4">
+            <path class="route" d="M 140 160 Q 200 140 280 180"/>
+            <path class="route" d="M 400 150 Q 480 130 560 150"/>
+            <path class="route" d="M 560 150 Q 600 200 610 170"/>
+          </g>
+        </svg>
+
+        <div class="physical-stats">
+          <div class="phys-stat">
+            <span class="phys-stat-num" id="physWaymo">400,000+</span>
+            <span class="phys-stat-label">Waymo rides / week</span>
+          </div>
+          <div class="phys-stat">
+            <span class="phys-stat-num" id="physTAM">$38T</span>
+            <span class="phys-stat-label">Labor market in play</span>
+          </div>
+          <div class="phys-stat">
+            <span class="phys-stat-num" id="physTesla">8.4B</span>
+            <span class="phys-stat-label">Tesla FSD miles</span>
+          </div>
+          <div class="phys-stat">
+            <span class="phys-stat-num" id="physAurora">200+</span>
+            <span class="phys-stat-label">Aurora trucks</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <a class="dive-deeper" data-slide-link="11">→ Dive deeper</a>
+  </section>
+
+  <!-- ============== SLIDE 12: The Business Model Problem ============== -->
+  <section class="slide" data-slide="12" id="slide-12">
+    <div class="slide-inner slide-12">
+      <p class="slide-eyebrow">Business models</p>
+      <h1 class="slide-headline">The pricing models all broke. One didn't.</h1>
+      <p class="slide-sub">Anthropic extracts <strong>7×</strong> more per user than OpenAI. The next $100B company will solve pricing — not training.</p>
+
+      <div class="pricing-row">
+        <div class="pricing-icon pricing-icon--cracked">
+          <div class="pricing-glyph">👤</div>
+          <span class="pricing-label">Per-seat</span>
+        </div>
+        <div class="pricing-icon pricing-icon--cracked">
+          <div class="pricing-glyph">≡</div>
+          <span class="pricing-label">Per-token</span>
+        </div>
+        <div class="pricing-icon pricing-icon--cracked">
+          <div class="pricing-glyph">∞</div>
+          <span class="pricing-label">Per-subscription</span>
+        </div>
+        <div class="pricing-icon pricing-icon--cracked">
+          <div class="pricing-glyph">◉</div>
+          <span class="pricing-label">Per-ad</span>
+        </div>
+        <div class="pricing-icon pricing-icon--glow">
+          <div class="pricing-glyph">✓</div>
+          <span class="pricing-label pricing-label--teal">Per-outcome (AaaS)</span>
+        </div>
+      </div>
+
+      <div class="chart-wrap chart-wrap--arpu">
+        <p class="inline-chart-title">ARPU · monthly per active user</p>
+        <canvas id="arpuChart"></canvas>
+      </div>
+    </div>
+    <a class="dive-deeper" data-slide-link="12">→ Dive deeper</a>
+  </section>
+
+  <!-- ============== SLIDE 13: Close — The Pattern ============== -->
+  <section class="slide" data-slide="13" id="slide-13">
+    <div class="slide-inner slide-13">
+      <p class="slide-eyebrow">The pattern repeats</p>
+      <h1 class="slide-headline">Toy → Tool → Infrastructure.</h1>
+      <p class="slide-sub">Then it's too late to build the competing version. Stay curious. Stay aggressive.</p>
+
+      <svg class="cycles-svg cycles-svg--close" viewBox="0 0 1100 460" aria-hidden="true">
+        <line x1="60" y1="380" x2="1040" y2="380" stroke="#A0A8BC" stroke-width="1" opacity="0.3"/>
+        <path class="cycle-curve" d="M 60 380 C 200 380 280 360 360 280 C 440 200 500 100 600 80" fill="none" stroke="#A0A8BC" stroke-width="3" opacity="0.35"/>
+        <path class="cycle-curve" d="M 360 380 C 480 380 540 350 600 280 C 670 200 730 110 820 90" fill="none" stroke="#F5C542" stroke-width="3" opacity="0.35"/>
+        <!-- AI curve highlighted -->
+        <path class="cycle-curve" id="curve-ai-close" d="M 720 380 C 780 380 810 370 850 320 C 890 270 920 200 960 160" fill="none" stroke="#4ECDC4" stroke-width="5"/>
+        <!-- phase markers -->
+        <g id="phaseMarkers">
+          <circle cx="760" cy="372" r="6" fill="#E8837C"/>
+          <text x="770" y="430" fill="#E8837C" font-size="13" font-weight="700">Infrastructure buildout</text>
+          <circle cx="850" cy="320" r="6" fill="#F5C542" opacity="0.6"/>
+          <text x="858" y="312" fill="#F5C542" font-size="13" font-weight="600" opacity="0.7">Platform consolidation</text>
+          <circle cx="930" cy="200" r="6" fill="#4ECDC4" opacity="0.5"/>
+          <text x="938" y="192" fill="#4ECDC4" font-size="13" font-weight="600" opacity="0.6">Application dominance</text>
+        </g>
+        <!-- "you are here" pulse -->
+        <g id="youAreHere" transform="translate(760,372)">
+          <circle r="14" fill="none" stroke="#E8837C" stroke-width="2" class="yah-pulse"/>
+          <circle r="20" fill="none" stroke="#E8837C" stroke-width="1" class="yah-pulse-2"/>
+          <text x="0" y="-26" text-anchor="middle" fill="#E8837C" font-size="12" font-weight="800">YOU ARE HERE</text>
+        </g>
+      </svg>
+    </div>
+    <a class="dive-deeper" data-slide-link="13">→ Dive deeper</a>
+  </section>
+
+</main>
+
+<!-- Hint at bottom -->
+<div class="nav-hint">← →  Space  ·  Esc to exit</div>
+
+<script src="slides-data.js"></script>
+<script src="slides.js"></script>
+</body>
+</html>
