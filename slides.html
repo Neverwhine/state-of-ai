@@ -33,41 +33,107 @@
 <!-- Slides container -->
 <main class="deck" id="deck">
 
-  <!-- ============== SLIDE 1: Opening (OpenClaw family) ============== -->
+  <!-- ============== SLIDE 1: Opening (cinematic day-in-the-life) ============== -->
   <section class="slide" data-slide="1" id="slide-1">
     <div class="slide-inner slide-1">
-      <svg class="house-svg" viewBox="0 0 800 500" aria-hidden="true">
-        <line x1="40" y1="430" x2="760" y2="430" stroke="#4ECDC4" stroke-width="2" opacity="0.4"/>
-        <path d="M 100 430 L 100 220 L 400 80 L 700 220 L 700 430 Z" fill="none" stroke="#A0A8BC" stroke-width="2" opacity="0.7"/>
-        <path d="M 100 220 L 400 80 L 700 220" fill="none" stroke="#F5C542" stroke-width="2"/>
-        <line x1="280" y1="430" x2="280" y2="220" stroke="#A0A8BC" stroke-width="1" opacity="0.4" stroke-dasharray="4 4"/>
-        <line x1="520" y1="430" x2="520" y2="220" stroke="#A0A8BC" stroke-width="1" opacity="0.4" stroke-dasharray="4 4"/>
-        <line x1="100" y1="320" x2="700" y2="320" stroke="#A0A8BC" stroke-width="1" opacity="0.4" stroke-dasharray="4 4"/>
+      <svg class="house-svg" id="houseSvg" viewBox="0 0 800 500" aria-hidden="true">
+        <defs>
+          <radialGradient id="sunGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#FFE6A8" stop-opacity="0.95"/>
+            <stop offset="45%" stop-color="#F5C542" stop-opacity="0.55"/>
+            <stop offset="100%" stop-color="#F5C542" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="horizonGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%"   stop-color="#4ECDC4" stop-opacity="0.0"/>
+            <stop offset="60%"  stop-color="#4ECDC4" stop-opacity="0.18"/>
+            <stop offset="100%" stop-color="#4ECDC4" stop-opacity="0.32"/>
+          </linearGradient>
+          <radialGradient id="windowGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#F5C542" stop-opacity="0.55"/>
+            <stop offset="100%" stop-color="#F5C542" stop-opacity="0"/>
+          </radialGradient>
+          <filter id="iconBloom" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="2.5" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
 
-        <g class="house-icon" data-time="6:40am" data-label="Email">
-          <circle cx="180" cy="270" r="28" fill="#383E52" stroke="#4ECDC4" stroke-width="2"/>
+        <!-- Atmosphere: stars in the sky -->
+        <g id="starsLayer" opacity="0">
+          <circle class="sky-star" cx="60"  cy="40"  r="1.4" fill="#E8ECEF"/>
+          <circle class="sky-star" cx="140" cy="60"  r="0.9" fill="#E8ECEF"/>
+          <circle class="sky-star" cx="230" cy="30"  r="1.6" fill="#E8ECEF"/>
+          <circle class="sky-star" cx="310" cy="55"  r="1.0" fill="#E8ECEF"/>
+          <circle class="sky-star" cx="540" cy="35"  r="1.3" fill="#E8ECEF"/>
+          <circle class="sky-star" cx="640" cy="50"  r="0.9" fill="#E8ECEF"/>
+          <circle class="sky-star" cx="720" cy="30"  r="1.5" fill="#E8ECEF"/>
+          <circle class="sky-star" cx="100" cy="95"  r="0.8" fill="#E8ECEF"/>
+          <circle class="sky-star" cx="700" cy="100" r="0.8" fill="#E8ECEF"/>
+        </g>
+
+        <!-- Sun: travels left-to-right along an arc, color shifts as time progresses -->
+        <g id="sunGroup" opacity="0">
+          <circle id="sunGlowDisc" cx="0" cy="0" r="60" fill="url(#sunGlow)"/>
+          <circle id="sunCore" cx="0" cy="0" r="14" fill="#FFE6A8"/>
+        </g>
+
+        <!-- Ground line + soft horizon glow -->
+        <rect x="0" y="420" width="800" height="30" fill="url(#horizonGrad)"/>
+        <line id="groundLine" x1="40" y1="430" x2="760" y2="430" stroke="#4ECDC4" stroke-width="2" opacity="0.4" stroke-dasharray="720" stroke-dashoffset="720"/>
+
+        <!-- House outline (architecturally drawn in) -->
+        <path id="houseOutline" d="M 100 430 L 100 220 L 400 80 L 700 220 L 700 430 Z" fill="none" stroke="#A0A8BC" stroke-width="2" opacity="0.7" stroke-dasharray="1500" stroke-dashoffset="1500"/>
+        <path id="houseRoof" d="M 100 220 L 400 80 L 700 220" fill="none" stroke="#F5C542" stroke-width="2" stroke-dasharray="760" stroke-dashoffset="760"/>
+
+        <!-- Internal grid (lights up after the house draws) -->
+        <g id="houseGrid" opacity="0">
+          <line x1="280" y1="430" x2="280" y2="220" stroke="#A0A8BC" stroke-width="1" opacity="0.4" stroke-dasharray="4 4"/>
+          <line x1="520" y1="430" x2="520" y2="220" stroke="#A0A8BC" stroke-width="1" opacity="0.4" stroke-dasharray="4 4"/>
+          <line x1="100" y1="320" x2="700" y2="320" stroke="#A0A8BC" stroke-width="1" opacity="0.4" stroke-dasharray="4 4"/>
+        </g>
+
+        <!-- Window glows behind each icon (warm orange light, fades in when icon activates) -->
+        <circle class="win-glow" id="win-1" cx="180" cy="270" r="54" fill="url(#windowGlow)" opacity="0"/>
+        <circle class="win-glow" id="win-2" cx="400" cy="270" r="54" fill="url(#windowGlow)" opacity="0"/>
+        <circle class="win-glow" id="win-3" cx="620" cy="270" r="54" fill="url(#windowGlow)" opacity="0"/>
+        <circle class="win-glow" id="win-4" cx="280" cy="380" r="54" fill="url(#windowGlow)" opacity="0"/>
+        <circle class="win-glow" id="win-5" cx="520" cy="380" r="54" fill="url(#windowGlow)" opacity="0"/>
+
+        <!-- Connectors that flow icon-to-icon as the day progresses -->
+        <path class="day-connector" id="conn-1" d="M 180 270 Q 290 250 400 270" fill="none" stroke="#4ECDC4" stroke-width="1.5" opacity="0" stroke-dasharray="260" stroke-dashoffset="260"/>
+        <path class="day-connector" id="conn-2" d="M 400 270 Q 510 250 620 270" fill="none" stroke="#F5C542" stroke-width="1.5" opacity="0" stroke-dasharray="260" stroke-dashoffset="260"/>
+        <path class="day-connector" id="conn-3" d="M 620 270 Q 450 320 280 380" fill="none" stroke="#4ECDC4" stroke-width="1.5" opacity="0" stroke-dasharray="480" stroke-dashoffset="480"/>
+        <path class="day-connector" id="conn-4" d="M 280 380 Q 400 360 520 380" fill="none" stroke="#E8837C" stroke-width="1.5" opacity="0" stroke-dasharray="260" stroke-dashoffset="260"/>
+
+        <g class="house-icon" id="icon-1" data-time="6:40am" data-label="Email">
+          <circle class="icon-pulse" cx="180" cy="270" r="28" fill="none" stroke="#4ECDC4" stroke-width="2" opacity="0"/>
+          <circle class="icon-bg" cx="180" cy="270" r="28" fill="#383E52" stroke="#4ECDC4" stroke-width="2"/>
           <path d="M 165 263 L 195 263 L 195 280 L 165 280 Z M 165 263 L 180 273 L 195 263" fill="none" stroke="#4ECDC4" stroke-width="1.8"/>
           <text x="180" y="320" text-anchor="middle" fill="#E8ECEF" font-size="11" font-weight="600">6:40am · Email</text>
         </g>
-        <g class="house-icon" data-time="6:45am" data-label="Calendar">
-          <circle cx="400" cy="270" r="28" fill="#383E52" stroke="#F5C542" stroke-width="2"/>
+        <g class="house-icon" id="icon-2" data-time="6:45am" data-label="Calendar">
+          <circle class="icon-pulse" cx="400" cy="270" r="28" fill="none" stroke="#F5C542" stroke-width="2" opacity="0"/>
+          <circle class="icon-bg" cx="400" cy="270" r="28" fill="#383E52" stroke="#F5C542" stroke-width="2"/>
           <rect x="386" y="258" width="28" height="22" rx="2" fill="none" stroke="#F5C542" stroke-width="1.8"/>
           <line x1="386" y1="265" x2="414" y2="265" stroke="#F5C542" stroke-width="1.8"/>
           <text x="400" y="320" text-anchor="middle" fill="#E8ECEF" font-size="11" font-weight="600">6:45am · Calendar</text>
         </g>
-        <g class="house-icon" data-time="7:15am" data-label="Telegram">
-          <circle cx="620" cy="270" r="28" fill="#383E52" stroke="#4ECDC4" stroke-width="2"/>
+        <g class="house-icon" id="icon-3" data-time="7:15am" data-label="Telegram">
+          <circle class="icon-pulse" cx="620" cy="270" r="28" fill="none" stroke="#4ECDC4" stroke-width="2" opacity="0"/>
+          <circle class="icon-bg" cx="620" cy="270" r="28" fill="#383E52" stroke="#4ECDC4" stroke-width="2"/>
           <path d="M 608 270 L 632 262 L 628 282 L 620 276 L 614 280 Z" fill="none" stroke="#4ECDC4" stroke-width="1.8"/>
           <text x="620" y="320" text-anchor="middle" fill="#E8ECEF" font-size="11" font-weight="600">7:15am · Telegram</text>
         </g>
-        <g class="house-icon" data-time="7:20am" data-label="Amazon">
-          <circle cx="280" cy="380" r="28" fill="#383E52" stroke="#F5C542" stroke-width="2"/>
+        <g class="house-icon" id="icon-4" data-time="7:20am" data-label="Amazon">
+          <circle class="icon-pulse" cx="280" cy="380" r="28" fill="none" stroke="#F5C542" stroke-width="2" opacity="0"/>
+          <circle class="icon-bg" cx="280" cy="380" r="28" fill="#383E52" stroke="#F5C542" stroke-width="2"/>
           <rect x="266" y="368" width="28" height="20" rx="1" fill="none" stroke="#F5C542" stroke-width="1.8"/>
           <path d="M 268 388 Q 280 396 292 388" fill="none" stroke="#F5C542" stroke-width="1.8"/>
           <text x="280" y="420" text-anchor="middle" fill="#E8ECEF" font-size="11" font-weight="600">7:20am · Amazon</text>
         </g>
-        <g class="house-icon" data-time="3:10pm" data-label="Waymo">
-          <circle cx="520" cy="380" r="28" fill="#383E52" stroke="#E8837C" stroke-width="2"/>
+        <g class="house-icon" id="icon-5" data-time="3:10pm" data-label="Waymo">
+          <circle class="icon-pulse" cx="520" cy="380" r="28" fill="none" stroke="#E8837C" stroke-width="2" opacity="0"/>
+          <circle class="icon-bg" cx="520" cy="380" r="28" fill="#383E52" stroke="#E8837C" stroke-width="2"/>
           <rect x="504" y="372" width="32" height="14" rx="3" fill="none" stroke="#E8837C" stroke-width="1.8"/>
           <circle cx="512" cy="388" r="3" fill="none" stroke="#E8837C" stroke-width="1.5"/>
           <circle cx="528" cy="388" r="3" fill="none" stroke="#E8837C" stroke-width="1.5"/>
@@ -75,8 +141,10 @@
         </g>
       </svg>
 
-      <h1 class="slide-headline slide-headline--xl">This runs today.</h1>
-      <p class="slide-eyebrow">A day in the life — already automated</p>
+      <div class="opener-words">
+        <h1 class="slide-headline slide-headline--xl opener-headline">This runs today.</h1>
+        <p class="slide-eyebrow opener-eyebrow">A day in the life — already automated</p>
+      </div>
     </div>
     <a class="dive-deeper" data-slide-link="1">→ Dive deeper</a>
   </section>

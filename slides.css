@@ -137,13 +137,62 @@ body { position: relative; }
 }
 
 /* ============ SLIDE 1 — OpenClaw house ============ */
-.slide-1 { align-items: center; text-align: center; }
-.house-svg {
-  width: min(900px, 90%); height: auto;
-  margin-bottom: 32px;
+/* ============ SLIDE 1 — Cinematic opener ============ */
+.slide[data-slide="1"] {
+  /* Subtle radial sky gradient — implies the void around the house */
+  background:
+    radial-gradient(ellipse at 50% 30%, rgba(78, 205, 196, 0.06) 0%, transparent 60%),
+    radial-gradient(ellipse at 50% 80%, rgba(232, 131, 124, 0.05) 0%, transparent 50%);
 }
-.house-icon { opacity: 0; transform-origin: center; }
+.slide-1 { align-items: center; text-align: center; position: relative; }
+.house-svg {
+  width: min(960px, 92%);
+  height: auto;
+  margin-bottom: 28px;
+  filter: drop-shadow(0 6px 18px rgba(0,0,0,0.25));
+}
+.house-icon {
+  opacity: 0;
+  transform-origin: center;
+  cursor: default;
+}
 .house-icon.is-revealed { opacity: 1; }
+.house-icon .icon-bg { transition: stroke-width 200ms ease; }
+.house-icon:hover .icon-bg { stroke-width: 3; }
+
+/* Twinkle: each star pulses gently on its own rhythm */
+.sky-star { transform-origin: center; }
+.sky-star {
+  animation: sky-twinkle 3.5s ease-in-out infinite;
+}
+.sky-star:nth-child(2n) { animation-duration: 4.2s; animation-delay: 0.4s; }
+.sky-star:nth-child(3n) { animation-duration: 5.1s; animation-delay: 1.1s; }
+.sky-star:nth-child(5n) { animation-duration: 3.8s; animation-delay: 1.7s; }
+@keyframes sky-twinkle {
+  0%, 100% { opacity: 0.85; }
+  50%      { opacity: 0.32; }
+}
+
+/* Title block sits below the SVG with a soft drop-in */
+.opener-words {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+.opener-headline {
+  letter-spacing: -0.02em;
+  background: linear-gradient(180deg, #FFFFFF 0%, #C8CCD4 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.opener-eyebrow {
+  letter-spacing: 0.18em;
+  color: var(--teal);
+  text-transform: uppercase;
+  font-weight: 600;
+}
 
 /* ============ SLIDE 2 / 13 — Cycles ============ */
 .cycles-svg {
