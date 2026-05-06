@@ -177,6 +177,7 @@ window.SLIDES_DATA = {
     12: 'index.html#sec-8',   // physical AI (rebuilt — was 9)
     13: 'index.html#sec-9',   // business models / pricing (was 10)
     14: 'index.html#sec-9',   // sequoia services matrix
-    15: 'index.html#sec-15'   // close (was 11)
+    15: 'index.html#attack-angles-block', // three attack angles
+    16: 'index.html#sec-15'   // close (was 11)
   }
 };

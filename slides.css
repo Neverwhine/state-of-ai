@@ -698,15 +698,21 @@ body { position: relative; }
 .slide[data-slide="13"] .slide-headline { font-size: clamp(34px, 3.8vw, 52px); margin-bottom: 8px; }
 .slide[data-slide="13"] .slide-sub { margin-bottom: 14px; }
 
-/* Slide 10/14 — top-anchor for iframe slides so headline doesn't push iframe off-screen */
-.slide[data-slide="10"] { align-items: flex-start; padding-top: 40px; }
-.slide[data-slide="14"] { align-items: flex-start; padding-top: 40px; }
+/* Slide 10/14/15 — top-anchor for iframe slides so headline doesn't push iframe off-screen */
+.slide[data-slide="10"], .slide[data-slide="14"], .slide[data-slide="15"] { align-items: flex-start; padding-top: 40px; }
 .slide[data-slide="10"] .slide-headline,
-.slide[data-slide="14"] .slide-headline { font-size: clamp(34px, 3.8vw, 52px); margin-bottom: 8px; }
+.slide[data-slide="14"] .slide-headline,
+.slide[data-slide="15"] .slide-headline { font-size: clamp(34px, 3.8vw, 52px); margin-bottom: 8px; }
 .slide[data-slide="10"] .slide-sub,
-.slide[data-slide="14"] .slide-sub { margin-bottom: 14px; }
+.slide[data-slide="14"] .slide-sub,
+.slide[data-slide="15"] .slide-sub { margin-bottom: 14px; }
 .slide[data-slide="10"] .slide-iframe-container--tall { height: 64vh; }
 .slide[data-slide="14"] .slide-iframe-container--tall { height: 66vh; }
+.slide[data-slide="15"] .slide-iframe-container--tall { height: 70vh; max-height: 800px; }
+.slide[data-slide="15"] { padding-top: 56px; padding-bottom: 32px; }
+.slide[data-slide="15"] .iframe-headline { margin-bottom: 6px; }
+.slide[data-slide="15"] .slide-headline { font-size: clamp(28px, 3.2vw, 42px); margin-bottom: 4px; }
+.slide[data-slide="15"] .slide-sub { font-size: 0.92rem; margin-bottom: 8px; }
 
 /* Slide 13 — pricing-row stays compact above the live ARPU iframe */
 .pricing-row--compact { margin: 8px 0 12px; gap: 0.6rem; }

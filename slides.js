@@ -898,9 +898,14 @@
     loadIframe(document.getElementById('slide-14'));
   };
 
-  // ─── SLIDE 15 — Close (cycles + you-are-here) ───
+  // ─── SLIDE 15 — Three attack angles (iframe) ───
   ANIMATIONS[15] = function () {
-    const curves = document.querySelectorAll('#slide-15 .cycle-curve');
+    loadIframe(document.getElementById('slide-15'));
+  };
+
+  // ─── SLIDE 16 — Close (cycles + you-are-here) ───
+  ANIMATIONS[16] = function () {
+    const curves = document.querySelectorAll('#slide-16 .cycle-curve');
     curves.forEach((c, i) => {
       const len = c.getTotalLength ? c.getTotalLength() : 1200;
       c.style.strokeDasharray = len;

@@ -33,6 +33,7 @@
   <link rel="stylesheet" href="sec3.css">
   <link rel="stylesheet" href="sec8.css">
   <link rel="stylesheet" href="sec13.css">
+  <link rel="stylesheet" href="attack-angles.css">
   <link rel="stylesheet" href="mobile.css">
 <!-- ===== EMBED MODE (used by slides.html iframes) =====
      URL: index.html?embed=sec-7  →  shows ONLY #sec-7, hides nav, hero, footer, slideshow link.
@@ -62,6 +63,8 @@ body.embed-focus-mode #seq-matrix-block.embed-focus .seq-matrix-intro { display:
 /* When the focus is the agent-stack-block, hide its own header (slide already says "It's a new stack") */
 body.embed-focus-mode #agent-stack-block.embed-focus > .subsection-title,
 body.embed-focus-mode #agent-stack-block.embed-focus > .aa-stack-sub { display:none !important; }
+/* When the focus is the attack-angles-block, hide its own header (slide already shows the title) */
+body.embed-focus-mode #attack-angles-block.embed-focus .aa-header { display:none !important; }
 body.embed-mode { padding: 0 !important; margin: 0 !important; }
 </style>
 <script>
@@ -3422,6 +3425,9 @@ body.embed-mode { padding: 0 !important; margin: 0 !important; }
       <span class="stat-source" style="display:block;text-align:center;margin-top:1rem">Framework: Sequoia Capital, 2026 &mdash; contenders filtered to $10M+ raised &mdash; <span style="color:#7C4DFF">DVC portfolio</span> highlighted</span>
     </div>
 
+    <!-- ═══ THREE ATTACK ANGLES ═══ -->
+    <div class="aa-block anim-fade" id="attack-angles-block"></div>
+
     <!-- Founder Takeaway -->
     <div class="a2a-takeaway anim-fade">
       <div class="a2a-takeaway-inner">
@@ -4916,5 +4922,6 @@ body.embed-mode { padding: 0 !important; margin: 0 !important; }
   <script src="sec3.js"></script>
   <script src="sec8.js"></script>
   <script src="sec13.js"></script>
+  <script src="attack-angles.js"></script>
 </body>
 </html>
