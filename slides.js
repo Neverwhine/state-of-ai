@@ -445,142 +445,155 @@
     }
   };
 
-  // ─── SLIDE 8 — Model cluster dissolve (was 7) ───
+  // ─── SLIDE 8 — Model cluster (3 lanes: Commodity / Specialist / Restricted) ───
   ANIMATIONS[8] = function () {
     const svg = document.getElementById('clusterSvg');
-    if (!svg || svg.children.length) return;
+    if (!svg) return;
+    if (svg.dataset.rendered === '1') {
+      // Replay only the entrance animation — don't re-render geometry
+      if (window.gsap) {
+        const lanes = svg.querySelectorAll('.lane-bg');
+        const titles = svg.querySelectorAll('.lane-title, .lane-sub');
+        const chips = svg.querySelectorAll('.cluster-chip');
+        const dep = svg.querySelectorAll('.cluster-chip--deprecated');
+        gsap.fromTo(lanes,  { opacity: 0, scaleX: 0.8, transformOrigin: '50% 50%' }, { opacity: 1, scaleX: 1, duration: 0.55, stagger: 0.1, ease: 'power2.out' });
+        gsap.fromTo(titles, { opacity: 0, y: -8 }, { opacity: 1, y: 0, duration: 0.4, delay: 0.15, stagger: 0.05 });
+        gsap.fromTo(chips,  { opacity: 0 }, { opacity: 1, duration: 0.45, stagger: 0.04, delay: 0.45, ease: 'power2.out' });
+        if (dep.length) gsap.to(dep, { opacity: 0.45, duration: 0.6, delay: 1.5 });
+      }
+      return;
+    }
     const SVG_NS = 'http://www.w3.org/2000/svg';
 
+    // viewBox is 1200x520; carve into 3 vertical lanes.
+    const VW = 1200, VH = 520;
+    const laneCenters = { commodity: 200, specialist: 600, govOnly: 1000 };
+    const fillMap = {
+      commodity:   'rgba(232,131,124,0.16)',
+      specialist:  'rgba(245,197,66,0.18)',
+      govOnly:     'rgba(160,168,188,0.18)',
+      deprecated:  'rgba(124,77,255,0.10)'
+    };
+    const strokeMap = {
+      commodity:   '#E8837C',
+      specialist:  '#F5C542',
+      govOnly:     '#A0A8BC',
+      deprecated:  '#7C4DFF'
+    };
+
     const groups = D.modelClusterGroups;
-    const allItems = [
-      ...groups.commodity.map(n  => ({ name: n, group: 'commodity' })),
-      ...groups.specialist.map(n => ({ name: n, group: 'specialist' })),
-      ...groups.govOnly.map(n    => ({ name: n, group: 'govOnly' })),
-      ...groups.deprecated.map(n => ({ name: n, group: 'deprecated' }))
+
+    // ----- 1. draw lane backdrops + headers -----
+    const lanes = [
+      { key: 'commodity',  title: 'COMMODITY',  sub: 'Open-source, fungible' },
+      { key: 'specialist', title: 'SPECIALIST', sub: 'Vertical leaders' },
+      { key: 'govOnly',    title: 'RESTRICTED', sub: 'Government / safety-gated' }
     ];
+    lanes.forEach(lane => {
+      const cx = laneCenters[lane.key];
+      // backdrop column
+      const bg = document.createElementNS(SVG_NS, 'rect');
+      bg.setAttribute('x', cx - 170); bg.setAttribute('y', 30);
+      bg.setAttribute('width', 340);  bg.setAttribute('height', VH - 60);
+      bg.setAttribute('rx', 14);
+      bg.setAttribute('fill', fillMap[lane.key].replace(/0\.\d+/, '0.05'));
+      bg.setAttribute('stroke', strokeMap[lane.key] + '40');
+      bg.setAttribute('stroke-width', '1');
+      bg.setAttribute('class', 'lane-bg');
+      bg.dataset.lane = lane.key;
+      svg.appendChild(bg);
 
-    // Initial positions: clustered in center with jitter
-    const centerX = 600, centerY = 240;
-    const initR = 110;
+      const title = document.createElementNS(SVG_NS, 'text');
+      title.setAttribute('class', 'lane-title');
+      title.setAttribute('x', cx); title.setAttribute('y', 70);
+      title.setAttribute('text-anchor', 'middle');
+      title.setAttribute('fill', strokeMap[lane.key]);
+      title.textContent = lane.title;
+      svg.appendChild(title);
 
-    const circleEls = [];
-    allItems.forEach((it, i) => {
-      const ang = (i / allItems.length) * Math.PI * 2;
-      const r = initR * (0.4 + Math.random() * 0.6);
-      const cx = centerX + Math.cos(ang) * r;
-      const cy = centerY + Math.sin(ang) * r;
+      const sub = document.createElementNS(SVG_NS, 'text');
+      sub.setAttribute('class', 'lane-sub');
+      sub.setAttribute('x', cx); sub.setAttribute('y', 92);
+      sub.setAttribute('text-anchor', 'middle');
+      sub.setAttribute('fill', '#A0A8BC');
+      sub.textContent = lane.sub;
+      svg.appendChild(sub);
+    });
 
+    // ----- 2. place chips inside each lane in a 2-column grid -----
+    const allItems = [];
+    function placeLane(items, laneKey) {
+      const cx = laneCenters[laneKey];
+      const cols = 2;
+      const colW = 165;
+      const startY = 140;
+      const rowH = 60;
+      items.forEach((name, i) => {
+        const col = i % cols;
+        const row = Math.floor(i / cols);
+        const x = cx - colW / 2 + col * colW;
+        const y = startY + row * rowH;
+        allItems.push({ name, group: laneKey, x, y });
+      });
+    }
+    placeLane(groups.commodity,  'commodity');
+    placeLane(groups.specialist, 'specialist');
+    placeLane(groups.govOnly,    'govOnly');
+
+    // Deprecated chips: row across the bottom
+    const depStartX = (VW - groups.deprecated.length * 130) / 2 + 65;
+    const depY = VH - 30;
+    groups.deprecated.forEach((name, i) => {
+      allItems.push({ name, group: 'deprecated', x: depStartX + i * 130, y: depY });
+    });
+
+    // ----- 3. render the chips (rounded pills, not bare circles) -----
+    const chipEls = [];
+    allItems.forEach(it => {
       const g = document.createElementNS(SVG_NS, 'g');
-      g.setAttribute('class', 'cluster-circle' + (it.group === 'deprecated' ? ' cluster-circle--deprecated' : ''));
-      g.setAttribute('transform', `translate(${cx},${cy})`);
+      g.setAttribute('class', 'cluster-chip' + (it.group === 'deprecated' ? ' cluster-chip--deprecated' : ''));
+      g.setAttribute('transform', `translate(${it.x},${it.y})`);
 
-      const c = document.createElementNS(SVG_NS, 'circle');
-      c.setAttribute('class', 'circle-shape');
-      c.setAttribute('r', 36);
-      const fillMap = {
-        commodity:   'rgba(232,131,124,0.16)',
-        specialist:  'rgba(245,197,66,0.16)',
-        govOnly:     'rgba(160,168,188,0.16)',
-        deprecated:  'rgba(124,77,255,0.10)'
-      };
-      const strokeMap = {
-        commodity:   '#E8837C',
-        specialist:  '#F5C542',
-        govOnly:     '#A0A8BC',
-        deprecated:  '#7C4DFF'
-      };
-      c.setAttribute('fill', fillMap[it.group]);
-      c.setAttribute('stroke', strokeMap[it.group]);
-      c.setAttribute('stroke-width', '1.5');
-      g.appendChild(c);
+      const w = Math.max(120, Math.min(155, it.name.length * 9 + 22));
+      const r = document.createElementNS(SVG_NS, 'rect');
+      r.setAttribute('class', 'chip-shape');
+      r.setAttribute('x', -w / 2); r.setAttribute('y', -18);
+      r.setAttribute('width', w);   r.setAttribute('height', 36);
+      r.setAttribute('rx', 18);
+      r.setAttribute('fill', fillMap[it.group]);
+      r.setAttribute('stroke', strokeMap[it.group]);
+      r.setAttribute('stroke-width', '1.5');
+      g.appendChild(r);
 
       const t = document.createElementNS(SVG_NS, 'text');
-      t.setAttribute('class', 'cluster-circle-text');
+      t.setAttribute('class', 'cluster-chip-text');
       t.setAttribute('y', 4);
+      t.setAttribute('text-anchor', 'middle');
       t.textContent = it.name;
       g.appendChild(t);
 
-      // strikethrough for deprecated
       if (it.group === 'deprecated') {
         const ln = document.createElementNS(SVG_NS, 'line');
-        ln.setAttribute('x1', -32); ln.setAttribute('x2', 32);
-        ln.setAttribute('y1', 0);   ln.setAttribute('y2', 0);
+        ln.setAttribute('x1', -w / 2 + 8); ln.setAttribute('x2', w / 2 - 8);
+        ln.setAttribute('y1', 0); ln.setAttribute('y2', 0);
         ln.setAttribute('stroke', '#E8837C'); ln.setAttribute('stroke-width', '2');
         g.appendChild(ln);
       }
 
       svg.appendChild(g);
-      circleEls.push({ el: g, item: it, x0: cx, y0: cy });
+      chipEls.push(g);
     });
+    svg.dataset.rendered = '1';
 
-    // Animation timeline
     if (!window.gsap) return;
-    const tl = gsap.timeline();
-
-    // 1. Pulse the cluster — fade in (don't touch transform; we use it for positioning)
-    tl.fromTo(circleEls.map(c => c.el), { opacity: 0 },
-      { opacity: 1, duration: 0.55, stagger: 0.03, ease: 'power2.out' });
-    // pulse the inner circle shapes (scale on a non-transformed child element)
-    tl.fromTo(svg.querySelectorAll('.cluster-circle .circle-shape'),
-      { scale: 0.6, transformOrigin: '50% 50%' },
-      { scale: 1, duration: 0.5, ease: 'back.out(1.7)', stagger: 0.02 }, '-=0.4');
-    tl.to(svg.querySelectorAll('.cluster-circle .circle-shape'),
-      { scale: 1.12, duration: 0.35, yoyo: true, repeat: 1, transformOrigin: '50% 50%' }, '+=0.15');
-
-    // 2. Split into groups
-    // Layout targets:
-    const groupTargets = {
-      commodity:  { cx: 220,  cyStart: 200, dx: 0, dy: 60 }, // 6 circles in 2x3 grid
-      specialist: { cx: 600,  cyStart: 200, dx: 0, dy: 60 }, // 4 circles in 1x4
-      govOnly:    { cx: 980,  cyStart: 220, dx: 0, dy: 60 }, // 2 circles
-      deprecated: { cx: 600,  cyStart: 480, dx: 0, dy: 0  }  // bottom
-    };
-
-    // Compute target per circle within its group
-    const counters = { commodity: 0, specialist: 0, govOnly: 0, deprecated: 0 };
-    circleEls.forEach(ce => {
-      const g = ce.item.group;
-      const idx = counters[g]++;
-      let tx, ty;
-      if (g === 'commodity') {
-        const col = idx % 2;
-        const row = Math.floor(idx / 2);
-        tx = 160 + col * 140;
-        ty = 160 + row * 90;
-      } else if (g === 'specialist') {
-        const row = idx; // 4 rows
-        tx = 600;
-        ty = 130 + row * 80;
-      } else if (g === 'govOnly') {
-        tx = 980;
-        ty = 200 + idx * 90;
-      } else { // deprecated
-        tx = 600;
-        ty = 470;
-      }
-      ce.tx = tx; ce.ty = ty;
-    });
-
-    // Tween each circle to its target position individually (per-element targets)
-    circleEls.forEach((ce, i) => {
-      tl.to(ce.el, {
-        duration: 1.2, ease: 'power3.inOut',
-        attr: { transform: `translate(${ce.tx},${ce.ty})` }
-      }, i === 0 ? '+=0.3' : '<');
-    });
-
-    // Reveal labels
-    tl.add(() => {
-      document.getElementById('labelCommodity').classList.add('is-revealed');
-      document.getElementById('labelSpecialist').classList.add('is-revealed');
-      document.getElementById('labelGov').classList.add('is-revealed');
-    }, '-=0.6');
-
-    // 3. Fade deprecated to bottom
-    const dep = circleEls.filter(c => c.item.group === 'deprecated').map(c => c.el);
-    if (dep.length) {
-      tl.to(dep, { opacity: 0.4, duration: 0.6 }, '+=0.3');
-    }
+    // Lane backdrops fade in first
+    gsap.fromTo(svg.querySelectorAll('.lane-bg'),  { opacity: 0, scaleX: 0.8, transformOrigin: '50% 50%' }, { opacity: 1, scaleX: 1, duration: 0.55, stagger: 0.1, ease: 'power2.out' });
+    gsap.fromTo(svg.querySelectorAll('.lane-title, .lane-sub'), { opacity: 0, y: -8 }, { opacity: 1, y: 0, duration: 0.4, delay: 0.15, stagger: 0.05 });
+    // Chips drop in by lane
+    gsap.fromTo(chipEls, { opacity: 0 }, { opacity: 1, duration: 0.45, stagger: 0.04, delay: 0.45, ease: 'power2.out' });
+    // Deprecated dim after settling
+    const depEls = chipEls.filter((_, i) => allItems[i].group === 'deprecated');
+    if (depEls.length) gsap.to(depEls, { opacity: 0.45, duration: 0.6, delay: 1.5 });
   };
 
   // ─── SLIDE 9 — Smarter AND cheaper dual axis (was 8) ───

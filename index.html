@@ -56,6 +56,12 @@ body.embed-mode .section.embed-visible .section-intro { display:none !important;
 /* Focus mode: hide all section children except .embed-focus and its ancestors */
 body.embed-focus-mode .section.embed-visible > .container > *:not(.embed-focus-ancestor):not(.embed-focus) { display:none !important; }
 body.embed-focus-mode .section.embed-visible > .container > .embed-focus { display:block !important; }
+/* When the focus is the matrix block, hide its own duplicate header/intro since the slide already shows them */
+body.embed-focus-mode #seq-matrix-block.embed-focus .seq-matrix-header,
+body.embed-focus-mode #seq-matrix-block.embed-focus .seq-matrix-intro { display:none !important; }
+/* When the focus is the agent-stack-block, hide its own header (slide already says "It's a new stack") */
+body.embed-focus-mode #agent-stack-block.embed-focus > .subsection-title,
+body.embed-focus-mode #agent-stack-block.embed-focus > .aa-stack-sub { display:none !important; }
 body.embed-mode { padding: 0 !important; margin: 0 !important; }
 </style>
 <script>
@@ -1733,6 +1739,7 @@ body.embed-mode { padding: 0 !important; margin: 0 !important; }
       <div class="asc-hero-num" style="--accent: #4A90D9"><span class="big tabnum" style="color:#4A90D9">88%</span><span class="label">of Fortune 100 use E2B sandboxes</span></div>
     </div>
 
+    <div id="agent-stack-block">
     <h3 class="subsection-title anim-fade">THE 7-LAYER AGENT STACK</h3>
     <p class="aa-stack-sub anim-fade">Click any layer to explore tools, companies, and key data. Hover any company for details.</p>
     <div class="aa-stack anim-fade">
@@ -1952,6 +1959,7 @@ body.embed-mode { padding: 0 !important; margin: 0 !important; }
       </div>
 
     </div>
+    </div><!-- /#agent-stack-block -->
 
     <div class="asc-quote anim-fade">
       &ldquo;Stitch all of these primitives together, and what emerges isn&rsquo;t a chatbot &mdash; it&rsquo;s a digital coworker more human than AI.&rdquo;
@@ -3330,8 +3338,8 @@ body.embed-mode { padding: 0 !important; margin: 0 !important; }
 
     <!-- ═══ SEQUOIA SERVICES DISRUPTION MATRIX ═══ -->
     <div class="anim-fade" id="seq-matrix-block" style="margin:2.5rem 0">
-      <h3 class="subsection-title" style="margin-bottom:0.25rem">WHERE AGENTS EAT <span style="color:#4ECDC4">SERVICES</span> FIRST</h3>
-      <p style="color:#A0A8BC;font-size:0.88rem;margin:0 0 1.5rem;text-align:center">$1.5T+ in professional services mapped by automation readiness. Tap any category for AI contenders.</p>
+      <h3 class="subsection-title seq-matrix-header" style="margin-bottom:0.25rem">WHERE AGENTS EAT <span style="color:#4ECDC4">SERVICES</span> FIRST</h3>
+      <p class="seq-matrix-intro" style="color:#A0A8BC;font-size:0.88rem;margin:0 0 1.5rem;text-align:center">$1.5T+ in professional services mapped by automation readiness. Tap any category for AI contenders.</p>
       <div style="position:relative;margin:0 auto;max-width:1100px">
         <div style="text-align:center;margin-bottom:0.5rem"><span style="color:#6B7280;font-size:0.7rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase">OUTSOURCED</span></div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;position:relative">

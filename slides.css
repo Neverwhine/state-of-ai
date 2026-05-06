@@ -535,7 +535,11 @@ body { position: relative; }
 .cluster-circle--deprecated .circle-shape {
   opacity: 0.3;
 }
-.cluster-circle--deprecated text {
+.lane-title { font-family: 'Inter', sans-serif; font-size: 18px; font-weight: 800; letter-spacing: 0.18em; }
+.lane-sub   { font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.05em; }
+.cluster-chip-text { font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600; fill: #E8E9ED; pointer-events: none; }
+.cluster-chip { transition: opacity 400ms ease-out; }
+.cluster-chip--deprecated text {
   text-decoration: line-through;
   fill: var(--text-mute);
 }
@@ -684,6 +688,25 @@ body { position: relative; }
 }
 .slide-iframe-container--tall { height: 64vh; max-height: 720px; }
 .slide-iframe-container--medium { height: 44vh; max-height: 460px; }
+
+/* Vibe coding slide — top-anchor so empty top space is gone */
+.slide[data-slide="11"] { align-items: flex-start; padding-top: 60px; }
+.slide[data-slide="11"] .slide-inner { gap: 12px; }
+
+/* Slide 13 — top-anchor + slimmer headline since the iframe carries the visual weight */
+.slide[data-slide="13"] { align-items: flex-start; padding-top: 50px; }
+.slide[data-slide="13"] .slide-headline { font-size: clamp(34px, 3.8vw, 52px); margin-bottom: 8px; }
+.slide[data-slide="13"] .slide-sub { margin-bottom: 14px; }
+
+/* Slide 10/14 — top-anchor for iframe slides so headline doesn't push iframe off-screen */
+.slide[data-slide="10"] { align-items: flex-start; padding-top: 40px; }
+.slide[data-slide="14"] { align-items: flex-start; padding-top: 40px; }
+.slide[data-slide="10"] .slide-headline,
+.slide[data-slide="14"] .slide-headline { font-size: clamp(34px, 3.8vw, 52px); margin-bottom: 8px; }
+.slide[data-slide="10"] .slide-sub,
+.slide[data-slide="14"] .slide-sub { margin-bottom: 14px; }
+.slide[data-slide="10"] .slide-iframe-container--tall { height: 64vh; }
+.slide[data-slide="14"] .slide-iframe-container--tall { height: 66vh; }
 
 /* Slide 13 — pricing-row stays compact above the live ARPU iframe */
 .pricing-row--compact { margin: 8px 0 12px; gap: 0.6rem; }
