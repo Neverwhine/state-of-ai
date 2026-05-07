@@ -14,17 +14,16 @@
       when: 'Many moderately-sized buyers · similar workflows',
       badWhen: 'Concentrated market or fragmented + sticky clients',
       customer: 'The service provider',
-      capital: { label: 'Equity · light · ARR-funded', dots: 1 },
+      capital: { label: 'Equity · moderate · inference-cost drag', dots: 2 },
       pricing: 'Seat + usage hybrid',
-      grossMargin: 75, // mid of 70-80
-      grossMarginLabel: '70-80%',
-      ebitda: 25,
-      ebitdaLabel: '20-30%',
+      grossMargin: 52,
+      grossMarginLabel: '40-60%',
+      ebitda: 5,
+      ebitdaLabel: '0-10% (near break-even)',
       comps: [
         { name: 'ServiceTitan',  detail: 'NASDAQ: TTAN' },
         { name: 'ServiceNow Otto', detail: 'May 2026' },
         { name: 'Harvey',        detail: '~$3B val' },
-        { name: 'EvenUp',        detail: '$2B+ val' },
         { name: 'Atlassian Rovo', detail: 'shipped' },
         { name: 'Agentforce',    detail: 'Salesforce' }
       ],
@@ -49,24 +48,22 @@
       when: 'Concentrated market · clear winners possible',
       badWhen: 'Highly fragmented or relationship-locked customers',
       customer: 'The end customer',
-      capital: { label: 'Equity · heavy · venture-burn', dots: 2 },
+      capital: { label: 'Equity · heavy · deep venture-burn', dots: 3 },
       pricing: 'Outcome / per-task',
-      grossMargin: 58,
-      grossMarginLabel: '50-65%',
-      ebitda: 7,
-      ebitdaLabel: '0-15% (scaling)',
+      grossMargin: 45,
+      grossMarginLabel: '30-55%',
+      ebitda: -15,
+      ebitdaLabel: 'Negative (scaling)',
       comps: [
         { name: 'Sierra',     detail: '$15.8B · May 2026' },
         { name: 'Decagon',    detail: '$4.5B · Jan 2026' },
         { name: 'Crescendo',  detail: 'Acquired PartnerHero' },
-        { name: 'Cognition',  detail: 'Devin · SWE' },
-        { name: 'Cursor',     detail: '$2B+ ARR' },
+        { name: 'EvenUp',     detail: '$2B+ · demand letters' },
         { name: 'Lovable',    detail: '$400M ARR' }
       ],
       dvc: [
         { name: 'Doctronic',          detail: 'AI medical consults' },
         { name: 'Howie AI',           detail: 'EA · scheduling' },
-        { name: 'Aurora First',       detail: 'Family assistant' },
         { name: 'tely.ai',            detail: 'B2B content marketing' },
         { name: 'Unreal Labs',        detail: 'Performance marketing' },
         { name: 'Keye',               detail: 'PE due diligence' },
@@ -86,8 +83,8 @@
       customer: 'You become the service provider',
       capital: { label: 'Equity + Debt · acquisition leverage', dots: 3 },
       pricing: 'Own the P&L · price the work',
-      grossMargin: 45,
-      grossMarginLabel: '35-55%',
+      grossMargin: 42,
+      grossMarginLabel: '35-50%',
       ebitda: 35,
       ebitdaLabel: '30-40% target',
       comps: [
@@ -191,7 +188,7 @@
                   </div>
                   <div class="aa-bar-row">
                     <span class="aa-bar-label">EBITDA</span>
-                    <div class="aa-bar"><div class="aa-bar-fill aa-bar-fill--ebitda" style="width:${a.ebitda}%"></div></div>
+                    <div class="aa-bar${a.ebitda < 0 ? ' aa-bar--negative' : ''}"><div class="aa-bar-fill aa-bar-fill--ebitda" style="width:${Math.max(4, Math.abs(a.ebitda))}%"></div></div>
                     <span class="aa-bar-num">${a.ebitdaLabel}</span>
                   </div>
                 </dd>
