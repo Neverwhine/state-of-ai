@@ -48,7 +48,8 @@ body.embed-mode .top-banner,
 body.embed-mode footer,
 body.embed-mode .footer,
 body.embed-mode .floating-toc,
-body.embed-mode a[href="slides.html"] { display:none !important; }
+body.embed-mode a[href="slides.html"],
+body.embed-mode a[href="whats-new.html"] { display:none !important; }
 body.embed-mode .section { display:none !important; padding-top: 1.5rem !important; padding-bottom: 1.5rem !important; min-height: 0 !important; }
 body.embed-mode .section.embed-visible { display:block !important; }
 body.embed-mode .section.embed-visible .section-bridge,
@@ -144,6 +145,7 @@ body.embed-mode { padding: 0 !important; margin: 0 !important; }
 
 <section class="section section--hero section--hero-dvc" id="sec-0">
   <a href="slides.html" style="position:fixed;top:1.25rem;right:1.5rem;z-index:1000;font-family:'Inter',sans-serif;font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:#4ECDC4;text-decoration:none;padding:0.5rem 0.85rem;border:1px solid rgba(78,205,196,0.4);border-radius:6px;background:rgba(45,49,66,0.7);backdrop-filter:blur(8px);transition:all 0.2s ease" onmouseover="this.style.background='rgba(78,205,196,0.15)';this.style.borderColor='#4ECDC4'" onmouseout="this.style.background='rgba(45,49,66,0.7)';this.style.borderColor='rgba(78,205,196,0.4)'">▶ 20-min Slideshow</a>
+  <a href="whats-new.html" style="position:fixed;top:3.5rem;right:1.5rem;z-index:1000;font-family:'Inter',sans-serif;font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:#F5C542;text-decoration:none;padding:0.5rem 0.85rem;border:1px solid rgba(245,197,66,0.4);border-radius:6px;background:rgba(45,49,66,0.7);backdrop-filter:blur(8px);transition:all 0.2s ease" onmouseover="this.style.background='rgba(245,197,66,0.15)';this.style.borderColor='#F5C542'" onmouseout="this.style.background='rgba(45,49,66,0.7)';this.style.borderColor='rgba(245,197,66,0.4)'">✦ What's new &middot; May 6</a>
   <div class="hero-blocks">
     <div class="hero-block hero-block--white">
       <div class="hero-block-inner">
@@ -169,6 +171,9 @@ body.embed-mode { padding: 0 !important; margin: 0 !important; }
   </div>
   <span class="hero-dvc-url">davidovs.com</span>
 </section>
+
+
+<!-- What's New / Patch Notes lives at whats-new.html (linked from the top-right rail). -->
 
 
 <section class="section section--dark section--money-flow" id="sec-1">
@@ -256,14 +261,14 @@ body.embed-mode { padding: 0 !important; margin: 0 !important; }
         </div>
         <div class="mf-layer-body">
           <div class="mf-pills">
-            <div class="mf-pill" data-tooltip="$25B ARR · $852B val (Apr 2026, $122B Series D) · ~42% GM · 80% app / 20% API">
+            <div class="mf-pill" data-tooltip="$25B annualized run-rate (Feb 2026) · $852B post-money / $730B pre-money (Series F, $122B raised, closed Mar 2026) · 80% app / 20% API">
               <span class="mf-pill-name">OpenAI</span>
               <span class="mf-pill-val tabnum">$25B</span>
               <span class="mf-pill-dual">L5+L4</span>
             </div>
-            <div class="mf-pill" data-tooltip="$19B ARR · $380B val · ~55% GM · 26% app / 74% API">
+            <div class="mf-pill" data-tooltip="$30B+ run-rate (Apr 2026, official) · ~$40B reported late Apr · $380B post-money (Series G, Feb 2026) · ~$900B reported in active talks · 26% app / 74% API">
               <span class="mf-pill-name">Anthropic</span>
-              <span class="mf-pill-val tabnum">$19B</span>
+              <span class="mf-pill-val tabnum">$30B+</span>
               <span class="mf-pill-dual">L5+L4</span>
             </div>
             <div class="mf-pill" data-tooltip="$2B+ ARR · $60B SpaceX option (Apr 2026) · ~35% GM · Fastest SaaS ever">
@@ -286,7 +291,7 @@ body.embed-mode { padding: 0 !important; margin: 0 !important; }
               <span class="mf-pill-name">Lovable</span>
               <span class="mf-pill-val tabnum">$400M</span>
             </div>
-            <div class="mf-pill" data-tooltip="$330M ARR · $3.3B val · ~50% GM · Voice/audio AI leader">
+            <div class="mf-pill" data-tooltip="$330M ARR · $11B val (latest) · ~50% GM · Voice/audio AI leader">
               <span class="mf-pill-name">ElevenLabs</span>
               <span class="mf-pill-val tabnum">$330M</span>
               <span class="mf-pill-dual">L5+L4</span>
@@ -318,7 +323,7 @@ body.embed-mode { padding: 0 !important; margin: 0 !important; }
           <div class="mf-margin-detail">
             <div class="mf-margin-row"><span>Traditional SaaS</span><span class="tabnum">70–85% GM</span><span>Benchmark</span></div>
             <div class="mf-margin-row"><span>Perplexity</span><span class="tabnum accent-teal">50%+ GM</span><span>Search + subscription</span></div>
-            <div class="mf-margin-row"><span>OpenAI</span><span class="tabnum">~42% GM</span><span>H1 2025, improving</span></div>
+            <div class="mf-margin-row"><span>OpenAI</span><span class="tabnum">GM est. varies</span><span>Not officially disclosed</span></div>
             <div class="mf-margin-row"><span>Cursor</span><span class="tabnum accent-gold">~35% GM</span><span>Heavy inference load</span></div>
             <div class="mf-margin-row"><span>Higgsfield</span><span class="tabnum accent-gold">30%+ GM</span><span>Video generation</span></div>
             <div class="mf-margin-row"><span>Lovable</span><span class="tabnum accent-coral">20–40% GM</span><span>Vibe-coding, scaling fast</span></div>
@@ -348,8 +353,8 @@ body.embed-mode { padding: 0 !important; margin: 0 !important; }
             </div>
           </div>
           <div class="mf-margin-cards">
-            <div class="mf-mc"><strong>OpenAI</strong><span class="tabnum">GM ~42%</span><span class="accent-coral">-$6.9B H1 loss</span></div>
-            <div class="mf-mc"><strong>Anthropic</strong><span class="tabnum">GM ~40%</span><span>Lowered from 50%</span></div>
+            <div class="mf-mc"><strong>OpenAI</strong><span class="tabnum">GM est. varies</span><span class="accent-coral">-$6.9B H1 loss</span></div>
+            <div class="mf-mc"><strong>Anthropic</strong><span class="tabnum">GM est. varies</span><span>Not officially disclosed</span></div>
             <div class="mf-mc"><strong>Google Gemini</strong><span>Not disclosed</span><span class="accent-teal">Serving costs -78%</span></div>
             <div class="mf-mc"><strong>Cohere</strong><span class="tabnum accent-teal">GM ~70%</span><span>Best in class</span></div>
             <div class="mf-mc"><strong>xAI</strong><span class="accent-coral">Net loss 13.6x rev</span><span></span></div>
@@ -364,13 +369,13 @@ body.embed-mode { padding: 0 !important; margin: 0 !important; }
           <span class="mf-layer-badge">LAYER 3</span>
           <h3 class="mf-layer-title">CLOUD & INFRA</h3>
           <span class="mf-layer-rev tabnum" data-years='{"2024":"$18-22B","2025":"$27-34B","2026":"$45-55B"}'>$18-22B rev</span>
-          <span class="mf-layer-capex tabnum" data-years='{"2024":"$224B","2025":"$379B","2026":"$700B"}'>$224B CapEx</span>
+          <span class="mf-layer-capex tabnum" data-years='{"2024":"$224B","2025":"$379B","2026":"~$695B mid / $725B top"}'>$224B CapEx</span>
           <span class="mf-capex-ratio tabnum">23:1 CapEx-to-AI-Revenue</span>
           <span class="mf-expand-hint">▸</span>
         </div>
         <div class="mf-layer-body">
           <div class="mf-cloud-margins">
-            <div class="mf-cloud-row"><strong>AWS</strong><span class="tabnum">37.0% OM</span><span class="tabnum">$39.8B / $107.6B</span></div>
+            <div class="mf-cloud-row"><strong>AWS</strong><span class="tabnum">37.0% OM</span><span class="tabnum">$39.8B / $107.6B (9M 2025)</span></div>
             <div class="mf-cloud-row"><strong>Microsoft IC</strong><span class="tabnum">47.1% OM</span><span class="tabnum">$49.6B / $105.4B</span><span class="tabnum" style="color:#A0A8BC">Cloud GM 71%</span></div>
             <div class="mf-cloud-row"><strong>Google Cloud</strong><span class="tabnum">14.1% OM</span><span class="tabnum">$6.1B / $43.2B</span><span style="color:#4ECDC4">&rarr; 17.5%</span></div>
             <div class="mf-cloud-row"><strong>Meta</strong><span class="tabnum">42.0% OM</span><span>(total company)</span></div>
@@ -417,7 +422,7 @@ body.embed-mode { padding: 0 !important; margin: 0 !important; }
             <span class="mf-capex-arrow">&rarr;</span>
             <span class="tabnum">2025: $379B</span>
             <span class="mf-capex-arrow">&rarr;</span>
-            <span class="tabnum accent-gold">2026E: $700B</span>
+            <span class="tabnum accent-gold">2026E: ~$695B mid / up to $725B</span>
           </div>
         </div>
         <div class="mf-flow-label anim-fade"><span class="tabnum">60–70%</span> of CapEx &rarr; GPUs</div>
@@ -509,7 +514,7 @@ body.embed-mode { padding: 0 !important; margin: 0 !important; }
             <span class="stat-source">Source: NVIDIA GTC 2026 / WSJ / CNBC / Axios, Mar 2026</span>
           </div>
         </div>
-        <div class="mf-flow-label anim-fade"><span class="tabnum">580 TWh</span> by 2028</div>
+        <div class="mf-flow-label anim-fade"><span class="tabnum">580 TWh</span> US high-case by 2028</div>
       </div>
 
       <!-- ── LAYER 1: ENERGY ── -->
@@ -657,15 +662,15 @@ body.embed-mode { padding: 0 !important; margin: 0 !important; }
 
     <div class="explosion-pills anim-fade" style="display:flex;flex-wrap:wrap;gap:0.75rem;justify-content:center;margin-bottom:1rem">
 
-      <div class="explosion-pill" style="position:relative;display:inline-flex;align-items:center;gap:0.6rem;padding:0.65rem 1.1rem;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;cursor:default;transition:all 0.25s ease" data-tooltip="$25B ARR — ~80% consumer (ChatGPT), ~20% API. API growing fast. Fastest to $25B in AI history. $122B Series D closed Apr 2026 at $852B valuation (SoftBank $30B + Amazon $50B lead).">
+      <div class="explosion-pill" style="position:relative;display:inline-flex;align-items:center;gap:0.6rem;padding:0.65rem 1.1rem;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;cursor:default;transition:all 0.25s ease" data-tooltip="~$25B annualized run-rate (Feb 2026) — ~80% consumer (ChatGPT), ~20% API. API growing fast. Series F: $122B raised, closed Mar 2026 at $852B post-money / $730B pre-money (SoftBank $30B + Amazon $50B + Nvidia $30B lead).">
         <span style="color:#E8E9ED;font-weight:600;font-size:0.9rem">OpenAI</span>
         <span class="tabnum" style="color:#F5C542;font-weight:700;font-size:0.9rem">$25B</span>
         <span style="font-size:0.55rem;color:#7C4DFF;opacity:0.8">&#9679; mixed</span>
       </div>
 
-      <div class="explosion-pill" style="position:relative;display:inline-flex;align-items:center;gap:0.6rem;padding:0.65rem 1.1rem;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;cursor:default;transition:all 0.25s ease" data-tooltip="$30B run-rate (Apr 2026) — 3x in 4 months. 1,000+ enterprise customers at $1M+/yr. Claude Code ~$2.5B run-rate alone. $0 ad revenue. Anti-ads stance is the brand.">
+      <div class="explosion-pill" style="position:relative;display:inline-flex;align-items:center;gap:0.6rem;padding:0.65rem 1.1rem;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;cursor:default;transition:all 0.25s ease" data-tooltip="$30B+ run-rate (Apr 6 official); ~$40B reported late Apr — 3x in 4 months. 1,000+ enterprise customers at $1M+/yr. Claude Code &gt;$2.5B run-rate (Feb 2026). $0 ad revenue. Anti-ads stance is the brand.">
         <span style="color:#E8E9ED;font-weight:600;font-size:0.9rem">Claude</span>
-        <span class="tabnum" style="color:#F5C542;font-weight:700;font-size:0.9rem">$30B</span>
+        <span class="tabnum" style="color:#F5C542;font-weight:700;font-size:0.9rem">$30B+</span>
         <span style="font-size:0.55rem;color:#7C4DFF;opacity:0.8">&#9679; mixed</span>
       </div>
 
@@ -760,8 +765,19 @@ body.embed-mode { padding: 0 !important; margin: 0 !important; }
     <p class="section-intro anim-fade" style="max-width:780px;color:#C8CCD4;font-size:1.05rem;line-height:1.65;margin:0 auto 2.5rem">10+ companies at the frontier simultaneously. The bottom is commoditizing; the top is getting more expensive and more strategic. Open-source models now match proprietary ones on most benchmarks.</p>
     <!-- PROPRIETARY TIER -->
     <h3 class="subsection-title anim-fade" style="margin-bottom:1rem;font-size:0.85rem;color:#A0A8BC;letter-spacing:0.12em">PROPRIETARY FRONTIER</h3>
+
+    <!-- May 2026 — default-model upgrade at consumer scale -->
+    <div class="anim-fade" style="margin:0 0 1.25rem;padding:0.85rem 1.1rem;background:rgba(16,163,127,0.06);border:1px solid rgba(16,163,127,0.22);border-left:3px solid #10A37F;border-radius:8px">
+      <div style="display:flex;align-items:center;gap:0.55rem;margin-bottom:0.25rem;flex-wrap:wrap">
+        <span style="background:rgba(16,163,127,0.18);color:#10A37F;padding:0.16rem 0.5rem;border-radius:4px;font-size:0.64rem;font-weight:700;letter-spacing:0.1em">MAY 5 2026</span>
+        <strong style="color:#10A37F;font-size:0.88rem;letter-spacing:0.02em">DEFAULT-MODEL UPGRADE: GPT-5.5 INSTANT</strong>
+      </div>
+      <p style="color:#C8CCD4;font-size:0.84rem;line-height:1.55;margin:0">OpenAI swapped the default ChatGPT model from GPT-5.3 Instant to <strong>GPT-5.5 Instant</strong>: AIME 2025 jumps <span class="tabnum">65.4 &rarr; 81.2</span>, MMMU-Pro <span class="tabnum">69.2 &rarr; 76</span>, with lower hallucination in law, medicine, and finance and the same low latency. API exposed as <code style="background:rgba(255,255,255,0.06);padding:0.05rem 0.3rem;border-radius:3px;font-size:0.85em">chat-latest</code>. The default tier is compounding quietly at consumer scale &mdash; most users never click a model picker.</p>
+      <span class="stat-source" style="display:block;margin-top:0.4rem">Source: <a href="https://techcrunch.com/2026/05/05/openai-releases-gpt-5-5-instant-a-new-default-model-for-chatgpt/" target="_blank" rel="noopener" style="color:#10A37F">TechCrunch, May 5 2026</a></span>
+    </div>
+
     <div class="model-grid anim-fade" style="grid-template-columns:repeat(auto-fit,minmax(150px,1fr));margin-bottom:2rem">
-      <div class="model-card" data-tip="<strong>GPT-5.4 / o3</strong><br><span style='color:#A0A8BC'>Released:</span> March 5, 2026 &mdash; current public flagship<br><span style='color:#A0A8BC'>Context:</span> 1M tokens<br><span style='color:#A0A8BC'>Benchmarks:</span> SWE-Bench Pro 57.7% &middot; OSWorld 75.0% &middot; GPQA Diamond 92.8%<br><span style='color:#F5C542;font-size:0.82em;margin-top:3px;display:inline-block'>&starf; First model with native computer-use &mdash; agents can operate desktop/browser autonomously</span><br><span style='color:#A0A8BC;font-size:0.82em;margin-top:4px;display:inline-block'>Codex: 4M weekly users (↑ from 3M). $852B valuation after $122B Series D (SoftBank $30B + Amazon $50B).</span><br><span style='color:#6B7280;font-size:0.78em;margin-top:4px;display:inline-block'><em>Note: &lsquo;Spud&rsquo; (GPT-5.5/6) &mdash; next-gen model, pretraining just completed, no public benchmarks yet. Shown on next card.</em></span>">
+      <div class="model-card" data-tip="<strong>GPT-5.4 / o3</strong><br><span style='color:#A0A8BC'>Released:</span> March 5, 2026 &mdash; current public flagship<br><span style='color:#A0A8BC'>Context:</span> 1M tokens<br><span style='color:#A0A8BC'>Benchmarks:</span> SWE-Bench Pro 57.7% &middot; OSWorld 75.0% &middot; GPQA Diamond 92.8%<br><span style='color:#F5C542;font-size:0.82em;margin-top:3px;display:inline-block'>&starf; First model with native computer-use &mdash; agents can operate desktop/browser autonomously</span><br><span style='color:#A0A8BC;font-size:0.82em;margin-top:4px;display:inline-block'>Codex: 4M weekly users (↑ from 3M). $852B post-money / $730B pre-money after $122B Series F (SoftBank $30B + Amazon $50B + Nvidia $30B).</span><br><span style='color:#6B7280;font-size:0.78em;margin-top:4px;display:inline-block'><em>Note: &lsquo;Spud&rsquo; (GPT-5.5/6) &mdash; next-gen model, pretraining just completed, no public benchmarks yet. Shown on next card.</em></span>">
         <div class="model-logo" style="background:#10A37F">O</div>
         <h3>OpenAI</h3>
         <p class="model-name">GPT-5.4 / o3</p>
@@ -1167,7 +1183,7 @@ body.embed-mode { padding: 0 !important; margin: 0 !important; }
           <div class="ar-card-toggle">+</div>
         </div>
         <div class="ar-card-detail">
-          <p>GA May 2025 → $2.5B run-rate by Feb 2026. Weekly active users doubled since Jan 2026. Business subscriptions quadrupled. Terminal-first agentic coding drove Anthropic to $380B valuation and $30B Series G.</p>
+          <p>GA May 2025 → &gt;$2.5B run-rate by Feb 2026 (most recent disclosed). Weekly active users doubled since Jan 2026. Business subscriptions quadrupled. Terminal-first agentic coding drove Anthropic to a $380B post-money Series G ($30B raised, Feb 2026).</p>
           <span class="stat-source">Source: Anthropic Series G announcement, 2026</span>
         </div>
       </div>
@@ -1323,11 +1339,11 @@ body.embed-mode { padding: 0 !important; margin: 0 !important; }
 
       <!-- Stat Bar -->
       <div class="ar-stat-bar anim-fade">
-        <div class="ar-stat-bar-fill" style="--bar-target:84%">
-          <span class="ar-stat-bar-label tabnum">84%</span>
+        <div class="ar-stat-bar-fill" style="--bar-target:42%">
+          <span class="ar-stat-bar-label tabnum">42%</span>
         </div>
-        <p class="ar-stat-bar-text"><strong class="tabnum">84%</strong> of developers are using or planning to use AI tools in development</p>
-        <span class="stat-source">Source: Stack Overflow Developer Survey, 2025</span>
+        <p class="ar-stat-bar-text"><strong class="tabnum">42%</strong> of committed code is now AI-generated or significantly AI-assisted &mdash; and <strong class="tabnum">72%</strong> of developers who tried AI use it every day.</p>
+        <span class="stat-source">Source: <a href="https://www.sonarsource.com/state-of-code-developer-survey-report.pdf" target="_blank" rel="noopener">SonarSource 2026 State of Code Developer Survey</a> &middot; Stack Overflow 2025 (51% daily) as secondary</span>
       </div>
 
       <!-- Self-referential note -->
@@ -1447,6 +1463,27 @@ body.embed-mode { padding: 0 !important; margin: 0 !important; }
     <div class="ar-deploy-callout anim-fade">
       <p>Cloud held <strong class="tabnum">81.1%</strong> of agent market share in 2025 — but local-first is the next visible deployment wave</p>
       <span class="stat-source">Source: Mordor Intelligence, 2025</span>
+    </div>
+
+    <!-- May 2026 — Frontier labs adopt the Palantir FDE model: PE-backed deployment vehicles + packaged vertical agents -->
+    <div class="anim-fade" style="margin:1.25rem 0 2rem;padding:1.25rem 1.5rem;background:linear-gradient(135deg, rgba(124,77,255,0.06), rgba(212,165,116,0.04));border:1px solid rgba(124,77,255,0.2);border-radius:14px">
+      <div style="display:flex;align-items:center;gap:0.6rem;margin-bottom:0.6rem;flex-wrap:wrap">
+        <span style="background:rgba(124,77,255,0.18);color:#7C4DFF;padding:0.2rem 0.55rem;border-radius:4px;font-size:0.66rem;font-weight:700;letter-spacing:0.1em">MAY 2026</span>
+        <strong style="color:#E8E9ED;font-size:0.98rem;letter-spacing:0.01em">FROM MODEL APIS TO DEPLOYMENT COMPANIES</strong>
+      </div>
+      <p style="color:#C8CCD4;font-size:0.88rem;line-height:1.6;margin:0 0 0.85rem">The next leg of the agent build-out is not a better chat UI &mdash; it is the <strong style="color:#7C4DFF">Palantir FDE playbook</strong> at frontier-lab scale. Two signals landed in the same window:</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:0.85rem">
+        <div style="padding:0.85rem 1rem;background:rgba(255,255,255,0.03);border-radius:10px;border-left:3px solid #7C4DFF">
+          <strong style="color:#7C4DFF;font-size:0.82rem;letter-spacing:0.04em">PE-BACKED DEPLOYMENT JVs</strong>
+          <p style="color:#C8CCD4;font-size:0.82rem;margin:0.35rem 0 0;line-height:1.55">OpenAI raised <strong class="tabnum">$4B+</strong> for <em>The Deployment Company</em> at a <strong class="tabnum">$10B</strong> valuation (TPG, Brookfield, Bain) with access to 2,000+ portfolio clients. Anthropic was reported as forming a parallel adoption entity with Blackstone, Hellman &amp; Friedman, Goldman, Apollo, GIC, and Sequoia. Frontier labs are becoming deployment companies, not just APIs.</p>
+          <span class="stat-source" style="display:block;margin-top:0.4rem">Source: <a href="https://finance.yahoo.com/sectors/technology/articles/openai-finalizes-10-billion-joint-123100557.html" target="_blank" rel="noopener" style="color:#7C4DFF">Bloomberg / Yahoo Finance, May 4&ndash;5 2026</a></span>
+        </div>
+        <div style="padding:0.85rem 1rem;background:rgba(255,255,255,0.03);border-radius:10px;border-left:3px solid #D4A574">
+          <strong style="color:#D4A574;font-size:0.82rem;letter-spacing:0.04em">PACKAGED VERTICAL WORKFLOWS</strong>
+          <p style="color:#C8CCD4;font-size:0.82rem;margin:0.35rem 0 0;line-height:1.55">Anthropic shipped <strong>10 ready-to-run finance agents</strong> &mdash; pitchbooks, KYC, month-end close, etc. &mdash; via Claude Cowork, Claude Code plugins, and Managed Agents, with Excel / PowerPoint / Word / Outlook add-ins inbound and a Moody's MCP app covering <strong class="tabnum">600M+</strong> public and private companies. Generic chat is giving way to packaged vertical workflows.</p>
+          <span class="stat-source" style="display:block;margin-top:0.4rem">Source: <a href="https://www.anthropic.com/news/finance-agents" target="_blank" rel="noopener" style="color:#D4A574">Anthropic, May 5 2026</a></span>
+        </div>
+      </div>
     </div>
 
     <!-- ═══ BLOCK 5: TASK TYPE GRAPH ═══ -->
@@ -1887,8 +1924,8 @@ body.embed-mode { padding: 0 !important; margin: 0 !important; }
         </div>
         <div class="aa-layer-detail">
           <div class="aa-detail-tools">
-            <span class="aa-tool-chip aa-tool-chip--has-tip" data-tip="<strong>OpenAI</strong> · $25B ARR<br>GPT-5.4, o3, GPT-oss (open source). <strong>$852B valuation</strong> after $122B Series D (Apr 2026; SoftBank $30B + Amazon $50B). The market leader in both proprietary and now open-weight models.<br><em>ChatGPT: 800M+ weekly active users &middot; Codex: 4M weekly users</em>">OpenAI</span>
-            <span class="aa-tool-chip aa-tool-chip--has-tip" data-tip="<strong>Anthropic</strong> · $380B valuation<br>Claude Opus 4.7 (Apr 16, 2026): SWE-bench Verified 87.6%, CursorBench 70%. #1 Chatbot Arena. $30B run-rate revenue (3x in 4 months). 1,000+ enterprise customers at $1M+/yr. Claude Code: $2.5B+ run-rate. New Routines feature (scheduled/API/webhook agent jobs).<br><em>Inventor of MCP · $0 ad revenue · Focus on AI safety</em>">Anthropic</span>
+            <span class="aa-tool-chip aa-tool-chip--has-tip" data-tip="<strong>OpenAI</strong> · ~$25B annualized run-rate (Feb 2026)<br>GPT-5.4, o3, GPT-oss (open source). <strong>$852B post-money / $730B pre-money</strong> after $122B Series F (Mar 2026; SoftBank $30B + Amazon $50B + Nvidia $30B). The market leader in both proprietary and now open-weight models.<br><em>ChatGPT: 900M+ weekly active users (Feb 2026) &middot; Codex: 4M weekly users</em>">OpenAI</span>
+            <span class="aa-tool-chip aa-tool-chip--has-tip" data-tip="<strong>Anthropic</strong> · $380B post-money (Series G, Feb 2026, last closed); ~$900B reported in active talks (Apr/May 2026)<br>Claude Opus 4.7 (Apr 16, 2026): SWE-bench Verified 87.6%, CursorBench 70%. #1 Chatbot Arena. $30B+ run-rate (Apr 2026, official) / ~$40B reported late Apr — 3x in 4 months. 1,000+ enterprise customers at $1M+/yr. Claude Code: &gt;$2.5B run-rate (Feb 2026). New Routines feature (scheduled/API/webhook agent jobs).<br><em>Inventor of MCP · $0 ad revenue · Focus on AI safety</em>">Anthropic</span>
             <span class="aa-tool-chip aa-tool-chip--has-tip" data-tip="<strong>Google DeepMind</strong><br>Gemini 3.1 Pro: 1M context window, natively multimodal. #2 Chatbot Arena.<br><em>SWE-Bench 80.6% · ARC-AGI-2 77.1% · Leader of A2A protocol</em>">Google</span>
             <span class="aa-tool-chip aa-tool-chip--has-tip" data-tip="<strong>xAI</strong> (Elon Musk)<br>Grok 3: Trained on 200K H100 Colossus cluster. $1.25T merged valuation with SpaceX.<br><em>$12B raised · World's largest training cluster</em>">xAI</span>
             <span class="aa-tool-chip aa-tool-chip--has-tip" data-tip="<strong>Meta</strong> · Llama 4 Maverick<br>Most downloaded open-weight model family. Community License. Acquired Manus ($2B+) for agent capabilities.<br><em>Benchmark controversy exposed industry-wide eval gaming</em>">Meta / Llama</span>
@@ -2303,10 +2340,10 @@ body.embed-mode { padding: 0 !important; margin: 0 !important; }
     <p class="section-intro anim-fade" style="max-width:780px;color:#C8CCD4;font-size:1.05rem;line-height:1.65;margin:0 auto 2.5rem">Every breakthrough at the application layer is paid for in chips, data centers, cooling, and power. AI is driving the largest infrastructure buildout since the interstate highway system, with capital racing ahead of certainty. The bottleneck is no longer just compute; it is whether the physical world can support the pace.</p>
 
     <!-- ═══ INTERACTIVE CAPEX EXPLORER ═══ -->
-    <div class="capex-explorer anim-fade">
+    <div class="capex-explorer anim-fade" id="capex-explorer-block">
       <div class="capex-header">
         <h3 class="chart-title">Hyperscaler Capital Expenditure</h3>
-        <div class="capex-total-badge"><span class="tabnum" id="capexTotalNum">$700B</span><span class="capex-total-label">2026 GUIDANCE</span></div>
+        <div class="capex-total-badge"><span class="tabnum" id="capexTotalNum">~$700B</span><span class="capex-total-label">2026 GUIDANCE (mid · up to $725B)</span></div>
       </div>
 
       <!-- Company toggles -->
@@ -2334,6 +2371,12 @@ body.embed-mode { padding: 0 !important; margin: 0 !important; }
       </div>
 
       <span class="stat-source">Source: SEC filings, company earnings, Goldman Sachs, Epoch AI, CNBC, Introl &mdash; 2026 figures are guidance midpoints</span>
+
+      <!-- May 2026 hyperscaler guidance reset -->
+      <div class="anim-fade" style="margin:1.25rem 0 0;padding:0.85rem 1.1rem;background:rgba(245,197,66,0.06);border:1px solid rgba(245,197,66,0.18);border-left:3px solid #F5C542;border-radius:8px">
+        <p style="color:#C8CCD4;font-size:0.85rem;line-height:1.55;margin:0"><strong style="color:#F5C542">Latest reset (Apr&ndash;May 2026):</strong> hyperscaler 2026 capex guidance has stepped up to roughly <strong class="tabnum">$725B</strong> combined &mdash; Amazon ~$200B, Microsoft ~$190B, Google ~$180&ndash;190B, Meta $125&ndash;145B &mdash; about <strong class="tabnum">$100B above</strong> projections we built this section on. The infrastructure chapter is still getting bigger; the bottleneck is memory, power, and data-center execution, not appetite.</p>
+        <span class="stat-source" style="display:block;margin-top:0.4rem">Source: <a href="https://finance.yahoo.com/markets/article/magnificent-7-earnings-rush-reveals-ai-spending-surge-with-hyperscaler-capex-set-to-reach-725-billion-in-2026-224901707.html" target="_blank" rel="noopener" style="color:#F5C542">Yahoo Finance / Business Insider, Apr 29&ndash;30 2026</a></span>
+      </div>
     </div>
 
     <!-- ═══ FCF CRUNCH + DEBT ═══ -->
@@ -2432,6 +2475,26 @@ body.embed-mode { padding: 0 !important; margin: 0 !important; }
         <span style="display:inline-block;padding:0.4rem 0.85rem;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:6px;color:#A0A8BC;font-size:0.8rem"><strong style="color:#4ECDC4">DSX Exchange</strong> — Networking fabric</span>
       </div>
       <span class="stat-source" style="margin-top:0.75rem;display:block">Source: NVIDIA GTC 2025–2026 keynotes</span>
+    </div>
+
+    <!-- May 2026: rivals renting each other's factories -->
+    <div class="anim-fade" style="margin:0 0 1.25rem;padding:1rem 1.2rem;background:rgba(232,131,124,0.05);border:1px solid rgba(232,131,124,0.18);border-left:3px solid #E8837C;border-radius:10px">
+      <div style="display:flex;align-items:center;gap:0.6rem;margin-bottom:0.4rem;flex-wrap:wrap">
+        <span style="background:rgba(232,131,124,0.18);color:#E8837C;padding:0.18rem 0.55rem;border-radius:4px;font-size:0.66rem;font-weight:700;letter-spacing:0.1em">MAY 2026</span>
+        <strong style="color:#E8837C;font-size:0.92rem;letter-spacing:0.02em">RIVAL LABS RENT EACH OTHER'S FACTORIES</strong>
+      </div>
+      <p style="color:#C8CCD4;font-size:0.86rem;line-height:1.55;margin:0">Anthropic signed for the full compute capacity of <strong>SpaceX's Colossus 1</strong> in Memphis (300+ MW), with the deal reportedly extending to interest in space-based compute. The "AI factory" is now fungible enough that competitors will rent it from each other &mdash; compute scarcity beats ideology.</p>
+      <span class="stat-source" style="display:block;margin-top:0.45rem">Source: <a href="https://www.cnbc.com/2026/05/06/anthropic-spacex-data-center-capacity.html" target="_blank" rel="noopener" style="color:#E8837C">CNBC, May 6 2026</a></span>
+    </div>
+
+    <!-- Apr 2026: Microsoft / OpenAI partnership rebalance — distribution & cloud lock-in -->
+    <div class="anim-fade" style="margin:0 0 1.25rem;padding:1rem 1.2rem;background:rgba(0,120,212,0.05);border:1px solid rgba(0,120,212,0.22);border-left:3px solid #0078D4;border-radius:10px">
+      <div style="display:flex;align-items:center;gap:0.6rem;margin-bottom:0.4rem;flex-wrap:wrap">
+        <span style="background:rgba(0,120,212,0.18);color:#4A90D9;padding:0.18rem 0.55rem;border-radius:4px;font-size:0.66rem;font-weight:700;letter-spacing:0.1em">APR 27 2026</span>
+        <strong style="color:#4A90D9;font-size:0.92rem;letter-spacing:0.02em">AI CLOUD EXCLUSIVITY CRACKS</strong>
+      </div>
+      <p style="color:#C8CCD4;font-size:0.86rem;line-height:1.55;margin:0">Microsoft remains OpenAI's primary cloud partner, but the relationship is now <strong>non-exclusive</strong>: OpenAI can serve products on any cloud, the Microsoft IP license through 2032 is non-exclusive, OpenAI's revenue share to Microsoft continues through 2030 (capped), and Microsoft no longer pays revenue share to OpenAI. The single-cloud lock-in that defined this era is gone &mdash; distribution and compute are becoming multi-cloud by default.</p>
+      <span class="stat-source" style="display:block;margin-top:0.45rem">Source: <a href="https://blogs.microsoft.com/blog/2026/04/27/the-next-phase-of-the-microsoft-openai-partnership/" target="_blank" rel="noopener" style="color:#4A90D9">Microsoft</a> / <a href="https://openai.com/index/next-phase-of-microsoft-partnership/" target="_blank" rel="noopener" style="color:#4A90D9">OpenAI, Apr 27 2026</a></span>
     </div>
 
     <div class="nvidia-spotlight anim-fade">
@@ -3150,44 +3213,53 @@ body.embed-mode { padding: 0 !important; margin: 0 !important; }
     <!-- ARPU Analysis (moved from $60B section) -->
     <!-- ═══ THE ARPU PROBLEM ═══ -->
     <div class="explosion-arpu anim-fade" id="arpu-block" style="margin-top:1rem">
-      <h3 class="subsection-title" style="margin-bottom:0.5rem">AI IS STILL EXPLORING BUSINESS MODELS</h3>
-      <p style="color:#A0A8BC;font-size:0.88rem;margin-bottom:1.5rem;max-width:680px;margin-left:auto;margin-right:auto;text-align:center">
-        OpenAI has <strong class="tabnum" style="color:#E8E9ED">900M</strong> weekly active users but only <strong class="tabnum" style="color:#E8E9ED">50M</strong> subscribers — a <strong class="tabnum" style="color:#E8837C">5.6%</strong> paid conversion rate. Compare the ad revenue per user:
+      <h3 class="subsection-title" style="margin-bottom:0.5rem">PER-TOKEN BEATS PER-SEAT WHEN AI DOES THE WORK</h3>
+      <p style="color:#A0A8BC;font-size:0.88rem;margin-bottom:1.5rem;max-width:760px;margin-left:auto;margin-right:auto;text-align:center">
+        Subscription caps upside and mis-prices heavy users. Usage / per-token / per-work-unit pricing captures expanding task volume and compute intensity. Anthropic <strong class="tabnum" style="color:#4ECDC4">3&times;</strong> in 4 months on per-token API. Perplexity <strong class="tabnum" style="color:#4ECDC4">+50%</strong> in one month after Computer launched (per-task work). OpenAI carries <strong class="tabnum" style="color:#E8E9ED">900M+</strong> WAU but only <strong class="tabnum" style="color:#E8837C">5.6%</strong> pay — subs are distribution, not value capture. Compare blended ARPU:
       </p>
 
       <div style="max-width:620px;margin:0 auto;display:flex;flex-direction:column;gap:0.65rem">
 
         <div style="display:flex;align-items:center;gap:0.75rem">
-          <span style="flex-shrink:0;width:120px;color:#A0A8BC;font-size:0.85rem;font-weight:600;text-align:right">Netflix (sub)</span>
+          <span style="flex-shrink:0;width:160px;color:#4ECDC4;font-size:0.85rem;font-weight:700;text-align:right">Anthropic (per-token)</span>
+          <div style="flex:1;position:relative;height:30px;background:rgba(78,205,196,0.08);border:1px solid rgba(78,205,196,0.25);border-radius:8px;overflow:hidden">
+            <div style="height:100%;width:100%;background:linear-gradient(90deg,#4ECDC4,#3DB8B0);border-radius:8px;display:flex;align-items:center;justify-content:flex-end;padding-right:0.75rem">
+              <span class="tabnum" style="color:#0E1014;font-size:0.8rem;font-weight:700">~$194/yr</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:center;gap:0.75rem">
+          <span style="flex-shrink:0;width:160px;color:#A0A8BC;font-size:0.85rem;font-weight:600;text-align:right">Netflix (sub)</span>
           <div style="flex:1;position:relative;height:30px;background:rgba(255,255,255,0.03);border-radius:8px;overflow:hidden">
-            <div style="height:100%;width:100%;background:linear-gradient(90deg,#F5C542,#D4A840);border-radius:8px;display:flex;align-items:center;justify-content:flex-end;padding-right:0.75rem">
+            <div style="height:100%;width:71%;background:linear-gradient(90deg,#F5C542,#D4A840);border-radius:8px;display:flex;align-items:center;justify-content:flex-end;padding-right:0.75rem">
               <span class="tabnum" style="color:#1A1A2E;font-size:0.8rem;font-weight:700">$138/yr</span>
             </div>
           </div>
         </div>
 
         <div style="display:flex;align-items:center;gap:0.75rem">
-          <span style="flex-shrink:0;width:120px;color:#A0A8BC;font-size:0.85rem;font-weight:600;text-align:right">Meta (ads)</span>
+          <span style="flex-shrink:0;width:160px;color:#A0A8BC;font-size:0.85rem;font-weight:600;text-align:right">Meta (ads)</span>
           <div style="flex:1;position:relative;height:30px;background:rgba(255,255,255,0.03);border-radius:8px;overflow:hidden">
-            <div style="height:100%;width:42%;background:linear-gradient(90deg,#4A90D9,#3A7CC4);border-radius:8px;display:flex;align-items:center;justify-content:flex-end;padding-right:0.75rem">
+            <div style="height:100%;width:30%;background:linear-gradient(90deg,#4A90D9,#3A7CC4);border-radius:8px;display:flex;align-items:center;justify-content:flex-end;padding-right:0.75rem">
               <span class="tabnum" style="color:#E8E9ED;font-size:0.8rem;font-weight:700">$58/yr</span>
             </div>
           </div>
         </div>
 
         <div style="display:flex;align-items:center;gap:0.75rem">
-          <span style="flex-shrink:0;width:120px;color:#A0A8BC;font-size:0.85rem;font-weight:600;text-align:right">Google (ads)</span>
+          <span style="flex-shrink:0;width:160px;color:#A0A8BC;font-size:0.85rem;font-weight:600;text-align:right">Google (ads)</span>
           <div style="flex:1;position:relative;height:30px;background:rgba(255,255,255,0.03);border-radius:8px;overflow:hidden">
-            <div style="height:100%;width:37%;background:linear-gradient(90deg,#4ECDC4,#3DB8B0);border-radius:8px;display:flex;align-items:center;justify-content:flex-end;padding-right:0.75rem">
+            <div style="height:100%;width:26%;background:linear-gradient(90deg,#A0A8BC,#8B93A8);border-radius:8px;display:flex;align-items:center;justify-content:flex-end;padding-right:0.75rem">
               <span class="tabnum" style="color:#E8E9ED;font-size:0.8rem;font-weight:700">$51/yr</span>
             </div>
           </div>
         </div>
 
         <div style="display:flex;align-items:center;gap:0.75rem">
-          <span style="flex-shrink:0;width:120px;color:#E8837C;font-size:0.85rem;font-weight:700;text-align:right">OpenAI (blended)</span>
+          <span style="flex-shrink:0;width:160px;color:#E8837C;font-size:0.85rem;font-weight:700;text-align:right">OpenAI (blended sub)</span>
           <div style="flex:1;position:relative;height:30px;background:rgba(232,131,124,0.08);border:1px solid rgba(232,131,124,0.2);border-radius:8px;overflow:hidden">
-            <div style="height:100%;width:20%;background:linear-gradient(90deg,#E8837C,#D0706A);border-radius:8px;display:flex;align-items:center;justify-content:flex-end;padding-right:0.75rem">
+            <div style="height:100%;width:14%;background:linear-gradient(90deg,#E8837C,#D0706A);border-radius:8px;display:flex;align-items:center;justify-content:flex-end;padding-right:0.75rem">
               <span class="tabnum" style="color:#E8E9ED;font-size:0.8rem;font-weight:700">~$28/yr</span>
             </div>
           </div>
@@ -3195,10 +3267,10 @@ body.embed-mode { padding: 0 !important; margin: 0 !important; }
 
       </div>
 
-      <p style="color:#C8CCD4;font-size:0.85rem;line-height:1.55;max-width:680px;margin:1.25rem auto 0;text-align:center">
-        OpenAI's $25B ARR blends to ~$28/user across 900M WAU — but 94% are free. Ad revenue alone is estimated at $500M–$800M in 2026, or <strong style="color:#E8837C">&lt;$1/yr per free user</strong> — a fraction of what Meta and Google extract. Subscriptions carry the economics; ads alone cannot fund inference at scale.
+      <p style="color:#C8CCD4;font-size:0.85rem;line-height:1.55;max-width:760px;margin:1.25rem auto 0;text-align:center">
+        <strong style="color:#4ECDC4">Subscription caps upside; usage scales with workload.</strong> Anthropic ARPU $16.20/mo (vs OpenAI $2.20, Google $1.10) — premium per-token customers, not free-tier reach. Per-token revenue grows with task volume and compute intensity; flat subs mis-price heavy users. Subscription remains a useful on-ramp/distribution bundle, but the economic engine is usage / work performed.
       </p>
-      <span class="stat-source" style="display:block;text-align:center;margin-top:0.75rem">Source: OpenAI (Feb 2026), Statista (Meta ARPU 2025), Reuters (ad estimates), Netflix Q4 2025 earnings</span>
+      <span class="stat-source" style="display:block;text-align:center;margin-top:0.75rem">Source: Counterpoint Research (Apr 2026), Anthropic disclosures, Perplexity (Apr 2026), OpenAI (Feb 2026), Statista (Meta ARPU 2025), Netflix Q4 2025 earnings</span>
     </div>
 
     <!-- ═══ CLOSING CALLOUT ═══ -->
@@ -3212,18 +3284,18 @@ body.embed-mode { padding: 0 !important; margin: 0 !important; }
       <h3>THREE COMPETING MONETIZATION PARADIGMS</h3>
       <div class="biz-paradigm-cards">
 
-        <div class="biz-paradigm-card">
+        <div class="biz-paradigm-card biz-paradigm-card--highlight">
           <div class="biz-paradigm-icon">&#9889;</div>
           <h4>API + Tokens</h4>
-          <p class="biz-paradigm-desc">The default: pay per token consumed. Simple, scalable, commoditizing fast.</p>
+          <p class="biz-paradigm-desc">Pay per token consumed. Scales with workload &mdash; today's economic engine.</p>
           <div class="biz-paradigm-players">
+            <span class="biz-player">Anthropic <span class="tabnum biz-price">3&times; in 4mo</span></span>
             <span class="biz-player">OpenAI</span>
-            <span class="biz-player">Anthropic</span>
             <span class="biz-player">Google</span>
           </div>
           <div class="biz-paradigm-issue">
-            <span class="biz-issue-label">&#9888; Problem</span>
-            <span>Prices dropped 10x in 18 months. Race to zero.</span>
+            <span class="biz-issue-label" style="color:#4ECDC4">&#10003; Working</span>
+            <span>Per-token revenue tracks compute intensity. Unit prices fall, volume grows faster.</span>
           </div>
         </div>
 
@@ -3244,14 +3316,15 @@ body.embed-mode { padding: 0 !important; margin: 0 !important; }
 
         <div class="biz-paradigm-card">
           <div class="biz-paradigm-icon">&#128240;</div>
-          <h4>Ads + Subscriptions</h4>
-          <p class="biz-paradigm-desc">Consumer AI tries the ad model. But the math doesn't work — yet.</p>
+          <h4>Subscriptions + Ads</h4>
+          <p class="biz-paradigm-desc">Useful on-ramp / distribution bundle &mdash; not the value-capture engine.</p>
           <div class="biz-paradigm-players">
             <span class="biz-player">OpenAI <span class="biz-tag biz-tag--testing">testing ads</span></span>
+            <span class="biz-player">Perplexity <span class="biz-tag">sub-first</span></span>
           </div>
           <div class="biz-paradigm-issue">
             <span class="biz-issue-label">&#9888; Problem</span>
-            <span>Inference costs >> ad revenue per query</span>
+            <span>Flat subs mis-price heavy users. Ad revenue &lt;$1/yr per free user can't fund inference.</span>
           </div>
         </div>
 
@@ -3264,14 +3337,14 @@ body.embed-mode { padding: 0 !important; margin: 0 !important; }
       <div class="biz-margin-cards">
         <div class="biz-margin-card">
           <span class="biz-margin-company">OpenAI</span>
-          <span class="biz-margin-metric tabnum">$25B ARR</span>
+          <span class="biz-margin-metric tabnum">~$25B ARR</span>
           <span class="biz-margin-detail">~$8B compute spend</span>
-          <span class="biz-margin-gm"><span class="tabnum">~33%</span> gross margin</span>
-          <span class="biz-margin-note">Projected <span class="tabnum">$600B</span> compute spend through 2030</span>
+          <span class="biz-margin-gm"><span class="tabnum">GM est. varies</span></span>
+          <span class="biz-margin-note">Projected <span class="tabnum">~$600B</span> compute spend through 2030</span>
         </div>
         <div class="biz-margin-card">
           <span class="biz-margin-company">Anthropic</span>
-          <span class="biz-margin-metric tabnum">$30B run-rate</span>
+          <span class="biz-margin-metric tabnum">$30B+ run-rate</span>
           <span class="biz-margin-detail">3x in 4 months &middot; ARPU $16.20/mo vs OpenAI $2.20</span>
           <span class="biz-margin-gm">Anti-ads stance</span>
           <span class="biz-margin-note">"Ads are coming to AI. But not to Claude."</span>
@@ -3664,7 +3737,7 @@ body.embed-mode { padding: 0 !important; margin: 0 !important; }
           </div>
           <div style="padding:0.85rem;background:rgba(255,255,255,0.02);border-radius:8px;border-left:3px solid #7C4DFF">
             <strong style="color:#7C4DFF;font-size:0.85rem">Anthropic Position</strong>
-            <p style="color:#A0A8BC;font-size:0.82rem;margin:0.3rem 0 0;line-height:1.5">Google invested $3B+ in Anthropic. Anthropic trains and runs Claude on Google TPUs &mdash; just expanded to multi-GW deal with Google + Broadcom for 3.5 GW of next-gen TPU capacity starting 2027. Google earns strategic exposure and infrastructure revenue from a frontier lab doing $30B run-rate.</p>
+            <p style="color:#A0A8BC;font-size:0.82rem;margin:0.3rem 0 0;line-height:1.5">Google invested $3B+ in Anthropic and committed up to $40B more (Apr 2026). Anthropic trains and runs Claude on Google TPUs &mdash; just expanded to multi-GW deal with Google + Broadcom for 3.5 GW of next-gen TPU capacity starting 2027. Google earns strategic exposure and infrastructure revenue from a frontier lab at $30B+ run-rate (Apr 2026).</p>
           </div>
           <span class="stat-source">Source: Reuters (Feb 2026), Alphabet Q4 2025 earnings, Search Engine Land, Statcounter, Anthropic Series G announcement</span>
         </div>
@@ -3873,9 +3946,9 @@ body.embed-mode { padding: 0 !important; margin: 0 !important; }
 
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-bottom:1.25rem">
         <div style="padding:1rem;background:rgba(255,255,255,0.03);border-radius:10px;text-align:center">
-          <span style="display:block;font-size:0.72rem;color:#A0A8BC;font-weight:600;letter-spacing:0.08em;margin-bottom:0.25rem">DEEPSEEK-V3 TRAINING COST</span>
+          <span style="display:block;font-size:0.72rem;color:#A0A8BC;font-weight:600;letter-spacing:0.08em;margin-bottom:0.25rem">DEEPSEEK-V3 TRAINING COST <span style="color:#E8837C">(disputed)</span></span>
           <span class="tabnum" style="display:block;font-size:1.8rem;font-weight:800;color:#F5C542">$5.6M</span>
-          <span style="display:block;font-size:0.75rem;color:#A0A8BC;margin-top:0.2rem">2.788M H800 GPU hours</span>
+          <span style="display:block;font-size:0.75rem;color:#A0A8BC;margin-top:0.2rem">2.788M H800 GPU hours · DeepSeek self-report; analysts dispute</span>
         </div>
         <div style="padding:1rem;background:rgba(255,255,255,0.03);border-radius:10px;text-align:center">
           <span style="display:block;font-size:0.72rem;color:#A0A8BC;font-weight:600;letter-spacing:0.08em;margin-bottom:0.25rem">V3 ARCHITECTURE</span>
@@ -4026,6 +4099,16 @@ body.embed-mode { padding: 0 !important; margin: 0 !important; }
           <p>Bifurcated AI ecosystem solidifying — two dominant stacks plus contested middle</p>
         </div>
       </div>
+    </div>
+
+    <!-- May 2026 — Pentagon classified-AI vendor list: frontier models become national-security infra -->
+    <div class="anim-fade" style="margin:2rem 0;padding:1.5rem 1.75rem;background:linear-gradient(135deg, rgba(160,168,188,0.06), rgba(74,144,217,0.04));border:1px solid rgba(160,168,188,0.22);border-left:3px solid #A0A8BC;border-radius:14px">
+      <div style="display:flex;align-items:center;gap:0.6rem;margin-bottom:0.75rem;flex-wrap:wrap">
+        <span style="background:rgba(160,168,188,0.2);color:#C8CCD4;padding:0.2rem 0.6rem;border-radius:4px;font-size:0.68rem;font-weight:700;letter-spacing:0.1em">MAY 1 2026 &middot; PENTAGON</span>
+        <strong style="color:#E8E9ED;font-size:0.98rem;letter-spacing:0.01em">FRONTIER MODELS BECOME NATIONAL-SECURITY INFRASTRUCTURE</strong>
+      </div>
+      <p style="color:#C8CCD4;font-size:0.88rem;line-height:1.6;margin:0 0 0.75rem">DoD signed formal agreements with <strong style="color:#E8E9ED">8 vendors</strong> &mdash; <strong>SpaceX, OpenAI, Google, NVIDIA, Reflection, Microsoft, AWS, and Oracle</strong> &mdash; to deploy frontier AI on classified networks for lawful operational use. <strong style="color:#E8837C">Anthropic was excluded</strong> amid an ongoing supply-chain-risk dispute. The geopolitical map of the AI stack now sits inside the procurement diagrams of the world's largest customer for compute &mdash; safety posture and supply-chain stance have become go-to-market constraints, not just brand choices.</p>
+      <span class="stat-source" style="display:block">Source: <a href="https://defensescoop.com/2026/05/01/dod-expands-classified-ai-work-with-8-companies-excluding-anthropic/" target="_blank" rel="noopener" style="color:#A0A8BC">DefenseScoop, May 1 2026</a></span>
     </div>
 
     <!-- ═══ SOVEREIGN AI PLAYERS — EXPANDED ═══ -->

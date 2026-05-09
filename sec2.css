@@ -878,7 +878,7 @@
 }
 
 .ar-stat-bar-fill.animated {
-  width: var(--bar-target, 84%);
+  width: var(--bar-target, 42%);
 }
 
 .ar-stat-bar-label {

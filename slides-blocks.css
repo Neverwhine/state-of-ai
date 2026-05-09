@@ -1,0 +1,711 @@
+/* slides-blocks.css
+ * Styles for the native (formerly iframe) slide blocks.
+ * Replicates the report's aa-stack / capex-explorer / arpu / seq-matrix /
+ * attack-angles components, scoped under .slide so they don't bleed.
+ *
+ * Colors and tokens follow the report design system (style.css :root).
+ * Where the slide layout differs from the report we add slide-only overrides
+ * at the bottom of this file.
+ */
+
+/* ─────────────────────────────────────────────────────────
+   Common report-style typography reused inside slides
+   ───────────────────────────────────────────────────────── */
+.slide .tabnum { font-variant-numeric: tabular-nums; font-feature-settings: "tnum"; }
+.slide .chart-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #E8ECF2;
+  letter-spacing: 0.02em;
+  margin: 0;
+}
+.slide .subsection-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #A0A8BC;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin: 0 0 0.65rem;
+  text-align: center;
+}
+.slide .stat-source {
+  display: block;
+  font-size: 0.72rem;
+  color: #6B7280;
+  font-style: italic;
+  margin-top: 0.5rem;
+}
+.slide .stat-source a { color: #4ECDC4; }
+
+/* ─────────────────────────────────────────────────────────
+   CAPEX EXPLORER  (slide 7)
+   Source: replicates style.css .capex-explorer family
+   ───────────────────────────────────────────────────────── */
+.slide-capex {
+  background: rgba(56,62,82,0.5);
+  border: 1px solid rgba(78,205,196,0.12);
+  border-radius: 16px;
+  padding: 0.9rem 1.15rem 0.85rem;
+  width: 100%;
+  max-width: 920px;
+  margin: 0 auto;
+}
+.slide-capex .capex-header {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 0.75rem; margin-bottom: 0.85rem; flex-wrap: wrap;
+}
+.slide-capex .capex-total-badge {
+  display: flex; align-items: baseline; gap: 0.5rem;
+  background: rgba(78,205,196,0.08);
+  border: 1px solid rgba(78,205,196,0.2);
+  border-radius: 8px;
+  padding: 0.35rem 0.8rem;
+}
+.slide-capex .capex-total-badge .tabnum {
+  font-size: 1.15rem; font-weight: 700; color: #4ECDC4;
+}
+.slide-capex .capex-total-label {
+  font-size: 0.6rem; letter-spacing: 0.1em; color: #A0A8BC; text-transform: uppercase;
+}
+.slide-capex .capex-toggles {
+  display: flex; gap: 0.4rem; margin-bottom: 0.75rem; flex-wrap: wrap;
+}
+.slide-capex .capex-tog {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.32rem 0.65rem;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 6px;
+  color: #A0A8BC;
+  font-size: 0.74rem;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.slide-capex .capex-tog:hover {
+  border-color: var(--tog-color);
+  background: rgba(255,255,255,0.05);
+}
+.slide-capex .capex-tog.active {
+  border-color: var(--tog-color);
+  color: #E8ECF2;
+  background: color-mix(in srgb, var(--tog-color) 12%, transparent);
+}
+.slide-capex .tog-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--tog-color);
+  flex-shrink: 0; opacity: 0.4; transition: opacity 0.2s;
+}
+.slide-capex .capex-tog.active .tog-dot { opacity: 1; }
+.slide-capex .tog-val {
+  font-size: 0.7rem; color: var(--tog-color);
+  opacity: 0.75; margin-left: 0.15rem;
+}
+.slide-capex .capex-chart-wrap {
+  position: relative;
+  height: 280px;
+  margin-bottom: 0.5rem;
+}
+.slide-capex .capex-chart-wrap canvas {
+  width: 100% !important; height: 100% !important;
+}
+.slide-capex .capex-gap-toggle {
+  display: flex; align-items: center; gap: 0.55rem; margin-bottom: 0.5rem;
+}
+.slide-capex .gap-switch {
+  position: relative; display: inline-block; width: 34px; height: 18px;
+}
+.slide-capex .gap-switch input { opacity: 0; width: 0; height: 0; }
+.slide-capex .gap-slider {
+  position: absolute; cursor: pointer; inset: 0;
+  background: rgba(255,255,255,0.1);
+  border-radius: 18px; transition: 0.25s;
+}
+.slide-capex .gap-slider::before {
+  content: ''; position: absolute;
+  height: 12px; width: 12px; left: 3px; bottom: 3px;
+  background: #A0A8BC; border-radius: 50%; transition: 0.25s;
+}
+.slide-capex .gap-switch input:checked + .gap-slider {
+  background: rgba(232,131,124,0.3);
+}
+.slide-capex .gap-switch input:checked + .gap-slider::before {
+  transform: translateX(16px); background: #E8837C;
+}
+.slide-capex .gap-label { font-size: 0.78rem; color: #A0A8BC; }
+
+/* ─────────────────────────────────────────────────────────
+   AGENT 7-LAYER STACK  (slide 8)
+   Source: replicates style.css/sec3.css .aa-stack family
+   ───────────────────────────────────────────────────────── */
+.slide .aa-stack {
+  display: flex; flex-direction: column; gap: 4px;
+  width: 100%; max-width: 880px; margin: 0 auto;
+}
+.slide .aa-layer {
+  background: #383E52;
+  border-radius: 8px;
+  border-left: 4px solid var(--layer-color, #4ECDC4);
+  overflow: hidden;
+  cursor: pointer;
+  transition: background 0.3s, box-shadow 0.3s;
+}
+.slide .aa-layer:hover { background: #3F4560; }
+.slide .aa-layer--expanded {
+  background: #3F4560;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.25);
+  overflow: visible;
+}
+.slide .aa-layer-bar {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 14px; user-select: none;
+}
+.slide .aa-layer-num {
+  font-size: 0.72rem; font-weight: 700;
+  color: var(--layer-color, #4ECDC4);
+  background: rgba(255,255,255,0.06);
+  width: 24px; height: 24px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.slide .aa-layer-icon {
+  width: 22px; height: 22px;
+  color: var(--layer-color, #4ECDC4); flex-shrink: 0;
+}
+.slide .aa-layer-name {
+  font-size: 0.92rem; font-weight: 600; color: #fff; white-space: nowrap;
+}
+.slide .aa-layer-tagline {
+  font-size: 0.78rem; color: #A0A8BC;
+  margin-left: auto; white-space: nowrap;
+  overflow: hidden; text-overflow: ellipsis;
+}
+.slide .aa-layer-chevron {
+  width: 18px; height: 18px; color: #A0A8BC; flex-shrink: 0;
+  transition: transform 0.3s; margin-left: 4px;
+}
+.slide .aa-layer--expanded .aa-layer-chevron { transform: rotate(180deg); }
+.slide .aa-layer-detail {
+  max-height: 0; overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1), padding 0.4s cubic-bezier(0.4,0,0.2,1);
+  padding: 0 16px;
+  border-top: 1px solid transparent;
+}
+.slide .aa-layer--expanded .aa-layer-detail {
+  max-height: 600px;
+  padding: 14px 16px 18px;
+  border-top-color: rgba(255,255,255,0.06);
+  overflow: visible;
+}
+.slide .aa-detail-tools {
+  display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px;
+}
+.slide .aa-tool-chip {
+  font-size: 0.74rem;
+  color: #fff;
+  background: rgba(255,255,255,0.08);
+  padding: 4px 10px;
+  border-radius: 18px;
+  white-space: nowrap;
+  position: relative;
+}
+.slide .aa-tool-chip--has-tip { cursor: pointer; transition: background 0.2s, border-color 0.2s; }
+.slide .aa-tool-chip--has-tip:not(.aa-tool-chip--funded):not(.aa-tool-chip--dvc):hover {
+  background: rgba(255,255,255,0.14);
+}
+.slide .aa-tool-chip--funded {
+  border: 1px solid rgba(245,197,66,0.25);
+  background: rgba(245,197,66,0.06);
+}
+.slide .aa-tool-chip--funded:hover {
+  background: rgba(245,197,66,0.12);
+  border-color: rgba(245,197,66,0.4);
+}
+.slide .aa-tool-chip--dvc {
+  border: 1px solid #F5C542;
+  background: rgba(245,197,66,0.08);
+}
+.slide .aa-stars { color: #A0A8BC; font-size: 0.68rem; margin-left: 4px; }
+.slide .aa-chip-dl { color: #A0A8BC; font-size: 0.65rem; margin-left: 4px; opacity: 0.8; }
+.slide .aa-dvc-badge {
+  font-size: 0.62rem; font-weight: 700;
+  color: #F5C542;
+  background: rgba(245,197,66,0.15);
+  padding: 1px 6px; border-radius: 4px;
+  text-transform: uppercase; letter-spacing: 0.05em;
+  margin-left: 5px; white-space: nowrap;
+}
+.slide .aa-detail-stat {
+  display: flex; align-items: baseline; gap: 8px;
+  margin-bottom: 6px; flex-wrap: wrap;
+}
+.slide .aa-stat-number {
+  font-size: 1.4rem; font-weight: 700; color: #4ECDC4; line-height: 1;
+}
+.slide .aa-stat-label {
+  font-size: 0.78rem; color: #A0A8BC; line-height: 1.4;
+}
+
+/* Universal data-tip popup (used by sec3.js for chips and seq-entries) */
+.aa-tip-popup {
+  position: fixed; z-index: 9999;
+  background: #1a1e2e;
+  border: 1px solid rgba(78,205,196,0.25);
+  border-radius: 10px;
+  padding: 10px 14px;
+  min-width: 220px; max-width: 320px;
+  white-space: normal;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.74rem;
+  color: #A0A8BC;
+  line-height: 1.55;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(78,205,196,0.08);
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.2s, transform 0.2s;
+}
+.aa-tip-popup.aa-tip-popup--visible { opacity: 1; transform: translateY(0); }
+.aa-tip-popup.aa-tip-popup--funded { border-color: rgba(245,197,66,0.3); }
+.aa-tip-popup strong { color: #4ECDC4; font-weight: 700; }
+.aa-tip-popup.aa-tip-popup--funded strong { color: #F5C542; }
+.aa-tip-popup em {
+  color: #A0A8BC; font-style: normal; opacity: 0.85;
+  display: block; margin-top: 4px; font-size: 0.7rem;
+}
+
+/* ─────────────────────────────────────────────────────────
+   ARPU bars  (slide 10) — uses inline styles in HTML, no extra CSS needed
+   ───────────────────────────────────────────────────────── */
+
+/* ─────────────────────────────────────────────────────────
+   SEQUOIA SERVICES MATRIX  (slide 11) — entries already inline-styled.
+   We just keep the tooltip system happy and tighten mobile layout.
+   ───────────────────────────────────────────────────────── */
+.slide .seq-entry { cursor: pointer; }
+
+/* ─────────────────────────────────────────────────────────
+   ATTACK ANGLES  (slide 12) — overrides for the embedded layout
+   ───────────────────────────────────────────────────────── */
+.slide .aa-block .aa-header { display: none; } /* slide already has its own headline */
+.slide .aa-block { margin: 0; }
+.slide .aa-grid { gap: 0.75rem; }
+.slide .aa-col { padding: 0.85rem 0.85rem 1rem; }
+
+/* ─────────────────────────────────────────────────────────
+   Slide-scoped layout for the new native blocks
+   ───────────────────────────────────────────────────────── */
+.slide-block-layout {
+  display: flex; flex-direction: column;
+  gap: 0.85rem;
+  width: 100%; max-width: 1180px; margin: 0 auto;
+  padding: 1.5rem 2rem 1.25rem;
+  align-items: stretch;
+  height: 100%;
+  justify-content: flex-start;
+}
+.slide-block-layout .slide-text { text-align: center; max-width: 920px; margin: 0 auto; }
+.slide-block-layout .slide-text .slide-headline { margin-bottom: 0.25rem; }
+.slide-block-layout .slide-text .slide-sub { margin: 0 auto; max-width: 820px; }
+.slide-block-layout .slide-block-stage {
+  flex: 1 1 auto; min-height: 0;
+  display: flex; flex-direction: column;
+  align-items: stretch; justify-content: flex-start;
+  overflow: auto;
+  padding: 0 0.25rem;
+}
+
+/* Native ARPU stat row (replaces iframe-stat-row, repurposed as pricing icons header) */
+.slide-block-layout .pricing-row { margin: 0 auto; }
+
+/* Sequoia matrix overrides — make compact for slide context */
+.slide[data-slide="11"] .seq-grid-wrap {
+  position: relative; margin: 0 auto; max-width: 1100px;
+}
+.slide[data-slide="11"] .seq-cell {
+  min-height: 150px;
+}
+.slide[data-slide="11"] .seq-axis-label {
+  color: #6B7280; font-size: 0.7rem; font-weight: 700;
+  letter-spacing: 0.15em; text-transform: uppercase;
+}
+
+/* ─────────────────────────────────────────────────────────
+   MOBILE
+   ───────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .slide-block-layout {
+    padding: 1.1rem 1rem 1rem;
+    gap: 0.6rem;
+  }
+  .slide-capex {
+    padding: 0.85rem 0.85rem 0.75rem;
+    border-radius: 12px;
+  }
+  .slide-capex .capex-header {
+    flex-direction: column; align-items: flex-start; gap: 0.5rem;
+  }
+  .slide-capex .capex-toggles { gap: 0.3rem; }
+  .slide-capex .capex-tog {
+    font-size: 0.7rem; padding: 0.25rem 0.55rem;
+  }
+  .slide-capex .capex-tog .tog-val { display: none; } /* tighten on small screens */
+  .slide-capex .capex-chart-wrap { height: 240px; }
+  .slide .aa-stack { gap: 3px; }
+  .slide .aa-layer-bar { padding: 9px 12px; gap: 8px; }
+  .slide .aa-layer-name { font-size: 0.85rem; }
+  .slide .aa-layer-tagline { display: none; }
+  .slide .aa-tool-chip { font-size: 0.7rem; padding: 3px 8px; }
+  .slide .aa-stat-number { font-size: 1.2rem; }
+  .aa-tip-popup {
+    min-width: auto; max-width: calc(100vw - 24px);
+    font-size: 0.7rem;
+  }
+  .slide .aa-grid { grid-template-columns: 1fr !important; }
+  .slide .aa-col { padding: 0.7rem 0.75rem 0.85rem; }
+
+  /* Sequoia matrix on mobile: stack quadrants vertically */
+  .slide[data-slide="11"] .seq-grid-wrap > div[style*="grid-template-columns:1fr 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+  .slide[data-slide="11"] .seq-axis-label--side { display: none !important; }
+}
+
+@media (max-width: 480px) {
+  .slide-block-layout { padding: 0.9rem 0.75rem; }
+  .slide-capex .capex-chart-wrap { height: 220px; }
+  .slide .aa-tool-chip { font-size: 0.66rem; padding: 3px 7px; }
+}
+
+/* ─────────────────────────────────────────────────────────
+   SLIDE 10  —  Native ARPU bars (replaces iframe)
+   ───────────────────────────────────────────────────────── */
+.slide-arpu-block {
+  width: 100%;
+  max-width: 760px;
+  margin: 0.25rem auto 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  text-align: center;
+}
+.slide-arpu-intro {
+  color: #A0A8BC;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  margin: 0;
+}
+.slide-arpu-intro strong { color: #E8E9ED; }
+.slide-arpu-intro .slide-arpu-pct { color: #E8837C; }
+.slide-arpu-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  width: 100%;
+  max-width: 620px;
+  margin: 0 auto;
+}
+.slide-arpu-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.slide-arpu-label {
+  flex-shrink: 0;
+  width: 130px;
+  color: #A0A8BC;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-align: right;
+}
+.slide-arpu-row--openai .slide-arpu-label {
+  color: #E8837C;
+  font-weight: 700;
+}
+.slide-arpu-track {
+  flex: 1;
+  position: relative;
+  height: 30px;
+  background: rgba(255,255,255,0.03);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.slide-arpu-track--openai {
+  background: rgba(232,131,124,0.08);
+  border: 1px solid rgba(232,131,124,0.2);
+}
+.slide-arpu-fill {
+  height: 100%;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #E8E9ED;
+}
+.slide-arpu-fill--netflix {
+  background: linear-gradient(90deg, #F5C542, #D4A840);
+  color: #1A1A2E;
+}
+.slide-arpu-fill--meta {
+  background: linear-gradient(90deg, #4A90D9, #3A7CC4);
+}
+.slide-arpu-fill--google {
+  background: linear-gradient(90deg, #4ECDC4, #3DB8B0);
+}
+.slide-arpu-fill--openai {
+  background: linear-gradient(90deg, #E8837C, #D0706A);
+}
+.slide-arpu-foot {
+  color: #C8CCD4;
+  font-size: 0.76rem;
+  line-height: 1.45;
+  max-width: 700px;
+  margin: 0.25rem auto 0;
+}
+.slide-arpu-foot strong { color: #E8E9ED; }
+
+/* ─────────────────────────────────────────────────────────
+   SLIDE 11  —  Native Sequoia matrix wrapper (scroll if tall)
+   ───────────────────────────────────────────────────────── */
+.slide[data-slide="11"] .slide-inner { overflow: hidden; }
+.slide[data-slide="11"] .slide-seq-matrix {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 0.5rem;
+  /* Visible scrollbar so users see when content overflows on short viewports. */
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(78,205,196,0.55) rgba(255,255,255,0.06);
+}
+.slide[data-slide="11"] .slide-seq-matrix::-webkit-scrollbar { width: 10px; }
+.slide[data-slide="11"] .slide-seq-matrix::-webkit-scrollbar-track {
+  background: rgba(255,255,255,0.04); border-radius: 8px;
+}
+.slide[data-slide="11"] .slide-seq-matrix::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(78,205,196,0.65), rgba(78,205,196,0.35));
+  border-radius: 8px;
+}
+/* Tighten quadrant cells so all four fit in typical laptop viewports
+   (≤900px tall). The inline min-height:180px was causing the lower row
+   to push entries past the matrix's overflow-y boundary. */
+.slide[data-slide="11"] .slide-seq-matrix div[style*="min-height:180px"] {
+  min-height: 0 !important;
+  padding: 0.7rem 0.9rem !important;
+}
+.slide[data-slide="11"] .seq-entry {
+  padding: 0.22rem 0.5rem !important;
+  font-size: 0.68rem !important;
+}
+/* On tighter viewports, shrink chip padding/text further so the bottom row
+   of entries doesn't get clipped. */
+@media (max-height: 820px) {
+  .slide[data-slide="11"] .slide-seq-matrix div[style*="min-height:180px"] {
+    padding: 0.55rem 0.75rem !important;
+  }
+  .slide[data-slide="11"] .seq-entry {
+    padding: 0.18rem 0.45rem !important;
+    font-size: 0.66rem !important;
+  }
+  .slide[data-slide="11"] .slide-text--compact .slide-headline {
+    font-size: clamp(24px, 2.6vw, 36px);
+    margin-bottom: 4px;
+  }
+  .slide[data-slide="11"] .slide-text--compact .slide-sub {
+    font-size: clamp(12px, 0.9vw, 14px);
+    margin-bottom: 6px;
+  }
+}
+.slide[data-slide="11"] #seq-matrix-block {
+  margin: 0 !important;
+}
+.slide[data-slide="11"] #seq-matrix-block .seq-matrix-header,
+.slide[data-slide="11"] #seq-matrix-block .seq-matrix-intro {
+  display: none;
+}
+.slide[data-slide="11"] .seq-entry {
+  cursor: pointer;
+  outline: none;
+}
+.slide[data-slide="11"] .seq-entry:focus-visible {
+  box-shadow: 0 0 0 2px rgba(78,205,196,0.55);
+}
+/* The fixed-position .click-zone sits at z:30 at the root stacking context,
+   above .slide (z:10). On slide 11 the matrix needs to receive hover/tap,
+   so when slide 11 is active we shrink the prev/next click-zones to thin
+   side rails. Forward/back nav still works via keyboard, swipe, the side
+   rails, and the page chrome links. */
+body:has(.slide[data-slide="11"].is-active) .click-zone--prev { width: 64px; }
+body:has(.slide[data-slide="11"].is-active) .click-zone--next { width: 64px; }
+/* Tooltip popup must always paint above slide chrome, click zones, and any
+   stacking context introduced by the slide-iframe-layout grid. */
+.aa-tip-popup { z-index: 10000; }
+
+/* ─────────────────────────────────────────────────────────
+   SLIDE 12  —  Native attack-angles wrapper (scrollable region)
+   ───────────────────────────────────────────────────────── */
+.slide[data-slide="12"] .slide-inner {
+  overflow: hidden;
+  min-height: 0;
+}
+.slide[data-slide="12"] .iframe-headline { min-height: 0; }
+
+/* Wrapper holds the scrolling container + scroll affordances. */
+.slide[data-slide="12"] .slide-attack-angles {
+  position: relative;
+  min-height: 0;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  align-self: stretch;
+  /* Inside grid: row 2 of slide-iframe-layout (1fr) — let it own that height. */
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* The actual scroller. Padded so the bottom fade doesn't cover content. */
+.slide[data-slide="12"] .slide-attack-angles__scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0 14px 28px;
+  /* Always reserve gutter so scrollbar doesn't shift layout. */
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(78,205,196,0.55) rgba(255,255,255,0.06);
+  -webkit-overflow-scrolling: touch;
+}
+/* WebKit scrollbar — visible, on-brand, never invisible. */
+.slide[data-slide="12"] .slide-attack-angles__scroll::-webkit-scrollbar {
+  width: 10px;
+}
+.slide[data-slide="12"] .slide-attack-angles__scroll::-webkit-scrollbar-track {
+  background: rgba(255,255,255,0.04);
+  border-radius: 8px;
+  margin: 4px 0;
+}
+.slide[data-slide="12"] .slide-attack-angles__scroll::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(78,205,196,0.65), rgba(78,205,196,0.35));
+  border-radius: 8px;
+  border: 2px solid rgba(15,17,24,0.0);
+  background-clip: padding-box;
+}
+.slide[data-slide="12"] .slide-attack-angles__scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(78,205,196,0.85);
+  background-clip: padding-box;
+  border: 2px solid rgba(15,17,24,0.0);
+}
+
+/* Bottom fade — shown when there's more content below the fold. */
+.slide[data-slide="12"] .slide-attack-angles__fade {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 56px;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(15,17,24,0) 0%, rgba(15,17,24,0.75) 65%, rgba(15,17,24,0.95) 100%);
+  opacity: 0;
+  transition: opacity 220ms ease;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+.slide[data-slide="12"] .slide-attack-angles[data-can-scroll="true"] .slide-attack-angles__fade {
+  opacity: 1;
+}
+.slide[data-slide="12"] .slide-attack-angles[data-at-bottom="true"] .slide-attack-angles__fade {
+  opacity: 0;
+}
+
+/* "Scroll for more" pill — gentle pulse so the affordance is unmistakable. */
+.slide[data-slide="12"] .slide-attack-angles__hint {
+  position: absolute;
+  left: 50%;
+  bottom: 10px;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 11px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: #0E1014;
+  background: #4ECDC4;
+  border-radius: 999px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.35), 0 0 0 1px rgba(78,205,196,0.45);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 220ms ease;
+}
+.slide[data-slide="12"] .slide-attack-angles__hint::after {
+  content: "▾";
+  font-size: 12px;
+  line-height: 1;
+}
+.slide[data-slide="12"] .slide-attack-angles[data-can-scroll="true"] .slide-attack-angles__hint {
+  opacity: 1;
+  animation: aaScrollHintBob 1.6s ease-in-out infinite;
+}
+.slide[data-slide="12"] .slide-attack-angles[data-at-bottom="true"] .slide-attack-angles__hint {
+  opacity: 0;
+  animation: none;
+}
+@keyframes aaScrollHintBob {
+  0%, 100% { transform: translate(-50%, 0); }
+  50%      { transform: translate(-50%, 3px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .slide[data-slide="12"] .slide-attack-angles__hint { animation: none !important; }
+}
+
+/* On mobile the deck flips to vertical page-scroll mode (slides.css @768),
+   so the wrapper should not create its own inner scroller — let the page own it. */
+@media (max-width: 768px) {
+  .slide[data-slide="12"] .slide-inner { overflow: visible; }
+  .slide[data-slide="12"] .slide-attack-angles {
+    height: auto;
+    display: block;
+  }
+  .slide[data-slide="12"] .slide-attack-angles__scroll {
+    overflow: visible;
+    padding: 0;
+    max-height: none;
+  }
+  .slide[data-slide="12"] .slide-attack-angles__fade,
+  .slide[data-slide="12"] .slide-attack-angles__hint { display: none; }
+}
+
+/* ─────────────────────────────────────────────────────────
+   Mobile tweaks for new native blocks
+   ───────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .slide-arpu-label { width: 96px; font-size: 0.78rem; }
+  .slide-arpu-fill { font-size: 0.72rem; padding-right: 0.5rem; }
+  .slide-arpu-track { height: 26px; }
+  .slide-arpu-foot { font-size: 0.76rem; }
+  .slide-arpu-intro { font-size: 0.8rem; }
+
+  /* Sequoia matrix: stack quadrants on small screens */
+  .slide[data-slide="11"] .slide-seq-matrix > div > div[style*="grid-template-columns:1fr 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+  .slide[data-slide="11"] .slide-seq-matrix span[style*="rotate(-90deg)"],
+  .slide[data-slide="11"] .slide-seq-matrix span[style*="rotate(90deg)"] {
+    display: none !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .slide-arpu-label { width: 80px; font-size: 0.72rem; }
+  .slide-arpu-fill { font-size: 0.66rem; }
+  .slide-arpu-track { height: 22px; }
+}

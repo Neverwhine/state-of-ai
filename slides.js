@@ -39,6 +39,7 @@
   // ── Activate a slide ──
   function activate(idx) {
     idx = Math.max(0, Math.min(total - 1, idx));
+    const fromIdx = activeIndex;
     if (idx === activeIndex && document.querySelector('.slide.is-active')) {
       // still trigger first animation
     }
@@ -46,15 +47,52 @@
     activeIndex = idx;
     if (numEl) numEl.textContent = idx + 1;
     if (progressEl) progressEl.style.width = (((idx + 1) / total) * 100) + '%';
+    // Stash desired entry state on the multi-state slide BEFORE animation fires
+    const slideEl = slides[idx];
+    if (slideEl && parseInt(slideEl.dataset.slideStates || '0', 10) > 1) {
+      const totalStates = parseInt(slideEl.dataset.slideStates, 10);
+      const enteredFromAfter = fromIdx > idx;
+      slideEl.dataset.entryState = String(enteredFromAfter ? totalStates - 1 : 0);
+    }
     if (!animatedFor.has(idx)) {
       animatedFor.add(idx);
       // small delay so the crossfade has begun
       setTimeout(() => triggerSlideAnimation(idx + 1), 120);
+    } else {
+      // Re-entry: reset multi-state slides so the talk replays cleanly
+      const driver = getStateDriver(slideEl);
+      if (driver && typeof driver.activate === 'function') {
+        const totalStates = parseInt(slideEl.dataset.slideStates || '1', 10);
+        const enteredFromAfter = fromIdx > idx;
+        driver.activate(enteredFromAfter ? totalStates - 1 : 0);
+      }
     }
   }
 
-  function next() { activate(activeIndex + 1); }
-  function prev() { activate(activeIndex - 1); }
+  // ── Multi-state slide navigation ──
+  // A slide can declare data-slide-states="N" to absorb up to N-1 forward
+  // advances (and back) before yielding to next slide. Slide drivers expose
+  // their state controller at window.__slideN where N is data-slide.
+  function getStateDriver(slideEl) {
+    if (!slideEl) return null;
+    const states = parseInt(slideEl.dataset.slideStates || '0', 10);
+    if (states <= 1) return null;
+    const n = parseInt(slideEl.dataset.slide, 10);
+    return window['__slide' + n] || null;
+  }
+
+  function next() {
+    const cur = slides[activeIndex];
+    const driver = getStateDriver(cur);
+    if (driver && typeof driver.advance === 'function' && driver.advance(+1)) return;
+    activate(activeIndex + 1);
+  }
+  function prev() {
+    const cur = slides[activeIndex];
+    const driver = getStateDriver(cur);
+    if (driver && typeof driver.advance === 'function' && driver.advance(-1)) return;
+    activate(activeIndex - 1);
+  }
 
   // ── Keyboard ──
   document.addEventListener('keydown', e => {
@@ -78,23 +116,35 @@
   if (zNext) zNext.addEventListener('click', next);
 
   // ── Touch swipe ──
-  let touchStartX = 0, touchStartY = 0;
+  // Desktop / tablet (non-mobile): horizontal swipe advances slides (or internal states).
+  // Mobile: vertical scroll governs navigation, so swipes do not navigate slides — but
+  // a horizontal swipe over the unified-stack slide still advances/reverses its
+  // internal state (so users have an alternative to tapping pips).
+  const isMobile = window.matchMedia('(max-width: 768px)').matches;
+  let touchStartX = 0, touchStartY = 0, touchStartTarget = null;
   document.addEventListener('touchstart', e => {
     if (!e.touches[0]) return;
     touchStartX = e.touches[0].clientX;
     touchStartY = e.touches[0].clientY;
+    touchStartTarget = e.target;
   }, { passive: true });
   document.addEventListener('touchend', e => {
     if (!e.changedTouches[0]) return;
     const dx = e.changedTouches[0].clientX - touchStartX;
     const dy = e.changedTouches[0].clientY - touchStartY;
-    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) {
-      if (dx < 0) next(); else prev();
+    if (Math.abs(dx) <= 50 || Math.abs(dx) <= Math.abs(dy)) return;
+    if (isMobile) {
+      // Only advance internal state when the swipe started on the unified-stack slide.
+      const slideEl = touchStartTarget && touchStartTarget.closest && touchStartTarget.closest('.slide--stack-unified');
+      if (!slideEl) return;
+      const driver = getStateDriver(slideEl);
+      if (driver && typeof driver.advance === 'function') driver.advance(dx < 0 ? +1 : -1);
+      return;
     }
+    if (dx < 0) next(); else prev();
   }, { passive: true });
 
   // ── On mobile (no virtual slides) — let scroll happen but still animate on enter ──
-  const isMobile = window.matchMedia('(max-width: 768px)').matches;
   if (isMobile) {
     // Make all slides visible (CSS already does this); use IntersectionObserver
     const io = new IntersectionObserver(entries => {
@@ -294,35 +344,84 @@
     }, '+=0');
   };
 
-  // ─── SLIDE 2 — Tech cycles draw ───
+  // ─── SLIDE 2 — Tech cycles (price-drop ladder + software-economics arc) ───
+  // Reveals each platform chip left-to-right (PC → Internet → Mobile → Cloud → AI),
+  // pulses the "AI" chip + "we are here" tag, then morphs the software-economics arc
+  // (Bespoke → Cloud/SaaS → AI-native) and lights the AI column last.
   ANIMATIONS[2] = function () {
-    const curves = document.querySelectorAll('#slide-2 .cycle-curve');
-    curves.forEach((c, i) => {
-      // measure path length for accurate animation
-      const len = c.getTotalLength ? c.getTotalLength() : 1200;
-      c.style.strokeDasharray = len;
-      c.style.strokeDashoffset = len;
-      // force reflow then transition
-      requestAnimationFrame(() => {
-        setTimeout(() => {
-          c.style.transition = 'stroke-dashoffset 1400ms ease-out';
-          c.style.strokeDashoffset = '0';
-        }, i * 350);
-      });
+    const ladder = document.getElementById('tcLadder');
+    const arc    = document.getElementById('tcArc');
+    if (!ladder || ladder.dataset.played === '1') return;
+    ladder.dataset.played = '1';
+
+    const chips = ladder.querySelectorAll('.tc-chip');
+    const eras  = arc ? arc.querySelectorAll('.tc-era') : [];
+
+    // Stagger chips in left-to-right
+    chips.forEach((chip, i) => {
+      setTimeout(() => {
+        chip.style.opacity = '1';
+        chip.style.transform = 'none';
+      }, 160 + i * 220);
     });
+    setTimeout(() => ladder.classList.add('is-built'), 160 + chips.length * 220);
+
+    // After chips settle, build the arc eras (left → right)
+    const arcStart = 160 + chips.length * 220 + 180;
+    eras.forEach((era, i) => {
+      setTimeout(() => {
+        era.style.opacity = '1';
+        era.style.transform = 'none';
+      }, arcStart + i * 280);
+    });
+    if (arc) {
+      setTimeout(() => arc.classList.add('is-built'), arcStart + 80);
+      // Light up AI orbits last (intelligence substrate goes live)
+      setTimeout(() => arc.classList.add('is-lit'), arcStart + eras.length * 280 + 220);
+    }
+
+    // Pulse the "we are here" tag on the AI chip after the arc fully reveals
+    setTimeout(() => {
+      const here = ladder.querySelector('.tc-here');
+      if (here && window.gsap) {
+        window.gsap.fromTo(here,
+          { opacity: 0, y: 4 },
+          { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }
+        );
+      }
+    }, arcStart + eras.length * 280 + 420);
   };
 
-  // ─── STACK VISUAL HELPERS (slides 3, 4, 5) ───
-  // Build a single-column stack of 5 layer cards into a container element.
-  // mode: 'full' | 'revenue' | 'margin' | 'small'
-  function buildStackViz(container, mode) {
-    if (!container || container.children.length) return [];
+  // ════════════════════════════════════════════════════════
+  //   SLIDE 3 — UNIFIED STACK (3 internal states on one slide)
+  //
+  //   The same 5-layer DOM stack persists across states; only its
+  //   per-card content (revenue → margin → mini) and the surrounding
+  //   chrome (header copy, foot stats, side rails) morph between states.
+  //
+  //   States are advanced/reversed by the deck navigation (slides.js
+  //   navigation hook) which calls window.__slide3.advance(+1 / -1) and
+  //   window.__slide3.activate(stateIdx) before flipping slides.
+  // ════════════════════════════════════════════════════════
+
+  // Build the 5-layer card scaffolding once. Returns the cards array.
+  function buildStackCards(container) {
+    if (!container) return [];
+    if (container.dataset.built === '1') {
+      return Array.from(container.querySelectorAll('.stack-layer'));
+    }
     const layers = D.stackLayers || [];
     const cards = [];
     layers.forEach(layer => {
       const card = document.createElement('div');
       card.className = 'stack-layer';
       card.style.setProperty('--accent', layer.accent);
+      card.dataset.accent = layer.accent;
+      card.dataset.marginPct = layer.marginPct;
+      card.dataset.marginRange = layer.marginRange;
+      card.dataset.revenue = layer.revenue2026;
+      card.dataset.revenueLabel = layer.revenueLabel;
+      card.dataset.growth = layer.growth;
 
       const badge = document.createElement('span');
       badge.className = 'stack-badge';
@@ -334,30 +433,18 @@
 
       const value = document.createElement('span');
       value.className = 'stack-value';
+      value.textContent = layer.revenue2026;
 
       const label = document.createElement('span');
       label.className = 'stack-label';
+      label.textContent = layer.revenueLabel;
 
-      if (mode === 'margin') {
-        // Margin lens: width-proportional bar, semantic coloring
-        value.textContent = layer.marginPct + '%';
-        label.textContent = layer.marginRange;
-        // semantic color: high (>=40) teal, mid (20-39) gold, low (<20) coral
-        const m = layer.marginPct;
-        const semantic = m >= 40 ? '#4ECDC4' : (m < 20 ? '#E8837C' : '#F5C542');
-        card.style.setProperty('--accent', semantic);
-        card.classList.add('stack-layer--margin');
-        // store target width pct for animation
-        card.dataset.marginPct = m;
-      } else if (mode === 'revenue') {
-        value.textContent = layer.revenue2026;
-        label.textContent = layer.growth + ' · ' + layer.revenueLabel;
-      } else {
-        // 'full' or 'small'
-        value.textContent = layer.revenue2026;
-        label.textContent = layer.revenueLabel;
-      }
+      // Margin overlay bar — present always, width 0% until state 1
+      const marginBar = document.createElement('span');
+      marginBar.className = 'stack-margin-bar';
+      marginBar.style.setProperty('--bar-width', '0%');
 
+      card.appendChild(marginBar);
       card.appendChild(badge);
       card.appendChild(title);
       card.appendChild(value);
@@ -365,122 +452,483 @@
       container.appendChild(card);
       cards.push(card);
     });
+    container.dataset.built = '1';
     return cards;
   }
 
-  // ─── SLIDE 3 — The Stack: stagger reveal of 5 layers ───
-  ANIMATIONS[3] = function () {
-    const container = document.getElementById('stackViz3');
-    const cards = buildStackViz(container, 'full');
+  // Apply per-state content to each card. Animates between states.
+  function setStackState(cards, state) {
     if (!cards.length) return;
-    if (window.gsap) {
-      gsap.fromTo(cards,
-        { opacity: 0, y: -16 },
-        { opacity: 1, y: 0, duration: 0.55, ease: 'power2.out', stagger: 0.12 }
-      );
-    } else {
-      cards.forEach((c, i) => setTimeout(() => c.classList.add('is-revealed'), i * 120));
-    }
-  };
+    cards.forEach(card => {
+      const value = card.querySelector('.stack-value');
+      const label = card.querySelector('.stack-label');
+      const marginBar = card.querySelector('.stack-margin-bar');
+      const accent = card.dataset.accent;
+      const marginPct = parseFloat(card.dataset.marginPct) || 0;
+      const marginSemantic = marginPct >= 40 ? '#4ECDC4' : (marginPct < 20 ? '#E8837C' : '#F5C542');
 
-  // ─── SLIDE 4 — Same stack, two lenses (revenue vs margin) ───
-  ANIMATIONS[4] = function () {
-    const revContainer = document.getElementById('stackVizRev');
-    const marContainer = document.getElementById('stackVizMar');
-    const revCards = buildStackViz(revContainer, 'revenue');
-    const marCards = buildStackViz(marContainer, 'margin');
-    if (!revCards.length || !marCards.length) return;
+      // Reset state classes
+      card.classList.remove('stack-layer--margin', 'stack-layer--force');
 
-    if (window.gsap) {
-      const tl = gsap.timeline();
-      // 1. Reveal left (revenue) stack
-      tl.fromTo(revCards,
-        { opacity: 0, y: -10 },
-        { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out', stagger: 0.08 }
-      );
-      // 2. Fade in right (margin) stack background cards
-      tl.fromTo(marCards,
-        { opacity: 0 },
-        { opacity: 1, duration: 0.4, ease: 'power2.out', stagger: 0.06 },
-        '+=0.2'
-      );
-      // 3. Animate margin bars: width 0% → marginPct (using CSS custom property width)
-      marCards.forEach(card => {
-        const pct = parseFloat(card.dataset.marginPct) || 0;
-        // initialize width to 0, then animate
-        card.style.setProperty('--bar-width', '0%');
-        tl.to(card, {
-          duration: 0.7, ease: 'power2.out',
-          onUpdate: function() {
-            const p = this.progress();
-            card.style.setProperty('--bar-width', (pct * p) + '%');
+      if (state === 0) {
+        // State A — revenue build-up. Pure accent borders.
+        card.style.setProperty('--accent', accent);
+        value.textContent = card.dataset.revenue;
+        label.textContent = card.dataset.revenueLabel;
+        if (marginBar) {
+          if (window.gsap) gsap.to(marginBar, { duration: 0.5, '--bar-width': '0%', ease: 'power2.out' });
+          else marginBar.style.setProperty('--bar-width', '0%');
+        }
+      } else if (state === 1) {
+        // State B — margin lens. Bar fills proportional to margin; numbers swap.
+        card.style.setProperty('--accent', marginSemantic);
+        card.classList.add('stack-layer--margin');
+        value.textContent = marginPct + '%';
+        label.textContent = card.dataset.growth + ' rev · ' + card.dataset.marginRange + ' margin';
+        if (marginBar) {
+          if (window.gsap) {
+            // Animate via custom property
+            const proxy = { p: 0 };
+            gsap.to(proxy, {
+              p: marginPct, duration: 0.9, ease: 'power2.out',
+              onUpdate: () => marginBar.style.setProperty('--bar-width', proxy.p + '%')
+            });
+          } else {
+            marginBar.style.setProperty('--bar-width', marginPct + '%');
           }
-        }, '<0.05');
-      });
-    } else {
-      revCards.forEach((c, i) => setTimeout(() => c.classList.add('is-revealed'), i * 80));
-      marCards.forEach((c, i) => {
-        setTimeout(() => {
-          c.classList.add('is-revealed');
-          c.style.setProperty('--bar-width', (parseFloat(c.dataset.marginPct) || 0) + '%');
-        }, 500 + i * 80);
-      });
-    }
-  };
+        }
+      } else if (state === 2) {
+        // State C — forces lens. Stack stays in revenue mode but compresses;
+        // accent stays original; the surrounding rails carry the meaning.
+        card.style.setProperty('--accent', accent);
+        card.classList.add('stack-layer--force');
+        value.textContent = card.dataset.revenue;
+        label.textContent = card.dataset.revenueLabel;
+        if (marginBar) {
+          if (window.gsap) gsap.to(marginBar, { duration: 0.4, '--bar-width': '0%', ease: 'power2.out' });
+          else marginBar.style.setProperty('--bar-width', '0%');
+        }
+      }
+    });
+  }
 
-  // ─── SLIDE 5 — Two forces: stack + arrows reveal ───
-  ANIMATIONS[5] = function () {
-    const container = document.getElementById('stackViz5');
-    const cards = buildStackViz(container, 'small');
-    const paths = document.querySelectorAll('#slide-5 .force-path');
+  // Crossfade header / footer state blocks
+  function activateStateBlock(slideEl, state) {
+    if (!slideEl) return;
+    slideEl.querySelectorAll('.su-header-state, .su-foot-state').forEach(el => {
+      const target = parseInt(el.dataset.state, 10);
+      el.classList.toggle('is-active', target === state);
+    });
+    slideEl.querySelectorAll('.su-pip').forEach(p => {
+      const target = parseInt(p.dataset.pip, 10);
+      const active = target === state;
+      p.classList.toggle('is-active', active);
+      p.setAttribute('aria-selected', active ? 'true' : 'false');
+    });
+    const stage = slideEl.querySelector('.su-stage');
+    if (stage) stage.dataset.state = String(state);
+  }
 
-    if (window.gsap) {
-      const tl = gsap.timeline();
-      tl.fromTo(cards,
-        { opacity: 0, y: -10 },
-        { opacity: 1, y: 0, duration: 0.45, ease: 'power2.out', stagger: 0.09 }
-      );
-    } else {
-      cards.forEach((c, i) => setTimeout(() => c.classList.add('is-revealed'), i * 90));
-    }
-
-    // SVG arrow stroke-dashoffset reveal
+  // Animate force arrows: draw on entry to state 2, fade on exit
+  function setForceArrows(slideEl, state) {
+    if (!slideEl) return;
+    const paths = slideEl.querySelectorAll('.force-path');
     paths.forEach((p, i) => {
       const len = p.getTotalLength ? p.getTotalLength() : 600;
       p.style.strokeDasharray = len;
-      p.style.strokeDashoffset = len;
-      requestAnimationFrame(() => {
-        setTimeout(() => {
-          p.style.transition = 'stroke-dashoffset 1100ms ease-out';
-          p.style.strokeDashoffset = '0';
-        }, 600 + i * 250);
+      if (state === 2) {
+        // Draw in
+        p.style.strokeDashoffset = len;
+        requestAnimationFrame(() => {
+          setTimeout(() => {
+            p.style.transition = 'stroke-dashoffset 950ms ease-out, opacity 320ms ease-out';
+            p.style.strokeDashoffset = '0';
+            p.style.opacity = '1';
+          }, 180 + i * 220);
+        });
+      } else {
+        // Hide
+        p.style.transition = 'opacity 220ms ease-out';
+        p.style.opacity = '0';
+      }
+    });
+  }
+
+  // ─── SLIDE 3 — driver ───
+  // Exposes window.__slide3 for the deck navigation to step through internal states.
+  ANIMATIONS[3] = function () {
+    const slide = document.getElementById('slide-3');
+    if (!slide) return;
+    const stackContainer = slide.querySelector('#suStack');
+    const cards = buildStackCards(stackContainer);
+
+    let state = 0;
+
+    function render(s, opts) {
+      state = Math.max(0, Math.min(2, s | 0));
+      activateStateBlock(slide, state);
+      setStackState(cards, state);
+      setForceArrows(slide, state);
+      // Persist on the slide so deck nav can read current state
+      slide.dataset.state = String(state);
+    }
+
+    function advance(dir) {
+      const next = state + (dir > 0 ? 1 : -1);
+      if (next < 0 || next > 2) return false; // signal "leave slide"
+      render(next);
+      return true;
+    }
+
+    // Initial render — honor entry direction (entryState set by activate())
+    const entryState = parseInt(slide.dataset.entryState || '0', 10);
+    render(entryState);
+    if (window.gsap) {
+      gsap.from(cards, {
+        opacity: 0, y: -14, duration: 0.55, ease: 'power2.out', stagger: 0.10,
+        clearProps: 'opacity,y'
+      });
+    } else {
+      cards.forEach((c, i) => setTimeout(() => c.classList.add('is-revealed'), i * 100));
+    }
+
+    // Wire pip clicks (idempotent)
+    if (!slide.dataset.pipsWired) {
+      slide.querySelectorAll('.su-pip').forEach(pip => {
+        pip.addEventListener('click', e => {
+          e.stopPropagation();
+          const idx = parseInt(pip.dataset.pip, 10) || 0;
+          render(idx);
+        });
+      });
+      slide.dataset.pipsWired = '1';
+    }
+
+    // Expose driver for the deck navigation
+    window.__slide3 = {
+      advance,                    // advance(+1) or advance(-1) — returns false at boundary
+      activate: render,           // jump to a specific state
+      reset: () => render(0),     // for re-entry
+      get state() { return state; }
+    };
+  };
+
+  // ─── TOOLTIP HELPER for native [data-tip] elements (slide 11 seq-matrix etc.) ───
+  // Lightweight: hover on desktop, tap on touch. Mirrors sec3.js popup styling
+  // (.aa-tip-popup) which is loaded via slides-blocks.css.
+  let __tipPopup = null;
+  let __tipActive = null;
+  let __tipHideTimer = null;
+  // Prefer hover-capable detection so desktop users with touch screens still get hover tips.
+  const __hasHover = window.matchMedia && window.matchMedia('(hover: hover)').matches;
+  const __isTouch = !__hasHover && (('ontouchstart' in window) || (navigator.maxTouchPoints > 0));
+
+  function getTipPopup() {
+    if (__tipPopup) return __tipPopup;
+    __tipPopup = document.createElement('div');
+    __tipPopup.className = 'aa-tip-popup';
+    document.body.appendChild(__tipPopup);
+    document.addEventListener('click', function () {
+      if (__isTouch && __tipActive) {
+        __tipPopup.classList.remove('aa-tip-popup--visible');
+        __tipActive = null;
+      }
+    });
+    window.addEventListener('scroll', function () {
+      if (__tipActive) {
+        __tipPopup.classList.remove('aa-tip-popup--visible');
+        __tipActive = null;
+      }
+    }, { passive: true });
+    return __tipPopup;
+  }
+  function showTip(el) {
+    const p = getTipPopup();
+    clearTimeout(__tipHideTimer);
+    __tipActive = el;
+    p.innerHTML = el.getAttribute('data-tip') || '';
+    p.classList.remove('aa-tip-popup--funded', 'aa-tip-popup--model');
+    p.style.visibility = 'hidden';
+    p.style.display = 'block';
+    p.classList.remove('aa-tip-popup--visible');
+    const rect = el.getBoundingClientRect();
+    const popW = p.offsetWidth;
+    const popH = p.offsetHeight;
+    let left = rect.left + rect.width / 2 - popW / 2;
+    let top = rect.bottom + 10;
+    if (top + popH > window.innerHeight - 10) top = rect.top - popH - 10;
+    if (left < 10) left = 10;
+    if (left + popW > window.innerWidth - 10) left = window.innerWidth - popW - 10;
+    p.style.left = left + 'px';
+    p.style.top = top + 'px';
+    p.style.visibility = '';
+    p.style.display = '';
+    requestAnimationFrame(function () { p.classList.add('aa-tip-popup--visible'); });
+  }
+  function hideTip() {
+    __tipHideTimer = setTimeout(function () {
+      if (__tipPopup) __tipPopup.classList.remove('aa-tip-popup--visible');
+      __tipActive = null;
+    }, 150);
+  }
+  function bindSlideTooltips(scope) {
+    if (!scope) return;
+    const els = scope.querySelectorAll('[data-tip]');
+    els.forEach(function (el) {
+      if (el._tipBound) return;
+      el._tipBound = true;
+      el.setAttribute('tabindex', '0');
+      el.addEventListener('mouseenter', function () { if (!__isTouch) showTip(el); });
+      el.addEventListener('mouseleave', function () { if (!__isTouch) hideTip(); });
+      el.addEventListener('focus', function () { showTip(el); });
+      el.addEventListener('blur', function () { hideTip(); });
+      el.addEventListener('click', function (e) {
+        if (!__isTouch) return;
+        e.stopPropagation();
+        if (__tipActive === el) { hideTip(); } else { showTip(el); }
       });
     });
-  };
+  }
 
   // ─── IFRAME LAZY-LOAD HELPER ───
   // Sets the iframe src to index.html?embed=<sec-id> on first slide entry.
+  // Uses a RELATIVE URL ('index.html?...') so the embed works regardless of the
+  // host path prefix (the previous '/?embed=...' hit the server root, which on
+  // some deploy targets returns FastAPI/Starlette '{"detail":"Not Found"}' JSON).
+  // If the iframe ever fails (404, non-HTML, JSON body), we hide it and reveal
+  // a polished fallback card so the deck never shows raw JSON.
   function loadIframe(slideEl) {
     if (!slideEl) return;
     const f = slideEl.querySelector('iframe[data-iframe-embed]');
     if (!f || f.dataset.loaded === '1') return;
     const target = f.getAttribute('data-iframe-embed');
     if (!target) return;
-    // Use absolute root path. Dev server strips queries on /index.html → /index 301;
-    // /?embed=... avoids the redirect. Firebase Hosting serves index.html at / by default.
-    // If target uses 'section:focus' syntax, jump the iframe to the focus element.
     var hashId = target.indexOf(':') > -1 ? target.split(':')[1] : target;
-    f.src = '/?embed=' + encodeURIComponent(target) + '#' + hashId;
+    f.src = 'index.html?embed=' + encodeURIComponent(target) + '#' + hashId;
     f.dataset.loaded = '1';
+
+    // Defensive: detect bad embed (no body, FastAPI JSON, or wrong content)
+    // and swap to a fallback card.
+    var verified = false;
+    var verify = function () {
+      if (verified) return;
+      verified = true;
+      try {
+        var doc = f.contentDocument;
+        // Same-origin: we can read the body. If it looks like JSON or is empty,
+        // show fallback. If we can't read (cross-origin), assume it's loading
+        // properly — Firebase serves same-origin so this branch only fires on
+        // genuine errors.
+        if (doc) {
+          var bodyText = (doc.body && doc.body.innerText || '').trim();
+          var looksLikeJson = bodyText.charAt(0) === '{' && bodyText.indexOf('"detail"') > -1;
+          var hasEmbedTarget = !!doc.getElementById(hashId);
+          if (looksLikeJson || (!hasEmbedTarget && bodyText.length < 200)) {
+            showIframeFallback(f, target);
+          }
+        }
+      } catch (e) { /* cross-origin — leave iframe alone */ }
+    };
+    f.addEventListener('load', verify);
+    f.addEventListener('error', function () { showIframeFallback(f, target); });
+    // Hard timeout: if nothing loaded in 8s, show fallback
+    setTimeout(function () { if (!verified) verify(); }, 8000);
   }
 
-  // ─── SLIDE 6 — Infrastructure & Energy (CapEx iframe) ───
-  ANIMATIONS[6] = function () {
-    loadIframe(document.getElementById('slide-6'));
+  function showIframeFallback(iframe, target) {
+    if (!iframe || iframe.dataset.fallback === '1') return;
+    iframe.dataset.fallback = '1';
+    var wrap = iframe.parentElement;
+    if (!wrap) return;
+    iframe.style.display = 'none';
+    var fb = document.createElement('div');
+    fb.className = 'iframe-fallback';
+    var label = (target || '').split(':')[1] || target || 'report';
+    label = label.replace(/-/g, ' ').replace(/block$/i, '').trim();
+    fb.innerHTML =
+      '<div class="iframe-fallback-eyebrow">Live data block</div>' +
+      '<div class="iframe-fallback-title">' + label + '</div>' +
+      '<a class="iframe-fallback-link" href="index.html#' + (target.split(':')[1] || target) + '" target="_blank" rel="noopener">Open in full report →</a>';
+    wrap.appendChild(fb);
+  }
+
+  // ─── SLIDE 7 — Infrastructure & Energy (NATIVE CapEx Explorer) ───
+  ANIMATIONS[7] = function () {
+    initSlide7Capex();
   };
 
-  // ─── SLIDE 7 — Funnel (was slide 6 — GSAP) ───
-  ANIMATIONS[7] = function () {
+  function initSlide7Capex() {
+    const canvas = document.getElementById('slide7CapexChart');
+    if (!canvas || canvas.dataset.inited === '1' || typeof Chart === 'undefined') return;
+    canvas.dataset.inited = '1';
+
+    let chart = null;
+    let showGap = false;
+
+    const YEARS = ['2020', '2021', '2022', '2023', '2024', '2025', '2026E'];
+    const COMPANIES = {
+      amazon:    { label: 'Amazon',    color: '#FF9900', data: [40, 61, 63, 54, 83, 131, 200] },
+      alphabet:  { label: 'Alphabet',  color: '#4285F4', data: [22, 29, 31, 32, 52, 91, 180] },
+      microsoft: { label: 'Microsoft', color: '#7FBA00', data: [20, 27, 32, 35, 56, 80, 145] },
+      meta:      { label: 'Meta',      color: '#0668E1', data: [16, 19, 32, 28, 39, 72, 125] },
+      oracle:    { label: 'Oracle',    color: '#C74634', data: [9, 7, 9, 9, 13, 35, 50] }
+    };
+    const AI_REVENUE = [2, 5, 10, 20, 40, 100, 180];
+    const activeCompanies = new Set(Object.keys(COMPANIES));
+
+    function buildDatasets() {
+      const datasets = [];
+      const keys = Object.keys(COMPANIES);
+      keys.forEach((key, i) => {
+        const c = COMPANIES[key];
+        const on = activeCompanies.has(key);
+        datasets.push({
+          label: c.label,
+          data: on ? [...c.data] : c.data.map(() => 0),
+          backgroundColor: on ? c.color + '55' : 'transparent',
+          borderColor: on ? c.color : 'transparent',
+          borderWidth: on ? 1.5 : 0,
+          fill: true,
+          tension: 0.35,
+          pointRadius: 0,
+          pointHoverRadius: 5,
+          pointHoverBackgroundColor: c.color,
+          order: keys.length - i
+        });
+      });
+      if (showGap) {
+        datasets.push({
+          label: 'AI Revenue',
+          data: [...AI_REVENUE],
+          backgroundColor: 'rgba(232,131,124,0.08)',
+          borderColor: '#E8837C',
+          borderWidth: 2.5,
+          borderDash: [6, 3],
+          fill: 'origin',
+          tension: 0.35,
+          pointRadius: 4,
+          pointBackgroundColor: '#E8837C',
+          pointBorderColor: '#2D3142',
+          pointBorderWidth: 1.5,
+          yAxisID: 'yRevenue',
+          order: -1
+        });
+      }
+      return datasets;
+    }
+
+    function updateTotal() {
+      const el = document.getElementById('slide7CapexTotalNum');
+      if (!el) return;
+      const total = Object.keys(COMPANIES).reduce((s, k) => s + (activeCompanies.has(k) ? COMPANIES[k].data[6] : 0), 0);
+      el.textContent = '~$' + total + 'B';
+    }
+
+    const gpt4Plugin = {
+      id: 'slide7Gpt4Line',
+      afterDraw(c) {
+        const xs = c.scales.x, ys = c.scales.y;
+        const x2022 = xs.getPixelForValue(2);
+        const x2023 = xs.getPixelForValue(3);
+        const xPos = x2022 + (x2023 - x2022) * 0.21;
+        const ctx = c.ctx;
+        ctx.save();
+        ctx.strokeStyle = 'rgba(245,197,66,0.5)';
+        ctx.lineWidth = 1;
+        ctx.setLineDash([4, 4]);
+        ctx.beginPath();
+        ctx.moveTo(xPos, ys.top);
+        ctx.lineTo(xPos, ys.bottom);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.fillStyle = '#F5C542';
+        ctx.font = '600 10px Inter, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('GPT-4', xPos, ys.top + 14);
+        ctx.fillStyle = 'rgba(245,197,66,0.6)';
+        ctx.font = '9px Inter, sans-serif';
+        ctx.fillText('Mar 2023', xPos, ys.top + 26);
+        ctx.restore();
+      }
+    };
+
+    chart = new Chart(canvas, {
+      type: 'line',
+      data: { labels: YEARS, datasets: buildDatasets() },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: { mode: 'index', intersect: false },
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: 'rgba(45,49,66,0.95)',
+            borderColor: 'rgba(78,205,196,0.2)',
+            borderWidth: 1,
+            padding: 12,
+            titleFont: { size: 13, weight: '600' },
+            bodyFont: { size: 12 },
+            callbacks: {
+              label: function (ctx) {
+                if (ctx.raw === 0) return null;
+                return ' ' + ctx.dataset.label + ': $' + ctx.raw + 'B';
+              },
+              afterBody: function (items) {
+                const total = items.reduce((s, i) => s + (i.raw || 0), 0);
+                return '\n Total: $' + total + 'B';
+              }
+            }
+          }
+        },
+        scales: {
+          x: { grid: { color: 'rgba(255,255,255,0.03)' }, ticks: { color: '#A0A8BC', font: { size: 11 } } },
+          y: {
+            stacked: true, beginAtZero: true,
+            ticks: { callback: v => '$' + v + 'B', color: '#A0A8BC', font: { size: 11 }, maxTicksLimit: 8 },
+            grid: { color: 'rgba(255,255,255,0.04)' }
+          },
+          yRevenue: {
+            display: false, beginAtZero: true, min: 0,
+            afterDataLimits(axis) { const m = axis.chart.scales.y.max; if (m) axis.max = m; }
+          }
+        },
+        elements: { line: { borderJoinStyle: 'round' } }
+      },
+      plugins: [gpt4Plugin]
+    });
+
+    const togs = document.getElementById('slide7CapexToggles');
+    if (togs) {
+      togs.addEventListener('click', e => {
+        const btn = e.target.closest('.capex-tog');
+        if (!btn) return;
+        const key = btn.dataset.company;
+        if (activeCompanies.has(key)) {
+          if (activeCompanies.size === 1) return;
+          activeCompanies.delete(key);
+          btn.classList.remove('active');
+        } else {
+          activeCompanies.add(key);
+          btn.classList.add('active');
+        }
+        chart.data.datasets = buildDatasets();
+        chart.update('active');
+        updateTotal();
+      });
+    }
+
+    const gap = document.getElementById('slide7GapToggle');
+    if (gap) {
+      gap.addEventListener('change', () => {
+        showGap = gap.checked;
+        chart.data.datasets = buildDatasets();
+        chart.update('active');
+      });
+    }
+  }
+
+  // ─── SLIDE 4 — Funnel (was slide 6 — GSAP) ───
+  ANIMATIONS[4] = function () {
     const dotsG  = document.getElementById('funnelDots');
     const appsG  = document.getElementById('funnelApps');
     const modsG  = document.getElementById('funnelModels');
@@ -571,7 +1019,7 @@
       modelTick++;
     }, 2200);
     // stash so we can clear later if needed
-    document.getElementById('slide-7')._modelTimer = modelTimer;
+    document.getElementById('slide-4')._modelTimer = modelTimer;
 
     // ── 4. animate dots flowing top → app layer → models ──
     if (window.gsap) {
@@ -598,8 +1046,8 @@
     }
   };
 
-  // ─── SLIDE 8 — Model cluster (3 lanes: Commodity / Specialist / Restricted) ───
-  ANIMATIONS[8] = function () {
+  // ─── SLIDE 5 — Model cluster (3 lanes: Commodity / Specialist / Restricted) ───
+  ANIMATIONS[5] = function () {
     const svg = document.getElementById('clusterSvg');
     if (!svg) return;
     if (svg.dataset.rendered === '1') {
@@ -749,9 +1197,9 @@
     if (depEls.length) gsap.to(depEls, { opacity: 0.45, duration: 0.6, delay: 1.5 });
   };
 
-  // ─── SLIDE 9 — Smarter AND cheaper dual axis (was 8) ───
+  // ─── SLIDE 6 — Smarter AND cheaper dual axis (was 8) ───
   let smarterChart = null;
-  ANIMATIONS[9] = function () {
+  ANIMATIONS[6] = function () {
     if (smarterChart) return;
     const ctx = document.getElementById('smarterChart');
     if (!ctx || !window.Chart) return;
@@ -836,21 +1284,116 @@
     });
   };
 
-  // ─── SLIDE 10 — Agent anatomy (iframe of 7-layer stack) ───
-  ANIMATIONS[10] = function () {
-    loadIframe(document.getElementById('slide-10'));
-    // Animate KPI cards in
-    const cards = document.querySelectorAll('#slide-10 .kpi-card');
-    if (window.gsap && cards.length) {
-      gsap.fromTo(cards,
-        { opacity: 0, y: 14 },
-        { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out', stagger: 0.12 }
+  // ─── SLIDE 8 — Agent anatomy (iframe of 7-layer stack) ───
+  ANIMATIONS[8] = function () {
+    initSlide8AgentStack();
+    const layers = document.querySelectorAll('#slide-8 .aa-layer');
+    if (window.gsap && layers.length) {
+      gsap.fromTo(layers,
+        { opacity: 0, y: 10 },
+        { opacity: 1, y: 0, duration: 0.45, ease: 'power2.out', stagger: 0.06 }
       );
     }
   };
 
-  // ─── SLIDE 11 — Vibe coding cards ───
-  ANIMATIONS[11] = function () {
+  // Native agent stack: accordion + chip tooltips. Idempotent — safe to call repeatedly.
+  function initSlide8AgentStack() {
+    const stack = document.getElementById('slide8AgentStack');
+    if (!stack || stack.dataset.inited === '1') return;
+    stack.dataset.inited = '1';
+
+    // Accordion behavior: click any layer-bar to expand/collapse.
+    const layers = stack.querySelectorAll('.aa-layer');
+    layers.forEach(layer => {
+      const bar = layer.querySelector('.aa-layer-bar');
+      if (!bar) return;
+      bar.setAttribute('role', 'button');
+      bar.setAttribute('tabindex', '0');
+      const handle = () => {
+        const wasExpanded = layer.classList.contains('aa-layer--expanded');
+        layers.forEach(l => l.classList.remove('aa-layer--expanded'));
+        if (!wasExpanded) layer.classList.add('aa-layer--expanded');
+      };
+      bar.addEventListener('click', handle);
+      bar.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handle(); }
+      });
+    });
+
+    // Chip tooltips (desktop hover, mobile tap, keyboard focus).
+    const isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+    let popup = null;
+    let activeChip = null;
+
+    function ensurePopup() {
+      if (popup) return popup;
+      popup = document.createElement('div');
+      popup.className = 'aa-tip-popup';
+      popup.setAttribute('role', 'tooltip');
+      document.body.appendChild(popup);
+      return popup;
+    }
+
+    function showTip(chip) {
+      const tipHtml = chip.getAttribute('data-tip');
+      if (!tipHtml) return;
+      const p = ensurePopup();
+      p.innerHTML = tipHtml;
+      p.classList.toggle('aa-tip-popup--funded',
+        chip.classList.contains('aa-tool-chip--funded') || chip.classList.contains('aa-tool-chip--dvc'));
+      // Position above chip, centered, within viewport
+      const r = chip.getBoundingClientRect();
+      const pw = Math.min(320, window.innerWidth - 24);
+      p.style.maxWidth = pw + 'px';
+      // Force a reflow to measure height
+      p.style.left = '0px';
+      p.style.top = '0px';
+      p.classList.add('aa-tip-popup--visible');
+      const ph = p.offsetHeight;
+      const pwReal = p.offsetWidth;
+      let left = r.left + (r.width / 2) - (pwReal / 2);
+      left = Math.max(12, Math.min(window.innerWidth - pwReal - 12, left));
+      let top = r.top - ph - 10;
+      if (top < 12) top = r.bottom + 10;
+      p.style.left = left + 'px';
+      p.style.top = top + 'px';
+      activeChip = chip;
+    }
+
+    function hideTip() {
+      if (popup) popup.classList.remove('aa-tip-popup--visible');
+      activeChip = null;
+    }
+
+    const chips = stack.querySelectorAll('.aa-tool-chip--has-tip[data-tip]');
+    chips.forEach(chip => {
+      chip.setAttribute('tabindex', '0');
+      if (!isTouch) {
+        chip.addEventListener('mouseenter', () => showTip(chip));
+        chip.addEventListener('mouseleave', hideTip);
+      }
+      chip.addEventListener('focus', () => showTip(chip));
+      chip.addEventListener('blur', hideTip);
+      chip.addEventListener('click', e => {
+        if (!isTouch) return;
+        e.stopPropagation();
+        if (activeChip === chip) hideTip(); else showTip(chip);
+      });
+    });
+
+    // Tap outside to dismiss on touch.
+    document.addEventListener('click', e => {
+      if (!isTouch) return;
+      if (!activeChip) return;
+      if (e.target.closest && e.target.closest('.aa-tool-chip--has-tip')) return;
+      hideTip();
+    });
+    window.addEventListener('scroll', hideTip, true);
+    window.addEventListener('resize', hideTip);
+  }
+
+  // ─── SLIDE 9 — Vibe coding cards ───
+  ANIMATIONS[9] = function () {
     const grid = document.getElementById('vibeGrid');
     if (!grid || grid.children.length) return;
     (D.vibeCoding || []).forEach(c => {
@@ -876,8 +1419,8 @@
     }
   };
 
-  // ─── SLIDE 12 — Physical AI: 3 motion tiles + stat strip (REBUILT) ───
-  ANIMATIONS[12] = function () {
+  // ─── SLIDE 13 — Physical AI: 3 motion tiles + stat strip (REBUILT) ───
+  ANIMATIONS[13] = function () {
     const tilesC = document.getElementById('physTiles');
     const stripC = document.getElementById('physStatsStrip');
     if (!tilesC || tilesC.children.length) return;
@@ -1036,41 +1579,81 @@
     }
   };
 
-  // ─── SLIDE 13 — Pricing + ARPU iframe (live report bars) ───
-  ANIMATIONS[13] = function () {
-    loadIframe(document.getElementById('slide-13'));
-    // Reveal pricing-row icons
-    const icons = document.querySelectorAll('#slide-13 .pricing-icon');
+  // ─── SLIDE 10 — Pricing + ARPU (NATIVE bars) ───
+  ANIMATIONS[10] = function () {
+    const icons = document.querySelectorAll('#slide-10 .pricing-icon');
     if (icons.length && window.gsap) {
       gsap.from(icons, { y: 14, opacity: 0, duration: 0.45, stagger: 0.07, ease: 'power2.out' });
     }
-  };
-
-  // ─── SLIDE 14 — Sequoia services matrix (iframe) ───
-  ANIMATIONS[14] = function () {
-    loadIframe(document.getElementById('slide-14'));
-  };
-
-  // ─── SLIDE 15 — Three attack angles (iframe) ───
-  ANIMATIONS[15] = function () {
-    loadIframe(document.getElementById('slide-15'));
-  };
-
-  // ─── SLIDE 16 — Close (cycles + you-are-here) ───
-  ANIMATIONS[16] = function () {
-    const curves = document.querySelectorAll('#slide-16 .cycle-curve');
-    curves.forEach((c, i) => {
-      const len = c.getTotalLength ? c.getTotalLength() : 1200;
-      c.style.strokeDasharray = len;
-      c.style.strokeDashoffset = len;
-      requestAnimationFrame(() => {
-        setTimeout(() => {
-          c.style.transition = 'stroke-dashoffset 1400ms ease-out';
-          c.style.strokeDashoffset = '0';
-        }, i * 300);
+    const fills = document.querySelectorAll('#slide-10 .slide-arpu-fill');
+    if (fills.length && window.gsap) {
+      fills.forEach(function (el) {
+        const target = el.style.width || '0%';
+        gsap.fromTo(el,
+          { width: 0, opacity: 0.4 },
+          { width: target, opacity: 1, duration: 0.7, ease: 'power2.out', delay: 0.2 }
+        );
       });
-    });
-    // YAH already pulses via CSS
+    }
+  };
+
+  // ─── SLIDE 11 — Sequoia services matrix (NATIVE) ───
+  ANIMATIONS[11] = function () {
+    const slide = document.getElementById('slide-11');
+    bindSlideTooltips(slide);
+    const entries = slide ? slide.querySelectorAll('.seq-entry') : [];
+    if (!entries.length) return;
+    // Guarantee final state (opacity 1, no transform) regardless of animation outcome —
+    // direct-hash entry was leaving entries at opacity:0 because gsap.from could fire
+    // twice and the second invocation reset all entries mid-tween.
+    entries.forEach(function (el) { el.style.opacity = '1'; el.style.transform = ''; });
+    if (window.gsap) {
+      gsap.fromTo(entries,
+        { y: 6, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.35, stagger: 0.012, ease: 'power2.out',
+          onComplete: function () {
+            entries.forEach(function (el) { el.style.opacity = '1'; el.style.transform = ''; });
+          },
+          onInterrupt: function () {
+            entries.forEach(function (el) { el.style.opacity = '1'; el.style.transform = ''; });
+          }
+        });
+    }
+  };
+
+  // ─── SLIDE 12 — Three attack angles (NATIVE via attack-angles.js) ───
+  ANIMATIONS[12] = function () {
+    if (window.ATTACK_ANGLES && typeof window.ATTACK_ANGLES.render === 'function') {
+      window.ATTACK_ANGLES.render('attack-angles-block');
+    }
+    const cols = document.querySelectorAll('#slide-12 .aa-col');
+    if (cols.length && window.gsap) {
+      gsap.from(cols, { y: 18, opacity: 0, duration: 0.5, stagger: 0.1, ease: 'power2.out' });
+    }
+  };
+
+  // ─── SLIDE 14 — Key Learnings (staggered card fade-in) ───
+  ANIMATIONS[14] = function () {
+    const cards = document.querySelectorAll('#slide-14 .kl-card');
+    if (cards.length && window.gsap) {
+      gsap.from(cards, { y: 14, opacity: 0, duration: 0.45, stagger: 0.08, ease: 'power2.out' });
+    } else {
+      cards.forEach((c, i) => {
+        c.style.opacity = '0';
+        c.style.transform = 'translateY(14px)';
+        requestAnimationFrame(() => {
+          setTimeout(() => {
+            c.style.transition = 'opacity 450ms ease, transform 450ms ease';
+            c.style.opacity = '1';
+            c.style.transform = 'translateY(0)';
+          }, i * 80);
+        });
+      });
+    }
+    const kicker = document.querySelector('#slide-14 .kl-kicker');
+    if (kicker && window.gsap) {
+      gsap.from(kicker, { y: 8, opacity: 0, delay: 0.55, duration: 0.5, ease: 'power2.out' });
+    }
   };
 
   // ── Start ──

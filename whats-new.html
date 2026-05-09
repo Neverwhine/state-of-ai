@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What's New &mdash; DVC State of AI Patch Notes &middot; May 6, 2026</title>
+<meta name="description" content="Patch notes for the DVC State of AI report &mdash; what changed in the last 10 days and where it shows up in the main report.">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="favicon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin:0; padding:0; }
+  body {
+    background:#1A1A2E;
+    color:#F5F6F8;
+    font-family:'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    -webkit-font-smoothing:antialiased;
+    line-height:1.55;
+    min-height:100vh;
+  }
+  a { color:#4ECDC4; }
+  .tabnum { font-variant-numeric: tabular-nums; }
+
+  /* Top nav rail */
+  .wn-nav {
+    position:fixed; top:0; left:0; right:0; z-index:1000;
+    display:flex; gap:0.6rem; align-items:center;
+    padding:0.9rem 1.5rem;
+    background:linear-gradient(180deg, rgba(26,26,46,0.92), rgba(26,26,46,0.65));
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid rgba(255,255,255,0.05);
+  }
+  .wn-nav-link {
+    font-size:0.7rem; letter-spacing:0.12em; text-transform:uppercase;
+    text-decoration:none; padding:0.45rem 0.8rem;
+    border:1px solid rgba(255,255,255,0.15); border-radius:6px;
+    background:rgba(45,49,66,0.6); color:#C8CCD4;
+    transition:all 0.18s ease;
+  }
+  .wn-nav-link:hover { border-color:#4ECDC4; color:#4ECDC4; background:rgba(78,205,196,0.1); }
+  .wn-nav-link--primary { border-color:rgba(78,205,196,0.45); color:#4ECDC4; }
+  .wn-nav-link--slides { border-color:rgba(245,197,66,0.4); color:#F5C542; }
+  .wn-nav-link--slides:hover { border-color:#F5C542; color:#F5C542; background:rgba(245,197,66,0.1); }
+  .wn-nav-spacer { flex:1; }
+  .wn-nav-here { font-size:0.7rem; letter-spacing:0.14em; text-transform:uppercase; color:#7C8395; }
+
+  /* Hero header */
+  .wn-hero {
+    padding:7rem 1.5rem 2.5rem;
+    max-width:1180px; margin:0 auto;
+  }
+  .wn-eyebrow {
+    display:inline-block; font-size:0.72rem; letter-spacing:0.18em; text-transform:uppercase;
+    color:#4ECDC4; font-weight:700; margin-bottom:0.6rem;
+  }
+  .wn-title {
+    font-size:clamp(1.8rem, 4vw, 2.6rem); font-weight:800; margin:0 0 0.6rem;
+    letter-spacing:-0.015em; line-height:1.1;
+  }
+  .wn-date-badge {
+    display:inline-block; font-size:0.7rem; letter-spacing:0.12em; text-transform:uppercase;
+    color:#1A1A2E; background:#F5C542; padding:0.28rem 0.65rem; border-radius:4px;
+    font-weight:700; vertical-align:middle; margin-left:0.5rem;
+  }
+  .wn-intro {
+    color:#C8CCD4; font-size:1.02rem; line-height:1.65; max-width:780px; margin:0.6rem 0 0;
+  }
+  .wn-meta-line {
+    color:#7C8395; font-size:0.78rem; margin-top:1rem;
+  }
+
+  /* Cards grid */
+  .wn-list-wrap { max-width:1180px; margin:0 auto; padding:1.25rem 1.5rem 4rem; }
+  .wn-list {
+    display:grid; grid-template-columns:repeat(auto-fit, minmax(340px, 1fr));
+    gap:1rem;
+  }
+  .wn-card {
+    background:#2D3142;
+    border:1px solid rgba(255,255,255,0.07);
+    border-left:3px solid var(--wn-accent, #4ECDC4);
+    border-radius:10px;
+    padding:1.1rem 1.2rem 1rem;
+    display:flex; flex-direction:column; gap:0.55rem;
+    transition:border-color 0.18s ease, transform 0.18s ease;
+  }
+  .wn-card:hover { border-color:rgba(78,205,196,0.35); transform:translateY(-1px); }
+  .wn-card-tag {
+    align-self:flex-start; font-size:0.62rem; letter-spacing:0.14em; text-transform:uppercase;
+    color:var(--wn-accent, #4ECDC4); font-weight:700;
+    padding:0.2rem 0.5rem; border:1px solid var(--wn-accent, #4ECDC4); border-radius:3px;
+    opacity:0.92;
+  }
+  .wn-card-headline {
+    font-size:1.02rem; font-weight:700; color:#F5F6F8; margin:0; line-height:1.3;
+  }
+  .wn-card-body {
+    font-size:0.86rem; line-height:1.6; color:#C8CCD4; margin:0;
+  }
+  .wn-card-meta {
+    display:flex; flex-wrap:wrap; gap:0.45rem 0.85rem; align-items:center; margin-top:0.25rem;
+    padding-top:0.6rem; border-top:1px dashed rgba(255,255,255,0.07);
+  }
+  .wn-card-updates { font-size:0.7rem; color:#A0A8BC; }
+  .wn-card-updates strong { color:#F5C542; font-weight:600; letter-spacing:0.04em; }
+  .wn-card-source { font-size:0.7rem; color:#A0A8BC; }
+  .wn-card-source a {
+    color:#4ECDC4; text-decoration:none; border-bottom:1px dotted rgba(78,205,196,0.4);
+  }
+  .wn-card-source a:hover { color:#7FE3DB; border-bottom-color:#7FE3DB; }
+  .wn-card-jump {
+    font-size:0.7rem; color:#A0A8BC;
+  }
+  .wn-card-jump a {
+    color:#A0A8BC; text-decoration:none; border-bottom:1px dotted rgba(160,168,188,0.3);
+  }
+  .wn-card-jump a:hover { color:#4ECDC4; border-bottom-color:#4ECDC4; }
+
+  .wn-footnote {
+    color:#7C8395; font-size:0.78rem; margin-top:2rem; line-height:1.6;
+    max-width:840px;
+  }
+  .wn-footer-actions {
+    display:flex; flex-wrap:wrap; gap:0.7rem; margin-top:1.5rem;
+  }
+  .wn-footer-link {
+    font-size:0.72rem; letter-spacing:0.12em; text-transform:uppercase;
+    text-decoration:none; padding:0.55rem 0.95rem;
+    border:1px solid rgba(78,205,196,0.4); border-radius:6px;
+    color:#4ECDC4; background:rgba(78,205,196,0.05);
+    transition:all 0.18s ease;
+  }
+  .wn-footer-link:hover { background:rgba(78,205,196,0.15); border-color:#4ECDC4; }
+  .wn-footer-link--gold { border-color:rgba(245,197,66,0.4); color:#F5C542; background:rgba(245,197,66,0.05); }
+  .wn-footer-link--gold:hover { background:rgba(245,197,66,0.15); border-color:#F5C542; }
+
+  @media (max-width: 720px) {
+    .wn-hero { padding-top:6rem; }
+    .wn-list { grid-template-columns:1fr; }
+    .wn-nav { flex-wrap:wrap; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="wn-nav" aria-label="Site navigation">
+  <a class="wn-nav-link wn-nav-link--primary" href="index.html">&larr; Back to report</a>
+  <a class="wn-nav-link wn-nav-link--slides" href="slides.html">&#9654; 20-min Slideshow</a>
+  <span class="wn-nav-spacer"></span>
+  <span class="wn-nav-here">What's new</span>
+</nav>
+
+<header class="wn-hero">
+  <span class="wn-eyebrow">DVC State of AI &middot; Patch notes</span>
+  <h1 class="wn-title">What's new<span class="wn-date-badge">May 6, 2026</span></h1>
+  <p class="wn-intro">The last 10 days compressed the report's thesis: compute is the new distribution, model labs are becoming deployment companies, and enterprise agents are moving from demo to packaged workflow. Each item below has been integrated into the relevant section of the main report &mdash; this page is the running changelog.</p>
+  <p class="wn-meta-line">7 updates &middot; window: Apr 27 &ndash; May 6, 2026 &middot; primary sources cited per item</p>
+</header>
+
+<main class="wn-list-wrap">
+  <div class="wn-list">
+
+    <!-- 1) Anthropic / SpaceX Colossus -->
+    <article class="wn-card" style="--wn-accent:#E8837C">
+      <span class="wn-card-tag">Compute</span>
+      <h2 class="wn-card-headline">Anthropic rents SpaceX's Colossus 1 capacity in Memphis</h2>
+      <p class="wn-card-body">Anthropic signed for the full compute capacity of Colossus 1 (300+ MW), with the deal reportedly extending to interest in space-based compute. Rival labs are now willing to rent each other's factories &mdash; compute scarcity beats ideology.</p>
+      <div class="wn-card-meta">
+        <span class="wn-card-updates">Updates: <strong>$700B Sprint</strong></span>
+        <span class="wn-card-jump"><a href="index.html#sec-7">Jump to section &rarr;</a></span>
+        <span class="wn-card-source">Source: <a href="https://www.cnbc.com/2026/05/06/anthropic-spacex-data-center-capacity.html" target="_blank" rel="noopener">CNBC, May 6 2026</a></span>
+      </div>
+    </article>
+
+    <!-- 2) PE-backed Deployment JVs -->
+    <article class="wn-card" style="--wn-accent:#7C4DFF">
+      <span class="wn-card-tag">Deployment</span>
+      <h2 class="wn-card-headline">OpenAI and Anthropic stand up PE-backed deployment vehicles</h2>
+      <p class="wn-card-body">OpenAI raised $4B+ for The Deployment Company at a $10B valuation (TPG, Brookfield, Bain) with access to 2,000+ portfolio clients; Anthropic was reported as forming a parallel adoption entity with Blackstone, Hellman &amp; Friedman, Goldman, Apollo, GIC, and Sequoia. Frontier labs are copying the Palantir FDE model and becoming deployment companies, not just model APIs.</p>
+      <div class="wn-card-meta">
+        <span class="wn-card-updates">Updates: <strong>Agent Revolution</strong>, <strong>Business Models</strong></span>
+        <span class="wn-card-jump"><a href="index.html#sec-4">Jump to section &rarr;</a></span>
+        <span class="wn-card-source">Source: <a href="https://finance.yahoo.com/sectors/technology/articles/openai-finalizes-10-billion-joint-123100557.html" target="_blank" rel="noopener">Bloomberg / Yahoo Finance, May 4&ndash;5 2026</a></span>
+      </div>
+    </article>
+
+    <!-- 3) GPT-5.5 Instant default -->
+    <article class="wn-card" style="--wn-accent:#10A37F">
+      <span class="wn-card-tag">Models</span>
+      <h2 class="wn-card-headline">GPT-5.5 Instant becomes the default ChatGPT model</h2>
+      <p class="wn-card-body">Replaces GPT-5.3 Instant: AIME 2025 jumps 65.4 &rarr; 81.2, MMMU-Pro 69.2 &rarr; 76, with lower hallucination in law, medicine, and finance and preserved low latency. API exposed as <code>chat-latest</code>. The default model is compounding quietly at consumer scale.</p>
+      <div class="wn-card-meta">
+        <span class="wn-card-updates">Updates: <strong>Model Wars</strong></span>
+        <span class="wn-card-jump"><a href="index.html#sec-3">Jump to section &rarr;</a></span>
+        <span class="wn-card-source">Source: <a href="https://techcrunch.com/2026/05/05/openai-releases-gpt-5-5-instant-a-new-default-model-for-chatgpt/" target="_blank" rel="noopener">TechCrunch, May 5 2026</a></span>
+      </div>
+    </article>
+
+    <!-- 4) Microsoft / OpenAI agreement -->
+    <article class="wn-card" style="--wn-accent:#0078D4">
+      <span class="wn-card-tag">Cloud</span>
+      <h2 class="wn-card-headline">Microsoft / OpenAI partnership goes non-exclusive</h2>
+      <p class="wn-card-body">Microsoft remains primary cloud partner but OpenAI can now serve products on any cloud; the Microsoft IP license through 2032 is non-exclusive; OpenAI revenue share to Microsoft continues through 2030 (capped) while Microsoft no longer pays revenue share to OpenAI. AI cloud exclusivity has cracked &mdash; distribution and compute are becoming multi-cloud.</p>
+      <div class="wn-card-meta">
+        <span class="wn-card-updates">Updates: <strong>$700B Sprint</strong>, <strong>Incumbents</strong></span>
+        <span class="wn-card-jump"><a href="index.html#sec-7">Jump to section &rarr;</a></span>
+        <span class="wn-card-source">Source: <a href="https://blogs.microsoft.com/blog/2026/04/27/the-next-phase-of-the-microsoft-openai-partnership/" target="_blank" rel="noopener">Microsoft</a> / <a href="https://openai.com/index/next-phase-of-microsoft-partnership/" target="_blank" rel="noopener">OpenAI, Apr 27 2026</a></span>
+      </div>
+    </article>
+
+    <!-- 5) Hyperscaler CapEx reset -->
+    <article class="wn-card" style="--wn-accent:#F5C542">
+      <span class="wn-card-tag">CapEx</span>
+      <h2 class="wn-card-headline">Hyperscaler 2026 CapEx resets toward $725B</h2>
+      <p class="wn-card-body">Amazon (~$200B), Microsoft (~$190B), Google (~$180&ndash;190B), and Meta ($125&ndash;145B) now guide to roughly $725B combined &mdash; about $100B above prior projections. The infrastructure chapter got bigger, not smaller; the bottleneck is memory, power, and data-center execution. Report's headline $700B figure is preserved as guidance midpoint with a callout to the latest reset.</p>
+      <div class="wn-card-meta">
+        <span class="wn-card-updates">Updates: <strong>$700B Sprint</strong>, <strong>Follow the Money</strong></span>
+        <span class="wn-card-jump"><a href="index.html#sec-7">Jump to section &rarr;</a></span>
+        <span class="wn-card-source">Source: <a href="https://finance.yahoo.com/markets/article/magnificent-7-earnings-rush-reveals-ai-spending-surge-with-hyperscaler-capex-set-to-reach-725-billion-in-2026-224901707.html" target="_blank" rel="noopener">Yahoo Finance / Business Insider, Apr 29&ndash;30 2026</a></span>
+      </div>
+    </article>
+
+    <!-- 6) Pentagon classified AI deals -->
+    <article class="wn-card" style="--wn-accent:#A0A8BC">
+      <span class="wn-card-tag">Defense</span>
+      <h2 class="wn-card-headline">Pentagon signs 8 frontier AI vendors for classified networks &mdash; Anthropic excluded</h2>
+      <p class="wn-card-body">DoD signed formal agreements with SpaceX, OpenAI, Google, NVIDIA, Reflection, Microsoft, AWS, and Oracle to deploy frontier AI on classified networks for lawful operational use. Anthropic was excluded amid an ongoing supply-chain-risk dispute. Frontier models are now national-security infrastructure &mdash; safety posture has become a go-to-market constraint.</p>
+      <div class="wn-card-meta">
+        <span class="wn-card-updates">Updates: <strong>Geopolitics</strong></span>
+        <span class="wn-card-jump"><a href="index.html#sec-11">Jump to section &rarr;</a></span>
+        <span class="wn-card-source">Source: <a href="https://defensescoop.com/2026/05/01/dod-expands-classified-ai-work-with-8-companies-excluding-anthropic/" target="_blank" rel="noopener">DefenseScoop, May 1 2026</a></span>
+      </div>
+    </article>
+
+    <!-- 7) Anthropic 10 finance agents -->
+    <article class="wn-card" style="--wn-accent:#D4A574">
+      <span class="wn-card-tag">Agents</span>
+      <h2 class="wn-card-headline">Anthropic ships 10 ready-to-run finance agents</h2>
+      <p class="wn-card-body">Ten templated workflows (pitchbooks, KYC, month-end close, etc.) deployed via Claude Cowork, Claude Code plugins, and Managed Agents &mdash; with Excel, PowerPoint, Word, and Outlook add-ins inbound and a Moody's MCP app covering 600M+ public and private companies. Agents are moving from generic chat into packaged vertical workflows.</p>
+      <div class="wn-card-meta">
+        <span class="wn-card-updates">Updates: <strong>Agent Revolution</strong></span>
+        <span class="wn-card-jump"><a href="index.html#sec-4">Jump to section &rarr;</a></span>
+        <span class="wn-card-source">Source: <a href="https://www.anthropic.com/news/finance-agents" target="_blank" rel="noopener">Anthropic, May 5 2026</a></span>
+      </div>
+    </article>
+
+  </div>
+
+  <p class="wn-footnote">Recurring patch-notes log. Reported items are sourced from primary releases or first-party reporting; dollar figures and benchmarks reflect what was published in-window and may be revised in the next refresh. Each item is also reflected, in concise form, in the relevant section of the main report &mdash; this page is the running changelog with full sources.</p>
+
+  <div class="wn-footer-actions">
+    <a class="wn-footer-link" href="index.html">&larr; Back to State of AI report</a>
+    <a class="wn-footer-link wn-footer-link--gold" href="slides.html">&#9654; 20-min Slideshow</a>
+  </div>
+</main>
+
+</body>
+</html>

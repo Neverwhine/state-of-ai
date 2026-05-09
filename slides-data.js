@@ -21,33 +21,33 @@ window.SLIDES_DATA = {
     },
     {
       badge: 'LAYER 3', title: 'CLOUD & INFRA', accent: '#4A90D9',
-      revenue2026: '$18-22B', revenueLabel: 'AI cloud rev (+ $224B CapEx)',
-      revenue2024Num: 8, revenue2026Num: 20,
+      revenue2026: '$45-55B', revenueLabel: 'AI cloud rev (+ $224B CapEx)',
+      revenue2024Num: 20, revenue2026Num: 50,
       growth: '+150%',
       marginPct: 28, marginRange: '20-35%'
     },
     {
       badge: 'LAYER 2', title: 'SILICON', accent: '#E8837C',
-      revenue2026: '$130B', revenueLabel: 'AI silicon revenue',
-      revenue2024Num: 60, revenue2026Num: 130,
-      growth: '+117%',
+      revenue2026: '$350B+', revenueLabel: 'AI silicon revenue',
+      revenue2024Num: 130, revenue2026Num: 350,
+      growth: '+169%',
       marginPct: 60, marginRange: '45-75% (NVIDIA)'
     },
     {
       badge: 'LAYER 1', title: 'ENERGY', accent: '#F5C542',
-      revenue2026: '460 TWh', revenueLabel: 'data-center power',
-      revenue2024Num: 240, revenue2026Num: 460,
-      growth: '+92%',
+      revenue2026: '580 TWh', revenueLabel: 'data-center power by 2028',
+      revenue2024Num: 460, revenue2026Num: 580,
+      growth: '+26%',
       marginPct: 12, marginRange: '8-15% (utility)'
     }
   ],
 
-  // Hyperscaler CapEx ($B)
-  hyperscalerCapex: { y2024: 224, y2026: 700, ratio: '$12 infra : $1 app revenue' },
+  // Hyperscaler CapEx ($B) — Big 4 2026 guidance: ~$695B midpoint, up to $725B top end (post-Q1 2026 earnings)
+  hyperscalerCapex: { y2024: 224, y2026: 695, y2026Label: '~$695B mid / up to $725B', ratio: '$12 infra : $1 app revenue' },
 
   // Inference cost collapse — log scale. Cost per million tokens (USD).
   inferenceCost: [
-    { date: 'GPT-4 (Mar 2023)',  cost: 60.00 },
+    { date: 'GPT-4 (Mar 2023)',  cost: 37.50 },
     { date: 'GPT-4 Turbo',       cost: 30.00 },
     { date: 'GPT-4o',            cost: 15.00 },
     { date: 'Gemini Flash',      cost: 0.70 },
@@ -55,20 +55,19 @@ window.SLIDES_DATA = {
   ],
   inferenceCostDrop: '99.6%',
 
-  // Application layer companies (slide 7 in new deck, was 6)
+  // Application layer companies (slide 7)
   appLayer: [
     { name: 'OpenAI',     val: '$25B',   color: '#10A37F' },
-    { name: 'Anthropic',  val: '$30B',   color: '#D4A574' },
+    { name: 'Anthropic',  val: '$30B+',  color: '#D4A574' },
     { name: 'Cursor',     val: '$2B',    color: '#A0A8BC' },
     { name: 'Perplexity', val: '$420M',  color: '#4ECDC4', dvc: true },
     { name: 'ElevenLabs', val: '$330M',  color: '#A0A8BC' },
     { name: 'Higgsfield', val: '$300M',  color: '#4ECDC4', dvc: true }
   ],
 
-  // Model layer
-  frontierModelCount: 15,
+  // Model layer (count derived from chips below — see slide 8 eyebrow)
   modelClusterGroups: {
-    commodity:   ['DeepSeek V3.2', 'Qwen 3', 'GLM-5', 'Kimi K2.5', 'Gemma 4', 'Llama 4'],
+    commodity:   ['DeepSeek V3.2', 'Qwen3.5 397B A17B', 'GLM-5', 'Kimi K2.5', 'Gemma 4', 'Llama 4'],
     specialist:  ['Cursor (code)', 'ElevenLabs (voice)', 'Veo 3.1 (video)', 'Imagen 4 (image)'],
     govOnly:     ['Mythos', 'GPT-5.5-Cyber'],
     deprecated:  ['Sora 2']
@@ -76,7 +75,7 @@ window.SLIDES_DATA = {
 
   // Smarter + Cheaper diverging curves
   smarterCurve: [
-    { date: '2023', mmlu: 70, cost: 60 },
+    { date: '2023', mmlu: 70, cost: 37.50 },
     { date: '2024', mmlu: 80, cost: 15 },
     { date: '2025', mmlu: 87, cost: 2 },
     { date: '2026', mmlu: 92, cost: 0.14 }
@@ -84,21 +83,14 @@ window.SLIDES_DATA = {
 
   // ── NEW slide 6: Infrastructure & Energy headline stats ──
   infraStats: {
-    capex2026: '$700B',
+    capex2026: '~$700B',
+    capex2026Detail: '~$695B midpoint · up to $725B top end (Big 4 post-Q1 2026)',
     capex2024: '$224B',
     multiplier: '3.1×',
     nuclear: 'Three Mile Island restart · Microsoft + Google SMRs'
   },
 
-  // ── NEW slide 10: Agent Anatomy KPIs + 7-layer stack ──
-  agentAnatomyKPIs: {
-    funding: '$1B+',
-    fundingLabel: 'Combined funding',
-    companyCount: '47',
-    companyLabel: 'Companies',
-    age: '18 mo',
-    ageLabel: "Most didn't exist before"
-  },
+  // ── NEW slide 10: Agent Anatomy 7-layer stack (KPIs are now inline in the slide headline) ──
   agentLayers: [
     { num: 1, name: 'UI / Frontend',       desc: 'How agents meet users' },
     { num: 2, name: 'Orchestration',       desc: 'Planning, routing, multi-agent' },
@@ -118,7 +110,15 @@ window.SLIDES_DATA = {
     { letter: 'W', name: 'Wabi',        stat: '$20M pre-seed',   color: '#4ECDC4', desc: 'Software creation, reimagined', dvc: true },
     { letter: 'B', name: 'Bolt.new',    stat: '~$40M ARR (6mo)', color: '#A0A8BC', desc: 'Browser-based full-stack builder' }
   ],
-  vibeStats: { devUsageStart: '25%', devUsageNow: '82%', timeframe: 'in one year' },
+  // SonarSource 2026 State of Code Developer Survey: 42% of committed code is AI-generated
+  // or significantly AI-assisted; 72% of developers who tried AI use it every day.
+  // Source: https://www.sonarsource.com/state-of-code-developer-survey-report.pdf
+  // Stack Overflow 2025 (51% daily) kept only as secondary signal.
+  vibeStats: {
+    aiAuthoredCode: '42%',
+    dailyUseAmongTriers: '72%',
+    source: 'SonarSource 2026 State of Code Developer Survey'
+  },
 
   // ── REBUILT slide 12: Physical AI tiles ──
   physicalAI: {
@@ -142,42 +142,39 @@ window.SLIDES_DATA = {
     { num: '200+',     label: 'AURORA TRUCKS',        accent: '#7C4DFF' }
   ],
 
-  // ARPU comparison (slide 13, was 10)
-  arpu: [
-    { name: 'Anthropic', value: 16.20, color: '#D4A574' },
-    { name: 'Microsoft', value: 5.00,  color: '#0078D4' },
-    { name: 'OpenAI',    value: 2.20,  color: '#10A37F' },
-    { name: 'Google',    value: 1.10,  color: '#4285F4' }
-  ],
+  // Slide 10 ARPU bars are now native (Netflix/Meta/Google/OpenAI). Numbers are
+  // hard-coded in slides.html under .slide-arpu-block. Update both the report
+  // (index.html #arpu-block) and slides.html together if any value changes.
 
   // Tech cycle phases (slide 15 close)
   cyclePhases: ['Infrastructure buildout', 'Platform consolidation', 'Application dominance'],
   weAreHere:   'Infrastructure buildout',
 
   // Iframe target sections — keyed by slide number, value passed as ?embed=...
+  // 14 slides total. Stack-logic slides come first (1-6), then industrial
+  // buildout (7), agents (8), vibe coding (9), business models (10),
+  // services quadrant (11), attack angles (12), physical AI (13), close (14).
   iframeEmbeds: {
-    6:  'sec-7',   // CapEx explorer
-    10: 'sec-5',   // Agent anatomy 7-layer stack
-    14: 'sec-9'    // Sequoia services matrix lives in sec-9
+    7:  'sec-7:capex-explorer-block',  // CapEx explorer (focused block)
+    8:  'sec-5:agent-stack-block'      // Agent anatomy 7-layer stack
+    // Slide 10 (ARPU), 11 (seq-matrix), 12 (attack-angles) are now NATIVE — no iframe.
   },
 
-  // Section anchors for "Dive deeper" links to index.html (15 slides)
+  // Section anchors for "Dive deeper" links to index.html (14 slides)
   diveDeeperAnchors: {
     1:  'index.html#sec-0',
     2:  'index.html#sec-1',
-    3:  'index.html#sec-1',   // stack
-    4:  'index.html#sec-1',   // revenue/margin
-    5:  'index.html#sec-1',   // two forces
-    6:  'index.html#sec-7',   // infrastructure & energy
-    7:  'index.html#sec-2',   // application layer (was 6)
-    8:  'index.html#sec-3',   // model wars (was 7)
-    9:  'index.html#sec-3',   // smarter+cheaper (was 8)
-    10: 'index.html#sec-5',   // agent anatomy
-    11: 'index.html#sec-4',   // vibe coding / agent revolution cards
-    12: 'index.html#sec-8',   // physical AI (rebuilt — was 9)
-    13: 'index.html#sec-9',   // business models / pricing (was 10)
-    14: 'index.html#sec-9',   // sequoia services matrix
-    15: 'index.html#attack-angles-block', // three attack angles
-    16: 'index.html#sec-15'   // close (was 11)
+    3:  'index.html#sec-1',   // unified stack: 5 layers / 2 lenses / 2 forces
+    4:  'index.html#sec-2',   // application layer funnel
+    5:  'index.html#sec-3',   // model wars
+    6:  'index.html#sec-3',   // smarter+cheaper
+    7:  'index.html#sec-7',   // infrastructure & energy (industrial buildout)
+    8:  'index.html#sec-5',   // agent anatomy
+    9:  'index.html#sec-4',   // vibe coding / agent revolution cards
+    10: 'index.html#sec-9',   // business models / pricing / ARPU
+    11: 'index.html#sec-9',   // sequoia services matrix
+    12: 'index.html#attack-angles-block', // three attack angles
+    13: 'index.html#sec-8',   // physical AI
+    14: 'index.html#sec-15'   // close
   }
 };

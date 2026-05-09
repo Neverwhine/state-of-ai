@@ -130,6 +130,17 @@ body { position: relative; }
 }
 .slide-sub strong { color: var(--gold); font-weight: 700; }
 
+.slide-source {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-mute);
+  opacity: 0.7;
+  margin-top: 14px;
+  letter-spacing: 0.02em;
+}
+.slide-source a { color: var(--text-mute); text-decoration: underline; text-underline-offset: 2px; }
+.slide-source a:hover { color: var(--teal); }
+
 .inline-chart-title {
   font-size: 11px; font-weight: 700;
   letter-spacing: 0.14em; text-transform: uppercase;
@@ -204,6 +215,225 @@ body { position: relative; }
   stroke-dashoffset: 2000;
 }
 .cycle-curve.is-drawn { stroke-dashoffset: 0; transition: stroke-dashoffset 1400ms ease-out; }
+
+/* ============ SLIDE 2 — Tech Cycles redesign (price-drop ladder + software arc) ============ */
+.slide--tc { align-items: flex-start; padding-top: 46px; }
+.slide--tc .slide-inner { max-width: 1240px; }
+.slide--tc .slide-headline { font-size: clamp(32px, 3.6vw, 52px); margin-bottom: 8px; }
+.slide--tc .slide-sub { margin-bottom: 28px; max-width: 880px; }
+.tc-bright { color: var(--teal); font-weight: 700; }
+
+/* ─── Part A: Price-drop ladder ─── */
+.tc-ladder {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  margin-bottom: 26px;
+}
+.tc-chip {
+  position: relative;
+  display: flex; flex-direction: column; align-items: center;
+  gap: 4px;
+  padding: 14px 10px 16px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: linear-gradient(160deg, rgba(56,62,82,0.55), rgba(56,62,82,0.25));
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 500ms ease, transform 500ms ease, border-color 400ms ease, box-shadow 400ms ease, background 400ms ease;
+}
+.tc-ladder.is-built .tc-chip { opacity: 1; transform: none; }
+.tc-chip-era   { color: #E8ECEF; font-weight: 800; font-size: 17px; letter-spacing: 0.02em; }
+.tc-chip-year  { color: var(--text-mute); font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase; }
+.tc-chip-arrow { color: var(--text-mute); font-size: 14px; line-height: 1; margin: 2px 0 2px; opacity: 0.7; }
+.tc-chip-drop  { color: #C9CFDB; font-size: 12.5px; font-weight: 600; text-align: center; line-height: 1.35; }
+
+.tc-chip--live {
+  border-color: rgba(78,205,196,0.55);
+  background: linear-gradient(160deg, rgba(78,205,196,0.20), rgba(78,205,196,0.05));
+  box-shadow: 0 0 28px rgba(78,205,196,0.18);
+}
+.tc-chip--live .tc-chip-era   { color: var(--teal); }
+.tc-chip--live .tc-chip-arrow { color: var(--teal); opacity: 1; }
+.tc-chip--live .tc-chip-drop  { color: var(--gold); font-weight: 800; }
+
+.tc-here {
+  display: inline-block;
+  margin-top: 6px;
+  padding: 2px 8px;
+  font-size: 9.5px; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--gold); font-weight: 800;
+  border: 1px solid rgba(245,197,66,0.4);
+  border-radius: 999px;
+  background: rgba(245,197,66,0.06);
+}
+
+/* ─── Part B: Software economics arc ─── */
+.tc-arc {
+  width: 100%;
+  padding: 18px 22px 22px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(124,77,255,0.04), rgba(78,205,196,0.04));
+  margin-bottom: 22px;
+}
+.tc-arc-label {
+  font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--text-mute); font-weight: 700; text-align: center;
+  margin-bottom: 14px;
+}
+.tc-arc-row {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr auto 1fr;
+  align-items: center;
+  gap: 14px;
+}
+.tc-era {
+  display: flex; flex-direction: column; align-items: center; gap: 12px;
+  padding: 12px 10px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: rgba(45,49,66,0.45);
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 600ms ease, transform 600ms ease, border-color 400ms ease, box-shadow 400ms ease;
+}
+.tc-arc.is-built .tc-era { opacity: 1; transform: none; }
+.tc-era--live {
+  border-color: rgba(78,205,196,0.55);
+  background: linear-gradient(160deg, rgba(78,205,196,0.10), rgba(124,77,255,0.06));
+  box-shadow: 0 0 24px rgba(78,205,196,0.14);
+}
+.tc-era-glyph {
+  position: relative;
+  width: 100%;
+  height: 96px;
+  display: flex; align-items: center; justify-content: center;
+}
+.tc-era-cap { display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center; }
+.tc-era-title {
+  font-size: 14px; font-weight: 800; letter-spacing: 0.04em;
+  color: #E8ECEF;
+}
+.tc-era--live .tc-era-title { color: var(--teal); }
+.tc-era-sub {
+  font-size: 11.5px; color: var(--text-mute); line-height: 1.4;
+  max-width: 240px;
+}
+
+/* Bespoke glyph: a few separate chunky nodes */
+.tc-era-glyph--bespoke {
+  gap: 14px;
+}
+.tc-era-glyph--bespoke .tc-node {
+  width: 22px; height: 22px; border-radius: 5px;
+  background: rgba(232,131,124,0.55);
+  border: 1px solid rgba(232,131,124,0.75);
+  box-shadow: 0 0 14px rgba(232,131,124,0.18);
+}
+.tc-era-glyph--bespoke .tc-node--big { width: 30px; height: 30px; }
+.tc-era-glyph--bespoke .tc-node--mid { width: 26px; height: 26px; }
+
+/* SaaS glyph: one block with many fan-out pips (one product, many customers) */
+.tc-era-glyph--saas { position: relative; }
+.tc-saas-block {
+  position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+  width: 56px; height: 56px; border-radius: 10px;
+  background: linear-gradient(160deg, rgba(245,197,66,0.55), rgba(245,197,66,0.25));
+  border: 1px solid rgba(245,197,66,0.7);
+  box-shadow: 0 0 18px rgba(245,197,66,0.18);
+}
+.tc-saas-fan {
+  position: absolute; right: 14px;
+  width: 12px; height: 12px; border-radius: 50%;
+  background: rgba(245,197,66,0.42);
+  border: 1px solid rgba(245,197,66,0.7);
+}
+.tc-arc.is-built .tc-era-glyph--saas::before {
+  content: '';
+  position: absolute; left: 70px; right: 26px; top: 50%;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(245,197,66,0.55), rgba(245,197,66,0.05));
+  transform: translateY(-50%);
+}
+.tc-saas-fan--1 { top: 8%;  }
+.tc-saas-fan--2 { top: 25%; }
+.tc-saas-fan--3 { top: 42%; }
+.tc-saas-fan--4 { top: 60%; }
+.tc-saas-fan--5 { top: 78%; }
+
+/* AI glyph: one teal core with many small custom orbiting nodes */
+.tc-era-glyph--ai { position: relative; }
+.tc-ai-core {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+  width: 36px; height: 36px; border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(78,205,196,0.95), rgba(78,205,196,0.4));
+  box-shadow: 0 0 24px rgba(78,205,196,0.5), inset 0 0 12px rgba(255,255,255,0.18);
+  border: 1px solid rgba(78,205,196,0.85);
+}
+.tc-ai-orbit {
+  position: absolute;
+  width: 10px; height: 10px; border-radius: 50%;
+  background: rgba(78,205,196,0.55);
+  border: 1px solid rgba(78,205,196,0.85);
+  box-shadow: 0 0 8px rgba(78,205,196,0.3);
+  opacity: 0;
+  transition: opacity 500ms ease;
+}
+.tc-arc.is-lit .tc-ai-orbit { opacity: 1; }
+.tc-ai-orbit--1 { left: 12%; top: 20%; }
+.tc-ai-orbit--2 { left: 30%; top: 8%;  width: 8px; height: 8px; }
+.tc-ai-orbit--3 { right: 18%; top: 14%; }
+.tc-ai-orbit--4 { right: 8%;  top: 50%; transform: translateY(-50%); width: 12px; height: 12px; }
+.tc-ai-orbit--5 { right: 22%; bottom: 14%; }
+.tc-ai-orbit--6 { left: 32%; bottom: 8%;  width: 8px; height: 8px; }
+.tc-ai-orbit--7 { left: 10%; bottom: 28%; }
+
+/* Connecting arrows between eras */
+.tc-arc-arrow {
+  display: flex; align-items: center; justify-content: center;
+  width: 36px;
+}
+.tc-arc-arrow span {
+  display: block;
+  width: 0; height: 0;
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+  border-left: 10px solid rgba(160,168,188,0.5);
+}
+.tc-era[data-era="2"] ~ .tc-arc-arrow span,
+.tc-era--live + .tc-arc-arrow span { border-left-color: var(--teal); }
+
+/* ─── Part C: Bridge ─── */
+.tc-bridge {
+  width: 100%;
+  display: flex; align-items: center; justify-content: center; flex-wrap: wrap;
+  gap: 12px;
+  font-size: clamp(15px, 1.5vw, 19px);
+  font-weight: 700;
+}
+.tc-bridge-line { color: var(--text); }
+.tc-bridge-sep  { color: var(--text-mute); }
+.tc-bridge-line--accent { color: var(--teal); }
+
+/* Punchline below the bridge */
+.tc-punchline {
+  width: 100%;
+  margin: 10px 0 0;
+  display: flex; align-items: center; justify-content: center; flex-wrap: wrap;
+  gap: 10px;
+  font-size: clamp(11px, 1.05vw, 13px);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--text-mute);
+}
+.tc-punchline-sep { color: rgba(160,168,188,0.45); }
+.tc-punchline-accent {
+  color: var(--gold);
+  text-shadow: 0 0 18px rgba(245,197,66,0.25);
+}
 
 /* ============ SHARED CHART WRAP ============ */
 .chart-wrap {
@@ -363,6 +593,256 @@ body { position: relative; }
   color: var(--text-mute);
 }
 .keystat-sep { color: var(--text-mute); opacity: 0.5; }
+
+/* ════════════ SLIDE 3 — UNIFIED STACK (3 internal states) ════════════
+   One slide, three lenses on the same 5-layer stack. Header / footer
+   crossfade between states; the central stack morphs in place.
+   ──────────────────────────────────────────────────────────────────── */
+
+.slide--stack-unified .slide-inner {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: flex-start;
+  gap: 18px; padding-top: 38px;
+}
+
+/* ── HEADER stack (3 versions overlap, fade between) ── */
+.su-header {
+  position: relative;
+  width: 100%; max-width: 1080px;
+  min-height: 132px;
+  text-align: center;
+}
+.su-header-state {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; gap: 8px; align-items: center;
+  opacity: 0; transform: translateY(8px);
+  transition: opacity 380ms ease-out, transform 380ms ease-out;
+  pointer-events: none;
+}
+.su-header-state.is-active {
+  opacity: 1; transform: translateY(0);
+  pointer-events: auto;
+}
+.su-header-state .slide-eyebrow {
+  font-size: 11px; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--text-mute);
+  font-weight: 800;
+}
+.su-header-state .slide-headline {
+  font-size: clamp(34px, 4.6vw, 60px);
+  font-weight: 800; letter-spacing: -0.025em;
+  margin: 0; line-height: 1.05;
+  color: var(--text);
+}
+.su-header-state .slide-sub {
+  max-width: 920px;
+  font-size: clamp(13px, 1.3vw, 16px);
+  color: var(--text-mute);
+  margin: 0;
+  line-height: 1.5;
+}
+.hl-accent {
+  background-clip: text; -webkit-background-clip: text;
+  color: transparent; -webkit-text-fill-color: transparent;
+}
+.hl-accent--teal  { background-image: linear-gradient(120deg, #4ECDC4 0%, #A8F2EC 100%); }
+.hl-accent--gold  { background-image: linear-gradient(120deg, #F5C542 0%, #FFE6A8 100%); }
+.hl-accent--coral { background-image: linear-gradient(120deg, #E8837C 0%, #FFB4AC 100%); }
+
+/* ── STAGE: rails flank the central stack ── */
+.su-stage {
+  position: relative;
+  display: grid;
+  grid-template-columns: 0fr 1fr 0fr;
+  gap: 0;
+  width: 100%; max-width: 1080px;
+  align-items: center;
+  transition: grid-template-columns 480ms cubic-bezier(0.6, 0.0, 0.2, 1.0), gap 480ms cubic-bezier(0.6,0,0.2,1);
+}
+/* In state C (forces), expand the rails so they're visible */
+.su-stage[data-state="2"] {
+  grid-template-columns: 200px 1fr 200px;
+  gap: 28px;
+}
+
+.su-rail {
+  display: flex; align-items: center; gap: 12px;
+  opacity: 0;
+  transform: translateX(0);
+  pointer-events: none;
+  overflow: hidden;
+  transition: opacity 360ms ease-out 80ms;
+  min-width: 0;
+}
+.su-rail--left  { flex-direction: row; transform: translateX(-12px); }
+.su-rail--right { flex-direction: row-reverse; transform: translateX(12px); }
+.su-stage[data-state="2"] .su-rail {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 480ms ease-out 240ms, transform 600ms ease-out 240ms;
+}
+.su-rail .force-arrow { width: 44px; height: 280px; flex-shrink: 0; }
+.su-rail .force-side-label { display: flex; flex-direction: column; gap: 4px; max-width: 150px; }
+.su-rail .force-side-title { font-size: 12px; font-weight: 800; letter-spacing: 0.14em; }
+.su-rail .force-side-sub   { font-size: 11px; color: var(--text-mute); line-height: 1.4; }
+.su-rail .force-path { opacity: 0; }
+
+/* ── CENTER STACK ── */
+.su-stack {
+  width: 100%; max-width: 760px;
+  margin: 0 auto;
+  display: flex; flex-direction: column; gap: 10px;
+  transition: max-width 480ms cubic-bezier(0.6,0,0.2,1), transform 480ms cubic-bezier(0.6,0,0.2,1);
+}
+.su-stage[data-state="2"] .su-stack {
+  max-width: 540px;
+  transform: scale(0.96);
+}
+
+.su-stack .stack-layer {
+  position: relative;
+  overflow: hidden;
+  transition: border-left-color 380ms ease-out, background 380ms ease-out, transform 380ms ease-out;
+}
+.su-stack .stack-layer .stack-margin-bar {
+  --bar-width: 0%;
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: var(--bar-width);
+  background: linear-gradient(90deg,
+    color-mix(in srgb, var(--accent) 32%, transparent) 0%,
+    color-mix(in srgb, var(--accent) 12%, transparent) 100%);
+  pointer-events: none;
+  z-index: 0;
+  transition: background 380ms ease-out;
+}
+.su-stack .stack-layer .stack-margin-bar::after {
+  content: '';
+  position: absolute; right: 0; top: 0; bottom: 0;
+  width: 2px;
+  background: var(--accent);
+  opacity: 0.55;
+  box-shadow: 0 0 12px var(--accent);
+}
+.su-stack .stack-layer.stack-layer--margin .stack-margin-bar { display: block; }
+.su-stack .stack-layer .stack-badge,
+.su-stack .stack-layer .stack-title,
+.su-stack .stack-layer .stack-value,
+.su-stack .stack-layer .stack-label { position: relative; z-index: 1; }
+.su-stack .stack-layer.stack-layer--force {
+  /* tighter padding when in force-state to make room for the side rails */
+  padding: 11px 18px;
+}
+
+/* ── FOOTER stat strip ── */
+.su-foot {
+  position: relative;
+  width: 100%; max-width: 1080px;
+  min-height: 64px;
+  display: flex; align-items: center; justify-content: center;
+}
+.su-foot-state {
+  position: absolute; inset: 0;
+  display: flex; flex-wrap: wrap; align-items: baseline;
+  justify-content: center; gap: 6px 18px;
+  padding: 14px 22px;
+  border-radius: 10px;
+  background: var(--bg-card); border: 1px solid var(--border);
+  opacity: 0; transform: translateY(6px);
+  transition: opacity 320ms ease-out, transform 320ms ease-out;
+  pointer-events: none;
+}
+.su-foot-state.is-active {
+  opacity: 1; transform: translateY(0);
+  pointer-events: auto;
+}
+.su-stat { display: inline-flex; align-items: baseline; gap: 8px; }
+.su-stat-num {
+  font-size: 22px; font-weight: 800; color: var(--text);
+  font-feature-settings: "tnum" 1;
+  letter-spacing: -0.01em;
+}
+.su-stat-num--accent { color: var(--coral); }
+.su-stat-num--teal   { color: var(--teal); }
+.su-stat-num--coral  { color: var(--coral); }
+.su-stat-tag {
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 0.10em; text-transform: uppercase;
+  color: var(--text-mute);
+}
+.su-stat-sep { color: var(--text-mute); opacity: 0.4; font-size: 14px; }
+
+/* Mobile-only inline hint — hidden on desktop */
+.su-mobile-hint { display: none; }
+
+/* ── PIPS (state indicator + clickable) ── */
+.su-pips {
+  display: flex; gap: 10px;
+  align-items: center; justify-content: center;
+  /* Take pips out of the slide stacking context so they sit above .click-zone (z:30) */
+  position: fixed;
+  left: 50%; bottom: 26px;
+  transform: translateX(-50%);
+  z-index: 45;
+  /* Hidden until the unified slide is active (rule below) */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 280ms ease-out;
+}
+.slide--stack-unified.is-active ~ .su-pips,
+.slide.is-active.slide--stack-unified .su-pips {
+  opacity: 1; pointer-events: auto;
+}
+/* Since pips live INSIDE the slide, the rule must apply when the slide is active */
+.slide.slide--stack-unified.is-active .su-pips { opacity: 1; pointer-events: auto; }
+.su-pip {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 14px;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  cursor: pointer;
+  font-family: inherit;
+  color: var(--text-mute);
+  transition: all 260ms ease-out;
+  outline: none;
+}
+.su-pip:hover { color: var(--text); border-color: rgba(78,205,196,0.6); }
+.su-pip:focus-visible { box-shadow: 0 0 0 2px rgba(78,205,196,0.4); }
+.su-pip-num {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  font-size: 10px; font-weight: 800;
+  background: rgba(160,168,188,0.15);
+  color: var(--text-mute);
+  letter-spacing: 0;
+}
+.su-pip-label {
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.10em; text-transform: uppercase;
+}
+.su-pip.is-active {
+  color: var(--text);
+  border-color: var(--teal);
+  background: linear-gradient(180deg, rgba(78,205,196,0.10), rgba(78,205,196,0.02));
+  box-shadow: 0 0 0 1px rgba(78,205,196,0.25), 0 8px 24px -12px rgba(78,205,196,0.6);
+}
+.su-pip.is-active .su-pip-num {
+  background: var(--teal);
+  color: #0F1320;
+}
+
+@media (max-width: 900px) {
+  .su-stage { grid-template-columns: 1fr !important; gap: 16px !important; }
+  .su-stage[data-state="2"] { grid-template-columns: 1fr !important; }
+  .su-rail { flex-direction: row !important; justify-content: center; max-width: 100%; }
+  .su-rail .force-arrow { height: 80px; width: 40px; transform: rotate(-90deg); }
+  .su-stack { max-width: 100% !important; transform: none !important; }
+  .su-header-state .slide-headline { font-size: clamp(26px, 7vw, 36px); }
+  .su-foot-state { font-size: 12px; padding: 10px 14px; }
+  .su-pip-label { font-size: 10px; }
+}
 
 /* ============ SLIDE 5 — Industrial layers ============ */
 .industrial-stack {
@@ -530,9 +1010,13 @@ body { position: relative; }
 /* ============ SLIDE 8 — Funnel ============ */
 .funnel-wrap {
   width: 100%; display: flex; justify-content: center;
+  /* Hard-cap height so the MODELS row label doesn't fall below the viewport. */
+  max-height: 64vh;
 }
 .funnel-svg {
-  width: 100%; max-width: 1100px; height: auto;
+  width: 100%; max-width: 1100px; height: 100%; max-height: 64vh;
+  /* preserve aspect ratio inside the cap */
+  display: block;
 }
 .funnel-dot {
   fill: var(--text-mute); opacity: 0.6;
@@ -738,35 +1222,55 @@ body { position: relative; }
 .slide-iframe-container--tall { height: 64vh; max-height: 720px; }
 .slide-iframe-container--medium { height: 44vh; max-height: 460px; }
 
-/* Vibe coding slide — top-anchor so empty top space is gone */
-.slide[data-slide="11"] { align-items: flex-start; padding-top: 60px; }
-.slide[data-slide="11"] .slide-inner { gap: 12px; }
+/* Iframe fallback — appears only if the embed cannot load (404, JSON, etc).
+   Replaces any raw "{"detail":"Not Found"}" with a polished card. */
+.iframe-fallback {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  gap: 12px; padding: 32px;
+  background: linear-gradient(135deg, rgba(78,205,196,0.06), rgba(124,77,255,0.06));
+  text-align: center;
+}
+.iframe-fallback-eyebrow {
+  font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--teal); font-weight: 700;
+}
+.iframe-fallback-title {
+  font-size: 22px; font-weight: 700; color: var(--text);
+  text-transform: capitalize;
+}
+.iframe-fallback-link {
+  font-size: 14px; color: var(--gold); text-decoration: none; font-weight: 600;
+  border: 1px solid rgba(245,197,66,0.35); padding: 8px 16px; border-radius: 999px;
+}
+.iframe-fallback-link:hover { background: rgba(245,197,66,0.08); }
 
-/* Slide 13 — top-anchor + slimmer headline since the iframe carries the visual weight */
-.slide[data-slide="13"] { align-items: flex-start; padding-top: 50px; }
-.slide[data-slide="13"] .slide-headline { font-size: clamp(34px, 3.8vw, 52px); margin-bottom: 8px; }
-.slide[data-slide="13"] .slide-sub { margin-bottom: 14px; }
+/* Business Models slide (10) — top-anchor so empty top space is gone */
+.slide[data-slide="10"] { align-items: flex-start; padding-top: 60px; }
+.slide[data-slide="10"] .slide-inner { gap: 12px; }
 
-/* Slide 10/14/15 — top-anchor for iframe slides so headline doesn't push iframe off-screen */
-.slide[data-slide="10"], .slide[data-slide="14"], .slide[data-slide="15"] { align-items: flex-start; padding-top: 40px; }
-.slide[data-slide="10"] .slide-headline,
-.slide[data-slide="14"] .slide-headline,
-.slide[data-slide="15"] .slide-headline { font-size: clamp(34px, 3.8vw, 52px); margin-bottom: 8px; }
-.slide[data-slide="10"] .slide-sub,
-.slide[data-slide="14"] .slide-sub,
-.slide[data-slide="15"] .slide-sub { margin-bottom: 14px; }
-.slide[data-slide="10"] .slide-iframe-container--tall { height: 64vh; }
+/* Attack angles slide (12) — top-anchor + slimmer headline since the iframe carries the visual weight */
+.slide[data-slide="12"] { align-items: flex-start; padding-top: 50px; }
+.slide[data-slide="12"] .slide-headline { font-size: clamp(34px, 3.8vw, 52px); margin-bottom: 8px; }
+.slide[data-slide="12"] .slide-sub { margin-bottom: 14px; }
+
+/* Physical AI (13) — centered vertically; tiles + strip share the slide.
+   Close slide (14) — top-anchored because Key Learnings cards need top space. */
+.slide[data-slide="13"] { align-items: center; padding-top: 64px; padding-bottom: 80px; }
+.slide[data-slide="14"] { align-items: flex-start; padding-top: 40px; }
+.slide[data-slide="13"] .slide-headline,
+.slide[data-slide="14"] .slide-headline { font-size: clamp(34px, 3.8vw, 52px); margin-bottom: 8px; }
+.slide[data-slide="13"] .slide-sub,
+.slide[data-slide="14"] .slide-sub { margin-bottom: 14px; }
+.slide[data-slide="13"] .slide-inner { gap: 18px; }
+.slide[data-slide="13"] .phys-tiles { margin-top: 22px; margin-bottom: 26px; }
+.slide[data-slide="13"] .phys-stats-strip { max-width: 1100px; }
 .slide[data-slide="14"] .slide-iframe-container--tall { height: 66vh; }
-.slide[data-slide="15"] .slide-iframe-container--tall { height: 70vh; max-height: 800px; }
-.slide[data-slide="15"] { padding-top: 56px; padding-bottom: 32px; }
-.slide[data-slide="15"] .iframe-headline { margin-bottom: 6px; }
-.slide[data-slide="15"] .slide-headline { font-size: clamp(28px, 3.2vw, 42px); margin-bottom: 4px; }
-.slide[data-slide="15"] .slide-sub { font-size: 0.92rem; margin-bottom: 8px; }
 
-/* Slide 13 — pricing-row stays compact above the live ARPU iframe */
-.pricing-row--compact { margin: 8px 0 12px; gap: 0.6rem; }
-.pricing-row--compact .pricing-icon { transform: scale(0.85); }
-.pricing-row--compact .pricing-glyph { font-size: 1.4rem; }
+/* Business Models slide (10) — pricing-row stays compact above the live ARPU iframe */
+.pricing-row--compact { margin: 4px 0 8px; gap: 0.55rem; }
+.pricing-row--compact .pricing-icon { transform: scale(0.78); }
+.pricing-row--compact .pricing-glyph { font-size: 1.3rem; }
 .slide-iframe {
   width: 100%; height: 100%; border: 0;
   background: transparent; display: block;
@@ -982,6 +1486,41 @@ body { position: relative; }
     border-bottom: 1px solid var(--border);
   }
   .progress-bar, .click-zone, .nav-hint { display: none; }
+
+  /* ── Mobile stack slide (slide 3) — pips become inline, tappable ── */
+  .slide--stack-unified .su-pips {
+    position: relative;
+    left: auto; bottom: auto; transform: none;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    margin: 18px auto 0;
+    flex-wrap: wrap;
+    gap: 8px;
+    width: 100%;
+    max-width: 360px;
+  }
+  .slide--stack-unified .su-pip {
+    /* Bigger tap targets on mobile */
+    padding: 12px 16px;
+    min-height: 44px;
+    flex: 1 1 100px;
+    justify-content: center;
+  }
+  .slide--stack-unified .su-pip-label { font-size: 11px; }
+  /* Mobile state hint */
+  .slide--stack-unified .su-mobile-hint {
+    display: block;
+    text-align: center;
+    font-size: 11px;
+    color: var(--text-mute);
+    margin-top: 10px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    opacity: 0.65;
+  }
+  /* Preserve header/footer state crossfade visibility on mobile.
+     The default rule uses opacity:0 + pointer-events:none for inactive states,
+     which already works because state changes toggle .is-active. Keep as-is. */
   .slide-counter { font-size: 11px; }
   .slide-headline { font-size: clamp(28px, 7vw, 40px); }
   .slide-headline--xl { font-size: clamp(36px, 8vw, 52px); }
@@ -1013,4 +1552,132 @@ body { position: relative; }
   .capex-callout { flex-wrap: wrap; gap: 12px; }
   .capex-num--big { font-size: 40px; }
   .dive-deeper { bottom: 18px; right: 18px; font-size: 10px; }
+
+  /* ── Mobile: Tech Cycles slide ── */
+  .slide--tc { padding-top: 40px; }
+  .slide--tc .slide-headline { font-size: 24px; line-height: 1.2; }
+  .slide--tc .slide-sub { font-size: 12.5px; margin-bottom: 16px; }
+
+  .tc-ladder {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 4px;
+    margin-bottom: 18px;
+  }
+  .tc-chip { padding: 8px 4px 10px; gap: 2px; border-radius: 8px; }
+  .tc-chip-era   { font-size: 11px; }
+  .tc-chip-year  { font-size: 8px; letter-spacing: 0.06em; }
+  .tc-chip-arrow { font-size: 10px; margin: 1px 0; }
+  .tc-chip-drop  { font-size: 8.5px; line-height: 1.25; }
+  .tc-here { font-size: 7.5px; padding: 1px 5px; letter-spacing: 0.10em; margin-top: 3px; }
+
+  .tc-arc { padding: 12px 10px 14px; margin-bottom: 14px; }
+  .tc-arc-label { font-size: 9px; letter-spacing: 0.10em; margin-bottom: 8px; }
+  .tc-arc-row {
+    grid-template-columns: 1fr 18px 1fr 18px 1fr;
+    gap: 4px;
+  }
+  .tc-era { padding: 6px 4px 8px; gap: 6px; }
+  .tc-era-glyph { height: 56px; }
+  .tc-era-title { font-size: 11px; letter-spacing: 0.02em; }
+  .tc-era-sub { font-size: 9px; line-height: 1.3; max-width: 100%; }
+  .tc-era-glyph--bespoke { gap: 6px; }
+  .tc-era-glyph--bespoke .tc-node { width: 12px; height: 12px; }
+  .tc-era-glyph--bespoke .tc-node--big { width: 16px; height: 16px; }
+  .tc-era-glyph--bespoke .tc-node--mid { width: 14px; height: 14px; }
+  .tc-saas-block { left: 6px; width: 28px; height: 28px; border-radius: 6px; }
+  .tc-saas-fan { right: 6px; width: 6px; height: 6px; }
+  .tc-arc.is-built .tc-era-glyph--saas::before { left: 36px; right: 14px; }
+  .tc-ai-core { width: 20px; height: 20px; }
+  .tc-ai-orbit { width: 6px; height: 6px; }
+  .tc-ai-orbit--2, .tc-ai-orbit--6 { width: 5px; height: 5px; }
+  .tc-ai-orbit--4 { width: 7px; height: 7px; }
+  .tc-arc-arrow { width: 18px; }
+  .tc-arc-arrow span { border-top-width: 4px; border-bottom-width: 4px; border-left-width: 6px; }
+
+  .tc-bridge { font-size: 12px; gap: 8px; flex-direction: column; }
+  .tc-bridge-sep { display: none; }
+  .tc-punchline { font-size: 9.5px; gap: 6px; letter-spacing: 0.12em; }
+  .tc-punchline-sep { display: none; }
+}
+
+/* ============ SLIDE 14 — Key Learnings ============ */
+.slide-keylearn {
+  display: flex; flex-direction: column;
+  align-items: flex-start; width: 100%;
+  max-width: 1200px;
+}
+.slide-keylearn .slide-headline { margin-bottom: 8px; }
+.slide-keylearn .slide-sub { margin-bottom: 22px; }
+
+.kl-grid {
+  list-style: none; padding: 0; margin: 0 0 22px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  width: 100%;
+}
+.kl-card {
+  position: relative;
+  background: rgba(160, 168, 188, 0.04);
+  border: 1px solid rgba(160, 168, 188, 0.16);
+  border-radius: 14px;
+  padding: 18px 18px 16px;
+  display: flex; flex-direction: column; gap: 8px;
+  transition: transform 200ms ease, border-color 200ms ease, background 200ms ease;
+}
+.kl-card::before {
+  content: ''; position: absolute; left: 0; top: 14px; bottom: 14px;
+  width: 3px; border-radius: 0 3px 3px 0;
+  background: var(--kl-accent, #4ECDC4);
+  opacity: 0.9;
+}
+.kl-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(160, 168, 188, 0.32);
+  background: rgba(160, 168, 188, 0.07);
+}
+.kl-card--teal   { --kl-accent: #4ECDC4; }
+.kl-card--coral  { --kl-accent: #E8837C; }
+.kl-card--gold   { --kl-accent: #F5C542; }
+.kl-card--purple { --kl-accent: #7C4DFF; }
+
+.kl-num {
+  font-size: 11px; font-weight: 800; letter-spacing: 0.16em;
+  color: var(--kl-accent, #4ECDC4);
+  font-feature-settings: "tnum" 1;
+}
+.kl-title {
+  font-size: clamp(15px, 1.25vw, 19px);
+  font-weight: 700; color: var(--text);
+  letter-spacing: -0.01em; line-height: 1.25;
+  margin: 0;
+}
+.kl-body {
+  font-size: clamp(12px, 0.95vw, 14px);
+  line-height: 1.55; color: var(--text-mute);
+  margin: 0;
+}
+.kl-body strong { color: var(--text); font-weight: 700; }
+
+.kl-kicker {
+  width: 100%;
+  font-size: clamp(13px, 1.05vw, 17px);
+  font-weight: 600; line-height: 1.45;
+  color: var(--text);
+  border-top: 1px solid rgba(160, 168, 188, 0.16);
+  padding-top: 14px;
+  letter-spacing: -0.005em;
+}
+
+@media (max-width: 980px) {
+  .kl-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+}
+@media (max-width: 640px) {
+  .slide-keylearn .slide-sub { margin-bottom: 16px; }
+  .kl-grid { grid-template-columns: 1fr; gap: 10px; }
+  .kl-card { padding: 14px 14px 12px; border-radius: 12px; }
+  .kl-card::before { top: 10px; bottom: 10px; }
+  .kl-title { font-size: 15px; }
+  .kl-body  { font-size: 12.5px; }
+  .kl-kicker { font-size: 13px; padding-top: 12px; }
 }

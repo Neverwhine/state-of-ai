@@ -5,8 +5,18 @@
       "firebase.json",
       ".firebase",
       ".git",
+      "**/.git/**",
+      ".gitignore",
       "sec3_snippet.html",
-      "**/.git/**"
+      "index.html.bak",
+      "sec8-new.html",
+      "sec13-new.html",
+      "sec9-bridge-fix.txt",
+      "fix-agent-anatomy.py",
+      "qa/**",
+      "qa-full/**",
+      "**/*.bak",
+      "**/.DS_Store"
     ],
     "headers": [
       {

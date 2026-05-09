@@ -1342,9 +1342,9 @@
     const paretoContainer = document.getElementById('paretoDeals');
     if (paretoContainer) {
       const dealData = [
-        { company: 'OpenAI',    amount: 110, label: '$110B',  date: 'Feb 2026',  investors: 'SoftBank, Microsoft, Thrive, NVIDIA',  color: '#E8837C' },
+        { company: 'OpenAI',    amount: 122, label: '$122B',  date: 'Mar 2026',  investors: 'Series F closed at $852B post-money / $730B pre-money — SoftBank $30B + Amazon $50B + NVIDIA $30B',  color: '#E8837C' },
         { company: 'OpenAI',    amount: 40,  label: '$40B',   date: 'Mar 2025',  investors: 'SoftBank, Microsoft, Thrive Capital',  color: '#E8837C' },
-        { company: 'Anthropic', amount: 30,  label: '$30B',   date: 'Jan 2026',  investors: 'Lightspeed, Spark, Google, SWFs',      color: '#F5C542' },
+        { company: 'Anthropic', amount: 30,  label: '$30B',   date: 'Feb 2026',  investors: 'Series G at $380B post-money — GIC + Coatue lead',      color: '#F5C542' },
         { company: 'Scale AI',  amount: 14.3,label: '$14.3B', date: 'Jun 2025',  investors: 'Tiger Global, existing investors',      color: '#4ECDC4' },
         { company: 'Anthropic', amount: 13,  label: '$13B',   date: 'Jul 2025',  investors: 'Menlo Ventures, a16z, SWFs',            color: '#F5C542' },
         { company: 'xAI',       amount: 10,  label: '$10B+',  date: 'Apr 2025',  investors: 'A16z, Lightspeed, Sequoia',             color: '#4A90D9' },

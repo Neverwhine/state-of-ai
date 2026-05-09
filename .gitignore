@@ -1,0 +1,30 @@
+# Firebase
+.firebase/
+firebase-debug.log
+.firebaserc.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Backups & WIP scratch artifacts (do not deploy)
+*.bak
+*.tmp
+sec8-new.html
+sec13-new.html
+sec9-bridge-fix.txt
+fix-agent-anatomy.py
+
+# QA screenshots (generated)
+qa/
+qa-full/
+
+# Node (if added later)
+node_modules/
+npm-debug.log*
