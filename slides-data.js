@@ -160,21 +160,22 @@ window.SLIDES_DATA = {
     // Slide 10 (ARPU), 11 (seq-matrix), 12 (attack-angles) are now NATIVE — no iframe.
   },
 
-  // Section anchors for "Dive deeper" links to index.html (14 slides)
+  // Section anchors for "Dive deeper" links to index.html (15 slides incl. cover)
   diveDeeperAnchors: {
-    1:  'index.html#sec-0',
-    2:  'index.html#sec-1',
-    3:  'index.html#sec-1',   // unified stack: 5 layers / 2 lenses / 2 forces
-    4:  'index.html#sec-2',   // application layer funnel
-    5:  'index.html#sec-3',   // model wars
-    6:  'index.html#sec-3',   // smarter+cheaper
-    7:  'index.html#sec-7',   // infrastructure & energy (industrial buildout)
-    8:  'index.html#sec-5',   // agent anatomy
-    9:  'index.html#sec-4',   // vibe coding / agent revolution cards
-    10: 'index.html#sec-9',   // business models / pricing / ARPU
-    11: 'index.html#sec-9',   // sequoia services matrix
-    12: 'index.html#attack-angles-block', // three attack angles
-    13: 'index.html#sec-8',   // physical AI
-    14: 'index.html#sec-15'   // close
+    1:  'index.html#sec-0',   // cover → top of report
+    2:  'index.html#sec-0',
+    3:  'index.html#sec-1',
+    4:  'index.html#sec-1',   // unified stack: 5 layers / 2 lenses / 2 forces
+    5:  'index.html#sec-2',   // application layer funnel
+    6:  'index.html#sec-3',   // model wars
+    7:  'index.html#sec-3',   // smarter+cheaper
+    8:  'index.html#sec-7',   // infrastructure & energy (industrial buildout)
+    9:  'index.html#sec-5',   // agent anatomy
+    10:  'index.html#sec-4',   // vibe coding / agent revolution cards
+    11: 'index.html#sec-9',   // business models / pricing / ARPU
+    12: 'index.html#sec-9',   // sequoia services matrix
+    13: 'index.html#attack-angles-block', // three attack angles
+    14: 'index.html#sec-8',   // physical AI
+    15: 'index.html#sec-15'   // close
   }
 };

@@ -319,13 +319,13 @@
 .slide-block-layout .pricing-row { margin: 0 auto; }
 
 /* Sequoia matrix overrides — make compact for slide context */
-.slide[data-slide="11"] .seq-grid-wrap {
+.slide[data-slide="12"] .seq-grid-wrap {
   position: relative; margin: 0 auto; max-width: 1100px;
 }
-.slide[data-slide="11"] .seq-cell {
+.slide[data-slide="12"] .seq-cell {
   min-height: 150px;
 }
-.slide[data-slide="11"] .seq-axis-label {
+.slide[data-slide="12"] .seq-axis-label {
   color: #6B7280; font-size: 0.7rem; font-weight: 700;
   letter-spacing: 0.15em; text-transform: uppercase;
 }
@@ -365,10 +365,10 @@
   .slide .aa-col { padding: 0.7rem 0.75rem 0.85rem; }
 
   /* Sequoia matrix on mobile: stack quadrants vertically */
-  .slide[data-slide="11"] .seq-grid-wrap > div[style*="grid-template-columns:1fr 1fr"] {
+  .slide[data-slide="12"] .seq-grid-wrap > div[style*="grid-template-columns:1fr 1fr"] {
     grid-template-columns: 1fr !important;
   }
-  .slide[data-slide="11"] .seq-axis-label--side { display: none !important; }
+  .slide[data-slide="12"] .seq-axis-label--side { display: none !important; }
 }
 
 @media (max-width: 480px) {
@@ -470,8 +470,8 @@
 /* ─────────────────────────────────────────────────────────
    SLIDE 11  —  Native Sequoia matrix wrapper (scroll if tall)
    ───────────────────────────────────────────────────────── */
-.slide[data-slide="11"] .slide-inner { overflow: hidden; }
-.slide[data-slide="11"] .slide-seq-matrix {
+.slide[data-slide="12"] .slide-inner { overflow: hidden; }
+.slide[data-slide="12"] .slide-seq-matrix {
   flex: 1 1 auto;
   min-height: 0;
   overflow-y: auto;
@@ -485,56 +485,56 @@
   scrollbar-width: thin;
   scrollbar-color: rgba(78,205,196,0.55) rgba(255,255,255,0.06);
 }
-.slide[data-slide="11"] .slide-seq-matrix::-webkit-scrollbar { width: 10px; }
-.slide[data-slide="11"] .slide-seq-matrix::-webkit-scrollbar-track {
+.slide[data-slide="12"] .slide-seq-matrix::-webkit-scrollbar { width: 10px; }
+.slide[data-slide="12"] .slide-seq-matrix::-webkit-scrollbar-track {
   background: rgba(255,255,255,0.04); border-radius: 8px;
 }
-.slide[data-slide="11"] .slide-seq-matrix::-webkit-scrollbar-thumb {
+.slide[data-slide="12"] .slide-seq-matrix::-webkit-scrollbar-thumb {
   background: linear-gradient(180deg, rgba(78,205,196,0.65), rgba(78,205,196,0.35));
   border-radius: 8px;
 }
 /* Tighten quadrant cells so all four fit in typical laptop viewports
    (≤900px tall). The inline min-height:180px was causing the lower row
    to push entries past the matrix's overflow-y boundary. */
-.slide[data-slide="11"] .slide-seq-matrix div[style*="min-height:180px"] {
+.slide[data-slide="12"] .slide-seq-matrix div[style*="min-height:180px"] {
   min-height: 0 !important;
   padding: 0.7rem 0.9rem !important;
 }
-.slide[data-slide="11"] .seq-entry {
+.slide[data-slide="12"] .seq-entry {
   padding: 0.22rem 0.5rem !important;
   font-size: 0.68rem !important;
 }
 /* On tighter viewports, shrink chip padding/text further so the bottom row
    of entries doesn't get clipped. */
 @media (max-height: 820px) {
-  .slide[data-slide="11"] .slide-seq-matrix div[style*="min-height:180px"] {
+  .slide[data-slide="12"] .slide-seq-matrix div[style*="min-height:180px"] {
     padding: 0.55rem 0.75rem !important;
   }
-  .slide[data-slide="11"] .seq-entry {
+  .slide[data-slide="12"] .seq-entry {
     padding: 0.18rem 0.45rem !important;
     font-size: 0.66rem !important;
   }
-  .slide[data-slide="11"] .slide-text--compact .slide-headline {
+  .slide[data-slide="12"] .slide-text--compact .slide-headline {
     font-size: clamp(24px, 2.6vw, 36px);
     margin-bottom: 4px;
   }
-  .slide[data-slide="11"] .slide-text--compact .slide-sub {
+  .slide[data-slide="12"] .slide-text--compact .slide-sub {
     font-size: clamp(12px, 0.9vw, 14px);
     margin-bottom: 6px;
   }
 }
-.slide[data-slide="11"] #seq-matrix-block {
+.slide[data-slide="12"] #seq-matrix-block {
   margin: 0 !important;
 }
-.slide[data-slide="11"] #seq-matrix-block .seq-matrix-header,
-.slide[data-slide="11"] #seq-matrix-block .seq-matrix-intro {
+.slide[data-slide="12"] #seq-matrix-block .seq-matrix-header,
+.slide[data-slide="12"] #seq-matrix-block .seq-matrix-intro {
   display: none;
 }
-.slide[data-slide="11"] .seq-entry {
+.slide[data-slide="12"] .seq-entry {
   cursor: pointer;
   outline: none;
 }
-.slide[data-slide="11"] .seq-entry:focus-visible {
+.slide[data-slide="12"] .seq-entry:focus-visible {
   box-shadow: 0 0 0 2px rgba(78,205,196,0.55);
 }
 /* The fixed-position .click-zone sits at z:30 at the root stacking context,
@@ -542,8 +542,8 @@
    so when slide 11 is active we shrink the prev/next click-zones to thin
    side rails. Forward/back nav still works via keyboard, swipe, the side
    rails, and the page chrome links. */
-body:has(.slide[data-slide="11"].is-active) .click-zone--prev { width: 64px; }
-body:has(.slide[data-slide="11"].is-active) .click-zone--next { width: 64px; }
+body:has(.slide[data-slide="12"].is-active) .click-zone--prev { width: 64px; }
+body:has(.slide[data-slide="12"].is-active) .click-zone--next { width: 64px; }
 /* Tooltip popup must always paint above slide chrome, click zones, and any
    stacking context introduced by the slide-iframe-layout grid. */
 .aa-tip-popup { z-index: 10000; }
@@ -551,14 +551,14 @@ body:has(.slide[data-slide="11"].is-active) .click-zone--next { width: 64px; }
 /* ─────────────────────────────────────────────────────────
    SLIDE 12  —  Native attack-angles wrapper (scrollable region)
    ───────────────────────────────────────────────────────── */
-.slide[data-slide="12"] .slide-inner {
+.slide[data-slide="13"] .slide-inner {
   overflow: hidden;
   min-height: 0;
 }
-.slide[data-slide="12"] .iframe-headline { min-height: 0; }
+.slide[data-slide="13"] .iframe-headline { min-height: 0; }
 
 /* Wrapper holds the scrolling container + scroll affordances. */
-.slide[data-slide="12"] .slide-attack-angles {
+.slide[data-slide="13"] .slide-attack-angles {
   position: relative;
   min-height: 0;
   width: 100%;
@@ -572,7 +572,7 @@ body:has(.slide[data-slide="11"].is-active) .click-zone--next { width: 64px; }
 }
 
 /* The actual scroller. Padded so the bottom fade doesn't cover content. */
-.slide[data-slide="12"] .slide-attack-angles__scroll {
+.slide[data-slide="13"] .slide-attack-angles__scroll {
   flex: 1 1 auto;
   min-height: 0;
   overflow-y: auto;
@@ -585,28 +585,28 @@ body:has(.slide[data-slide="11"].is-active) .click-zone--next { width: 64px; }
   -webkit-overflow-scrolling: touch;
 }
 /* WebKit scrollbar — visible, on-brand, never invisible. */
-.slide[data-slide="12"] .slide-attack-angles__scroll::-webkit-scrollbar {
+.slide[data-slide="13"] .slide-attack-angles__scroll::-webkit-scrollbar {
   width: 10px;
 }
-.slide[data-slide="12"] .slide-attack-angles__scroll::-webkit-scrollbar-track {
+.slide[data-slide="13"] .slide-attack-angles__scroll::-webkit-scrollbar-track {
   background: rgba(255,255,255,0.04);
   border-radius: 8px;
   margin: 4px 0;
 }
-.slide[data-slide="12"] .slide-attack-angles__scroll::-webkit-scrollbar-thumb {
+.slide[data-slide="13"] .slide-attack-angles__scroll::-webkit-scrollbar-thumb {
   background: linear-gradient(180deg, rgba(78,205,196,0.65), rgba(78,205,196,0.35));
   border-radius: 8px;
   border: 2px solid rgba(15,17,24,0.0);
   background-clip: padding-box;
 }
-.slide[data-slide="12"] .slide-attack-angles__scroll::-webkit-scrollbar-thumb:hover {
+.slide[data-slide="13"] .slide-attack-angles__scroll::-webkit-scrollbar-thumb:hover {
   background: rgba(78,205,196,0.85);
   background-clip: padding-box;
   border: 2px solid rgba(15,17,24,0.0);
 }
 
 /* Bottom fade — shown when there's more content below the fold. */
-.slide[data-slide="12"] .slide-attack-angles__fade {
+.slide[data-slide="13"] .slide-attack-angles__fade {
   position: absolute;
   left: 0; right: 0; bottom: 0;
   height: 56px;
@@ -617,15 +617,15 @@ body:has(.slide[data-slide="11"].is-active) .click-zone--next { width: 64px; }
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
 }
-.slide[data-slide="12"] .slide-attack-angles[data-can-scroll="true"] .slide-attack-angles__fade {
+.slide[data-slide="13"] .slide-attack-angles[data-can-scroll="true"] .slide-attack-angles__fade {
   opacity: 1;
 }
-.slide[data-slide="12"] .slide-attack-angles[data-at-bottom="true"] .slide-attack-angles__fade {
+.slide[data-slide="13"] .slide-attack-angles[data-at-bottom="true"] .slide-attack-angles__fade {
   opacity: 0;
 }
 
 /* "Scroll for more" pill — gentle pulse so the affordance is unmistakable. */
-.slide[data-slide="12"] .slide-attack-angles__hint {
+.slide[data-slide="13"] .slide-attack-angles__hint {
   position: absolute;
   left: 50%;
   bottom: 10px;
@@ -646,16 +646,16 @@ body:has(.slide[data-slide="11"].is-active) .click-zone--next { width: 64px; }
   opacity: 0;
   transition: opacity 220ms ease;
 }
-.slide[data-slide="12"] .slide-attack-angles__hint::after {
+.slide[data-slide="13"] .slide-attack-angles__hint::after {
   content: "▾";
   font-size: 12px;
   line-height: 1;
 }
-.slide[data-slide="12"] .slide-attack-angles[data-can-scroll="true"] .slide-attack-angles__hint {
+.slide[data-slide="13"] .slide-attack-angles[data-can-scroll="true"] .slide-attack-angles__hint {
   opacity: 1;
   animation: aaScrollHintBob 1.6s ease-in-out infinite;
 }
-.slide[data-slide="12"] .slide-attack-angles[data-at-bottom="true"] .slide-attack-angles__hint {
+.slide[data-slide="13"] .slide-attack-angles[data-at-bottom="true"] .slide-attack-angles__hint {
   opacity: 0;
   animation: none;
 }
@@ -664,24 +664,24 @@ body:has(.slide[data-slide="11"].is-active) .click-zone--next { width: 64px; }
   50%      { transform: translate(-50%, 3px); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .slide[data-slide="12"] .slide-attack-angles__hint { animation: none !important; }
+  .slide[data-slide="13"] .slide-attack-angles__hint { animation: none !important; }
 }
 
 /* On mobile the deck flips to vertical page-scroll mode (slides.css @768),
    so the wrapper should not create its own inner scroller — let the page own it. */
 @media (max-width: 768px) {
-  .slide[data-slide="12"] .slide-inner { overflow: visible; }
-  .slide[data-slide="12"] .slide-attack-angles {
+  .slide[data-slide="13"] .slide-inner { overflow: visible; }
+  .slide[data-slide="13"] .slide-attack-angles {
     height: auto;
     display: block;
   }
-  .slide[data-slide="12"] .slide-attack-angles__scroll {
+  .slide[data-slide="13"] .slide-attack-angles__scroll {
     overflow: visible;
     padding: 0;
     max-height: none;
   }
-  .slide[data-slide="12"] .slide-attack-angles__fade,
-  .slide[data-slide="12"] .slide-attack-angles__hint { display: none; }
+  .slide[data-slide="13"] .slide-attack-angles__fade,
+  .slide[data-slide="13"] .slide-attack-angles__hint { display: none; }
 }
 
 /* ─────────────────────────────────────────────────────────
@@ -695,11 +695,11 @@ body:has(.slide[data-slide="11"].is-active) .click-zone--next { width: 64px; }
   .slide-arpu-intro { font-size: 0.8rem; }
 
   /* Sequoia matrix: stack quadrants on small screens */
-  .slide[data-slide="11"] .slide-seq-matrix > div > div[style*="grid-template-columns:1fr 1fr"] {
+  .slide[data-slide="12"] .slide-seq-matrix > div > div[style*="grid-template-columns:1fr 1fr"] {
     grid-template-columns: 1fr !important;
   }
-  .slide[data-slide="11"] .slide-seq-matrix span[style*="rotate(-90deg)"],
-  .slide[data-slide="11"] .slide-seq-matrix span[style*="rotate(90deg)"] {
+  .slide[data-slide="12"] .slide-seq-matrix span[style*="rotate(-90deg)"],
+  .slide[data-slide="12"] .slide-seq-matrix span[style*="rotate(90deg)"] {
     display: none !important;
   }
 }

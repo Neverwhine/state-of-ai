@@ -178,7 +178,26 @@
   // ════════════════════════════════════════════════════════
   const ANIMATIONS = {};
 
-  // ─── SLIDE 1 — Cinematic day-in-the-life ───
+  // ─── SLIDE 1 — Cover (DVC squares + QR) ───
+  // Soft staggered fade-in for the cover content; the colored DVC squares
+  // animate in via a quick scale-up so the brand reads as deliberate.
+  ANIMATIONS[1] = function () {
+    const slide = document.getElementById('slide-1');
+    if (!slide || !window.gsap) return;
+    const blocks = slide.querySelectorAll('.cover-block');
+    const wordmark = slide.querySelector('.cover-wordmark');
+    const eyebrow = slide.querySelector('.cover-eyebrow');
+    const title = slide.querySelector('.cover-title');
+    const sub = slide.querySelector('.cover-subtitle');
+    const tag = slide.querySelector('.cover-tagline');
+    const qrRow = slide.querySelector('.cover-qr-row');
+    gsap.from(blocks, { opacity: 0, scale: 0.96, duration: 0.55, stagger: 0.05, ease: 'power2.out' });
+    gsap.from([wordmark, eyebrow, title, sub, tag, qrRow].filter(Boolean), {
+      y: 14, opacity: 0, duration: 0.55, stagger: 0.08, ease: 'power2.out', delay: 0.25
+    });
+  };
+
+  // ─── SLIDE 2 — Cinematic day-in-the-life ───
   // Sequence:
   //  1. Stars fade in (cold, pre-dawn night)
   //  2. House outline draws itself in stroke-by-stroke
@@ -186,8 +205,8 @@
   //  4. Each icon ignites in time-order, with a window glow + pulse
   //  5. Connectors flow between icons in sequence (showing the day)
   //  6. Sun arcs to evening; stars fade back in; headline drops in
-  ANIMATIONS[1] = function () {
-    const slide = document.getElementById('slide-1');
+  ANIMATIONS[2] = function () {
+    const slide = document.getElementById('slide-2');
     if (!slide) return;
 
     // Reset on every entry so the animation replays
@@ -348,7 +367,7 @@
   // Reveals each platform chip left-to-right (PC → Internet → Mobile → Cloud → AI),
   // pulses the "AI" chip + "we are here" tag, then morphs the software-economics arc
   // (Bespoke → Cloud/SaaS → AI-native) and lights the AI column last.
-  ANIMATIONS[2] = function () {
+  ANIMATIONS[3] = function () {
     const ladder = document.getElementById('tcLadder');
     const arc    = document.getElementById('tcArc');
     if (!ladder || ladder.dataset.played === '1') return;
@@ -400,8 +419,8 @@
   //   chrome (header copy, foot stats, side rails) morph between states.
   //
   //   States are advanced/reversed by the deck navigation (slides.js
-  //   navigation hook) which calls window.__slide3.advance(+1 / -1) and
-  //   window.__slide3.activate(stateIdx) before flipping slides.
+  //   navigation hook) which calls window.__slide4.advance(+1 / -1) and
+  //   window.__slide4.activate(stateIdx) before flipping slides.
   // ════════════════════════════════════════════════════════
 
   // Build the 5-layer card scaffolding once. Returns the cards array.
@@ -555,9 +574,9 @@
   }
 
   // ─── SLIDE 3 — driver ───
-  // Exposes window.__slide3 for the deck navigation to step through internal states.
-  ANIMATIONS[3] = function () {
-    const slide = document.getElementById('slide-3');
+  // Exposes window.__slide4 for the deck navigation to step through internal states.
+  ANIMATIONS[4] = function () {
+    const slide = document.getElementById('slide-4');
     if (!slide) return;
     const stackContainer = slide.querySelector('#suStack');
     const cards = buildStackCards(stackContainer);
@@ -605,7 +624,7 @@
     }
 
     // Expose driver for the deck navigation
-    window.__slide3 = {
+    window.__slide4 = {
       advance,                    // advance(+1) or advance(-1) — returns false at boundary
       activate: render,           // jump to a specific state
       reset: () => render(0),     // for re-entry
@@ -753,7 +772,7 @@
   }
 
   // ─── SLIDE 7 — Infrastructure & Energy (NATIVE CapEx Explorer) ───
-  ANIMATIONS[7] = function () {
+  ANIMATIONS[8] = function () {
     initSlide7Capex();
   };
 
@@ -928,7 +947,7 @@
   }
 
   // ─── SLIDE 4 — Funnel (was slide 6 — GSAP) ───
-  ANIMATIONS[4] = function () {
+  ANIMATIONS[5] = function () {
     const dotsG  = document.getElementById('funnelDots');
     const appsG  = document.getElementById('funnelApps');
     const modsG  = document.getElementById('funnelModels');
@@ -1019,7 +1038,7 @@
       modelTick++;
     }, 2200);
     // stash so we can clear later if needed
-    document.getElementById('slide-4')._modelTimer = modelTimer;
+    document.getElementById('slide-5')._modelTimer = modelTimer;
 
     // ── 4. animate dots flowing top → app layer → models ──
     if (window.gsap) {
@@ -1047,7 +1066,7 @@
   };
 
   // ─── SLIDE 5 — Model cluster (3 lanes: Commodity / Specialist / Restricted) ───
-  ANIMATIONS[5] = function () {
+  ANIMATIONS[6] = function () {
     const svg = document.getElementById('clusterSvg');
     if (!svg) return;
     if (svg.dataset.rendered === '1') {
@@ -1199,7 +1218,7 @@
 
   // ─── SLIDE 6 — Smarter AND cheaper dual axis (was 8) ───
   let smarterChart = null;
-  ANIMATIONS[6] = function () {
+  ANIMATIONS[7] = function () {
     if (smarterChart) return;
     const ctx = document.getElementById('smarterChart');
     if (!ctx || !window.Chart) return;
@@ -1285,9 +1304,9 @@
   };
 
   // ─── SLIDE 8 — Agent anatomy (iframe of 7-layer stack) ───
-  ANIMATIONS[8] = function () {
+  ANIMATIONS[9] = function () {
     initSlide8AgentStack();
-    const layers = document.querySelectorAll('#slide-8 .aa-layer');
+    const layers = document.querySelectorAll('#slide-9 .aa-layer');
     if (window.gsap && layers.length) {
       gsap.fromTo(layers,
         { opacity: 0, y: 10 },
@@ -1393,7 +1412,7 @@
   }
 
   // ─── SLIDE 9 — Vibe coding cards ───
-  ANIMATIONS[9] = function () {
+  ANIMATIONS[10] = function () {
     const grid = document.getElementById('vibeGrid');
     if (!grid || grid.children.length) return;
     (D.vibeCoding || []).forEach(c => {
@@ -1420,7 +1439,7 @@
   };
 
   // ─── SLIDE 13 — Physical AI: 3 motion tiles + stat strip (REBUILT) ───
-  ANIMATIONS[13] = function () {
+  ANIMATIONS[14] = function () {
     const tilesC = document.getElementById('physTiles');
     const stripC = document.getElementById('physStatsStrip');
     if (!tilesC || tilesC.children.length) return;
@@ -1580,12 +1599,12 @@
   };
 
   // ─── SLIDE 10 — Pricing + ARPU (NATIVE bars) ───
-  ANIMATIONS[10] = function () {
-    const icons = document.querySelectorAll('#slide-10 .pricing-icon');
+  ANIMATIONS[11] = function () {
+    const icons = document.querySelectorAll('#slide-11 .pricing-icon');
     if (icons.length && window.gsap) {
       gsap.from(icons, { y: 14, opacity: 0, duration: 0.45, stagger: 0.07, ease: 'power2.out' });
     }
-    const fills = document.querySelectorAll('#slide-10 .slide-arpu-fill');
+    const fills = document.querySelectorAll('#slide-11 .slide-arpu-fill');
     if (fills.length && window.gsap) {
       fills.forEach(function (el) {
         const target = el.style.width || '0%';
@@ -1598,8 +1617,8 @@
   };
 
   // ─── SLIDE 11 — Sequoia services matrix (NATIVE) ───
-  ANIMATIONS[11] = function () {
-    const slide = document.getElementById('slide-11');
+  ANIMATIONS[12] = function () {
+    const slide = document.getElementById('slide-12');
     bindSlideTooltips(slide);
     const entries = slide ? slide.querySelectorAll('.seq-entry') : [];
     if (!entries.length) return;
@@ -1622,19 +1641,19 @@
   };
 
   // ─── SLIDE 12 — Three attack angles (NATIVE via attack-angles.js) ───
-  ANIMATIONS[12] = function () {
+  ANIMATIONS[13] = function () {
     if (window.ATTACK_ANGLES && typeof window.ATTACK_ANGLES.render === 'function') {
       window.ATTACK_ANGLES.render('attack-angles-block');
     }
-    const cols = document.querySelectorAll('#slide-12 .aa-col');
+    const cols = document.querySelectorAll('#slide-13 .aa-col');
     if (cols.length && window.gsap) {
       gsap.from(cols, { y: 18, opacity: 0, duration: 0.5, stagger: 0.1, ease: 'power2.out' });
     }
   };
 
   // ─── SLIDE 14 — Key Learnings (staggered card fade-in) ───
-  ANIMATIONS[14] = function () {
-    const cards = document.querySelectorAll('#slide-14 .kl-card');
+  ANIMATIONS[15] = function () {
+    const cards = document.querySelectorAll('#slide-15 .kl-card');
     if (cards.length && window.gsap) {
       gsap.from(cards, { y: 14, opacity: 0, duration: 0.45, stagger: 0.08, ease: 'power2.out' });
     } else {
@@ -1650,14 +1669,14 @@
         });
       });
     }
-    const kicker = document.querySelector('#slide-14 .kl-kicker');
+    const kicker = document.querySelector('#slide-15 .kl-kicker');
     if (kicker && window.gsap) {
       gsap.from(kicker, { y: 8, opacity: 0, delay: 0.55, duration: 0.5, ease: 'power2.out' });
     }
   };
 
   // ── Start ──
-  // pick initial slide from hash (#slide-3 etc.)
+  // pick initial slide from hash (#slide-4 etc.)
   const m = location.hash.match(/^#slide-(\d+)$/);
   const startIdx = m ? Math.max(0, Math.min(total - 1, parseInt(m[1], 10) - 1)) : 0;
   activate(startIdx);

@@ -149,7 +149,7 @@ body { position: relative; }
 
 /* ============ SLIDE 1 — OpenClaw house ============ */
 /* ============ SLIDE 1 — Cinematic opener ============ */
-.slide[data-slide="1"] {
+.slide[data-slide="2"] {
   /* Subtle radial sky gradient — implies the void around the house */
   background:
     radial-gradient(ellipse at 50% 30%, rgba(78, 205, 196, 0.06) 0%, transparent 60%),
@@ -1246,26 +1246,26 @@ body { position: relative; }
 .iframe-fallback-link:hover { background: rgba(245,197,66,0.08); }
 
 /* Business Models slide (10) — top-anchor so empty top space is gone */
-.slide[data-slide="10"] { align-items: flex-start; padding-top: 60px; }
-.slide[data-slide="10"] .slide-inner { gap: 12px; }
+.slide[data-slide="11"] { align-items: flex-start; padding-top: 60px; }
+.slide[data-slide="11"] .slide-inner { gap: 12px; }
 
 /* Attack angles slide (12) — top-anchor + slimmer headline since the iframe carries the visual weight */
-.slide[data-slide="12"] { align-items: flex-start; padding-top: 50px; }
-.slide[data-slide="12"] .slide-headline { font-size: clamp(34px, 3.8vw, 52px); margin-bottom: 8px; }
-.slide[data-slide="12"] .slide-sub { margin-bottom: 14px; }
+.slide[data-slide="13"] { align-items: flex-start; padding-top: 50px; }
+.slide[data-slide="13"] .slide-headline { font-size: clamp(34px, 3.8vw, 52px); margin-bottom: 8px; }
+.slide[data-slide="13"] .slide-sub { margin-bottom: 14px; }
 
 /* Physical AI (13) — centered vertically; tiles + strip share the slide.
    Close slide (14) — top-anchored because Key Learnings cards need top space. */
-.slide[data-slide="13"] { align-items: center; padding-top: 64px; padding-bottom: 80px; }
-.slide[data-slide="14"] { align-items: flex-start; padding-top: 40px; }
-.slide[data-slide="13"] .slide-headline,
-.slide[data-slide="14"] .slide-headline { font-size: clamp(34px, 3.8vw, 52px); margin-bottom: 8px; }
-.slide[data-slide="13"] .slide-sub,
-.slide[data-slide="14"] .slide-sub { margin-bottom: 14px; }
-.slide[data-slide="13"] .slide-inner { gap: 18px; }
-.slide[data-slide="13"] .phys-tiles { margin-top: 22px; margin-bottom: 26px; }
-.slide[data-slide="13"] .phys-stats-strip { max-width: 1100px; }
-.slide[data-slide="14"] .slide-iframe-container--tall { height: 66vh; }
+.slide[data-slide="14"] { align-items: center; padding-top: 64px; padding-bottom: 80px; }
+.slide[data-slide="15"] { align-items: flex-start; padding-top: 40px; }
+.slide[data-slide="14"] .slide-headline,
+.slide[data-slide="15"] .slide-headline { font-size: clamp(34px, 3.8vw, 52px); margin-bottom: 8px; }
+.slide[data-slide="14"] .slide-sub,
+.slide[data-slide="15"] .slide-sub { margin-bottom: 14px; }
+.slide[data-slide="14"] .slide-inner { gap: 18px; }
+.slide[data-slide="14"] .phys-tiles { margin-top: 22px; margin-bottom: 26px; }
+.slide[data-slide="14"] .phys-stats-strip { max-width: 1100px; }
+.slide[data-slide="15"] .slide-iframe-container--tall { height: 66vh; }
 
 /* Business Models slide (10) — pricing-row stays compact above the live ARPU iframe */
 .pricing-row--compact { margin: 4px 0 8px; gap: 0.55rem; }
@@ -1680,4 +1680,213 @@ body { position: relative; }
   .kl-title { font-size: 15px; }
   .kl-body  { font-size: 12.5px; }
   .kl-kicker { font-size: 13px; padding-top: 12px; }
+}
+
+/* ============ SLIDE 1 — COVER (DVC squares) ============ */
+.slide--cover { padding: 0; align-items: stretch; justify-content: stretch; }
+.slide--cover .cover-inner {
+  width: 100%; max-width: none;
+  position: relative;
+  height: 100%;
+  display: block;
+  padding: 0;
+  margin: 0;
+  align-items: stretch;
+}
+
+/* DVC squares — 6-block grid echoing index.html hero */
+.cover-blocks {
+  position: absolute; inset: 0;
+  display: grid;
+  grid-template-columns: 55% 45%;
+  grid-template-rows: 55% 30% 15%;
+  z-index: 0;
+}
+.cover-block { position: relative; }
+.cover-block--white  { background: #FFFFFF; }
+.cover-block--teal   { background: #4ECDC4; }
+.cover-block--salmon { background: #E8837C; }
+.cover-block--gold   { background: #F5C542; }
+.cover-block--navy   { background: #2D3142; }
+.cover-block--blue   { background: #4A90D9; }
+
+.cover-wordmark {
+  /* Sits in the white block, top-right corner — clear of the slideshow's
+     back-link and slide-counter at the screen corners. */
+  position: absolute;
+  top: 26px;
+  left: calc(55% - 220px);
+  font-size: 12px; font-weight: 500; line-height: 1.35;
+  color: #555B6E;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-align: right;
+  z-index: 1;
+}
+
+/* Foreground content — sits over the upper-left white block.
+   Top padding is generous to clear the wordmark in the corner. */
+.cover-content {
+  position: absolute;
+  z-index: 2;
+  left: 0; top: 0;
+  width: 55%; height: 55%;
+  display: flex; flex-direction: column;
+  justify-content: center; align-items: flex-start;
+  text-align: left;
+  padding: 72px 56px 28px;
+  gap: 10px;
+}
+.cover-eyebrow {
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  color: #555B6E;
+  margin: 0 0 6px;
+}
+.cover-title {
+  font-size: clamp(40px, 6.4vw, 84px);
+  font-weight: 900; letter-spacing: -0.02em;
+  color: #1A1A2E;
+  line-height: 0.95;
+  margin: 0 0 4px;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.06);
+}
+.cover-subtitle {
+  font-size: clamp(15px, 1.5vw, 19px);
+  font-weight: 600; color: #2D3142;
+  letter-spacing: 0.005em;
+  margin: 0;
+}
+.cover-tagline {
+  font-size: clamp(12px, 1vw, 14px);
+  font-weight: 400; color: #555B6E;
+  line-height: 1.55;
+  max-width: 460px;
+  margin: 6px 0 16px;
+}
+
+/* QR row — sits in the lower portion of the white block */
+.cover-qr-row {
+  display: flex; align-items: center; gap: 18px;
+  margin-top: 4px;
+}
+.cover-qr-frame {
+  width: 220px; height: 220px;
+  background: #FFFFFF;
+  border: 1px solid rgba(45,49,66,0.18);
+  border-radius: 14px;
+  padding: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.cover-qr-svg { width: 100%; height: 100%; display: block; }
+.cover-qr-meta {
+  display: flex; flex-direction: column; gap: 4px;
+  min-width: 0;
+}
+.cover-qr-label {
+  font-size: 10.5px; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: #555B6E;
+}
+.cover-qr-url {
+  font-size: clamp(15px, 1.45vw, 19px);
+  font-weight: 700;
+  color: #1A1A2E;
+  text-decoration: none;
+  letter-spacing: -0.005em;
+  border-bottom: 1.5px solid rgba(78,205,196,0.55);
+  padding-bottom: 1px;
+  align-self: flex-start;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+.cover-qr-url:hover { color: #2D6E68; border-bottom-color: #4ECDC4; }
+.cover-qr-hint {
+  font-size: 11px; color: #6B718A;
+  letter-spacing: 0.04em;
+}
+
+.cover-footer {
+  position: absolute;
+  z-index: 2;
+  right: 24px; bottom: 18px;
+  font-size: 11px; color: rgba(255,255,255,0.78);
+  letter-spacing: 0.06em;
+}
+.cover-footer kbd {
+  display: inline-block;
+  padding: 1px 6px;
+  border: 1px solid rgba(255,255,255,0.45);
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 11px;
+  margin: 0 2px;
+}
+
+/* Cover dive-deeper override — sit over teal block, light text */
+.slide--cover .dive-deeper {
+  color: #1A1A2E;
+  background: rgba(255,255,255,0.78);
+  border-color: rgba(26,26,46,0.25);
+}
+.slide--cover .dive-deeper:hover {
+  background: #FFFFFF; color: #1A1A2E;
+}
+
+/* Mobile / portrait: stack content above blocks, single column */
+@media (max-width: 768px) {
+  /* Override the global mobile slide padding so the cover's blocks fill edge-to-edge.
+     The global rule sets padding: 80px 24px 80px on .slide on mobile; the cover has
+     its own internal padding via .cover-content. */
+  .slide.slide--cover {
+    padding: 0;
+    min-height: 100vh;
+    border-bottom: 0;
+  }
+  .slide--cover .cover-inner {
+    width: 100%;
+    min-height: 100vh;
+    position: relative;
+  }
+  /* Three-row layout: top wordmark band (white), main content (white), accent stripe band */
+  .cover-blocks {
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 1fr 60px;
+  }
+  .cover-block--white  { grid-column: 1 / -1; grid-row: 1 / 2; }
+  .cover-block--teal   { grid-column: 1 / 2; grid-row: 2 / 3; }
+  .cover-block--gold   { grid-column: 2 / 3; grid-row: 2 / 3; }
+  .cover-block--salmon,
+  .cover-block--navy,
+  .cover-block--blue   { display: none; }
+  /* On mobile, place the wordmark below the back-link area to avoid overlap. */
+  .cover-wordmark { top: auto; bottom: 76px; left: 24px; right: auto; text-align: left; font-size: 11px; }
+  .cover-content {
+    position: relative;
+    width: 100%; height: auto;
+    top: auto; left: auto;
+    padding: 84px 24px 96px;
+    justify-content: flex-start; align-items: flex-start;
+    gap: 8px;
+    z-index: 2;
+  }
+  .cover-eyebrow { font-size: 10.5px; }
+  .cover-title { font-size: clamp(36px, 11vw, 56px); line-height: 0.96; }
+  .cover-subtitle { font-size: 15px; }
+  .cover-tagline { font-size: 13px; max-width: 100%; margin: 6px 0 18px; line-height: 1.5; }
+  .cover-qr-row { gap: 16px; align-items: center; flex-wrap: nowrap; }
+  .cover-qr-frame { width: 180px; height: 180px; padding: 10px; border-radius: 12px; }
+  .cover-qr-url { font-size: 16px; }
+  .cover-qr-hint { font-size: 11px; }
+  .cover-footer { display: none; }
+  .slide--cover .dive-deeper { display: none; }
+}
+
+@media (max-width: 420px) {
+  .cover-content { padding: 72px 20px 80px; }
+  .cover-qr-frame { width: 160px; height: 160px; padding: 9px; }
+  .cover-qr-row { gap: 14px; }
+  .cover-tagline { display: none; }
+  .cover-title { font-size: clamp(32px, 12vw, 46px); }
 }

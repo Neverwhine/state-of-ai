@@ -26,7 +26,7 @@
 <a class="back-link" href="index.html">← Full Report</a>
 
 <!-- Top-right: slide counter -->
-<div class="slide-counter"><span id="slideNum">1</span> / <span id="slideTotal">14</span></div>
+<div class="slide-counter"><span id="slideNum">1</span> / <span id="slideTotal">15</span></div>
 
 <!-- Click zones (overlay) -->
 <div class="click-zone click-zone--prev" id="zonePrev" aria-label="Previous slide"></div>
@@ -35,8 +35,43 @@
 <!-- Slides container -->
 <main class="deck" id="deck">
 
-  <!-- ============== SLIDE 1: Opening (cinematic day-in-the-life) ============== -->
-  <section class="slide" data-slide="1" id="slide-1">
+  <!-- ============== SLIDE 1: COVER (DVC squares + QR) ============== -->
+  <section class="slide slide--cover" data-slide="1" id="slide-1">
+    <div class="slide-inner cover-inner">
+      <div class="cover-blocks" aria-hidden="true">
+        <div class="cover-block cover-block--white">
+          <span class="cover-wordmark">Davidovs<br>Venture<br>Collective</span>
+        </div>
+        <div class="cover-block cover-block--teal"></div>
+        <div class="cover-block cover-block--salmon"></div>
+        <div class="cover-block cover-block--gold"></div>
+        <div class="cover-block cover-block--navy"></div>
+        <div class="cover-block cover-block--blue"></div>
+      </div>
+      <div class="cover-content">
+        <p class="cover-eyebrow">DVC presents</p>
+        <h1 class="cover-title">STATE OF AI</h1>
+        <p class="cover-subtitle">The Operating Manual for the AI Revolution</p>
+        <p class="cover-tagline">A 20-minute compressed walk through the full stack &mdash; where money flows, who wins, what changes.</p>
+        <div class="cover-qr-row">
+          <div class="cover-qr-frame" aria-label="QR code linking to state-of-ai.dvc.ai">
+            <svg class="cover-qr-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 29 29" shape-rendering="crispEdges" aria-label="QR code: state-of-ai.dvc.ai"><rect width="29" height="29" fill="#FFFFFF"/><path d="M2,2h1v1h-1zM3,2h1v1h-1zM4,2h1v1h-1zM5,2h1v1h-1zM6,2h1v1h-1zM7,2h1v1h-1zM8,2h1v1h-1zM10,2h1v1h-1zM12,2h1v1h-1zM14,2h1v1h-1zM15,2h1v1h-1zM16,2h1v1h-1zM17,2h1v1h-1zM18,2h1v1h-1zM20,2h1v1h-1zM21,2h1v1h-1zM22,2h1v1h-1zM23,2h1v1h-1zM24,2h1v1h-1zM25,2h1v1h-1zM26,2h1v1h-1zM2,3h1v1h-1zM8,3h1v1h-1zM11,3h1v1h-1zM15,3h1v1h-1zM16,3h1v1h-1zM18,3h1v1h-1zM20,3h1v1h-1zM26,3h1v1h-1zM2,4h1v1h-1zM4,4h1v1h-1zM5,4h1v1h-1zM6,4h1v1h-1zM8,4h1v1h-1zM12,4h1v1h-1zM14,4h1v1h-1zM16,4h1v1h-1zM17,4h1v1h-1zM20,4h1v1h-1zM22,4h1v1h-1zM23,4h1v1h-1zM24,4h1v1h-1zM26,4h1v1h-1zM2,5h1v1h-1zM4,5h1v1h-1zM5,5h1v1h-1zM6,5h1v1h-1zM8,5h1v1h-1zM10,5h1v1h-1zM11,5h1v1h-1zM14,5h1v1h-1zM15,5h1v1h-1zM16,5h1v1h-1zM18,5h1v1h-1zM20,5h1v1h-1zM22,5h1v1h-1zM23,5h1v1h-1zM24,5h1v1h-1zM26,5h1v1h-1zM2,6h1v1h-1zM4,6h1v1h-1zM5,6h1v1h-1zM6,6h1v1h-1zM8,6h1v1h-1zM10,6h1v1h-1zM11,6h1v1h-1zM12,6h1v1h-1zM14,6h1v1h-1zM16,6h1v1h-1zM17,6h1v1h-1zM20,6h1v1h-1zM22,6h1v1h-1zM23,6h1v1h-1zM24,6h1v1h-1zM26,6h1v1h-1zM2,7h1v1h-1zM8,7h1v1h-1zM10,7h1v1h-1zM11,7h1v1h-1zM12,7h1v1h-1zM14,7h1v1h-1zM15,7h1v1h-1zM16,7h1v1h-1zM20,7h1v1h-1zM26,7h1v1h-1zM2,8h1v1h-1zM3,8h1v1h-1zM4,8h1v1h-1zM5,8h1v1h-1zM6,8h1v1h-1zM7,8h1v1h-1zM8,8h1v1h-1zM10,8h1v1h-1zM12,8h1v1h-1zM14,8h1v1h-1zM16,8h1v1h-1zM18,8h1v1h-1zM20,8h1v1h-1zM21,8h1v1h-1zM22,8h1v1h-1zM23,8h1v1h-1zM24,8h1v1h-1zM25,8h1v1h-1zM26,8h1v1h-1zM10,9h1v1h-1zM11,9h1v1h-1zM13,9h1v1h-1zM16,9h1v1h-1zM2,10h1v1h-1zM6,10h1v1h-1zM8,10h1v1h-1zM9,10h1v1h-1zM10,10h1v1h-1zM12,10h1v1h-1zM13,10h1v1h-1zM14,10h1v1h-1zM16,10h1v1h-1zM19,10h1v1h-1zM20,10h1v1h-1zM21,10h1v1h-1zM22,10h1v1h-1zM23,10h1v1h-1zM26,10h1v1h-1zM2,11h1v1h-1zM9,11h1v1h-1zM10,11h1v1h-1zM13,11h1v1h-1zM16,11h1v1h-1zM17,11h1v1h-1zM18,11h1v1h-1zM19,11h1v1h-1zM22,11h1v1h-1zM23,11h1v1h-1zM25,11h1v1h-1zM2,12h1v1h-1zM6,12h1v1h-1zM8,12h1v1h-1zM9,12h1v1h-1zM11,12h1v1h-1zM12,12h1v1h-1zM15,12h1v1h-1zM16,12h1v1h-1zM17,12h1v1h-1zM21,12h1v1h-1zM22,12h1v1h-1zM23,12h1v1h-1zM24,12h1v1h-1zM3,13h1v1h-1zM4,13h1v1h-1zM5,13h1v1h-1zM11,13h1v1h-1zM12,13h1v1h-1zM19,13h1v1h-1zM24,13h1v1h-1zM25,13h1v1h-1zM2,14h1v1h-1zM3,14h1v1h-1zM4,14h1v1h-1zM6,14h1v1h-1zM7,14h1v1h-1zM8,14h1v1h-1zM9,14h1v1h-1zM12,14h1v1h-1zM14,14h1v1h-1zM17,14h1v1h-1zM19,14h1v1h-1zM20,14h1v1h-1zM23,14h1v1h-1zM24,14h1v1h-1zM25,14h1v1h-1zM26,14h1v1h-1zM2,15h1v1h-1zM3,15h1v1h-1zM5,15h1v1h-1zM6,15h1v1h-1zM11,15h1v1h-1zM14,15h1v1h-1zM15,15h1v1h-1zM16,15h1v1h-1zM17,15h1v1h-1zM18,15h1v1h-1zM22,15h1v1h-1zM25,15h1v1h-1zM5,16h1v1h-1zM8,16h1v1h-1zM9,16h1v1h-1zM10,16h1v1h-1zM13,16h1v1h-1zM14,16h1v1h-1zM16,16h1v1h-1zM17,16h1v1h-1zM19,16h1v1h-1zM21,16h1v1h-1zM22,16h1v1h-1zM23,16h1v1h-1zM24,16h1v1h-1zM6,17h1v1h-1zM7,17h1v1h-1zM10,17h1v1h-1zM11,17h1v1h-1zM12,17h1v1h-1zM13,17h1v1h-1zM17,17h1v1h-1zM21,17h1v1h-1zM22,17h1v1h-1zM24,17h1v1h-1zM25,17h1v1h-1zM2,18h1v1h-1zM3,18h1v1h-1zM6,18h1v1h-1zM8,18h1v1h-1zM9,18h1v1h-1zM10,18h1v1h-1zM12,18h1v1h-1zM13,18h1v1h-1zM14,18h1v1h-1zM17,18h1v1h-1zM18,18h1v1h-1zM19,18h1v1h-1zM20,18h1v1h-1zM21,18h1v1h-1zM22,18h1v1h-1zM23,18h1v1h-1zM24,18h1v1h-1zM10,19h1v1h-1zM11,19h1v1h-1zM12,19h1v1h-1zM13,19h1v1h-1zM15,19h1v1h-1zM18,19h1v1h-1zM22,19h1v1h-1zM2,20h1v1h-1zM3,20h1v1h-1zM4,20h1v1h-1zM5,20h1v1h-1zM6,20h1v1h-1zM7,20h1v1h-1zM8,20h1v1h-1zM10,20h1v1h-1zM11,20h1v1h-1zM13,20h1v1h-1zM14,20h1v1h-1zM15,20h1v1h-1zM16,20h1v1h-1zM18,20h1v1h-1zM20,20h1v1h-1zM22,20h1v1h-1zM2,21h1v1h-1zM8,21h1v1h-1zM13,21h1v1h-1zM17,21h1v1h-1zM18,21h1v1h-1zM22,21h1v1h-1zM23,21h1v1h-1zM24,21h1v1h-1zM25,21h1v1h-1zM26,21h1v1h-1zM2,22h1v1h-1zM4,22h1v1h-1zM5,22h1v1h-1zM6,22h1v1h-1zM8,22h1v1h-1zM10,22h1v1h-1zM11,22h1v1h-1zM12,22h1v1h-1zM14,22h1v1h-1zM18,22h1v1h-1zM19,22h1v1h-1zM20,22h1v1h-1zM21,22h1v1h-1zM22,22h1v1h-1zM23,22h1v1h-1zM24,22h1v1h-1zM2,23h1v1h-1zM4,23h1v1h-1zM5,23h1v1h-1zM6,23h1v1h-1zM8,23h1v1h-1zM11,23h1v1h-1zM13,23h1v1h-1zM15,23h1v1h-1zM16,23h1v1h-1zM17,23h1v1h-1zM19,23h1v1h-1zM20,23h1v1h-1zM21,23h1v1h-1zM24,23h1v1h-1zM25,23h1v1h-1zM26,23h1v1h-1zM2,24h1v1h-1zM4,24h1v1h-1zM5,24h1v1h-1zM6,24h1v1h-1zM8,24h1v1h-1zM11,24h1v1h-1zM12,24h1v1h-1zM13,24h1v1h-1zM15,24h1v1h-1zM18,24h1v1h-1zM20,24h1v1h-1zM23,24h1v1h-1zM25,24h1v1h-1zM2,25h1v1h-1zM8,25h1v1h-1zM11,25h1v1h-1zM14,25h1v1h-1zM16,25h1v1h-1zM17,25h1v1h-1zM21,25h1v1h-1zM22,25h1v1h-1zM23,25h1v1h-1zM24,25h1v1h-1zM25,25h1v1h-1zM2,26h1v1h-1zM3,26h1v1h-1zM4,26h1v1h-1zM5,26h1v1h-1zM6,26h1v1h-1zM7,26h1v1h-1zM8,26h1v1h-1zM10,26h1v1h-1zM11,26h1v1h-1zM13,26h1v1h-1zM14,26h1v1h-1zM16,26h1v1h-1zM17,26h1v1h-1zM20,26h1v1h-1zM24,26h1v1h-1zM25,26h1v1h-1zM26,26h1v1h-1z" fill="#1A1A2E"/></svg>
+          </div>
+          <div class="cover-qr-meta">
+            <span class="cover-qr-label">Read the full report</span>
+            <a class="cover-qr-url" href="https://state-of-ai.dvc.ai">state-of-ai.dvc.ai</a>
+            <span class="cover-qr-hint">Scan or visit &middot; March 2026</span>
+          </div>
+        </div>
+      </div>
+      <div class="cover-footer">
+        <span>Press <kbd>&rarr;</kbd> or click to begin</span>
+      </div>
+    </div>
+    <a class="dive-deeper" data-slide-link="1">&rarr; Full report</a>
+  </section>
+  <!-- ============== SLIDE 2: Opening (cinematic day-in-the-life) ============== -->
+  <section class="slide" data-slide="2" id="slide-2">
     <div class="slide-inner slide-1">
       <svg class="house-svg" id="houseSvg" viewBox="0 0 800 500" aria-hidden="true">
         <defs>
@@ -148,10 +183,10 @@
         <p class="slide-eyebrow opener-eyebrow">A day in the life — already automated</p>
       </div>
     </div>
-    <a class="dive-deeper" data-slide-link="1">→ Dive deeper</a>
+    <a class="dive-deeper" data-slide-link="2">→ Dive deeper</a>
   </section>
   <!-- ============== SLIDE 2: Tech Cycles — "The price of intelligence is collapsing" ============== -->
-  <section class="slide slide--tc" data-slide="2" id="slide-2">
+  <section class="slide slide--tc" data-slide="3" id="slide-3">
     <div class="slide-inner slide-2">
       <p class="slide-eyebrow">Tech cycles</p>
       <h1 class="slide-headline">The price of <span class="hl-accent hl-accent--gold">intelligence</span> is collapsing</h1>
@@ -260,7 +295,7 @@
         <span class="tc-punchline-accent">Very beginning.</span>
       </p>
     </div>
-    <a class="dive-deeper" data-slide-link="2">→ Dive deeper</a>
+    <a class="dive-deeper" data-slide-link="3">→ Dive deeper</a>
   </section>
   <!-- ============== SLIDE 3: THE STACK — UNIFIED (3 internal states) ==============
        One slide that morphs through three lenses on the same 5-layer stack:
@@ -270,7 +305,7 @@
        Right-arrow / Space / click-next advances internal state first, then slide.
        data-slide-states="3" tells the deck how many sub-states to step through.
   -->
-  <section class="slide slide--stack-unified" data-slide="3" data-slide-states="3" id="slide-3">
+  <section class="slide slide--stack-unified" data-slide="4" data-slide-states="3" id="slide-4">
     <div class="slide-inner slide-3">
 
       <!-- Header: three pre-rendered states crossfade -->
@@ -371,10 +406,10 @@
       <p class="su-mobile-hint">Tap a state to switch lenses</p>
 
     </div>
-    <a class="dive-deeper" data-slide-link="3">→ Dive deeper</a>
+    <a class="dive-deeper" data-slide-link="4">→ Dive deeper</a>
   </section>
   <!-- ============== SLIDE 4: Application Layer Funnel (was 6) ============== -->
-  <section class="slide" data-slide="4" id="slide-4">
+  <section class="slide" data-slide="5" id="slide-5">
     <div class="slide-inner slide-7">
       <p class="slide-eyebrow">Application layer</p>
       <h1 class="slide-headline">The user never sees the model.</h1>
@@ -393,10 +428,10 @@
         </svg>
       </div>
     </div>
-    <a class="dive-deeper" data-slide-link="4">→ Dive deeper</a>
+    <a class="dive-deeper" data-slide-link="5">→ Dive deeper</a>
   </section>
   <!-- ============== SLIDE 5: Model Cluster (was 7) ============== -->
-  <section class="slide" data-slide="5" id="slide-5">
+  <section class="slide" data-slide="6" id="slide-6">
     <div class="slide-inner slide-8">
       <p class="slide-eyebrow">Model layer · 15 frontier models</p>
       <h1 class="slide-headline">Frontier broke into three races.</h1>
@@ -405,10 +440,10 @@
         <svg id="clusterSvg" viewBox="0 0 1200 520" aria-hidden="true"></svg>
       </div>
     </div>
-    <a class="dive-deeper" data-slide-link="5">→ Dive deeper</a>
+    <a class="dive-deeper" data-slide-link="6">→ Dive deeper</a>
   </section>
   <!-- ============== SLIDE 6: Smarter AND Cheaper (was 8) ============== -->
-  <section class="slide" data-slide="6" id="slide-6">
+  <section class="slide" data-slide="7" id="slide-7">
     <div class="slide-inner slide-9">
       <p class="slide-eyebrow">Capability vs. cost</p>
       <h1 class="slide-headline">Smarter AND cheaper.</h1>
@@ -417,10 +452,10 @@
         <canvas id="smarterChart"></canvas>
       </div>
     </div>
-    <a class="dive-deeper" data-slide-link="6">→ Dive deeper</a>
+    <a class="dive-deeper" data-slide-link="7">→ Dive deeper</a>
   </section>
   <!-- ============== SLIDE 7: Infrastructure & Energy (NATIVE CapEx Explorer) ============== -->
-  <section class="slide" data-slide="7" id="slide-7">
+  <section class="slide" data-slide="8" id="slide-8">
     <div class="slide-inner slide-block-layout">
       <div class="slide-text">
         <p class="slide-eyebrow">Infrastructure &amp; Energy</p>
@@ -460,10 +495,10 @@
         </div>
       </div>
     </div>
-    <a class="dive-deeper" data-slide-link="7">→ Dive deeper</a>
+    <a class="dive-deeper" data-slide-link="8">→ Dive deeper</a>
   </section>
   <!-- ============== SLIDE 8: Agent Anatomy (NATIVE 7-LAYER STACK) ============== -->
-  <section class="slide" data-slide="8" id="slide-8">
+  <section class="slide" data-slide="9" id="slide-9">
     <div class="slide-inner slide-block-layout">
       <div class="slide-text">
         <p class="slide-eyebrow">Agent anatomy</p>
@@ -686,10 +721,10 @@
         <span class="stat-source" style="text-align:center">Sources: Crunchbase, TechCrunch, GitHub, npm, PyPI · 2025–2026</span>
       </div>
     </div>
-    <a class="dive-deeper" data-slide-link="8">→ Dive deeper</a>
+    <a class="dive-deeper" data-slide-link="9">→ Dive deeper</a>
   </section>
   <!-- ============== SLIDE 9: Vibe Coding (NEW) ============== -->
-  <section class="slide" data-slide="9" id="slide-9">
+  <section class="slide" data-slide="10" id="slide-10">
     <div class="slide-inner slide-11">
       <p class="slide-eyebrow">Vibe coding</p>
       <h1 class="slide-headline">Code is becoming a throwaway artifact.</h1>
@@ -697,10 +732,10 @@
       <div class="vibe-grid" id="vibeGrid"></div>
       <p class="slide-source">Source: <a href="https://www.sonarsource.com/state-of-code-developer-survey-report.pdf" target="_blank" rel="noopener">SonarSource 2026 State of Code Developer Survey</a> (42% AI-authored code, 72% daily use among triers). Stack Overflow 2025 — 51% daily — as secondary signal.</p>
     </div>
-    <a class="dive-deeper" data-slide-link="9">→ Dive deeper</a>
+    <a class="dive-deeper" data-slide-link="10">→ Dive deeper</a>
   </section>
   <!-- ============== SLIDE 10: Business Models + ARPU (NATIVE) ============== -->
-  <section class="slide" data-slide="10" id="slide-10">
+  <section class="slide" data-slide="11" id="slide-11">
     <div class="slide-inner slide-iframe-layout">
       <div class="iframe-headline">
         <p class="slide-eyebrow">Business models · usage is the engine</p>
@@ -766,10 +801,10 @@
         <span class="stat-source">Source: Counterpoint Research (Apr 2026), Anthropic disclosures, Perplexity (Apr 2026), OpenAI (Feb 2026)</span>
       </div>
     </div>
-    <a class="dive-deeper" data-slide-link="10">→ Dive deeper</a>
+    <a class="dive-deeper" data-slide-link="11">→ Dive deeper</a>
   </section>
   <!-- ============== SLIDE 11: Sequoia Services Matrix (NATIVE) ============== -->
-  <section class="slide" data-slide="11" id="slide-11">
+  <section class="slide" data-slide="12" id="slide-12">
     <div class="slide-inner slide-iframe-layout slide-iframe-layout--full">
       <div class="slide-text slide-text--compact">
         <p class="slide-eyebrow">Services disruption</p>
@@ -859,10 +894,10 @@
       <span class="stat-source" style="display:block;text-align:center;margin-top:1rem">Framework: Sequoia Capital, 2026 &mdash; contenders filtered to $10M+ raised &mdash; <span style="color:#7C4DFF">DVC portfolio</span> highlighted</span>
       </div>
     </div>
-    <a class="dive-deeper" data-slide-link="11">→ Dive deeper</a>
+    <a class="dive-deeper" data-slide-link="12">→ Dive deeper</a>
   </section>
   <!-- ============== SLIDE 12: Three attack angles (NATIVE) ============== -->
-  <section class="slide" data-slide="12" id="slide-12">
+  <section class="slide" data-slide="13" id="slide-13">
     <div class="slide-inner slide-iframe-layout">
       <div class="iframe-headline">
         <p class="slide-eyebrow">How founders attack the $1.5T services map</p>
@@ -877,10 +912,10 @@
         <div class="slide-attack-angles__hint" aria-hidden="true">Scroll</div>
       </div>
     </div>
-    <a class="dive-deeper" data-slide-link="12">→ Dive deeper</a>
+    <a class="dive-deeper" data-slide-link="13">→ Dive deeper</a>
   </section>
   <!-- ============== SLIDE 13: Physical AI (REBUILT) ============== -->
-  <section class="slide" data-slide="13" id="slide-13">
+  <section class="slide" data-slide="14" id="slide-14">
     <div class="slide-inner slide-physical">
       <p class="slide-eyebrow">Physical AI</p>
       <h1 class="slide-headline">It already left the screen.</h1>
@@ -890,10 +925,10 @@
 
       <div class="phys-stats-strip" id="physStatsStrip"></div>
     </div>
-    <a class="dive-deeper" data-slide-link="13">→ Dive deeper</a>
+    <a class="dive-deeper" data-slide-link="14">→ Dive deeper</a>
   </section>
   <!-- ============== SLIDE 14: Key Learnings (close) ============== -->
-  <section class="slide" data-slide="14" id="slide-14">
+  <section class="slide" data-slide="15" id="slide-15">
     <div class="slide-inner slide-15 slide-keylearn">
       <p class="slide-eyebrow">Key learnings</p>
       <h1 class="slide-headline">Six things <span class="hl-accent hl-accent--teal">we now believe</span>.</h1>
@@ -934,7 +969,7 @@
 
       <p class="kl-kicker">You are not late to a trend. You are early to a restructuring of the global economy.</p>
     </div>
-    <a class="dive-deeper" data-slide-link="14">→ Dive deeper</a>
+    <a class="dive-deeper" data-slide-link="15">→ Dive deeper</a>
   </section>
 
 </main>
