@@ -223,11 +223,13 @@
 .hc-sankey-svg {
   display: block;
   width: 100%;
-  min-width: 960px;
+  /* Match the JS viewBox width (1280) so labels and overlays never clip
+     on a 1366px desktop. Smaller viewports horizontally scroll. */
+  min-width: 1280px;
   height: 760px;
 }
 @media (max-width: 900px) {
-  .hc-sankey-svg { min-width: 1180px; height: 820px; }
+  .hc-sankey-svg { min-width: 1320px; height: 820px; }
 }
 
 /* Column header text */
@@ -1143,48 +1145,108 @@
 .hc-sankey-svg .node.is-dim text { opacity: 0.32; }
 .hc-sankey-svg .node.is-hi rect { stroke: var(--hc-gold, #F5C542); stroke-width: 2; }
 
-/* AI / Incentive chips ------------------------------------------------- */
+/* Overlay layer + chips ----------------------------------------------- */
+.hc-overlay-layer { pointer-events: none; }
+.hc-overlay-tick  { pointer-events: none; }
+
+/* AI mode overlay --- teal halos on AI-relevant BC flows + pool rings
+   + chip stack on the right gutter. */
+.hc-ai-flow-halo { pointer-events: none; mix-blend-mode: screen; }
+.hc-ai-node-ring { pointer-events: none; }
 .hc-ai-chip { cursor: pointer; pointer-events: auto; }
 .hc-ai-chip rect {
-  fill: rgba(78, 205, 196, 0.14);
-  stroke: rgba(78, 205, 196, 0.65);
+  fill: rgba(78, 205, 196, 0.18);
+  stroke: rgba(78, 205, 196, 0.85);
   stroke-width: 1;
 }
-.hc-ai-chip text { fill: var(--hc-teal, #4ECDC4); font-size: 9.5px; font-weight: 700; letter-spacing: 0.02em; pointer-events: none; }
-.hc-ai-chip:hover rect, .hc-ai-chip:focus rect { fill: rgba(78, 205, 196, 0.3); stroke: var(--hc-teal, #4ECDC4); }
-.hc-overlay-tick { pointer-events: none; }
+.hc-ai-chip text {
+  fill: var(--hc-teal, #4ECDC4);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  pointer-events: none;
+}
+.hc-ai-chip:hover rect,
+.hc-ai-chip:focus rect {
+  fill: rgba(78, 205, 196, 0.35);
+  stroke: var(--hc-teal, #4ECDC4);
+}
 
+/* Incentives mode overlay --- hatched amber STRIPE on the affected node
+   (renders directly on the node, unlike AI which highlights flows). */
+.hc-inc-node-stripe { pointer-events: none; }
 .hc-inc-chip { cursor: pointer; pointer-events: auto; }
 .hc-inc-chip rect {
-  fill: rgba(245, 197, 66, 0.14);
-  stroke: rgba(245, 197, 66, 0.65);
+  fill: rgba(245, 197, 66, 0.20);
+  stroke: rgba(245, 197, 66, 0.9);
   stroke-width: 1;
   stroke-dasharray: 3 2;
 }
-.hc-inc-chip text { fill: var(--hc-gold, #F5C542); font-size: 9.5px; font-weight: 700; letter-spacing: 0.02em; pointer-events: none; }
-.hc-inc-chip:hover rect, .hc-inc-chip:focus rect { fill: rgba(245, 197, 66, 0.3); stroke: var(--hc-gold, #F5C542); }
+.hc-inc-chip text {
+  fill: var(--hc-gold, #F5C542);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  pointer-events: none;
+}
+.hc-inc-chip:hover rect,
+.hc-inc-chip:focus rect {
+  fill: rgba(245, 197, 66, 0.35);
+  stroke: var(--hc-gold, #F5C542);
+}
 
+/* Companies mode overlay --- ON-CHART badge clusters next to each pool
+   with company initials. Purple pool ring shows which pools host
+   companies in the filtered set. */
+.hc-co-node-ring { pointer-events: none; }
 .hc-co-badge { cursor: pointer; pointer-events: auto; }
-.hc-co-badge circle { fill: rgba(232, 233, 237, 0.55); stroke: rgba(232, 233, 237, 0.85); transition: transform 0.12s ease; }
-.hc-co-badge[data-group="dvc"] circle { fill: rgba(245, 197, 66, 0.55); stroke: rgba(245, 197, 66, 0.9); }
-.hc-co-badge:hover circle, .hc-co-badge:focus circle { transform: scale(1.35); transform-origin: center; }
+.hc-co-badge rect {
+  fill: rgba(45, 49, 66, 0.92);
+  stroke: rgba(160, 168, 188, 0.85);
+  stroke-width: 1;
+}
+.hc-co-badge text {
+  fill: var(--hc-text, #E8E9ED);
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  pointer-events: none;
+}
+.hc-co-badge[data-group="dvc"] rect {
+  fill: rgba(124, 77, 255, 0.22);
+  stroke: rgba(124, 77, 255, 0.95);
+}
+.hc-co-badge[data-group="dvc"] text {
+  fill: var(--hc-purple, #B59BFF);
+}
+.hc-co-badge:hover rect,
+.hc-co-badge:focus rect {
+  stroke-width: 1.8;
+}
 
 /* View-mode coloring of the river ------------------------------------- */
-/* Default Money mode: full opacity. */
-/* AI / Incentives / Companies modes: dim the river to ~45% so overlays read. */
+/* Default Money mode: full opacity so dollars read first. */
+/* AI / Incentives / Companies: dim the river so overlays read. */
 .hc-sankey-svg.view-ai .link-base,
 .hc-sankey-svg.view-incentives .link-base,
-.hc-sankey-svg.view-companies .link-base { stroke-opacity: 0.18; }
+.hc-sankey-svg.view-companies .link-base { stroke-opacity: 0.10; }
 .hc-sankey-svg.view-ai .node rect,
 .hc-sankey-svg.view-incentives .node rect,
 .hc-sankey-svg.view-companies .node rect { opacity: 0.55; }
 .hc-sankey-svg.view-ai .node-label,
 .hc-sankey-svg.view-incentives .node-label,
-.hc-sankey-svg.view-companies .node-label { opacity: 0.72; }
+.hc-sankey-svg.view-companies .node-label { opacity: 0.85; }
 /* Active highlight wins over dim. */
 .hc-sankey-svg .hc-link-group.is-hi .link-base { stroke-opacity: 0.85 !important; }
 .hc-sankey-svg .node.is-hi rect { opacity: 1 !important; }
 .hc-sankey-svg .node.is-hi text { opacity: 1 !important; }
+
+/* Belt-and-braces: company/portfolio status MUST NOT color flows. The
+   company-overlay group has no flow elements; this guard keeps any
+   accidental future code from overriding flow color in Companies mode. */
+.hc-sankey-svg.view-companies .link-base {
+  stroke: rgba(170, 178, 195, 0.32) !important;
+}
 
 /* Patient loop: stacked bands ----------------------------------------- */
 .hc-loop-svg .stack-band rect.band-bg {

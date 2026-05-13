@@ -231,10 +231,12 @@
       svg.selectAll('*').remove();
 
       var bbox = moneySvgEl.getBoundingClientRect();
-      var width = Math.max(960, bbox.width || moneySvgEl.parentNode.clientWidth || 1000);
+      // Force a wide viewBox so labels on either side never clip.
+      // The container is overflow-x:auto on mobile so users can scroll.
+      var width = Math.max(1280, bbox.width || moneySvgEl.parentNode.clientWidth || 1280);
       var height = 720;
       var isMobile = window.innerWidth < 768;
-      if (isMobile) { width = Math.max(1200, width); height = 820; }
+      if (isMobile) { width = Math.max(1320, width); height = 820; }
 
       svg.attr('viewBox', '0 0 ' + width + ' ' + height);
       svg.attr('preserveAspectRatio', 'xMinYMin meet');
@@ -242,6 +244,15 @@
       var defs = svg.append('defs');
       defs.append('marker').attr('id','hc-arrow').attr('viewBox','0 0 10 10').attr('refX',8).attr('refY',5).attr('markerWidth',6).attr('markerHeight',6).attr('orient','auto-start-reverse')
         .append('path').attr('d','M0,0 L10,5 L0,10 z').attr('fill','rgba(232,233,237,0.6)');
+      // Diagonal hatch pattern for incentive overlay stripes on nodes.
+      var hatch = defs.append('pattern')
+        .attr('id', 'hc-inc-hatch')
+        .attr('patternUnits', 'userSpaceOnUse')
+        .attr('width', 8).attr('height', 8)
+        .attr('patternTransform', 'rotate(45)');
+      hatch.append('rect').attr('width', 8).attr('height', 8).attr('fill', 'rgba(245,197,66,0.10)');
+      hatch.append('line').attr('x1', 0).attr('y1', 0).attr('x2', 0).attr('y2', 8)
+        .attr('stroke', 'rgba(245,197,66,0.85)').attr('stroke-width', 2);
 
       var layerA = DATA.paymentChannels.map(function (n) { return Object.assign({}, n, { layer: 0 }); });
       var layerB = DATA.destinations.map(function (n) { return Object.assign({}, n, { layer: 1 }); });
@@ -268,15 +279,17 @@
           return { id: l.id, source: l.source, target: l.target, value: l.value_b, span: 'BC' };
         }));
 
-      // Reserve a 220px right gutter for AI / incentive / company overlays
-      // so chips don't extend beyond the SVG viewBox.
-      var rightGutter = 220;
+      // Margins: leave room on the LEFT for payment-channel labels and on
+      // the RIGHT for pool labels + overlay chips/badges. Without these
+      // the labels clip at desktop widths (1366px) and on mobile.
+      var leftMargin  = 200;
+      var rightMargin = 260;
       var sankey = d3.sankey()
         .nodeId(function (d) { return d.id; })
         .nodeWidth(16)
         .nodePadding(10)
         .nodeAlign(d3.sankeyJustify || d3.sankeyLeft)
-        .extent([[18, 30], [width - rightGutter, height - 30]]);
+        .extent([[leftMargin, 30], [width - rightMargin, height - 30]]);
 
       sankeyGraph = sankey({
         nodes: allNodes.map(function (n) { return Object.assign({}, n); }),
@@ -392,10 +405,14 @@
 
       d3NodeSel.append('text')
         .attr('class', 'node-label')
-        .attr('x', function (d) { return d.layer === 2 ? d.x0 - 6 : (d.x0 < width / 2 ? d.x1 + 8 : d.x0 - 8); })
+        .attr('x', function (d) {
+          if (d.layer === 0) return d.x0 - 8;   // payment labels OUTSIDE on the left
+          if (d.layer === 2) return d.x1 + 8;   // pool labels OUTSIDE on the right
+          return d.x0 - 8;                       // destination labels to the left (anchored end)
+        })
         .attr('y', function (d) { return (d.y0 + d.y1) / 2; })
         .attr('dy', '0.35em')
-        .attr('text-anchor', function (d) { return d.layer === 2 ? 'end' : (d.x0 < width / 2 ? 'start' : 'end'); })
+        .attr('text-anchor', function (d) { return d.layer === 2 ? 'start' : 'end'; })
         .each(function (d) {
           var t = d3.select(this);
           t.append('tspan').text(d.label);
@@ -430,21 +447,62 @@
     }
 
     // ----- Overlays -----------------------------------------------------
-    // AI chips sit on a right gutter aligned to each pool's vertical center.
-    // Pool labels render to the LEFT of pools (text-anchor:end) so the right
-    // gutter is free for overlay placement without occluding text.
-    function poolGutterX() {
-      // farthest right edge across all pools + small gap
-      var maxX = 0;
-      Object.keys(poolPositions).forEach(function (id) {
-        var p = poolPositions[id];
-        if (p && p.x1 > maxX) maxX = p.x1;
-      });
-      return maxX + 14;
+    // Each mode renders a structurally different overlay so that AI,
+    // Incentives, and Companies are visually distinct on the same chart.
+    //
+    //   AI:         teal flow halos on AI-relevant BC links + teal pool
+    //               rings + teal chips on the right gutter
+    //   Incentives: amber HATCHED stripe drawn on top of each anchored
+    //               node (no flow halos), plus amber chips above the node
+    //   Companies:  on-chart badge clusters next to each pool with the
+    //               company initials visible; DVC vs leader tinting
+
+    function poolLabelGap() { return 130; } // approx pool label width
+    function poolOverlayX(p) {
+      // Place pool-side overlays just past the right edge of the pool
+      // label. The pool label is text-anchor:start at d.x1+8.
+      return p.x1 + 8 + poolLabelGap();
     }
 
     function buildAiOverlay() {
-      var gutterX = poolGutterX();
+      var grp = overlayG.append('g').attr('class', 'hc-ai-grp');
+
+      // 1. Teal flow halos on BC flows whose target pool has any AI surface.
+      var aiPools = {};
+      DATA.aiSurfaces.forEach(function (a) {
+        (a.attach_pools || []).forEach(function (pId) { aiPools[pId] = true; });
+      });
+      var d3 = window.d3;
+      sankeyGraph.links.forEach(function (l) {
+        if (l.span !== 'BC') return;
+        var tId = (typeof l.target === 'object') ? l.target.id : l.target;
+        if (!aiPools[tId]) return;
+        grp.append('path')
+          .attr('class', 'hc-ai-flow-halo')
+          .attr('d', d3.sankeyLinkHorizontal()(l))
+          .attr('fill', 'none')
+          .attr('stroke', 'rgba(78,205,196,0.55)')
+          .attr('stroke-width', Math.max(2, l.width))
+          .attr('pointer-events', 'none');
+      });
+
+      // 2. Teal node rings on AI-relevant pool nodes.
+      Object.keys(aiPools).forEach(function (pId) {
+        var p = poolPositions[pId];
+        if (!p) return;
+        grp.append('rect')
+          .attr('class', 'hc-ai-node-ring')
+          .attr('x', p.x0 - 3).attr('y', p.y0 - 3)
+          .attr('width', (p.x1 - p.x0) + 6)
+          .attr('height', (p.y1 - p.y0) + 6)
+          .attr('rx', 3)
+          .attr('fill', 'none')
+          .attr('stroke', 'rgba(78,205,196,0.85)')
+          .attr('stroke-width', 1.5)
+          .attr('pointer-events', 'none');
+      });
+
+      // 3. Teal AI opportunity chips on the right gutter, anchored to pool y.
       var byPool = {};
       DATA.aiSurfaces.forEach(function (a) {
         (a.attach_pools || []).forEach(function (pId) {
@@ -454,21 +512,21 @@
       Object.keys(byPool).forEach(function (pId) {
         var p = poolPositions[pId];
         if (!p) return;
-        var list = byPool[pId].slice(0, 4); // cap to avoid pile-up; rest accessible via drawer
-        var bandH = 16, gap = 2;
+        var list = byPool[pId].slice(0, 3);
+        var bandH = 18, gap = 3;
         var totalH = list.length * bandH + (list.length - 1) * gap;
         var startY = (p.y0 + p.y1) / 2 - totalH / 2;
-        var grp = overlayG.append('g').attr('class', 'hc-ai-grp').attr('data-pool', pId);
-        // connector tick from pool to chip stack
+        var gutterX = poolOverlayX(p);
+        // connector tick from pool label to chip stack
         grp.append('line')
-          .attr('class', 'hc-overlay-tick')
-          .attr('x1', p.x1).attr('y1', (p.y0 + p.y1) / 2)
-          .attr('x2', gutterX - 4).attr('y2', (p.y0 + p.y1) / 2)
+          .attr('class', 'hc-overlay-tick hc-ai-tick')
+          .attr('x1', p.x1 + 4).attr('y1', (p.y0 + p.y1) / 2)
+          .attr('x2', gutterX - 2).attr('y2', (p.y0 + p.y1) / 2)
           .attr('stroke', 'rgba(78,205,196,0.5)').attr('stroke-width', 1)
           .attr('stroke-dasharray', '2 2')
           .attr('pointer-events', 'none');
         list.forEach(function (a, i) {
-          var w = Math.max(140, a.label.length * 6.4 + 12);
+          var w = Math.max(110, a.label.length * 6.4 + 14);
           var x = gutterX;
           var y = startY + i * (bandH + gap);
           var g = grp.append('g')
@@ -478,7 +536,7 @@
             .attr('role', 'button')
             .attr('aria-label', a.label + ' — AI opportunity')
             .attr('transform', 'translate(' + x + ',' + y + ')');
-          g.append('rect').attr('width', w).attr('height', bandH).attr('rx', 8);
+          g.append('rect').attr('width', w).attr('height', bandH).attr('rx', 9);
           g.append('text').attr('x', w / 2).attr('y', bandH / 2 + 3.5).attr('text-anchor', 'middle').text(a.label);
           g.on('mouseenter', function (ev) { showTip(tipText(a.label + ' — AI opportunity', a.what), ev.clientX, ev.clientY); })
            .on('mouseleave', hideTip)
@@ -489,53 +547,92 @@
     }
 
     function buildIncentiveOverlay() {
-      // Incentives attach to destination nodes (preferred) or pools.
-      // We render small gold badges anchored just-above the node.
+      // Group all incentive content under a single mode group so we can
+      // toggle the whole layer at once.
+      var grp = overlayG.append('g').attr('class', 'hc-inc-grp');
+
+      // For each incentive, render a hatched amber STRIPE across the
+      // affected node (so the constraint is visibly attached to the node)
+      // plus a chip above the node.
       DATA.incentives.forEach(function (inc) {
         var anchors = [];
         (inc.attach_nodes || []).forEach(function (id) { anchors.push({ id: id, kind: 'node' }); });
         (inc.attach_pools || []).forEach(function (id) { anchors.push({ id: id, kind: 'pool' }); });
-        anchors.forEach(function (a, ai) {
-          var pos = null;
+        anchors.forEach(function (a) {
+          var nodeRect = null;
           if (a.kind === 'pool' && poolPositions[a.id]) {
-            var p = poolPositions[a.id];
-            pos = { x: p.x1 + 6, y: p.y0 - 10 };
+            nodeRect = poolPositions[a.id];
           } else if (sankeyGraph) {
             var n = sankeyGraph.nodes.find(function (x) { return x.id === a.id; });
-            if (n) pos = { x: (n.x0 + n.x1) / 2, y: n.y0 - 10 };
+            if (n) nodeRect = { x0: n.x0, x1: n.x1, y0: n.y0, y1: n.y1 };
           }
-          if (!pos) return;
-          var w = Math.max(130, inc.label.length * 6.4 + 16);
-          var h = 16;
-          var x = pos.x - w / 2;
-          // Clamp to keep chip inside the SVG viewBox horizontally.
-          var svgBBox = moneySvgEl.viewBox.baseVal;
-          var vbW = svgBBox && svgBBox.width ? svgBBox.width : 1200;
-          if (x < 4) x = 4;
-          if (x + w > vbW - 4) x = vbW - 4 - w;
-          var y = pos.y - h;
-          if (y < 4) y = 4;
-          var g = overlayG.append('g')
-            .attr('class', 'hc-inc-chip')
+          if (!nodeRect) return;
+
+          // Stripe overlay on top of the node.
+          grp.append('rect')
+            .attr('class', 'hc-inc-node-stripe')
             .attr('data-inc', inc.id)
             .attr('data-anchor', a.id)
-            .attr('tabindex', 0)
-            .attr('role', 'button')
-            .attr('aria-label', inc.label + ' — incentive on ' + a.id)
-            .attr('transform', 'translate(' + x + ',' + y + ')');
-          g.append('rect').attr('width', w).attr('height', h).attr('rx', 8);
-          g.append('text').attr('x', w / 2).attr('y', h / 2 + 3.5).attr('text-anchor', 'middle').text(inc.label);
-          g.on('mouseenter', function (ev) { showTip(tipText(inc.label + ' — incentive', inc.message), ev.clientX, ev.clientY); })
-           .on('mouseleave', hideTip)
-           .on('click', function (ev) { ev.stopPropagation(); selectIncentive(inc.id); })
-           .on('keydown', function (ev) { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); selectIncentive(inc.id); } });
+            .attr('x', nodeRect.x0 - 2)
+            .attr('y', nodeRect.y0)
+            .attr('width', (nodeRect.x1 - nodeRect.x0) + 4)
+            .attr('height', nodeRect.y1 - nodeRect.y0)
+            .attr('fill', 'url(#hc-inc-hatch)')
+            .attr('stroke', 'rgba(245,197,66,0.85)')
+            .attr('stroke-width', 1)
+            .attr('pointer-events', 'none');
         });
+
+        // Single chip per incentive — anchor to first anchor's position.
+        var first = anchors.find(function (a) {
+          if (a.kind === 'pool') return !!poolPositions[a.id];
+          return sankeyGraph && sankeyGraph.nodes.find(function (x) { return x.id === a.id; });
+        });
+        if (!first) return;
+        var firstRect;
+        if (first.kind === 'pool') firstRect = poolPositions[first.id];
+        else firstRect = sankeyGraph.nodes.find(function (x) { return x.id === first.id; });
+        var cx = (firstRect.x0 + firstRect.x1) / 2;
+        var w = Math.max(120, inc.label.length * 6.4 + 18);
+        var h = 18;
+        var x = cx - w / 2;
+        var svgBBox = moneySvgEl.viewBox.baseVal;
+        var vbW = svgBBox && svgBBox.width ? svgBBox.width : 1280;
+        if (x < 4) x = 4;
+        if (x + w > vbW - 4) x = vbW - 4 - w;
+        var y = firstRect.y0 - h - 6;
+        if (y < 4) y = 4;
+        var g = grp.append('g')
+          .attr('class', 'hc-inc-chip')
+          .attr('data-inc', inc.id)
+          .attr('tabindex', 0)
+          .attr('role', 'button')
+          .attr('aria-label', inc.label + ' — incentive')
+          .attr('transform', 'translate(' + x + ',' + y + ')');
+        g.append('rect').attr('width', w).attr('height', h).attr('rx', 9);
+        g.append('text').attr('x', w / 2).attr('y', h / 2 + 3.5).attr('text-anchor', 'middle').text(inc.label);
+        g.on('mouseenter', function (ev) { showTip(tipText(inc.label + ' — incentive', inc.message), ev.clientX, ev.clientY); })
+         .on('mouseleave', hideTip)
+         .on('click', function (ev) { ev.stopPropagation(); selectIncentive(inc.id); })
+         .on('keydown', function (ev) { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); selectIncentive(inc.id); } });
       });
     }
 
     function buildCompanyOverlay() {
-      // Tighter neutral badge cluster to the right of each pool.
-      var gutterX = poolGutterX();
+      // ON-CHART badge clusters: place a tight cluster of company badges
+      // next to each pool node. Badges display the company's first 2-3
+      // letters so they are recognizable directly on the chart canvas
+      // (the QA found previous badges were too small / off-canvas).
+      var grp = overlayG.append('g').attr('class', 'hc-co-grp');
+
+      function initials(name) {
+        var t = name.replace(/[^A-Za-z0-9 +]/g, '').trim();
+        var parts = t.split(/\s+/);
+        if (parts.length === 1) return t.slice(0, 3);
+        return (parts[0][0] + parts[1][0] + (parts[2] ? parts[2][0] : '')).toUpperCase();
+      }
+
+      // 1. Purple ring on pool nodes that have any companies.
       var byPool = {};
       DATA.companies.forEach(function (c) {
         (c.money_pool_ids || []).forEach(function (pId) {
@@ -543,16 +640,38 @@
         });
       });
       Object.keys(byPool).forEach(function (pId) {
+        var p = poolPositions[pId];
+        if (!p) return;
+        grp.append('rect')
+          .attr('class', 'hc-co-node-ring')
+          .attr('data-pool', pId)
+          .attr('x', p.x0 - 3).attr('y', p.y0 - 3)
+          .attr('width', (p.x1 - p.x0) + 6)
+          .attr('height', (p.y1 - p.y0) + 6)
+          .attr('rx', 3)
+          .attr('fill', 'none')
+          .attr('stroke', 'rgba(124,77,255,0.75)')
+          .attr('stroke-width', 1.5)
+          .attr('pointer-events', 'none');
+      });
+
+      // 2. Badge clusters: rectangular pills (initials + first-name first
+      // letter), arranged in a grid right of each pool. Bigger than the
+      // old r=4.5 dots, with explicit data-group so the DVC filter works.
+      var pillW = 32, pillH = 18, gapX = 3, gapY = 3, cols = 3;
+      Object.keys(byPool).forEach(function (pId) {
         var p = poolPositions[pId]; if (!p) return;
         var list = byPool[pId];
         var midY = (p.y0 + p.y1) / 2;
-        var grp = overlayG.append('g').attr('class', 'hc-co-grp').attr('data-pool', pId);
-        var cols = 5, dx = 14, dy = 12;
+        var poolGrp = grp.append('g').attr('class', 'hc-co-pool').attr('data-pool', pId);
+        var startX = poolOverlayX(p);
         list.forEach(function (c, i) {
           var col = i % cols, row = Math.floor(i / cols);
-          var x = gutterX + col * dx;
-          var y = midY - 6 + row * dy;
-          var g = grp.append('g')
+          var x = startX + col * (pillW + gapX);
+          var rows = Math.ceil(list.length / cols);
+          var startY = midY - (rows * (pillH + gapY) - gapY) / 2;
+          var y = startY + row * (pillH + gapY);
+          var g = poolGrp.append('g')
             .attr('class', 'hc-co-badge')
             .attr('data-company', c.id)
             .attr('data-group', c.group)
@@ -560,7 +679,9 @@
             .attr('role', 'button')
             .attr('aria-label', c.name + ' (' + (c.group === 'dvc' ? 'DVC portfolio' : 'market leader') + ')')
             .attr('transform', 'translate(' + x + ',' + y + ')');
-          g.append('circle').attr('r', 4.5);
+          g.append('rect').attr('width', pillW).attr('height', pillH).attr('rx', 4);
+          g.append('text').attr('x', pillW / 2).attr('y', pillH / 2 + 3.5)
+            .attr('text-anchor', 'middle').text(initials(c.name));
           g.on('mouseenter', function (ev) { showTip(tipText(c.name, c.short_description), ev.clientX, ev.clientY); })
            .on('mouseleave', hideTip)
            .on('click', function (ev) { ev.stopPropagation(); selectCompany(c.id); })
@@ -574,9 +695,11 @@
       var showAi  = state.view === 'ai';
       var showInc = state.view === 'incentives';
       var showCo  = state.view === 'companies';
-      overlayG.selectAll('.hc-ai-grp').style('display', showAi ? null : 'none');
-      overlayG.selectAll('.hc-inc-chip').style('display', showInc ? null : 'none');
-      overlayG.selectAll('.hc-co-grp').style('display', showCo ? null : 'none');
+      overlayG.select('.hc-ai-grp').style('display', showAi ? null : 'none');
+      overlayG.select('.hc-inc-grp').style('display', showInc ? null : 'none');
+      overlayG.select('.hc-co-grp').style('display', showCo ? null : 'none');
+      // DVC filter — hide non-DVC badges and the corresponding pool ring is
+      // unaffected (pool may still host DVC companies).
       overlayG.selectAll('.hc-co-badge').style('display', function () {
         if (!showCo) return 'none';
         if (state.companyFilter === 'dvc' && this.getAttribute('data-group') !== 'dvc') return 'none';
@@ -1216,11 +1339,10 @@
       svgEl('text', { class: 'patient-prompt', x: 0, y: 14, 'text-anchor': 'middle' }, cg).textContent = stateInfo ? stateInfo.prompt : '';
       svgEl('text', { class: 'patient-scenario', x: 0, y: 38, 'text-anchor': 'middle' }, cg).textContent = scenario.scenario || '';
 
-      // Loop guide ellipses + labels
+      // Loop geometry (no dashed guide ellipses — QA confirmed they read
+      // as "always-on connectors". Labels alone suffice).
       var careCx = 560, careCy = 230, careRx = 380, careRy = 170;
       var finCx  = 560, finCy  = 380, finRx  = 380, finRy  = 170;
-      svgEl('ellipse', { cx: careCx, cy: careCy, rx: careRx, ry: careRy, fill: 'none', stroke: 'rgba(78,205,196,0.12)', 'stroke-width': 1, 'stroke-dasharray': '4 4' });
-      svgEl('ellipse', { cx: finCx,  cy: finCy,  rx: finRx,  ry: finRy,  fill: 'none', stroke: 'rgba(245,197,66,0.12)', 'stroke-width': 1, 'stroke-dasharray': '4 4' });
       svgEl('text', { class: 'loop-label care', x: 560, y: 50, 'text-anchor': 'middle' }).textContent = 'CARE LOOP — clinical workflow, clockwise';
       svgEl('text', { class: 'loop-label fin',  x: 560, y: 575, 'text-anchor': 'middle' }).textContent = 'FINANCIAL LOOP — reimbursement, counterclockwise';
 
@@ -1288,13 +1410,16 @@
         svgEl('text', { class: 'band-label', x: STACK.x + 12, y: y + bandH / 2 + 4 }, g).textContent = s.label;
         svgEl('text', { class: 'band-contents', x: STACK.x + 170, y: y + bandH / 2 + 4 }, g).textContent = s.contents;
 
-        // Companies relevant to BOTH this stack layer AND any active step in the scenario.
+        // Companies for this band MUST be both:
+        //   (a) listed against this stack layer (companiesForStack), AND
+        //   (b) participate in at least one active scenario step.
+        // No fallback to the unfiltered list — bands without any
+        // scenario-relevant company examples render the empty sentinel
+        // so the chips visibly differ across scenarios.
         var stackCos = sortCompanies(filteredCompanies(companiesForStack(s.id)));
-        var scenarioCos = stackCos.filter(function (c) {
+        var cosForBand = stackCos.filter(function (c) {
           return (c.process_step_ids || []).some(function (sid) { return activeStepIds.indexOf(sid) >= 0; });
-        });
-        var cosForBand = scenarioCos.length ? scenarioCos : stackCos;
-        cosForBand = cosForBand.slice(0, 4);
+        }).slice(0, 4);
 
         if (cosForBand.length === 0) {
           svgEl('text', { class: 'band-co-empty', x: STACK.x + STACK.w - 12, y: y + bandH / 2 + 4, 'text-anchor': 'end' }, g)
