@@ -232,11 +232,13 @@
 
       var bbox = moneySvgEl.getBoundingClientRect();
       // Force a wide viewBox so labels on either side never clip.
-      // The container is overflow-x:auto on mobile so users can scroll.
-      var width = Math.max(1280, bbox.width || moneySvgEl.parentNode.clientWidth || 1280);
+      // Container is overflow-x:auto so narrower viewports horizontally scroll.
+      // Width must fit the longest left payment label (~300px), all 3 columns,
+      // and the right pool labels + chip gutter (~260px).
+      var width = Math.max(1380, bbox.width || moneySvgEl.parentNode.clientWidth || 1380);
       var height = 720;
       var isMobile = window.innerWidth < 768;
-      if (isMobile) { width = Math.max(1320, width); height = 820; }
+      if (isMobile) { width = Math.max(1420, width); height = 820; }
 
       svg.attr('viewBox', '0 0 ' + width + ' ' + height);
       svg.attr('preserveAspectRatio', 'xMinYMin meet');
@@ -280,9 +282,10 @@
         }));
 
       // Margins: leave room on the LEFT for payment-channel labels and on
-      // the RIGHT for pool labels + overlay chips/badges. Without these
-      // the labels clip at desktop widths (1366px) and on mobile.
-      var leftMargin  = 200;
+      // the RIGHT for pool labels + overlay chips/badges. Long payment
+      // labels (e.g. "Other third-party payers & programs $590.5B") need
+      // ~290px to render without clipping at desktop scale.
+      var leftMargin  = 300;
       var rightMargin = 260;
       var sankey = d3.sankey()
         .nodeId(function (d) { return d.id; })
@@ -620,16 +623,18 @@
 
     function buildCompanyOverlay() {
       // ON-CHART badge clusters: place a tight cluster of company badges
-      // next to each pool node. Badges display the company's first 2-3
-      // letters so they are recognizable directly on the chart canvas
-      // (the QA found previous badges were too small / off-canvas).
+      // LEFT of each pool node so they sit in the central, always-visible
+      // BC-flow area of the chart canvas (the previous build placed them
+      // in the far-right gutter beyond the visible scroll region on
+      // common desktop widths).
       var grp = overlayG.append('g').attr('class', 'hc-co-grp');
 
-      function initials(name) {
-        var t = name.replace(/[^A-Za-z0-9 +]/g, '').trim();
-        var parts = t.split(/\s+/);
-        if (parts.length === 1) return t.slice(0, 3);
-        return (parts[0][0] + parts[1][0] + (parts[2] ? parts[2][0] : '')).toUpperCase();
+      function shortName(name) {
+        // Keep the chip readable: short labels render the full name;
+        // longer ones are truncated to 12 chars + ellipsis. The full name
+        // is still on the tooltip + aria-label.
+        var t = name.replace(/\s*\+\s*/g, '+').trim();
+        return t.length > 12 ? t.slice(0, 11) + '…' : t;
       }
 
       // 1. Purple ring on pool nodes that have any companies.
@@ -650,26 +655,43 @@
           .attr('height', (p.y1 - p.y0) + 6)
           .attr('rx', 3)
           .attr('fill', 'none')
-          .attr('stroke', 'rgba(124,77,255,0.75)')
-          .attr('stroke-width', 1.5)
+          .attr('stroke', 'rgba(124,77,255,0.85)')
+          .attr('stroke-width', 2)
           .attr('pointer-events', 'none');
       });
 
-      // 2. Badge clusters: rectangular pills (initials + first-name first
-      // letter), arranged in a grid right of each pool. Bigger than the
-      // old r=4.5 dots, with explicit data-group so the DVC filter works.
-      var pillW = 32, pillH = 18, gapX = 3, gapY = 3, cols = 3;
+      // 2. Badge cluster anchored to the LEFT of each pool node so the
+      // cluster sits inside the BC-flow region (visible on the chart
+      // canvas, not a right gutter that scrolls off-screen at desktop
+      // widths). Uses 1 or 2 columns depending on count.
+      var pillW = 90, pillH = 18, gapX = 4, gapY = 3;
+      var clusterRightInset = 8;          // gap between cluster and pool
+      var vbBox = moneySvgEl.viewBox.baseVal;
+      var vbHeight = (vbBox && vbBox.height) ? vbBox.height : 720;
+      var maxBadgesPerPool = 8;           // hard cap, more accessible via drawer
       Object.keys(byPool).forEach(function (pId) {
         var p = poolPositions[pId]; if (!p) return;
-        var list = byPool[pId];
+        var fullList = sortCompanies(byPool[pId]); // DVC-first sort respected
+        var list = fullList.slice(0, maxBadgesPerPool);
+        var overflow = fullList.length - list.length;
         var midY = (p.y0 + p.y1) / 2;
         var poolGrp = grp.append('g').attr('class', 'hc-co-pool').attr('data-pool', pId);
-        var startX = poolOverlayX(p);
+
+        // 1 column up to 4 entries; 2 columns when > 4.
+        var cols = list.length > 4 ? 2 : 1;
+        var rows = Math.ceil(list.length / cols);
+        var clusterW = cols * pillW + (cols - 1) * gapX;
+        var clusterH = rows * pillH + (rows - 1) * gapY;
+        var startX = p.x0 - clusterRightInset - clusterW;
+        var startY = midY - clusterH / 2;
+        // Clamp Y so the cluster stays inside the SVG viewBox.
+        if (startY < 4) startY = 4;
+        if (startY + clusterH > vbHeight - 4) startY = vbHeight - 4 - clusterH;
+
         list.forEach(function (c, i) {
-          var col = i % cols, row = Math.floor(i / cols);
+          var col = i % cols;
+          var row = Math.floor(i / cols);
           var x = startX + col * (pillW + gapX);
-          var rows = Math.ceil(list.length / cols);
-          var startY = midY - (rows * (pillH + gapY) - gapY) / 2;
           var y = startY + row * (pillH + gapY);
           var g = poolGrp.append('g')
             .attr('class', 'hc-co-badge')
@@ -681,12 +703,31 @@
             .attr('transform', 'translate(' + x + ',' + y + ')');
           g.append('rect').attr('width', pillW).attr('height', pillH).attr('rx', 4);
           g.append('text').attr('x', pillW / 2).attr('y', pillH / 2 + 3.5)
-            .attr('text-anchor', 'middle').text(initials(c.name));
+            .attr('text-anchor', 'middle').text(shortName(c.name));
           g.on('mouseenter', function (ev) { showTip(tipText(c.name, c.short_description), ev.clientX, ev.clientY); })
            .on('mouseleave', hideTip)
            .on('click', function (ev) { ev.stopPropagation(); selectCompany(c.id); })
            .on('keydown', function (ev) { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); selectCompany(c.id); } });
         });
+
+        // "+N more" indicator beneath the cluster (clicks the pool node
+        // drawer which lists ALL companies for this pool).
+        if (overflow > 0) {
+          var moreY = startY + clusterH + gapY + 2;
+          if (moreY + pillH > vbHeight - 4) moreY = vbHeight - 4 - pillH;
+          var moreG = poolGrp.append('g')
+            .attr('class', 'hc-co-badge hc-co-more')
+            .attr('data-pool', pId)
+            .attr('tabindex', 0)
+            .attr('role', 'button')
+            .attr('aria-label', overflow + ' more companies in ' + pId)
+            .attr('transform', 'translate(' + startX + ',' + moreY + ')');
+          moreG.append('rect').attr('width', cols === 2 ? clusterW : pillW).attr('height', pillH).attr('rx', 4);
+          moreG.append('text').attr('x', (cols === 2 ? clusterW : pillW) / 2).attr('y', pillH / 2 + 3.5)
+            .attr('text-anchor', 'middle').text('+ ' + overflow + ' more');
+          moreG.on('click', function (ev) { ev.stopPropagation(); selectNode(pId); })
+            .on('keydown', function (ev) { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); selectNode(pId); } });
+        }
       });
     }
 

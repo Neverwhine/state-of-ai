@@ -223,13 +223,13 @@
 .hc-sankey-svg {
   display: block;
   width: 100%;
-  /* Match the JS viewBox width (1280) so labels and overlays never clip
-     on a 1366px desktop. Smaller viewports horizontally scroll. */
-  min-width: 1280px;
+  /* Match the JS viewBox width (1380 desktop, 1420 mobile) so labels and
+     overlays never clip. Smaller viewports horizontally scroll. */
+  min-width: 1380px;
   height: 760px;
 }
 @media (max-width: 900px) {
-  .hc-sankey-svg { min-width: 1320px; height: 820px; }
+  .hc-sankey-svg { min-width: 1420px; height: 820px; }
 }
 
 /* Column header text */
@@ -1195,33 +1195,45 @@
   stroke: var(--hc-gold, #F5C542);
 }
 
-/* Companies mode overlay --- ON-CHART badge clusters next to each pool
-   with company initials. Purple pool ring shows which pools host
-   companies in the filtered set. */
+/* Companies mode overlay --- ON-CHART badge clusters LEFT of each pool
+   in the BC-flow area (visible on the chart, not in a far-right gutter).
+   Purple pool ring shows which pools host companies in the filtered set. */
 .hc-co-node-ring { pointer-events: none; }
 .hc-co-badge { cursor: pointer; pointer-events: auto; }
 .hc-co-badge rect {
-  fill: rgba(45, 49, 66, 0.92);
-  stroke: rgba(160, 168, 188, 0.85);
+  fill: rgba(45, 49, 66, 0.95);
+  stroke: rgba(200, 204, 212, 0.9);
   stroke-width: 1;
 }
 .hc-co-badge text {
   fill: var(--hc-text, #E8E9ED);
-  font-size: 9.5px;
-  font-weight: 800;
-  letter-spacing: 0.04em;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
   pointer-events: none;
 }
 .hc-co-badge[data-group="dvc"] rect {
-  fill: rgba(124, 77, 255, 0.22);
-  stroke: rgba(124, 77, 255, 0.95);
+  fill: rgba(124, 77, 255, 0.32);
+  stroke: rgba(180, 155, 255, 1);
+  stroke-width: 1.4;
 }
 .hc-co-badge[data-group="dvc"] text {
-  fill: var(--hc-purple, #B59BFF);
+  fill: #E2D7FF;
+}
+.hc-co-badge.hc-co-more rect {
+  fill: rgba(0, 0, 0, 0.35);
+  stroke: rgba(160, 168, 188, 0.45);
+  stroke-dasharray: 3 2;
+}
+.hc-co-badge.hc-co-more text {
+  fill: var(--hc-text-mute, #A0A8BC);
+  font-size: 9.5px;
+  font-weight: 600;
 }
 .hc-co-badge:hover rect,
 .hc-co-badge:focus rect {
-  stroke-width: 1.8;
+  stroke-width: 2;
+  filter: drop-shadow(0 0 4px rgba(124,77,255,0.5));
 }
 
 /* View-mode coloring of the river ------------------------------------- */
