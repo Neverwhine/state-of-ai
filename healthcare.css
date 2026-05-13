@@ -717,8 +717,19 @@
 .hc-loop-svg .stack-cell .sc-c { font-size: 9px; fill: var(--hc-text-mute); }
 .hc-loop-svg .stack-cell { cursor: pointer; }
 
-.hc-loop-svg .loop-arrow.is-dim { opacity: 0.65; }
-.hc-loop-svg .loop-arrow.is-active { filter: drop-shadow(0 0 4px rgba(78,205,196,0.4)); }
+.hc-loop-svg .loop-arrow.is-active.is-care { filter: drop-shadow(0 0 3px rgba(78, 205, 196, 0.45)); }
+.hc-loop-svg .loop-arrow.is-active.is-fin  { filter: drop-shadow(0 0 3px rgba(245, 197, 66, 0.45)); }
+.hc-loop-svg .bridge-label { font-size: 10px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+.hc-loop-svg .band-co-empty { fill: var(--hc-text-mute, #A0A8BC); font-size: 10px; }
+.hc-loop-svg .band-co-chip[data-group="dvc"] rect {
+  fill: rgba(245, 197, 66, 0.12);
+  stroke: rgba(245, 197, 66, 0.4);
+}
+.hc-loop-svg .stack-band.is-active rect.band-bg {
+  fill: rgba(78, 205, 196, 0.14);
+  stroke: rgba(78, 205, 196, 0.55);
+  stroke-width: 1.2;
+}
 
 /* Ordered-list fallback below the loop SVG */
 .hc-loop-fallback {
@@ -867,6 +878,11 @@
   color: var(--hc-teal, #4ECDC4);
   font-weight: 700;
 }
+/* Tint active View segment by mode so the toggle reads visually distinct. */
+.hc-seg[data-view="money"].is-active        { background: rgba(232, 233, 237, 0.16); color: var(--hc-text, #E8E9ED); }
+.hc-seg[data-view="ai"].is-active           { background: rgba(78, 205, 196, 0.22);  color: var(--hc-teal, #4ECDC4); }
+.hc-seg[data-view="incentives"].is-active   { background: rgba(245, 197, 66, 0.22);  color: var(--hc-gold, #F5C542); }
+.hc-seg[data-view="companies"].is-active    { background: rgba(124, 77, 255, 0.22);  color: var(--hc-purple, #7C4DFF); }
 .hc-segmented--filter .hc-seg.is-active {
   background: rgba(245, 197, 66, 0.20);
   color: var(--hc-gold, #F5C542);
@@ -1128,28 +1144,47 @@
 .hc-sankey-svg .node.is-hi rect { stroke: var(--hc-gold, #F5C542); stroke-width: 2; }
 
 /* AI / Incentive chips ------------------------------------------------- */
-.hc-ai-chip { cursor: pointer; }
+.hc-ai-chip { cursor: pointer; pointer-events: auto; }
 .hc-ai-chip rect {
-  fill: rgba(78, 205, 196, 0.10);
-  stroke: rgba(78, 205, 196, 0.6);
+  fill: rgba(78, 205, 196, 0.14);
+  stroke: rgba(78, 205, 196, 0.65);
   stroke-width: 1;
 }
-.hc-ai-chip text { fill: var(--hc-teal, #4ECDC4); font-size: 10px; font-weight: 700; letter-spacing: 0.04em; }
-.hc-ai-chip:hover rect, .hc-ai-chip:focus rect { fill: rgba(78, 205, 196, 0.25); }
+.hc-ai-chip text { fill: var(--hc-teal, #4ECDC4); font-size: 9.5px; font-weight: 700; letter-spacing: 0.02em; pointer-events: none; }
+.hc-ai-chip:hover rect, .hc-ai-chip:focus rect { fill: rgba(78, 205, 196, 0.3); stroke: var(--hc-teal, #4ECDC4); }
+.hc-overlay-tick { pointer-events: none; }
 
-.hc-inc-chip { cursor: pointer; }
+.hc-inc-chip { cursor: pointer; pointer-events: auto; }
 .hc-inc-chip rect {
-  fill: rgba(245, 197, 66, 0.10);
-  stroke: rgba(245, 197, 66, 0.6);
+  fill: rgba(245, 197, 66, 0.14);
+  stroke: rgba(245, 197, 66, 0.65);
   stroke-width: 1;
+  stroke-dasharray: 3 2;
 }
-.hc-inc-chip text { fill: var(--hc-gold, #F5C542); font-size: 10px; font-weight: 700; letter-spacing: 0.04em; }
-.hc-inc-chip:hover rect, .hc-inc-chip:focus rect { fill: rgba(245, 197, 66, 0.25); }
+.hc-inc-chip text { fill: var(--hc-gold, #F5C542); font-size: 9.5px; font-weight: 700; letter-spacing: 0.02em; pointer-events: none; }
+.hc-inc-chip:hover rect, .hc-inc-chip:focus rect { fill: rgba(245, 197, 66, 0.3); stroke: var(--hc-gold, #F5C542); }
 
-.hc-co-badge { cursor: pointer; }
-.hc-co-badge circle { fill: rgba(232, 233, 237, 0.55); stroke: rgba(232, 233, 237, 0.8); }
+.hc-co-badge { cursor: pointer; pointer-events: auto; }
+.hc-co-badge circle { fill: rgba(232, 233, 237, 0.55); stroke: rgba(232, 233, 237, 0.85); transition: transform 0.12s ease; }
 .hc-co-badge[data-group="dvc"] circle { fill: rgba(245, 197, 66, 0.55); stroke: rgba(245, 197, 66, 0.9); }
-.hc-co-badge:hover circle, .hc-co-badge:focus circle { transform: scale(1.4); transform-origin: center; }
+.hc-co-badge:hover circle, .hc-co-badge:focus circle { transform: scale(1.35); transform-origin: center; }
+
+/* View-mode coloring of the river ------------------------------------- */
+/* Default Money mode: full opacity. */
+/* AI / Incentives / Companies modes: dim the river to ~45% so overlays read. */
+.hc-sankey-svg.view-ai .link-base,
+.hc-sankey-svg.view-incentives .link-base,
+.hc-sankey-svg.view-companies .link-base { stroke-opacity: 0.18; }
+.hc-sankey-svg.view-ai .node rect,
+.hc-sankey-svg.view-incentives .node rect,
+.hc-sankey-svg.view-companies .node rect { opacity: 0.55; }
+.hc-sankey-svg.view-ai .node-label,
+.hc-sankey-svg.view-incentives .node-label,
+.hc-sankey-svg.view-companies .node-label { opacity: 0.72; }
+/* Active highlight wins over dim. */
+.hc-sankey-svg .hc-link-group.is-hi .link-base { stroke-opacity: 0.85 !important; }
+.hc-sankey-svg .node.is-hi rect { opacity: 1 !important; }
+.hc-sankey-svg .node.is-hi text { opacity: 1 !important; }
 
 /* Patient loop: stacked bands ----------------------------------------- */
 .hc-loop-svg .stack-band rect.band-bg {

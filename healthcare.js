@@ -269,12 +269,15 @@
           return { id: l.id, source: l.source, target: l.target, value: l.value_b, span: 'BC' };
         }));
 
+      // Reserve a 220px right gutter for AI / incentive / company overlays
+      // so chips don't extend beyond the SVG viewBox.
+      var rightGutter = 220;
       var sankey = d3.sankey()
         .nodeId(function (d) { return d.id; })
         .nodeWidth(16)
         .nodePadding(10)
         .nodeAlign(d3.sankeyJustify || d3.sankeyLeft)
-        .extent([[18, 30], [width - 18, height - 30]]);
+        .extent([[18, 30], [width - rightGutter, height - 30]]);
 
       sankeyGraph = sankey({
         nodes: allNodes.map(function (n) { return Object.assign({}, n); }),
@@ -418,10 +421,31 @@
       buildIncentiveOverlay();
       buildCompanyOverlay();
       refreshOverlayVisibility();
+      reflectViewClass();
     } // renderSankey
 
+    function reflectViewClass() {
+      if (!moneySvgEl) return;
+      moneySvgEl.classList.remove('view-money','view-ai','view-incentives','view-companies');
+      moneySvgEl.classList.add('view-' + state.view);
+    }
+
     // ----- Overlays -----------------------------------------------------
+    // AI chips sit on a right gutter aligned to each pool's vertical center.
+    // Pool labels render to the LEFT of pools (text-anchor:end) so the right
+    // gutter is free for overlay placement without occluding text.
+    function poolGutterX() {
+      // farthest right edge across all pools + small gap
+      var maxX = 0;
+      Object.keys(poolPositions).forEach(function (id) {
+        var p = poolPositions[id];
+        if (p && p.x1 > maxX) maxX = p.x1;
+      });
+      return maxX + 14;
+    }
+
     function buildAiOverlay() {
+      var gutterX = poolGutterX();
       var byPool = {};
       DATA.aiSurfaces.forEach(function (a) {
         (a.attach_pools || []).forEach(function (pId) {
@@ -431,14 +455,23 @@
       Object.keys(byPool).forEach(function (pId) {
         var p = poolPositions[pId];
         if (!p) return;
-        var list = byPool[pId];
-        var midY = (p.y0 + p.y1) / 2;
+        var list = byPool[pId].slice(0, 4); // cap to avoid pile-up; rest accessible via drawer
+        var bandH = 16, gap = 2;
+        var totalH = list.length * bandH + (list.length - 1) * gap;
+        var startY = (p.y0 + p.y1) / 2 - totalH / 2;
         var grp = overlayG.append('g').attr('class', 'hc-ai-grp').attr('data-pool', pId);
+        // connector tick from pool to chip stack
+        grp.append('line')
+          .attr('class', 'hc-overlay-tick')
+          .attr('x1', p.x1).attr('y1', (p.y0 + p.y1) / 2)
+          .attr('x2', gutterX - 4).attr('y2', (p.y0 + p.y1) / 2)
+          .attr('stroke', 'rgba(78,205,196,0.5)').attr('stroke-width', 1)
+          .attr('stroke-dasharray', '2 2')
+          .attr('pointer-events', 'none');
         list.forEach(function (a, i) {
-          var w = Math.max(120, a.label.length * 6.6);
-          var h = 18;
-          var x = p.x1 + 18;
-          var y = midY - (list.length - 1) * 12 + i * 24 - h / 2;
+          var w = Math.max(140, a.label.length * 6.4 + 12);
+          var x = gutterX;
+          var y = startY + i * (bandH + gap);
           var g = grp.append('g')
             .attr('class', 'hc-ai-chip')
             .attr('data-ai', a.id)
@@ -446,8 +479,8 @@
             .attr('role', 'button')
             .attr('aria-label', a.label + ' — AI opportunity')
             .attr('transform', 'translate(' + x + ',' + y + ')');
-          g.append('rect').attr('width', w).attr('height', h).attr('rx', 9);
-          g.append('text').attr('x', w / 2).attr('y', h / 2 + 4).attr('text-anchor', 'middle').text(a.label);
+          g.append('rect').attr('width', w).attr('height', bandH).attr('rx', 8);
+          g.append('text').attr('x', w / 2).attr('y', bandH / 2 + 3.5).attr('text-anchor', 'middle').text(a.label);
           g.on('mouseenter', function (ev) { showTip(tipText(a.label + ' — AI opportunity', a.what), ev.clientX, ev.clientY); })
            .on('mouseleave', hideTip)
            .on('click', function (ev) { ev.stopPropagation(); selectAi(a.id); })
@@ -457,44 +490,53 @@
     }
 
     function buildIncentiveOverlay() {
-      // Attach to either a pool or a sankey node
-      var pos = {};
+      // Incentives attach to destination nodes (preferred) or pools.
+      // We render small gold badges anchored just-above the node.
       DATA.incentives.forEach(function (inc) {
-        var anchor = (inc.attach_pools || [])[0] || (inc.attach_nodes || [])[0];
-        if (!anchor) return;
-        var p = poolPositions[anchor];
-        if (!p) {
-          var n = sankeyGraph && sankeyGraph.nodes.find(function (x) { return x.id === anchor; });
-          if (!n) return;
-          p = { x0: n.x0, x1: n.x1, y0: n.y0, y1: n.y1 };
-        }
-        pos[inc.id] = { x: p.x1 + 18, y: (p.y0 + p.y1) / 2 };
-      });
-      var stacked = {}; // y stacking by pool/node
-      DATA.incentives.forEach(function (inc, idx) {
-        var p = pos[inc.id]; if (!p) return;
-        var key = String(Math.round(p.x)) + ':' + String(Math.round(p.y));
-        var i = stacked[key] = (stacked[key] || 0) + 1;
-        var w = Math.max(130, inc.label.length * 7);
-        var h = 18;
-        var g = overlayG.append('g')
-          .attr('class', 'hc-inc-chip')
-          .attr('data-inc', inc.id)
-          .attr('tabindex', 0)
-          .attr('role', 'button')
-          .attr('aria-label', inc.label + ' — incentive')
-          .attr('transform', 'translate(' + p.x + ',' + (p.y + (i - 1) * 22 - h / 2) + ')');
-        g.append('rect').attr('width', w).attr('height', h).attr('rx', 9);
-        g.append('text').attr('x', w / 2).attr('y', h / 2 + 4).attr('text-anchor', 'middle').text(inc.label);
-        g.on('mouseenter', function (ev) { showTip(tipText(inc.label + ' — incentive', inc.message), ev.clientX, ev.clientY); })
-         .on('mouseleave', hideTip)
-         .on('click', function (ev) { ev.stopPropagation(); selectIncentive(inc.id); })
-         .on('keydown', function (ev) { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); selectIncentive(inc.id); } });
+        var anchors = [];
+        (inc.attach_nodes || []).forEach(function (id) { anchors.push({ id: id, kind: 'node' }); });
+        (inc.attach_pools || []).forEach(function (id) { anchors.push({ id: id, kind: 'pool' }); });
+        anchors.forEach(function (a, ai) {
+          var pos = null;
+          if (a.kind === 'pool' && poolPositions[a.id]) {
+            var p = poolPositions[a.id];
+            pos = { x: p.x1 + 6, y: p.y0 - 10 };
+          } else if (sankeyGraph) {
+            var n = sankeyGraph.nodes.find(function (x) { return x.id === a.id; });
+            if (n) pos = { x: (n.x0 + n.x1) / 2, y: n.y0 - 10 };
+          }
+          if (!pos) return;
+          var w = Math.max(130, inc.label.length * 6.4 + 16);
+          var h = 16;
+          var x = pos.x - w / 2;
+          // Clamp to keep chip inside the SVG viewBox horizontally.
+          var svgBBox = moneySvgEl.viewBox.baseVal;
+          var vbW = svgBBox && svgBBox.width ? svgBBox.width : 1200;
+          if (x < 4) x = 4;
+          if (x + w > vbW - 4) x = vbW - 4 - w;
+          var y = pos.y - h;
+          if (y < 4) y = 4;
+          var g = overlayG.append('g')
+            .attr('class', 'hc-inc-chip')
+            .attr('data-inc', inc.id)
+            .attr('data-anchor', a.id)
+            .attr('tabindex', 0)
+            .attr('role', 'button')
+            .attr('aria-label', inc.label + ' — incentive on ' + a.id)
+            .attr('transform', 'translate(' + x + ',' + y + ')');
+          g.append('rect').attr('width', w).attr('height', h).attr('rx', 8);
+          g.append('text').attr('x', w / 2).attr('y', h / 2 + 3.5).attr('text-anchor', 'middle').text(inc.label);
+          g.on('mouseenter', function (ev) { showTip(tipText(inc.label + ' — incentive', inc.message), ev.clientX, ev.clientY); })
+           .on('mouseleave', hideTip)
+           .on('click', function (ev) { ev.stopPropagation(); selectIncentive(inc.id); })
+           .on('keydown', function (ev) { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); selectIncentive(inc.id); } });
+        });
       });
     }
 
     function buildCompanyOverlay() {
-      // Place small neutral badges near pools
+      // Tighter neutral badge cluster to the right of each pool.
+      var gutterX = poolGutterX();
       var byPool = {};
       DATA.companies.forEach(function (c) {
         (c.money_pool_ids || []).forEach(function (pId) {
@@ -506,19 +548,20 @@
         var list = byPool[pId];
         var midY = (p.y0 + p.y1) / 2;
         var grp = overlayG.append('g').attr('class', 'hc-co-grp').attr('data-pool', pId);
+        var cols = 5, dx = 14, dy = 12;
         list.forEach(function (c, i) {
-          var col = i % 6, row = Math.floor(i / 6);
-          var x = p.x1 + 24 + col * 10;
-          var y = midY + 18 + row * 11;
+          var col = i % cols, row = Math.floor(i / cols);
+          var x = gutterX + col * dx;
+          var y = midY - 6 + row * dy;
           var g = grp.append('g')
             .attr('class', 'hc-co-badge')
             .attr('data-company', c.id)
             .attr('data-group', c.group)
             .attr('tabindex', 0)
             .attr('role', 'button')
-            .attr('aria-label', c.name)
+            .attr('aria-label', c.name + ' (' + (c.group === 'dvc' ? 'DVC portfolio' : 'market leader') + ')')
             .attr('transform', 'translate(' + x + ',' + y + ')');
-          g.append('circle').attr('r', 4);
+          g.append('circle').attr('r', 4.5);
           g.on('mouseenter', function (ev) { showTip(tipText(c.name, c.short_description), ev.clientX, ev.clientY); })
            .on('mouseleave', hideTip)
            .on('click', function (ev) { ev.stopPropagation(); selectCompany(c.id); })
@@ -540,6 +583,7 @@
         if (state.companyFilter === 'dvc' && this.getAttribute('data-group') !== 'dvc') return 'none';
         return null;
       });
+      reflectViewClass();
     }
 
     // ----- Highlight ----------------------------------------------------
@@ -645,19 +689,12 @@
       clearHighlight();
       var c = findCompany(id);
       if (!c) return;
+      // Ring related nodes only — never color money flows by portfolio status.
       var hit = {};
       (c.money_pool_ids || []).forEach(function (x) { hit[x] = true; });
       (c.destination_ids || []).forEach(function (x) { hit[x] = true; });
       if (d3NodeSel) {
         d3NodeSel.classed('is-hi', function (n) { return !!hit[n.id]; });
-        d3NodeSel.classed('is-dim', function (n) { return !hit[n.id]; });
-      }
-      if (d3LinkGSel) {
-        d3LinkGSel.classed('is-hi', function (l) {
-          var s = typeof l.source === 'object' ? l.source.id : l.source;
-          var t = typeof l.target === 'object' ? l.target.id : l.target;
-          return !!(hit[s] && hit[t]);
-        });
       }
       renderCompanyDrawer(c);
     }
@@ -1163,116 +1200,134 @@
       // arrow defs
       var defs = svgEl('defs', {});
       function marker(id, fill) {
-        var m = svgEl('marker', { id: id, viewBox: '0 0 10 10', refX: 8, refY: 5, markerWidth: 6, markerHeight: 6, orient: 'auto-start-reverse' }, defs);
+        var m = svgEl('marker', { id: id, viewBox: '0 0 10 10', refX: 8, refY: 5, markerWidth: 7, markerHeight: 7, orient: 'auto-start-reverse' }, defs);
         svgEl('path', { d: 'M0,0 L10,5 L0,10 z', fill: fill }, m);
       }
       marker('hcl-arrow-care', '#4ECDC4');
       marker('hcl-arrow-fin',  '#F5C542');
-      marker('hcl-arrow-soft', 'rgba(232,233,237,0.65)');
+      marker('hcl-arrow-prev', '#FF8C42');
+      marker('hcl-arrow-vbc',  '#F5C542');
+      marker('hcl-arrow-bridge','#7C4DFF');
 
       // Center patient card
-      var cardX = 450, cardY = 230, cardW = 220, cardH = 125;
+      var cardX = 450, cardY = 235, cardW = 220, cardH = 115;
       var cg = svgEl('g', { class: 'patient-center', transform: 'translate(' + (cardX + cardW/2) + ',' + (cardY + cardH/2) + ')' });
-      svgEl('rect', { x: -cardW/2, y: -cardH/2, width: cardW, height: cardH, rx: 14, fill: 'rgba(0,0,0,0.45)', stroke: stateInfo ? stateInfo.color : '#4ECDC4', 'stroke-width': 2 }, cg);
-      svgEl('text', { class: 'patient-label', x: 0, y: -36, 'text-anchor': 'middle' }, cg).textContent = 'Patient state';
+      svgEl('rect', { x: -cardW/2, y: -cardH/2, width: cardW, height: cardH, rx: 14, fill: 'rgba(0,0,0,0.55)', stroke: stateInfo ? stateInfo.color : '#4ECDC4', 'stroke-width': 2 }, cg);
+      svgEl('text', { class: 'patient-label', x: 0, y: -34, 'text-anchor': 'middle' }, cg).textContent = 'Patient state';
       svgEl('text', { class: 'patient-state', x: 0, y: -10, 'text-anchor': 'middle', fill: stateInfo ? stateInfo.color : '#4ECDC4' }, cg).textContent = stateInfo ? stateInfo.label : '';
-      svgEl('text', { class: 'patient-prompt', x: 0, y: 18, 'text-anchor': 'middle' }, cg).textContent = stateInfo ? stateInfo.prompt : '';
-      svgEl('text', { class: 'patient-scenario', x: 0, y: 44, 'text-anchor': 'middle' }, cg).textContent = scenario.scenario || '';
+      svgEl('text', { class: 'patient-prompt', x: 0, y: 14, 'text-anchor': 'middle' }, cg).textContent = stateInfo ? stateInfo.prompt : '';
+      svgEl('text', { class: 'patient-scenario', x: 0, y: 38, 'text-anchor': 'middle' }, cg).textContent = scenario.scenario || '';
 
       // Loop guide ellipses + labels
-      svgEl('ellipse', { cx: 560, cy: 285, rx: 380, ry: 195, fill: 'none', stroke: 'rgba(78,205,196,0.16)', 'stroke-width': 1, 'stroke-dasharray': '4 4' });
-      svgEl('ellipse', { cx: 560, cy: 350, rx: 380, ry: 195, fill: 'none', stroke: 'rgba(245,197,66,0.16)', 'stroke-width': 1, 'stroke-dasharray': '4 4' });
-      svgEl('text', { class: 'loop-label care', x: 560, y: 60, 'text-anchor': 'middle' }).textContent = 'Care loop · clockwise';
-      svgEl('text', { class: 'loop-label fin',  x: 560, y: 575, 'text-anchor': 'middle' }).textContent = 'Financial loop · counterclockwise';
+      var careCx = 560, careCy = 230, careRx = 380, careRy = 170;
+      var finCx  = 560, finCy  = 380, finRx  = 380, finRy  = 170;
+      svgEl('ellipse', { cx: careCx, cy: careCy, rx: careRx, ry: careRy, fill: 'none', stroke: 'rgba(78,205,196,0.12)', 'stroke-width': 1, 'stroke-dasharray': '4 4' });
+      svgEl('ellipse', { cx: finCx,  cy: finCy,  rx: finRx,  ry: finRy,  fill: 'none', stroke: 'rgba(245,197,66,0.12)', 'stroke-width': 1, 'stroke-dasharray': '4 4' });
+      svgEl('text', { class: 'loop-label care', x: 560, y: 50, 'text-anchor': 'middle' }).textContent = 'CARE LOOP — clinical workflow, clockwise';
+      svgEl('text', { class: 'loop-label fin',  x: 560, y: 575, 'text-anchor': 'middle' }).textContent = 'FINANCIAL LOOP — reimbursement, counterclockwise';
 
-      drawLoopArrows(DATA.careLoop, 'care', careActive, 'hcl-arrow-care');
-      drawLoopArrows(DATA.financialLoop, 'fin', finActive, 'hcl-arrow-fin');
+      // Active-only arrows along ellipse paths
+      drawLoopActiveArrows(DATA.careLoop, careActive, careCx, careCy, careRx, careRy, true,  'care', 'hcl-arrow-care');
+      drawLoopActiveArrows(DATA.financialLoop, finActive, finCx, finCy, finRx, finRy, false, 'fin',  'hcl-arrow-fin');
 
       // Step nodes
       DATA.careLoop.forEach(function (s) { drawStepNode(s, 'care', !!careActive[s.id]); });
       DATA.financialLoop.forEach(function (s) { drawStepNode(s, 'fin', !!finActive[s.id]); });
 
-      // VBC bridge (left)
+      // VBC bridge (left rail)
       var vbcG = svgEl('g', { class: 'vbc-bridge' });
-      svgEl('text', { class: 'rail-title', x: 130, y: 130, 'text-anchor': 'middle' }, vbcG).textContent = 'VBC bridge';
-      svgEl('text', { class: 'rail-sub',   x: 130, y: 148, 'text-anchor': 'middle' }, vbcG).textContent = 'Reimbursement model';
+      svgEl('text', { class: 'rail-title', x: 130, y: 125, 'text-anchor': 'middle' }, vbcG).textContent = 'VBC BRIDGE';
+      svgEl('text', { class: 'rail-sub',   x: 130, y: 142, 'text-anchor': 'middle' }, vbcG).textContent = 'Reimbursement model';
       DATA.vbcBridge.forEach(function (v) { drawRailNode(v, 'vbc', !!vbcActive[v.id], vbcG); });
-      // VBC path connectors (V1 -> V2 -> ... -> V5)
+      // VBC path connectors — only show between sequentially-active steps
       for (var i = 0; i < DATA.vbcBridge.length - 1; i++) {
         var a = DATA.vbcBridge[i], b = DATA.vbcBridge[i + 1];
-        svgEl('path', { class: 'vbc-link', d: 'M ' + a.x + ' ' + (a.y + 16) + ' Q ' + ((a.x + b.x)/2 - 18) + ' ' + ((a.y + b.y)/2) + ' ' + b.x + ' ' + (b.y - 16),
-                        fill: 'none', stroke: 'rgba(245,197,66,0.35)', 'stroke-width': 1.4, 'stroke-dasharray': '4 4', 'marker-end': 'url(#hcl-arrow-soft)' }, vbcG);
+        var aOn = !!vbcActive[a.id], bOn = !!vbcActive[b.id];
+        if (!(aOn && bOn)) continue;
+        svgEl('path', { class: 'vbc-link is-active',
+          d: 'M ' + a.x + ' ' + (a.y + 16) + ' Q ' + ((a.x + b.x)/2 - 18) + ' ' + ((a.y + b.y)/2) + ' ' + b.x + ' ' + (b.y - 16),
+          fill: 'none', stroke: 'rgba(245,197,66,0.7)', 'stroke-width': 1.6, 'marker-end': 'url(#hcl-arrow-vbc)' }, vbcG);
       }
 
-      // Prevention orbit (right)
+      // Prevention orbit (right rail)
       var preG = svgEl('g', { class: 'prevention-orbit' });
-      svgEl('text', { class: 'rail-title', x: 990, y: 130, 'text-anchor': 'middle' }, preG).textContent = 'Private-pay prevention';
-      svgEl('text', { class: 'rail-sub',   x: 990, y: 148, 'text-anchor': 'middle' }, preG).textContent = 'Out-of-pocket orbit';
+      svgEl('text', { class: 'rail-title', x: 990, y: 125, 'text-anchor': 'middle' }, preG).textContent = 'PRIVATE-PAY PREVENTION';
+      svgEl('text', { class: 'rail-sub',   x: 990, y: 142, 'text-anchor': 'middle' }, preG).textContent = 'Out-of-pocket orbit';
       DATA.preventionOrbit.forEach(function (p) { drawRailNode(p, 'prev', !!prevActive[p.id], preG); });
-      // P1->P5 curved connectors
+      // P1->P5 curved connectors — only between sequentially-active orbit nodes
       for (var j = 0; j < DATA.preventionOrbit.length - 1; j++) {
         var pa = DATA.preventionOrbit[j], pb = DATA.preventionOrbit[j + 1];
-        svgEl('path', { class: 'prev-link', d: 'M ' + pa.x + ' ' + (pa.y + 16) + ' Q ' + ((pa.x + pb.x)/2 + 18) + ' ' + ((pa.y + pb.y)/2) + ' ' + pb.x + ' ' + (pb.y - 16),
-                        fill: 'none', stroke: 'rgba(255,159,90,0.30)', 'stroke-width': 1.4, 'stroke-dasharray': '4 4', 'marker-end': 'url(#hcl-arrow-soft)' }, preG);
+        if (!(prevActive[pa.id] && prevActive[pb.id])) continue;
+        svgEl('path', { class: 'prev-link is-active',
+          d: 'M ' + pa.x + ' ' + (pa.y + 16) + ' Q ' + ((pa.x + pb.x)/2 + 18) + ' ' + ((pa.y + pb.y)/2) + ' ' + pb.x + ' ' + (pb.y - 16),
+          fill: 'none', stroke: 'rgba(255,140,66,0.7)', 'stroke-width': 1.6, 'marker-end': 'url(#hcl-arrow-prev)' }, preG);
       }
 
-      // VBC bridge → C8 connector when V5 active
-      if (vbcActive.V5) {
-        svgEl('line', { x1: 205, y1: 490, x2: 770, y2: 390, stroke: 'rgba(245,197,66,0.5)', 'stroke-width': 1.4, 'stroke-dasharray': '5 4', 'marker-end': 'url(#hcl-arrow-soft)' });
+      // VBC bridge → C8 bridge connector when V5 active and care C8 active
+      if (vbcActive.V5 && careActive.C8) {
+        svgEl('path', {
+          class: 'vbc-c8-bridge',
+          d: 'M 205 490 C 360 470 600 430 770 390',
+          fill: 'none', stroke: 'rgba(124,77,255,0.6)', 'stroke-width': 1.6,
+          'stroke-dasharray': '5 4', 'marker-end': 'url(#hcl-arrow-bridge)'
+        });
+        svgEl('text', { class: 'bridge-label', x: 470, y: 432, 'text-anchor': 'middle', fill: 'rgba(124,77,255,0.85)' }).textContent = 'VBC funds prevention';
       }
 
-      // ----- Stacked seven-band stack (literal stacked bands) -----
+      // ----- Tech stack underneath the process visual -----
       var bandH = STACK.h / STACK.bands;
       var stackG = svgEl('g', { class: 'stack-group' });
-      svgEl('text', { class: 'rail-title', x: STACK.x + STACK.w / 2, y: STACK.y - 16, 'text-anchor': 'middle' }, stackG).textContent = 'Shared stack — care, payment, and prevention compete here';
+      svgEl('text', { class: 'rail-title', x: STACK.x + 6, y: STACK.y - 18, 'text-anchor': 'start' }, stackG).textContent =
+        'TECH STACK — what every process above depends on';
+      svgEl('text', { class: 'rail-sub', x: STACK.x + STACK.w - 6, y: STACK.y - 18, 'text-anchor': 'end' }, stackG)
+        .textContent = 'Highlighted bands and companies update with patient scenario';
+
       DATA.sharedStack.forEach(function (s, idx) {
         var y = bandY(idx);
         var active = !!stackActive[s.id];
-        var g = svgEl('g', { class: 'stack-band' + (active ? ' is-active' : ''), 'data-id': s.id, tabindex: 0, role: 'button', 'aria-label': s.label + ' stack layer' }, stackG);
-        svgEl('rect', { class: 'band-bg', x: STACK.x, y: y, width: STACK.w, height: bandH - 2, rx: 6 }, g);
+        var g = svgEl('g', { class: 'stack-band' + (active ? ' is-active' : ''), 'data-id': s.id, tabindex: 0, role: 'button', 'aria-label': s.label + ' stack layer' + (active ? ' (active for this scenario)' : '') }, stackG);
+        svgEl('rect', { class: 'band-bg', x: STACK.x, y: y, width: STACK.w, height: bandH - 3, rx: 6 }, g);
         svgEl('text', { class: 'band-label', x: STACK.x + 12, y: y + bandH / 2 + 4 }, g).textContent = s.label;
         svgEl('text', { class: 'band-contents', x: STACK.x + 170, y: y + bandH / 2 + 4 }, g).textContent = s.contents;
-        // Company chips inside band (small neutral)
-        var cos = sortCompanies(filteredCompanies(companiesForStack(s.id))).slice(0, 5);
-        cos.forEach(function (c, ci) {
-          var cx = STACK.x + STACK.w - 12 - (cos.length - ci) * 70;
-          var chip = svgEl('g', { class: 'band-co-chip', 'data-company': c.id, tabindex: 0, role: 'button', 'aria-label': c.name, transform: 'translate(' + cx + ',' + (y + bandH / 2 - 9) + ')' }, g);
-          svgEl('rect', { width: 64, height: 18, rx: 4 }, chip);
-          svgEl('text', { x: 32, y: 12, 'text-anchor': 'middle' }, chip).textContent = c.name;
-          chip.addEventListener('click', function (ev) { ev.stopPropagation(); selectCompany(c.id); });
-          chip.addEventListener('mouseenter', function (ev) { showTip(tipText(c.name, c.short_description), ev.clientX, ev.clientY); });
-          chip.addEventListener('mouseleave', hideTip);
+
+        // Companies relevant to BOTH this stack layer AND any active step in the scenario.
+        var stackCos = sortCompanies(filteredCompanies(companiesForStack(s.id)));
+        var scenarioCos = stackCos.filter(function (c) {
+          return (c.process_step_ids || []).some(function (sid) { return activeStepIds.indexOf(sid) >= 0; });
         });
-        g.addEventListener('click', function (ev) {
-          // If user clicked on a chip child, that handler stops propagation
-          ev.stopPropagation();
-          selectStackLayer(s.id);
-        });
+        var cosForBand = scenarioCos.length ? scenarioCos : stackCos;
+        cosForBand = cosForBand.slice(0, 4);
+
+        if (cosForBand.length === 0) {
+          svgEl('text', { class: 'band-co-empty', x: STACK.x + STACK.w - 12, y: y + bandH / 2 + 4, 'text-anchor': 'end' }, g)
+            .textContent = '—';
+        } else {
+          var chipW = 90, chipH = 18, chipGap = 6;
+          var totalChipsW = cosForBand.length * chipW + (cosForBand.length - 1) * chipGap;
+          var startCX = STACK.x + STACK.w - 12 - totalChipsW;
+          cosForBand.forEach(function (c, ci) {
+            var cx = startCX + ci * (chipW + chipGap);
+            var chip = svgEl('g', {
+              class: 'band-co-chip',
+              'data-company': c.id,
+              'data-group': c.group,
+              tabindex: 0, role: 'button',
+              'aria-label': c.name + ' — example for ' + s.label,
+              transform: 'translate(' + cx + ',' + (y + bandH / 2 - chipH / 2) + ')'
+            }, g);
+            svgEl('rect', { width: chipW, height: chipH, rx: 4 }, chip);
+            var label = c.name.length > 14 ? c.name.slice(0, 13) + '…' : c.name;
+            svgEl('text', { x: chipW / 2, y: chipH / 2 + 3.5, 'text-anchor': 'middle' }, chip).textContent = label;
+            chip.addEventListener('click', function (ev) { ev.stopPropagation(); selectCompany(c.id); });
+            chip.addEventListener('mouseenter', function (ev) { showTip(tipText(c.name, c.short_description), ev.clientX, ev.clientY); });
+            chip.addEventListener('mouseleave', hideTip);
+            chip.addEventListener('keydown', function (ev) { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); selectCompany(c.id); } });
+          });
+        }
+        g.addEventListener('click', function (ev) { ev.stopPropagation(); selectStackLayer(s.id); });
         g.addEventListener('mouseenter', function (ev) { showTip(tipText(s.label + ' — stack layer', s.contents), ev.clientX, ev.clientY); });
         g.addEventListener('mouseleave', hideTip);
         g.addEventListener('keydown', function (ev) { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); selectStackLayer(s.id); } });
-      });
-
-      // ----- Dependency lines: active steps → relevant stack bands -----
-      var depG = svgEl('g', { class: 'dep-lines' });
-      var allSteps = [
-        { list: DATA.careLoop, act: careActive },
-        { list: DATA.financialLoop, act: finActive },
-        { list: DATA.preventionOrbit, act: prevActive },
-        { list: DATA.vbcBridge, act: vbcActive }
-      ];
-      allSteps.forEach(function (group) {
-        group.list.forEach(function (s) {
-          if (!group.act[s.id]) return;
-          var deps = DATA.stepStackDeps[s.id] || [];
-          deps.forEach(function (stId) {
-            var idx = DATA.sharedStack.findIndex(function (x) { return x.id === stId; });
-            if (idx < 0) return;
-            var x2 = STACK.x + STACK.w / 2;
-            var y2 = bandY(idx) + bandH / 2;
-            svgEl('line', { x1: s.x, y1: s.y + 18, x2: x2, y2: y2, stroke: 'rgba(232,233,237,0.16)', 'stroke-width': 1 }, depG);
-          });
-        });
       });
 
       // ----- Mobile fallback list -----
@@ -1294,34 +1349,47 @@
       }
     }
 
-    function drawLoopArrows(steps, kind, active, markerId) {
-      for (var i = 0; i < steps.length; i++) {
-        var a = steps[i];
-        var b = steps[(i + 1) % steps.length];
-        var isActive = active[a.id] && active[b.id];
-        var stroke = isActive ? (kind === 'care' ? '#4ECDC4' : '#F5C542') : 'rgba(232,233,237,0.18)';
-        var sw = isActive ? 2.4 : 1.2;
+    // Draws arrows ONLY between consecutive active steps in the scenario,
+    // routed along the loop's guide ellipse so flow reads as one clean loop.
+    // For the care loop (upperHalf=true) we follow the TOP arc; for the
+    // financial loop we follow the BOTTOM arc.
+    function drawLoopActiveArrows(steps, active, cx, cy, rx, ry, upperHalf, kind, markerId) {
+      // `steps` is already in canonical loop order (C1..C8 / F1..F8). Filter
+      // by active so arrows only connect consecutive active steps in loop order.
+      var ordered = steps.filter(function (s) { return !!active[s.id]; });
+      if (ordered.length < 2) return;
+      // node radius along the ellipse for trimming so arrowheads don't sit
+      // inside the step boxes
+      var nodeRadius = 56;
+      for (var i = 0; i < ordered.length - 1; i++) {
+        var a = ordered[i], b = ordered[i + 1];
+        // Approximate the chord along the ellipse with a quadratic that
+        // bulges outward away from the center of the loop.
         var mx = (a.x + b.x) / 2;
         var my = (a.y + b.y) / 2;
-        var cx0 = 560, cy0 = (kind === 'care' ? 285 : 350);
-        var dx = mx - cx0, dy = my - cy0;
+        var dx = mx - cx, dy = my - cy;
         var len = Math.sqrt(dx * dx + dy * dy) || 1;
-        var bow = 22;
-        var cx = mx + (dx / len) * bow;
-        var cy = my + (dy / len) * bow;
-        var trim = 26;
-        var v1x = (cx - a.x), v1y = (cy - a.y);
-        var l1 = Math.sqrt(v1x * v1x + v1y * v1y) || 1;
-        var sx = a.x + (v1x / l1) * trim;
-        var sy = a.y + (v1y / l1) * trim;
-        var v2x = (cx - b.x), v2y = (cy - b.y);
-        var l2 = Math.sqrt(v2x * v2x + v2y * v2y) || 1;
-        var ex = b.x + (v2x / l2) * trim;
-        var ey = b.y + (v2y / l2) * trim;
-        var d = 'M ' + sx + ' ' + sy + ' Q ' + cx + ' ' + cy + ' ' + ex + ' ' + ey;
+        // bow magnitude proportional to chord length and the half (top/bottom)
+        var chord = Math.hypot(b.x - a.x, b.y - a.y);
+        var bow = Math.min(60, Math.max(18, chord * 0.16));
+        var bx = mx + (dx / len) * bow;
+        var by = my + (dy / len) * bow;
+        // Trim endpoints away from node centers
+        var v1x = bx - a.x, v1y = by - a.y;
+        var l1 = Math.hypot(v1x, v1y) || 1;
+        var sx = a.x + (v1x / l1) * nodeRadius;
+        var sy = a.y + (v1y / l1) * nodeRadius;
+        var v2x = bx - b.x, v2y = by - b.y;
+        var l2 = Math.hypot(v2x, v2y) || 1;
+        var ex = b.x + (v2x / l2) * nodeRadius;
+        var ey = b.y + (v2y / l2) * nodeRadius;
         svgEl('path', {
-          class: 'loop-arrow ' + kind + (isActive ? ' is-active' : ' is-dim'),
-          d: d, fill: 'none', stroke: stroke, 'stroke-width': sw,
+          class: 'loop-arrow is-' + kind + ' is-active',
+          d: 'M ' + sx + ' ' + sy + ' Q ' + bx + ' ' + by + ' ' + ex + ' ' + ey,
+          fill: 'none',
+          stroke: kind === 'care' ? '#4ECDC4' : '#F5C542',
+          'stroke-width': 2.2,
+          'stroke-linecap': 'round',
           'marker-end': 'url(#' + markerId + ')'
         });
       }
