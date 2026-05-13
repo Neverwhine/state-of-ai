@@ -309,10 +309,10 @@
     { id: 'C2', n: 2, label: 'Triage',           x: 380, y: 165, description: 'Patient or clinician asks what to do next.', ai: ['ai_patient_access','ai_scribes_copilots'] },
     { id: 'C3', n: 3, label: 'Access',           x: 500, y: 110, description: 'Scheduling, routing, telehealth, right site of care.', ai: ['ai_patient_access','ai_site_of_care'] },
     { id: 'C4', n: 4, label: 'Encounter',        x: 620, y: 95,  description: 'Visit, admission, dental visit, diagnostic appointment.', ai: ['ai_scribes_copilots'] },
-    { id: 'C5', n: 5, label: 'Diagnosis/orders', x: 740, y: 110, description: 'Labs, imaging, prescription, referral, treatment plan.', ai: ['ai_diagnostics','ai_techbio','ai_scribes_copilots'] },
+    { id: 'C5', n: 5, label: 'Dx / orders',      x: 740, y: 110, description: 'Labs, imaging, prescription, referral, treatment plan.', ai: ['ai_diagnostics','ai_techbio','ai_scribes_copilots'] },
     { id: 'C6', n: 6, label: 'Treatment',        x: 860, y: 165, description: 'Drug, procedure, therapy, behavior change, digital tool.', ai: ['ai_techbio','ai_site_of_care'] },
     { id: 'C7', n: 7, label: 'Follow-up',        x: 920, y: 280, description: 'Refill, adherence, escalation, monitoring, care plan adjustment.', ai: ['ai_site_of_care'] },
-    { id: 'C8', n: 8, label: 'Monitor/prevent',  x: 800, y: 395, description: 'Continuous or episodic risk management.', ai: ['ai_prevention','ai_diagnostics'] }
+    { id: 'C8', n: 8, label: 'Monitor',          x: 800, y: 395, description: 'Continuous or episodic risk management — discharge to prevention or escalation.', ai: ['ai_prevention','ai_diagnostics'] }
   ];
 
   // Financial loop — counterclockwise lower ellipse
@@ -332,11 +332,11 @@
   // loop is linked to the care loop at C8 → P1/P2 and P5 → C2 so it
   // never reads as a floating orbit.
   var preventionOrbit = [
-    { id: 'P1', label: 'Consumer AI assistant', x: 1040, y: 200, description: 'Patient asks questions, uploads labs, tracks goals.', ai: ['ai_patient_access','ai_prevention'] },
-    { id: 'P2', label: 'Wearables/home signals',x: 1075, y: 290, description: 'Sleep, HRV, CGM, activity, BP, recovery, symptoms.', ai: ['ai_prevention','ai_diagnostics'] },
-    { id: 'P3', label: 'Labs/omics',            x: 1075, y: 365, description: 'Rich biological data for risk and personalization.', ai: ['ai_diagnostics','ai_techbio'] },
-    { id: 'P4', label: 'Coaching/adherence',    x: 1040, y: 440, description: 'Behavior, nutrition, sleep, allergy care, follow-up.', ai: ['ai_prevention'] },
-    { id: 'P5', label: 'Escalation → triage',   x: 970, y: 520, description: 'AI routes to licensed clinician or care setting. Feeds the care loop at triage.', ai: ['ai_patient_access'] }
+    { id: 'P1', label: 'AI assistant',          x: 1040, y: 200, description: 'Patient-facing AI: asks questions, uploads labs, tracks goals.', ai: ['ai_patient_access','ai_prevention'] },
+    { id: 'P2', label: 'Wearables / home',      x: 1075, y: 290, description: 'Sleep, HRV, CGM, activity, BP, recovery, symptoms.', ai: ['ai_prevention','ai_diagnostics'] },
+    { id: 'P3', label: 'Labs / omics',          x: 1075, y: 365, description: 'Rich biological data for risk and personalization.', ai: ['ai_diagnostics','ai_techbio'] },
+    { id: 'P4', label: 'Coaching',              x: 1040, y: 440, description: 'Behavior, nutrition, sleep, allergy care, follow-up, adherence.', ai: ['ai_prevention'] },
+    { id: 'P5', label: 'Escalate → triage',     x: 970, y: 520, description: 'AI routes to licensed clinician or care setting. Feeds the care loop at triage.', ai: ['ai_patient_access'] }
   ];
 
   // VBC / risk bridge (left rail). Drawn flush-left so the rail label and
@@ -346,8 +346,8 @@
     { id: 'V1', label: 'FFS default',           x: 100, y: 200, description: 'Fee-for-service pays when services happen. Prevention has weak economics.' },
     { id: 'V2', label: 'Risk contract',         x: 110, y: 285, description: 'Someone bears downstream cost and can benefit from avoided events.' },
     { id: 'V3', label: 'MA / ACO / employer',   x: 130, y: 365, description: 'Common places where risk, quality, and prevention can matter.' },
-    { id: 'V4', label: 'Digital reimbursement', x: 145, y: 445, description: 'RTM, digital mental health, and CMS models create partial reimbursement paths.' },
-    { id: 'V5', label: 'Prevention financeable',x: 165, y: 525, description: 'Prevention becomes investable when outcomes and avoided cost are measurable.' }
+    { id: 'V4', label: 'Digital reimburse',     x: 145, y: 445, description: 'RTM, digital mental health, and CMS models create partial reimbursement paths.' },
+    { id: 'V5', label: 'Prevention fundable',   x: 165, y: 525, description: 'Prevention becomes investable when outcomes and avoided cost are measurable.' }
   ];
 
   // Shared stack — order matches spec (top to bottom = layer 1 to 7)

@@ -1791,12 +1791,12 @@
       // the care loop by a clear gutter and wide enough to contain the
       // full P node rectangles.
       var prevHullActive = groupIsActive('pg_prevention');
-      hullPath('M 960 195 Q 1155 195 1155 360 Q 1155 525 970 555 Q 880 540 905 480',
+      hullPath('M 950 195 Q 1170 195 1170 360 Q 1170 525 960 555 Q 870 540 895 480',
         'group-hull is-prev' + (prevHullActive ? ' is-active' : ' is-dim'));
       // VBC bridge hull — left rail, flush-left so V1 doesn't crowd Triage.
       // Hull is wider at the bottom because V3..V5 cascade rightward.
       var vbcHullActive = groupIsActive('pg_vbc');
-      hullPath('M 25 180 L 195 180 L 245 555 L 25 555 Z',
+      hullPath('M 12 180 L 195 180 L 260 555 L 12 555 Z',
         'group-hull is-vbc' + (vbcHullActive ? ' is-active' : ' is-dim'));
 
       // Track labels — every node belongs to a named process group.
@@ -1945,12 +1945,10 @@
       svgEl('text', { class: 'rail-sub', x: STACK.x + STACK.w - 6, y: STACK.y - 16, 'text-anchor': 'end' }, stackG)
         .textContent = 'Click any band to see the layer drawer';
 
-      // Scenario claim-tracking: a company shown in one band cannot
-      // reappear in any later band for the same scenario. This is a
-      // stricter version of "no same company in adjacent bands" and
-      // makes the per-band chip mix visibly differ across the stack.
-      var scenarioClaimed = {};
-
+      // Company examples are drawer-only on stack bands. Showing chips
+      // inline forced narrow scenes that clipped on desktop; the band
+      // now shows the layer name, its contents, and a quiet "N companies"
+      // count that opens the drawer with the full list.
       DATA.sharedStack.forEach(function (s, idx) {
         var y = bandY(idx);
         var active = !!stackActive[s.id];
@@ -1959,51 +1957,24 @@
         svgEl('text', { class: 'band-label', x: STACK.x + 12, y: y + bandH / 2 + 4 }, g).textContent = s.label;
         svgEl('text', { class: 'band-contents', x: STACK.x + 170, y: y + bandH / 2 + 4 }, g).textContent = s.contents;
 
-        // Scenario-specific band chips, capped at 2 visible. Same company
-        // never appears in more than one band per scenario (see
-        // scenarioClaimed map).
         var bandLayers = (DATA.stackToLayers && DATA.stackToLayers[s.id]) || [];
         var activeLayerSet = {};
         activeStepIds.forEach(function (sid) {
           ((DATA.stepToLayers || {})[sid] || []).forEach(function (lid) { activeLayerSet[lid] = true; });
         });
         var matchedLayers = bandLayers.filter(function (lid) { return !!activeLayerSet[lid]; });
-        var bandResolved = resolveLayerCompanies(matchedLayers, {
-          maxDrawer: 4,
-          exclude: scenarioClaimed
-        });
-        var cosForBand = bandResolved.visible.slice(0, 2);
-        if (state.companyFilter === 'dvc') {
-          cosForBand = cosForBand.filter(function (c) { return c.group === 'dvc'; });
-        }
-        cosForBand.forEach(function (c) { scenarioClaimed[c.id] = true; });
+        var bandResolved = resolveLayerCompanies(matchedLayers, { maxDrawer: 8 });
+        var coCount = bandResolved.visible.length;
+        var hintTxt = coCount === 0
+          ? '— no examples in this scenario'
+          : coCount + (coCount === 1 ? ' example' : ' examples') + ' · click for drawer';
+        svgEl('text', {
+          class: 'band-co-hint',
+          x: STACK.x + STACK.w - 14,
+          y: y + bandH / 2 + 4,
+          'text-anchor': 'end'
+        }, g).textContent = hintTxt;
 
-        if (cosForBand.length === 0) {
-          svgEl('text', { class: 'band-co-empty', x: STACK.x + STACK.w - 12, y: y + bandH / 2 + 4, 'text-anchor': 'end' }, g)
-            .textContent = '—';
-        } else {
-          var chipW = 96, chipH = 18, chipGap = 6;
-          var totalChipsW = cosForBand.length * chipW + (cosForBand.length - 1) * chipGap;
-          var startCX = STACK.x + STACK.w - 18 - totalChipsW;
-          cosForBand.forEach(function (c, ci) {
-            var cx = startCX + ci * (chipW + chipGap);
-            var chip = svgEl('g', {
-              class: 'band-co-chip',
-              'data-company': c.id,
-              'data-group': c.group,
-              tabindex: 0, role: 'button',
-              'aria-label': c.name + ' — example for ' + s.label,
-              transform: 'translate(' + cx + ',' + (y + bandH / 2 - chipH / 2) + ')'
-            }, g);
-            svgEl('rect', { width: chipW, height: chipH, rx: 4 }, chip);
-            var label = c.name.length > 14 ? c.name.slice(0, 13) + '…' : c.name;
-            svgEl('text', { x: chipW / 2, y: chipH / 2 + 3.5, 'text-anchor': 'middle' }, chip).textContent = label;
-            chip.addEventListener('click', function (ev) { ev.stopPropagation(); selectCompany(c.id); });
-            chip.addEventListener('mouseenter', function (ev) { showTip(tipText(c.name, c.short_description), ev.clientX, ev.clientY); });
-            chip.addEventListener('mouseleave', hideTip);
-            chip.addEventListener('keydown', function (ev) { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); selectCompany(c.id); } });
-          });
-        }
         g.addEventListener('click', function (ev) { ev.stopPropagation(); selectStackLayer(s.id); });
         g.addEventListener('mouseenter', function (ev) { showTip(tipText(s.label + ' — stack layer', s.contents), ev.clientX, ev.clientY); });
         g.addEventListener('mouseleave', hideTip);
@@ -2077,7 +2048,7 @@
 
     function drawStepNode(s, kind, isActive) {
       var classes = 'loop-step is-' + kind + (isActive ? ' is-active' : ' is-dim');
-      var w = 110, h = 36;
+      var w = 118, h = 36;
       var g = svgEl('g', {
         class: classes,
         transform: 'translate(' + (s.x - w / 2) + ',' + (s.y - h / 2) + ')',
@@ -2096,7 +2067,7 @@
 
     function drawRailNode(s, kind, isActive, parent) {
       var classes = 'rail-step is-' + kind + (isActive ? ' is-active' : ' is-dim');
-      var w = 150, h = 32;
+      var w = 168, h = 32;
       var g = svgEl('g', {
         class: classes,
         transform: 'translate(' + (s.x - w / 2) + ',' + (s.y - h / 2) + ')',

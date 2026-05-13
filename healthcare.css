@@ -628,23 +628,24 @@
   border-color: transparent;
 }
 
-/* Loop SVG container — horizontally scrollable on mobile */
+/* Loop SVG container — full-width canvas on desktop, horizontally
+   scrollable only on narrow viewports below the breakpoint. */
 .hc-loop-diagram {
   width: 100%;
   background: rgba(0,0,0,0.18);
   border-radius: 12px;
   border: 1px solid var(--hc-line-soft);
-  overflow-x: auto;
-  overflow-y: hidden;
-  -webkit-overflow-scrolling: touch;
+  overflow: hidden;
 }
 .hc-loop-svg {
   display: block;
   width: 100%;
-  min-width: 1180px;
   height: auto;
-  max-height: 880px;
   aspect-ratio: 1180 / 880;
+}
+@media (max-width: 900px) {
+  .hc-loop-diagram { overflow-x: auto; overflow-y: hidden; -webkit-overflow-scrolling: touch; }
+  .hc-loop-svg { min-width: 1080px; }
 }
 
 .hc-loop-svg .loop-step .bg {
@@ -748,6 +749,16 @@
   pointer-events: none;
 }
 .hc-loop-svg .band-co-empty { fill: var(--hc-text-mute, #A0A8BC); font-size: 10px; }
+.hc-loop-svg .band-co-hint {
+  fill: var(--hc-text-mute, #A0A8BC);
+  font-size: 10px;
+  letter-spacing: 0.02em;
+  font-weight: 600;
+  pointer-events: none;
+}
+.hc-loop-svg .stack-band.is-active .band-co-hint {
+  fill: rgba(78, 205, 196, 0.85);
+}
 .hc-loop-svg .band-co-chip[data-group="dvc"] rect {
   fill: rgba(245, 197, 66, 0.12);
   stroke: rgba(245, 197, 66, 0.4);
@@ -1541,26 +1552,24 @@
 .hc-flow-callout strong { color: var(--hc-text, #E8E9ED); font-size: 0.92rem; display: block; margin-bottom: 0.3rem; }
 .hc-flow-callout p { font-size: 0.8rem; color: var(--hc-text-soft, #C8CCD4); margin: 0; line-height: 1.45; }
 
-/* Patient loop: side-by-side diagram + drawer on desktop, stacked on mobile */
+/* Patient loop: full-width canvas, insight drawer stacked below.
+   Side-by-side was forcing the SVG to overflow/clip its right edge at
+   typical desktop widths, so the diagram now claims the full row and
+   the drawer sits beneath as a quiet companion panel. */
 .hc-loop-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(280px, 340px);
-  gap: 1rem;
-  align-items: start;
-}
-@media (max-width: 1000px) {
-  .hc-loop-grid { grid-template-columns: 1fr; }
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.9rem;
+  align-items: stretch;
 }
 .hc-loop-insight {
-  position: sticky;
-  top: 80px;
   background: var(--hc-panel);
   border: 1px solid var(--hc-line);
   border-radius: 12px;
   padding: 0.95rem 1.05rem;
   font-size: 0.84rem;
   color: var(--hc-text-soft, #C8CCD4);
-  max-height: calc(100vh - 140px);
+  max-height: 320px;
   overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: rgba(160,168,188,0.35) transparent;
@@ -1664,9 +1673,8 @@
 }
 
 /* Smaller mobile loop insight panel */
-@media (max-width: 1000px) {
+@media (max-width: 900px) {
   .hc-loop-insight {
-    position: static;
     max-height: none;
     min-height: 0;
     padding: 0.8rem 1rem;

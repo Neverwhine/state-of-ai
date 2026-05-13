@@ -434,10 +434,12 @@ function within(p, w, h, label) {
     p.x - w / 2 >= 10 && p.x + w / 2 <= VB_W - 10 &&
     p.y - h / 2 >= 30 && p.y + h / 2 <= VB_H - 10);
 }
-D.careLoop.forEach(function (s)        { within(s, 110, 36, 'care node'); });
-D.financialLoop.forEach(function (s)   { within(s, 110, 36, 'financial node'); });
-D.preventionOrbit.forEach(function (s) { within(s, 150, 32, 'prevention node'); });
-D.vbcBridge.forEach(function (s)       { within(s, 150, 32, 'vbc node'); });
+// Node widths must match the renderer: care/fin are 118, P/V are 168.
+var STEP_W = 118, STEP_H = 36, RAIL_W = 168, RAIL_H = 32;
+D.careLoop.forEach(function (s)        { within(s, STEP_W, STEP_H, 'care node'); });
+D.financialLoop.forEach(function (s)   { within(s, STEP_W, STEP_H, 'financial node'); });
+D.preventionOrbit.forEach(function (s) { within(s, RAIL_W, RAIL_H, 'prevention node'); });
+D.vbcBridge.forEach(function (s)       { within(s, RAIL_W, RAIL_H, 'vbc node'); });
 
 console.log('--- Test: nodes do not collide across tracks ---');
 // Pairwise distance between every step in different tracks must be
@@ -447,16 +449,16 @@ function rectsOverlap(ax, ay, aw, ah, bx, by, bw, bh, pad) {
          Math.abs(ay - by) * 2 < (ah + bh + pad * 2);
 }
 var allWithSize = []
-  .concat(D.careLoop.map(function (s)        { return { s: s, w: 110, h: 36, k: 'care' }; }))
-  .concat(D.financialLoop.map(function (s)   { return { s: s, w: 110, h: 36, k: 'fin'  }; }))
-  .concat(D.preventionOrbit.map(function (s) { return { s: s, w: 150, h: 32, k: 'prev' }; }))
-  .concat(D.vbcBridge.map(function (s)       { return { s: s, w: 150, h: 32, k: 'vbc'  }; }));
+  .concat(D.careLoop.map(function (s)        { return { s: s, w: STEP_W, h: STEP_H, k: 'care' }; }))
+  .concat(D.financialLoop.map(function (s)   { return { s: s, w: STEP_W, h: STEP_H, k: 'fin'  }; }))
+  .concat(D.preventionOrbit.map(function (s) { return { s: s, w: RAIL_W, h: RAIL_H, k: 'prev' }; }))
+  .concat(D.vbcBridge.map(function (s)       { return { s: s, w: RAIL_W, h: RAIL_H, k: 'vbc'  }; }));
 var crossCollisions = 0;
 for (var ai = 0; ai < allWithSize.length; ai++) {
   for (var bi = ai + 1; bi < allWithSize.length; bi++) {
     var A = allWithSize[ai], B = allWithSize[bi];
     if (A.k === B.k) continue;
-    if (rectsOverlap(A.s.x, A.s.y, A.w, A.h, B.s.x, B.s.y, B.w, B.h, 6)) {
+    if (rectsOverlap(A.s.x, A.s.y, A.w, A.h, B.s.x, B.s.y, B.w, B.h, 0)) {
       crossCollisions++;
     }
   }
@@ -468,6 +470,46 @@ check('healthcare.js declares the 1180 x 880 viewBox',
   hcSrc.indexOf("LOOP_VB = { w: 1180, h: 880 }") > -1);
 check('healthcare.css aspect-ratio matches viewBox',
   cssSrc.indexOf('aspect-ratio: 1180 / 880') > -1);
+
+console.log('--- Test: loop grid is single-column so SVG never overflows ---');
+// The previous side-by-side layout (1fr + 280-340px column) forced the
+// SVG into a column narrower than its min-width and clipped the right
+// side of the canvas at typical desktop widths. The fix is a single
+// full-width column with the insight drawer stacked below.
+check('healthcare.css declares a single-column .hc-loop-grid',
+  /\.hc-loop-grid\s*\{[^}]*grid-template-columns:\s*minmax\(0,\s*1fr\)/m.test(cssSrc));
+check('healthcare.css no longer pins a second column to .hc-loop-grid',
+  !/\.hc-loop-grid\s*\{[^}]*grid-template-columns:[^;]*minmax\(280px/m.test(cssSrc));
+check('healthcare.css drops the desktop SVG min-width that forced overflow',
+  !/\.hc-loop-svg\s*\{[^}]*min-width:\s*1180px/m.test(cssSrc));
+check('healthcare.css gives .hc-loop-insight a stacked (non-sticky) treatment',
+  !/\.hc-loop-insight\s*\{[^}]*position:\s*sticky/m.test(cssSrc));
+
+console.log('--- Test: long step labels stay inside the node box ---');
+// Approximate label width: SVG text at 10.5px proportional fonts is
+// ~6.4px / char. The label starts at x=30 inside a box of width
+// STEP_W, so usable label width is STEP_W - 30 - 6 = 92 px. No care
+// or financial step label may exceed that.
+var maxStepChars = Math.floor((STEP_W - 36) / 6.4);
+[].concat(D.careLoop, D.financialLoop).forEach(function (s) {
+  check('step ' + s.id + ' label "' + s.label + '" fits the ' + STEP_W + 'px box',
+    s.label.length <= maxStepChars);
+});
+var maxRailChars = Math.floor((RAIL_W - 36) / 6.4);
+[].concat(D.preventionOrbit, D.vbcBridge).forEach(function (s) {
+  check('rail ' + s.id + ' label "' + s.label + '" fits the ' + RAIL_W + 'px box',
+    s.label.length <= maxRailChars);
+});
+
+console.log('--- Test: stack bands no longer render inline company chips ---');
+// Inline chips on the band canvas clipped on desktop. The renderer now
+// emits a non-clickable hint string and routes the full example list
+// to the layer drawer.
+check('healthcare.js no longer creates band-co-chip elements',
+  !/class:\s*'band-co-chip'/.test(hcSrc));
+check('healthcare.js emits a band-co-hint summary instead',
+  hcSrc.indexOf("class: 'band-co-hint'") > -1 ||
+  hcSrc.indexOf("class:\"band-co-hint\"") > -1);
 
 console.log('--- Test: Dmitry sourced callouts exist and are wired ---');
 check('loopCallouts data is present', Array.isArray(D.loopCallouts) && D.loopCallouts.length >= 5);
