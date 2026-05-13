@@ -1132,9 +1132,88 @@
   background: rgba(245, 197, 66, 0.15);
   color: var(--hc-gold, #F5C542);
 }
-.hc-co-grouptag.leader {
+.hc-co-grouptag.leader,
+.hc-co-grouptag.drawer {
   background: rgba(160, 168, 188, 0.15);
   color: var(--hc-text-mute, #A0A8BC);
+}
+.hc-co-grouptag.incumbent {
+  background: rgba(96, 144, 200, 0.15);
+  color: #9CC5E0;
+}
+.hc-co-grouptag.ainative {
+  background: rgba(78, 205, 196, 0.16);
+  color: var(--hc-teal, #4ECDC4);
+}
+
+/* Compact company drawer body */
+.hc-drawer-sub {
+  font-size: 0.72rem;
+  color: var(--hc-text-mute, #A0A8BC);
+  margin: 0.2rem 0 0.55rem;
+  letter-spacing: 0.02em;
+}
+.hc-co-meta-line {
+  display: flex; flex-wrap: wrap; gap: 0.75rem;
+  font-size: 0.78rem;
+  color: var(--hc-text-mute, #A0A8BC);
+  margin: 0.4rem 0 0.55rem;
+}
+.hc-co-meta-line strong { color: #E8E9ED; font-weight: 700; }
+
+/* Drawer section headers (Primary pair / More in this layer) */
+.hc-co-section-h {
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--hc-text-mute, #A0A8BC);
+  margin: 0.55rem 0 0.3rem;
+  opacity: 0.85;
+}
+
+/* Tooltip role badge */
+.hc-tooltip-role {
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-left: 0.4rem;
+  padding: 0.05rem 0.4rem;
+  border-radius: 4px;
+  background: rgba(160, 168, 188, 0.15);
+  color: var(--hc-text-mute, #A0A8BC);
+}
+
+/* Biotech sidecar */
+.hc-biotech-link { pointer-events: none; }
+.hc-biotech-card { cursor: pointer; }
+.hc-sankey-svg .hc-biotech-sidecar { display: none; }
+.hc-sankey-svg.view-companies .hc-biotech-sidecar { display: block; }
+.hc-biotech-kind {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  fill: rgba(124,77,255,0.95);
+  font-family: var(--hc-font, inherit);
+}
+.hc-biotech-title {
+  font-size: 12px;
+  font-weight: 700;
+  fill: #E8E9ED;
+}
+.hc-biotech-body {
+  font-size: 11px;
+  fill: #C8CCD4;
+}
+.hc-biotech-badge rect {
+  fill: rgba(124,77,255,0.18);
+  stroke: rgba(124,77,255,0.6);
+}
+.hc-biotech-badge text {
+  fill: #E8E9ED;
+  font-size: 10px;
+  font-weight: 700;
 }
 
 /* Sankey hit area + highlight ----------------------------------------- */

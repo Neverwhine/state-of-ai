@@ -159,25 +159,132 @@
       });
     }
 
-    function companiesForPool(poolId) {
-      return DATA.companies.filter(function (c) { return (c.money_pool_ids || []).indexOf(poolId) >= 0; });
+    // ===================================================================
+    // LAYER RESOLUTION — visible pair + drawer per element.
+    //
+    // resolveLayerPair(layerIds):
+    //   Given an ordered list of audit layers, returns the visible
+    //   incumbent + ai-native PAIR for the FIRST layer that has one,
+    //   plus a deduped drawer set drawn from that layer and any
+    //   subsequent layers (capped at ~4 drawer entries).
+    //
+    // Visible cap: 2 companies (incumbent + ai-native). A third badge
+    // is only added when a DVC company is the *most precise* leader for
+    // that element AND would not otherwise appear in a visible slot,
+    // up to a total of 3.
+    // ===================================================================
+    var coById = {};
+    DATA.companies.forEach(function (c) { coById[c.id] = c; });
+
+    function pickLayersForElement(kind, id) {
+      if (kind === 'destination') return (DATA.destinationToLayers && DATA.destinationToLayers[id]) || [];
+      if (kind === 'pool')        return (DATA.poolToLayers && DATA.poolToLayers[id]) || [];
+      if (kind === 'step')        return (DATA.stepToLayers && DATA.stepToLayers[id]) || [];
+      if (kind === 'stack')       return (DATA.stackToLayers && DATA.stackToLayers[id]) || [];
+      return [];
     }
-    function companiesForDestination(destId) {
-      return DATA.companies.filter(function (c) { return (c.destination_ids || []).indexOf(destId) >= 0; });
+
+    // Returns { visible: [...co], drawer: [...co], layerIds: [...] }
+    // visible has at most 2 companies (incumbent + ai-native).
+    function resolveLayerCompanies(layerIds, opts) {
+      opts = opts || {};
+      var maxDrawer = opts.maxDrawer != null ? opts.maxDrawer : 4;
+      var visible = [];
+      var seen = {};
+      var firstLayerWithPair = null;
+      for (var i = 0; i < layerIds.length; i++) {
+        var L = DATA.companyLayers[layerIds[i]];
+        if (!L) continue;
+        if (!firstLayerWithPair && L.pair && (L.pair[0] || L.pair[1])) {
+          firstLayerWithPair = layerIds[i];
+          (L.pair || []).forEach(function (cid) {
+            if (cid && coById[cid] && !seen[cid]) { seen[cid] = true; visible.push(coById[cid]); }
+          });
+          break;
+        }
+      }
+      // Drawer: drawer entries from the first layer (with pair), then drawer
+      // entries from subsequent layers, then any leftover pair members from
+      // subsequent layers — all deduped, capped at maxDrawer.
+      var drawer = [];
+      function pushIfNew(cid) {
+        if (!cid || !coById[cid] || seen[cid]) return;
+        seen[cid] = true; drawer.push(coById[cid]);
+      }
+      // Drawer entries for visible-pair layer first
+      if (firstLayerWithPair) {
+        (DATA.companyLayers[firstLayerWithPair].drawer || []).forEach(pushIfNew);
+      }
+      // Then drawer/pair from subsequent layers
+      for (var j = 0; j < layerIds.length; j++) {
+        if (layerIds[j] === firstLayerWithPair) continue;
+        var L2 = DATA.companyLayers[layerIds[j]];
+        if (!L2) continue;
+        (L2.pair || []).forEach(pushIfNew);
+        (L2.drawer || []).forEach(pushIfNew);
+      }
+      // Apply DVC filter (only filters the visible set + drawer if the user is
+      // in "DVC only" mode). Always show DVC pin in drawer slot if precise.
+      if (state.companyFilter === 'dvc') {
+        visible = visible.filter(function (c) { return c.group === 'dvc'; });
+        drawer  = drawer.filter(function (c) { return c.group === 'dvc'; });
+      }
+      // Promote a DVC drawer pin into the visible slot only when:
+      //   - there is no DVC already in visible
+      //   - there is a DVC drawer entry that maps to one of the supplied
+      //     layers as its primary layer (which is always true by construction)
+      //   - visible has <3 entries
+      //   - the DVC pin is the *most precise* leader (i.e. its layer is the
+      //     first one in layerIds)
+      if (visible.length < 3 && firstLayerWithPair) {
+        var dvcPin = drawer.find(function (c) {
+          return c.group === 'dvc' && c.layer_id === firstLayerWithPair;
+        });
+        if (dvcPin && visible.indexOf(dvcPin) < 0) {
+          visible.push(dvcPin);
+          drawer = drawer.filter(function (c) { return c.id !== dvcPin.id; });
+        }
+      }
+      // Cap visible at 3 absolute (1 incumbent + 1 ai-native + at most 1 DVC).
+      if (visible.length > 3) visible = visible.slice(0, 3);
+      // Cap drawer
+      drawer = drawer.slice(0, maxDrawer);
+      return { visible: visible, drawer: drawer, layerIds: layerIds, primaryLayer: firstLayerWithPair };
     }
-    function companiesForStep(stepId) {
-      return DATA.companies.filter(function (c) { return (c.process_step_ids || []).indexOf(stepId) >= 0; });
+
+    function resolveForElement(kind, id, opts) {
+      return resolveLayerCompanies(pickLayersForElement(kind, id), opts);
     }
+
+    function companiesForPool(poolId)        { return resolveForElement('pool', poolId).visible; }
+    function companiesForDestination(destId) { return resolveForElement('destination', destId).visible; }
+    function companiesForStep(stepId)        { return resolveForElement('step', stepId).visible; }
+    function companiesForStack(stackId)      { return resolveForElement('stack', stackId).visible; }
     function companiesForAi(aiId) {
-      return DATA.companies.filter(function (c) { return (c.ai_surface_ids || []).indexOf(aiId) >= 0; });
-    }
-    function companiesForStack(stackId) {
-      return DATA.companies.filter(function (c) { return (c.stack_ids || []).indexOf(stackId) >= 0; });
+      // AI surface visible companies: intersect attached pools + step layers
+      var layerIds = [];
+      var seen = {};
+      var a = DATA.aiSurfaces.find(function (x) { return x.id === aiId; });
+      if (a) {
+        (a.attach_pools || []).forEach(function (pId) {
+          ((DATA.poolToLayers || {})[pId] || []).forEach(function (lid) {
+            if (!seen[lid]) { seen[lid] = true; layerIds.push(lid); }
+          });
+        });
+        (a.attach_steps || []).forEach(function (sId) {
+          ((DATA.stepToLayers || {})[sId] || []).forEach(function (lid) {
+            if (!seen[lid]) { seen[lid] = true; layerIds.push(lid); }
+          });
+        });
+      }
+      return resolveLayerCompanies(layerIds).visible;
     }
 
     function companyChipHTML(c) {
-      var groupLabel = c.tag || (c.group === 'dvc' ? 'DVC portfolio' : 'Market leader');
-      var groupTag = '<span class="hc-co-grouptag ' + (c.group === 'dvc' ? 'dvc' : 'leader') + '">' + escapeHtml(groupLabel) + '</span>';
+      var roleClass = c.role === 'incumbent' ? 'incumbent'
+                     : c.role === 'ai-native' ? 'ainative'
+                     : c.group === 'dvc' ? 'dvc' : 'drawer';
+      var groupTag = '<span class="hc-co-grouptag ' + roleClass + '">' + escapeHtml(roleTagText(c)) + '</span>';
       return '<button type="button" class="hc-co-chip" data-action="company" data-id="' + c.id + '">' +
                '<span class="hc-co-chip-name">' + escapeHtml(c.name) + '</span>' +
                groupTag +
@@ -185,10 +292,39 @@
              '</button>';
     }
 
+    // Render visible-pair first, drawer-only second. `resolved` is the
+    // return value of resolveForElement / resolveLayerCompanies.
+    function companyDrawerHTML(resolved) {
+      if (!resolved) return '<p class="hc-empty">No company examples linked here.</p>';
+      var visible = resolved.visible || [];
+      var drawer  = resolved.drawer  || [];
+      if (state.companyFilter === 'dvc') {
+        visible = visible.filter(function (c) { return c.group === 'dvc'; });
+        drawer  = drawer.filter(function (c) { return c.group === 'dvc'; });
+      }
+      if (!visible.length && !drawer.length) return '<p class="hc-empty">No company examples linked here.</p>';
+      var out = '';
+      if (visible.length) {
+        out += '<div class="hc-co-section-h">Primary pair</div>';
+        out += '<div class="hc-co-list">' + visible.map(companyChipHTML).join('') + '</div>';
+      }
+      if (drawer.length) {
+        out += '<div class="hc-co-section-h">More in this layer</div>';
+        out += '<div class="hc-co-list">' + drawer.map(companyChipHTML).join('') + '</div>';
+      }
+      return out;
+    }
+
+    // Legacy shim used by AI-surface and step drawers (which previously
+    // received an unstructured list). Resolves the list as a single
+    // 'visible' set and renders via the structured drawer.
     function companyListHTML(list) {
-      var cs = sortCompanies(filteredCompanies(list));
+      var cs = sortCompanies(filteredCompanies(list || []));
       if (!cs.length) return '<p class="hc-empty">No company examples linked here.</p>';
-      return '<div class="hc-co-list">' + cs.map(companyChipHTML).join('') + '</div>';
+      // Cap to 3 visible to honour the surface rule.
+      var visible = cs.slice(0, 3);
+      var drawer = cs.slice(3, 7);
+      return companyDrawerHTML({ visible: visible, drawer: drawer });
     }
 
     function compositionRows(rows, totalForShare, totalForTarget, mode) {
@@ -622,31 +758,29 @@
     }
 
     function buildCompanyOverlay() {
-      // ON-CHART badge clusters: place a tight cluster of company badges
-      // LEFT of each pool node so they sit in the central, always-visible
-      // BC-flow area of the chart canvas (the previous build placed them
-      // in the far-right gutter beyond the visible scroll region on
-      // common desktop widths).
+      // Visible-overlay rule: each cost-pool element shows AT MOST 2 badges
+      // (incumbent + AI-native) — drawn from the FIRST audit layer that
+      // applies to that pool. A 3rd DVC badge can appear only when the DVC
+      // pin is the *most precise* leader for the pool (see resolveLayerCompanies).
+      // Drawer-only companies live behind a click on the pool node.
       var grp = overlayG.append('g').attr('class', 'hc-co-grp');
 
       function shortName(name) {
-        // Keep the chip readable: short labels render the full name;
-        // longer ones are truncated to 12 chars + ellipsis. The full name
-        // is still on the tooltip + aria-label.
         var t = name.replace(/\s*\+\s*/g, '+').trim();
         return t.length > 12 ? t.slice(0, 11) + '…' : t;
       }
 
-      // 1. Purple ring on pool nodes that have any companies.
-      var byPool = {};
-      DATA.companies.forEach(function (c) {
-        (c.money_pool_ids || []).forEach(function (pId) {
-          (byPool[pId] = byPool[pId] || []).push(c);
-        });
+      // 1. Purple ring on pool nodes that have any visible companies.
+      var poolBadges = {}; // pId -> visible[]
+      Object.keys(poolPositions).forEach(function (pId) {
+        var resolved = resolveForElement('pool', pId);
+        var vis = resolved.visible;
+        if (state.companyFilter === 'dvc') vis = vis.filter(function (c) { return c.group === 'dvc'; });
+        poolBadges[pId] = vis;
       });
-      Object.keys(byPool).forEach(function (pId) {
-        var p = poolPositions[pId];
-        if (!p) return;
+      Object.keys(poolBadges).forEach(function (pId) {
+        if (!poolBadges[pId].length) return;
+        var p = poolPositions[pId]; if (!p) return;
         grp.append('rect')
           .attr('class', 'hc-co-node-ring')
           .attr('data-pool', pId)
@@ -660,75 +794,188 @@
           .attr('pointer-events', 'none');
       });
 
-      // 2. Badge cluster anchored to the LEFT of each pool node so the
-      // cluster sits inside the BC-flow region (visible on the chart
-      // canvas, not a right gutter that scrolls off-screen at desktop
-      // widths). Uses 1 or 2 columns depending on count.
-      var pillW = 90, pillH = 18, gapX = 4, gapY = 3;
-      var clusterRightInset = 8;          // gap between cluster and pool
+      // 2. Render up to 3 badges per pool (cap enforced by resolver).
+      var pillW = 96, pillH = 18, gapY = 3;
+      var clusterRightInset = 8;
       var vbBox = moneySvgEl.viewBox.baseVal;
       var vbHeight = (vbBox && vbBox.height) ? vbBox.height : 720;
-      var maxBadgesPerPool = 8;           // hard cap, more accessible via drawer
-      Object.keys(byPool).forEach(function (pId) {
+
+      Object.keys(poolBadges).forEach(function (pId) {
+        var list = poolBadges[pId];
+        if (!list.length) return;
         var p = poolPositions[pId]; if (!p) return;
-        var fullList = sortCompanies(byPool[pId]); // DVC-first sort respected
-        var list = fullList.slice(0, maxBadgesPerPool);
-        var overflow = fullList.length - list.length;
         var midY = (p.y0 + p.y1) / 2;
         var poolGrp = grp.append('g').attr('class', 'hc-co-pool').attr('data-pool', pId);
 
-        // 1 column up to 4 entries; 2 columns when > 4.
-        var cols = list.length > 4 ? 2 : 1;
-        var rows = Math.ceil(list.length / cols);
-        var clusterW = cols * pillW + (cols - 1) * gapX;
-        var clusterH = rows * pillH + (rows - 1) * gapY;
-        var startX = p.x0 - clusterRightInset - clusterW;
+        var clusterH = list.length * pillH + (list.length - 1) * gapY;
+        var startX = p.x0 - clusterRightInset - pillW;
         var startY = midY - clusterH / 2;
-        // Clamp Y so the cluster stays inside the SVG viewBox.
         if (startY < 4) startY = 4;
         if (startY + clusterH > vbHeight - 4) startY = vbHeight - 4 - clusterH;
 
         list.forEach(function (c, i) {
-          var col = i % cols;
-          var row = Math.floor(i / cols);
-          var x = startX + col * (pillW + gapX);
-          var y = startY + row * (pillH + gapY);
+          var y = startY + i * (pillH + gapY);
           var g = poolGrp.append('g')
             .attr('class', 'hc-co-badge')
             .attr('data-company', c.id)
             .attr('data-group', c.group)
+            .attr('data-role', c.role || '')
             .attr('tabindex', 0)
             .attr('role', 'button')
-            .attr('aria-label', c.name + ' (' + (c.group === 'dvc' ? 'DVC portfolio' : 'market leader') + ')')
-            .attr('transform', 'translate(' + x + ',' + y + ')');
+            .attr('aria-label', c.name + ' — ' + roleTagText(c))
+            .attr('transform', 'translate(' + startX + ',' + y + ')');
           g.append('rect').attr('width', pillW).attr('height', pillH).attr('rx', 4);
           g.append('text').attr('x', pillW / 2).attr('y', pillH / 2 + 3.5)
             .attr('text-anchor', 'middle').text(shortName(c.name));
-          g.on('mouseenter', function (ev) { showTip(tipText(c.name, c.short_description), ev.clientX, ev.clientY); })
+          g.on('mouseenter', function (ev) { showTip(companyTip(c), ev.clientX, ev.clientY); })
            .on('mouseleave', hideTip)
            .on('click', function (ev) { ev.stopPropagation(); selectCompany(c.id); })
            .on('keydown', function (ev) { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); selectCompany(c.id); } });
         });
 
-        // "+N more" indicator beneath the cluster (clicks the pool node
-        // drawer which lists ALL companies for this pool).
-        if (overflow > 0) {
-          var moreY = startY + clusterH + gapY + 2;
-          if (moreY + pillH > vbHeight - 4) moreY = vbHeight - 4 - pillH;
-          var moreG = poolGrp.append('g')
-            .attr('class', 'hc-co-badge hc-co-more')
-            .attr('data-pool', pId)
-            .attr('tabindex', 0)
-            .attr('role', 'button')
-            .attr('aria-label', overflow + ' more companies in ' + pId)
-            .attr('transform', 'translate(' + startX + ',' + moreY + ')');
-          moreG.append('rect').attr('width', cols === 2 ? clusterW : pillW).attr('height', pillH).attr('rx', 4);
-          moreG.append('text').attr('x', (cols === 2 ? clusterW : pillW) / 2).attr('y', pillH / 2 + 3.5)
-            .attr('text-anchor', 'middle').text('+ ' + overflow + ' more');
-          moreG.on('click', function (ev) { ev.stopPropagation(); selectNode(pId); })
-            .on('keydown', function (ev) { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); selectNode(pId); } });
+        // Single, compact "more in drawer" hint that opens the pool drawer.
+        var moreY = startY + clusterH + gapY + 2;
+        if (moreY + pillH > vbHeight - 4) moreY = vbHeight - 4 - pillH;
+        var moreG = poolGrp.append('g')
+          .attr('class', 'hc-co-badge hc-co-more')
+          .attr('data-pool', pId)
+          .attr('tabindex', 0)
+          .attr('role', 'button')
+          .attr('aria-label', 'More companies in this pool — open drawer')
+          .attr('transform', 'translate(' + startX + ',' + moreY + ')');
+        moreG.append('rect').attr('width', pillW).attr('height', pillH).attr('rx', 4);
+        moreG.append('text').attr('x', pillW / 2).attr('y', pillH / 2 + 3.5)
+          .attr('text-anchor', 'middle').text('More ▸');
+        moreG.on('click', function (ev) { ev.stopPropagation(); selectNode(pId); })
+          .on('keydown', function (ev) { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); selectNode(pId); } });
+      });
+
+      // 3. Biotech sidecar — upstream of NHE, linked to dest_rx.
+      buildBiotechSidecar(grp);
+    }
+
+    // ===================================================================
+    // BIOTECH SIDECAR — Drug discovery + pharma intelligence, OUTSIDE NHE.
+    // Renders next to the Retail-Rx destination node with a visual link
+    // making the boundary explicit.
+    // ===================================================================
+    function buildBiotechSidecar(parentGrp) {
+      var sc = DATA.biotechSidecar; if (!sc || !sankeyGraph) return;
+      var rxNode = sankeyGraph.nodes.find(function (n) { return n.id === sc.linked_destination; });
+      if (!rxNode) return;
+      var d3 = window.d3;
+      var sg = parentGrp.append('g').attr('class', 'hc-biotech-sidecar')
+        .attr('data-anchor', sc.linked_destination);
+
+      var cardW = 230, cardH = 168;
+      var cardX = rxNode.x0 - cardW - 28;
+      var cardY = rxNode.y0 - cardH - 20;
+      // Clamp into viewBox
+      var vb = moneySvgEl.viewBox.baseVal || { width: 1380, height: 720 };
+      if (cardX < 8) cardX = 8;
+      if (cardY < 8) cardY = 8;
+      if (cardY + cardH > vb.height - 8) cardY = vb.height - 8 - cardH;
+
+      // Dashed link to the linked destination (cardX+cardW -> rxNode.x0)
+      sg.append('path')
+        .attr('class', 'hc-biotech-link')
+        .attr('d', 'M ' + (cardX + cardW) + ' ' + (cardY + cardH / 2) +
+                   ' Q ' + (rxNode.x0 - 16) + ' ' + (cardY + cardH / 2) +
+                   ' '  + rxNode.x0 + ' ' + ((rxNode.y0 + rxNode.y1) / 2))
+        .attr('fill', 'none')
+        .attr('stroke', 'rgba(124,77,255,0.5)')
+        .attr('stroke-width', 1.5)
+        .attr('stroke-dasharray', '4 4')
+        .attr('pointer-events', 'none');
+
+      var card = sg.append('g').attr('transform', 'translate(' + cardX + ',' + cardY + ')');
+      card.append('rect').attr('class', 'hc-biotech-card')
+        .attr('width', cardW).attr('height', cardH).attr('rx', 8)
+        .attr('fill', 'rgba(124,77,255,0.06)')
+        .attr('stroke', 'rgba(124,77,255,0.55)')
+        .attr('stroke-width', 1);
+      card.append('text').attr('class', 'hc-biotech-kind').attr('x', 12).attr('y', 16).text('OUTSIDE $5.3T NHE');
+      card.append('text').attr('class', 'hc-biotech-title').attr('x', 12).attr('y', 36).text(sc.title);
+      // Wrap body into lines (~32 chars)
+      wrapText(card, sc.body, 12, 56, cardW - 24, 13, 'hc-biotech-body', 5);
+
+      // Render up to 3 visible badges (1 from L14, 1 from L13, 1 DVC pin)
+      var pinIds = [];
+      var L14 = DATA.companyLayers.L14_drug_discovery, L13 = DATA.companyLayers.L13_pharma_intel;
+      if (L14 && L14.pair[1]) pinIds.push(L14.pair[1]);   // AI-native drug discovery (Isomorphic)
+      if (L14 && L14.drawer && L14.drawer.length) {
+        // Promote DVC drug discovery pin if available
+        var dvcKerna = (L14.drawer || []).find(function (id) { var c = coById[id]; return c && c.group === 'dvc'; });
+        if (dvcKerna) pinIds.push(dvcKerna);
+      }
+      if (L13 && L13.pair[1]) pinIds.push(L13.pair[1]);   // AI-native pharma intel (AlphaSense)
+      // Dedup and cap at 3
+      var seen = {};
+      pinIds = pinIds.filter(function (id) { if (seen[id]) return false; seen[id] = true; return !!coById[id]; }).slice(0, 3);
+
+      var badgeY = cardH - 30;
+      var badgeW = 64, badgeH = 18, bg = 6;
+      var bx = 12;
+      pinIds.forEach(function (cid, i) {
+        var c = coById[cid];
+        var bgGrp = card.append('g')
+          .attr('class', 'hc-co-badge hc-biotech-badge')
+          .attr('data-company', c.id)
+          .attr('data-group', c.group)
+          .attr('transform', 'translate(' + bx + ',' + badgeY + ')')
+          .attr('tabindex', 0).attr('role', 'button')
+          .attr('aria-label', c.name + ' — biotech sidecar (outside NHE)');
+        bgGrp.append('rect').attr('width', badgeW).attr('height', badgeH).attr('rx', 4);
+        bgGrp.append('text').attr('x', badgeW / 2).attr('y', badgeH / 2 + 3.5)
+          .attr('text-anchor', 'middle').text(c.name.length > 9 ? c.name.slice(0, 8) + '…' : c.name);
+        bgGrp.on('mouseenter', function (ev) { showTip(companyTip(c), ev.clientX, ev.clientY); })
+          .on('mouseleave', hideTip)
+          .on('click', function (ev) { ev.stopPropagation(); selectCompany(c.id); })
+          .on('keydown', function (ev) { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); selectCompany(c.id); } });
+        bx += badgeW + bg;
+      });
+
+      // Header click opens combined biotech drawer
+      card.style('cursor', 'pointer');
+      card.on('click', function (ev) { ev.stopPropagation(); openBiotechDrawer(); });
+    }
+
+    function wrapText(parent, text, x, y, maxW, lineH, cls, maxLines) {
+      var words = String(text).split(/\s+/);
+      var lines = [];
+      var current = '';
+      // Approximate char width: 6.0 px @ 11px font.
+      var maxChars = Math.floor(maxW / 5.8);
+      words.forEach(function (w) {
+        if ((current + ' ' + w).trim().length > maxChars) {
+          if (current) lines.push(current);
+          current = w;
+        } else {
+          current = (current + ' ' + w).trim();
         }
       });
+      if (current) lines.push(current);
+      if (lines.length > maxLines) {
+        lines = lines.slice(0, maxLines);
+        lines[lines.length - 1] = lines[lines.length - 1].replace(/\s\S+$/, '') + '…';
+      }
+      lines.forEach(function (l, i) {
+        parent.append('text').attr('class', cls).attr('x', x).attr('y', y + i * lineH).text(l);
+      });
+    }
+
+    function roleTagText(c) {
+      if (!c) return '';
+      if (c.role === 'incumbent') return 'Incumbent';
+      if (c.role === 'ai-native') return 'AI-native leader';
+      if (c.group === 'dvc' && c.role === 'dvc') return 'DVC emerging';
+      if (c.role === 'drawer')   return 'Drawer only';
+      return c.group === 'dvc' ? 'DVC portfolio' : 'Leader';
+    }
+    function companyTip(c) {
+      return '<div class="hc-tooltip-title">' + escapeHtml(c.name) +
+             ' <span class="hc-tooltip-role">' + escapeHtml(roleTagText(c)) + '</span></div>' +
+             '<div class="hc-tooltip-body">' + escapeHtml(c.short_description) + '</div>';
     }
 
     function refreshOverlayVisibility() {
@@ -926,9 +1173,8 @@
                     return '<button type="button" class="hc-pill" data-action="ai" data-id="' + a.id + '">' + escapeHtml(a.label) + '</button>';
                   }).join('') + '</div>';
         }
-        // Company examples
-        var companies = companiesForDestination(n.id);
-        html += '<h5>Who is building here</h5>' + companyListHTML(companies);
+        // Company examples — primary pair + drawer-only set
+        html += '<h5>Who is building here</h5>' + companyDrawerHTML(resolveForElement('destination', n.id));
       } else {
         // Cost pool: inbound from destinations
         var feeders = DATA.moneyLinksBC
@@ -947,8 +1193,7 @@
                     return '<button type="button" class="hc-pill" data-action="ai" data-id="' + a.id + '">' + escapeHtml(a.label) + '</button>';
                   }).join('') + '</div>';
         }
-        var poolCos = companiesForPool(n.id);
-        html += '<h5>Who is building here</h5>' + companyListHTML(poolCos);
+        html += '<h5>Who is building here</h5>' + companyDrawerHTML(resolveForElement('pool', n.id));
       }
 
       html += methodNote();
@@ -995,10 +1240,10 @@
           relevantAi = aiSurfacesForDestination(t.id);
         }
       }
-      var relevantCos = [];
+      var relevantResolved = null;
       if (t) {
-        if (DATA.costPools.find(function (p) { return p.id === t.id; })) relevantCos = companiesForPool(t.id);
-        else relevantCos = companiesForDestination(t.id);
+        if (DATA.costPools.find(function (p) { return p.id === t.id; })) relevantResolved = resolveForElement('pool', t.id);
+        else relevantResolved = resolveForElement('destination', t.id);
       }
 
       var why = whyFlowMatters(f);
@@ -1018,7 +1263,8 @@
               return '<button type="button" class="hc-pill" data-action="ai" data-id="' + a.id + '">' + escapeHtml(a.label) + '</button>';
             }).join('') + '</div>'
           : '') +
-        (relevantCos.length ? '<h5>Who is building here</h5>' + companyListHTML(relevantCos) : '') +
+        (relevantResolved && (relevantResolved.visible.length || relevantResolved.drawer.length)
+          ? '<h5>Who is building here</h5>' + companyDrawerHTML(relevantResolved) : '') +
         methodNote() +
         '</div>';
       setInsight(html);
@@ -1042,7 +1288,15 @@
       // No TAM/opportunity dollars in AI surface drawers
       var pools = (a.attach_pools || []).map(function (id) { return DATA.costPools.find(function (p) { return p.id === id; }); }).filter(Boolean);
       var steps = (a.attach_steps || []).map(function (id) { return findStep(id); }).filter(Boolean);
-      var cos = companiesForAi(a.id);
+      // Resolve via layer logic: union of pool-layers + step-layers
+      var layerIds = []; var seen = {};
+      (a.attach_pools || []).forEach(function (pId) {
+        ((DATA.poolToLayers || {})[pId] || []).forEach(function (lid) { if (!seen[lid]) { seen[lid] = true; layerIds.push(lid); } });
+      });
+      (a.attach_steps || []).forEach(function (sId) {
+        ((DATA.stepToLayers || {})[sId] || []).forEach(function (lid) { if (!seen[lid]) { seen[lid] = true; layerIds.push(lid); } });
+      });
+      var resolved = resolveLayerCompanies(layerIds);
 
       var html = '<div class="hc-drawer">' +
         '<div class="hc-drawer-kind">AI opportunity</div>' +
@@ -1060,7 +1314,8 @@
           : '') +
         (a.buyer ? '<p><strong>Likely buyer:</strong> ' + escapeHtml(a.buyer) + '</p>' : '') +
         (a.adoption ? '<p><strong>Why adoption is easy or hard:</strong> ' + escapeHtml(a.adoption) + '</p>' : '') +
-        (cos.length ? '<h5>Who is building here</h5>' + companyListHTML(cos) : '') +
+        ((resolved.visible.length || resolved.drawer.length)
+          ? '<h5>Who is building here</h5>' + companyDrawerHTML(resolved) : '') +
         '<p class="hc-evidence">AI overlay describes placement and mechanism, not market sizing.</p>' +
         '</div>';
       setInsight(html);
@@ -1093,30 +1348,34 @@
 
     function renderCompanyDrawer(c) {
       if (!c) return;
-      var groupLabel = c.tag || (c.group === 'dvc' ? 'DVC portfolio' : 'Market leader / benchmark');
-      var groupTag = '<span class="hc-co-grouptag ' + (c.group === 'dvc' ? 'dvc' : 'leader') + '">' + escapeHtml(groupLabel) + '</span>';
-      var pools = (c.money_pool_ids || []).map(function (id) { return DATA.costPools.find(function (p) { return p.id === id; }); }).filter(Boolean);
-      var steps = (c.process_step_ids || []).map(findStep).filter(Boolean);
-      var ais = (c.ai_surface_ids || []).map(findAi).filter(Boolean);
+      // Concise: role tag + 1-sentence description + buyer + value capture.
+      // Cross-links to pool / step / AI surface kept as small pills.
+      var roleClass = c.role === 'incumbent' ? 'incumbent'
+                     : c.role === 'ai-native' ? 'ainative'
+                     : c.group === 'dvc' ? 'dvc' : 'drawer';
+      var groupTag = '<span class="hc-co-grouptag ' + roleClass + '">' + escapeHtml(roleTagText(c)) + '</span>';
+      var layer = c.layer_id && DATA.companyLayers[c.layer_id] ? DATA.companyLayers[c.layer_id] : null;
+      var pools = (c.money_pool_ids || []).slice(0, 3).map(function (id) { return DATA.costPools.find(function (p) { return p.id === id; }); }).filter(Boolean);
+      var steps = (c.process_step_ids || []).slice(0, 4).map(findStep).filter(Boolean);
       var html = '<div class="hc-drawer">' +
-        '<div class="hc-drawer-kind">Company</div>' +
+        '<div class="hc-drawer-kind">Company' + (c.outside_nhe ? ' · outside NHE' : '') + '</div>' +
         '<div class="hc-drawer-title">' + escapeHtml(c.name) + ' ' + groupTag + '</div>' +
+        (layer ? '<div class="hc-drawer-sub">Layer: ' + escapeHtml(layer.label) + '</div>' : '') +
         '<p>' + escapeHtml(c.short_description) + '</p>' +
-        (c.buyer_user ? '<p><strong>Buyer/user:</strong> ' + escapeHtml(c.buyer_user) + '</p>' : '') +
-        (c.value_capture ? '<p><strong>Value capture:</strong> ' + escapeHtml(c.value_capture) + '</p>' : '') +
+        (c.buyer_user || c.value_capture
+          ? '<p class="hc-co-meta-line">' +
+              (c.buyer_user   ? '<span><strong>Buyer:</strong> ' + escapeHtml(c.buyer_user) + '</span>' : '') +
+              (c.value_capture? '<span><strong>Value:</strong> ' + escapeHtml(c.value_capture) + '</span>' : '') +
+            '</p>'
+          : '') +
         (pools.length
-          ? '<h5>Money placement</h5><div class="hc-pill-row">' +
+          ? '<div class="hc-pill-row">' +
             pools.map(function (p) { return '<button type="button" class="hc-pill" data-action="pool" data-id="' + p.id + '">' + escapeHtml(p.label) + '</button>'; }).join('') +
             '</div>' : '') +
         (steps.length
-          ? '<h5>Process placement</h5><div class="hc-pill-row">' +
-            steps.map(function (s) { return '<button type="button" class="hc-pill" data-action="step" data-id="' + s.id + '">' + escapeHtml(s.id + ' · ' + s.label) + '</button>'; }).join('') +
+          ? '<div class="hc-pill-row">' +
+            steps.map(function (s) { return '<button type="button" class="hc-pill" data-action="step" data-id="' + s.id + '">' + escapeHtml(s.id) + '</button>'; }).join('') +
             '</div>' : '') +
-        (ais.length
-          ? '<h5>AI opportunities</h5><div class="hc-pill-row">' +
-            ais.map(function (a) { return '<button type="button" class="hc-pill" data-action="ai" data-id="' + a.id + '">' + escapeHtml(a.label) + '</button>'; }).join('') +
-            '</div>' : '') +
-        '<p class="hc-evidence">Company examples are illustrative. See company sites for current claims.</p>' +
         '</div>';
       setInsight(html);
       maybeOpenSheet(html);
@@ -1130,7 +1389,7 @@
               : 'VBC bridge';
       var deps = (DATA.stepStackDeps[s.id] || []).map(findStackLayer).filter(Boolean);
       var ais  = (s.ai || []).map(findAi).filter(Boolean);
-      var cos  = companiesForStep(s.id);
+      var resolved = resolveForElement('step', s.id);
       var html = '<div class="hc-drawer">' +
         '<div class="hc-drawer-kind">' + kind + '</div>' +
         '<div class="hc-drawer-title">' + escapeHtml(s.id + ' · ' + s.label) + '</div>' +
@@ -1143,7 +1402,8 @@
           ? '<h5>AI surfaces here</h5><div class="hc-pill-row">' +
             ais.map(function (a) { return '<button type="button" class="hc-pill" data-action="ai" data-id="' + a.id + '">' + escapeHtml(a.label) + '</button>'; }).join('') +
             '</div>' : '') +
-        (cos.length ? '<h5>Who is building here</h5>' + companyListHTML(cos) : '') +
+        ((resolved.visible.length || resolved.drawer.length)
+          ? '<h5>Who is building here</h5>' + companyDrawerHTML(resolved) : '') +
         '</div>';
       setInsight(html);
       maybeOpenSheet(html);
@@ -1151,7 +1411,7 @@
 
     function renderStackDrawer(sl) {
       if (!sl) return;
-      var cos = companiesForStack(sl.id);
+      var resolved = resolveForElement('stack', sl.id);
       var stepsHere = [];
       Object.keys(DATA.stepStackDeps).forEach(function (sid) {
         if (DATA.stepStackDeps[sid].indexOf(sl.id) >= 0) stepsHere.push(sid);
@@ -1166,7 +1426,46 @@
               var st = findStep(sid);
               return '<button type="button" class="hc-pill" data-action="step" data-id="' + sid + '">' + escapeHtml(sid + (st ? ' · ' + st.label : '')) + '</button>';
             }).join('') + '</div>' : '') +
-        (cos.length ? '<h5>Who is building here</h5>' + companyListHTML(cos) : '') +
+        ((resolved.visible.length || resolved.drawer.length)
+          ? '<h5>Who is building here</h5>' + companyDrawerHTML(resolved) : '') +
+        '</div>';
+      setInsight(html);
+      maybeOpenSheet(html);
+    }
+
+    // ===================================================================
+    // BIOTECH SIDECAR DRAWER (combines L13 + L14 — both OUTSIDE NHE)
+    // ===================================================================
+    function openBiotechDrawer() {
+      var sc = DATA.biotechSidecar;
+      var combined = { visible: [], drawer: [], primaryLayer: 'L14_drug_discovery' };
+      var seen = {};
+      function push(arr, cid) {
+        if (!cid || !coById[cid] || seen[cid]) return;
+        seen[cid] = true; arr.push(coById[cid]);
+      }
+      (sc.layers || []).forEach(function (lid) {
+        var L = DATA.companyLayers[lid]; if (!L) return;
+        (L.pair || []).forEach(function (cid) { push(combined.visible, cid); });
+      });
+      // Cap visible at 3
+      if (combined.visible.length > 3) combined.visible = combined.visible.slice(0, 3);
+      (sc.layers || []).forEach(function (lid) {
+        var L = DATA.companyLayers[lid]; if (!L) return;
+        (L.drawer || []).forEach(function (cid) { push(combined.drawer, cid); });
+      });
+      combined.drawer = combined.drawer.slice(0, 5);
+
+      state.selection = { kind: 'biotech', id: 'biotech_sidecar' };
+      reflectResetButton();
+
+      var html = '<div class="hc-drawer">' +
+        '<div class="hc-drawer-kind">Outside NHE</div>' +
+        '<div class="hc-drawer-title">' + escapeHtml(sc.title) + '</div>' +
+        '<p>' + escapeHtml(sc.body) + '</p>' +
+        '<p class="hc-aside">These layers are visually linked to Retail Rx because commercialized drugs enter NHE through retail dispensing — but the R&D capital and pharma-intelligence SaaS sit outside the $5.3T system.</p>' +
+        '<h5>Who is building here</h5>' + companyDrawerHTML(combined) +
+        '<p class="hc-evidence">Pharma R&D and pharma intelligence are B2B markets to pharma/biotech, not healthcare-payer reimbursement. Do not place these companies inside hospital/clinical/claims flows.</p>' +
         '</div>';
       setInsight(html);
       maybeOpenSheet(html);
@@ -1451,16 +1750,24 @@
         svgEl('text', { class: 'band-label', x: STACK.x + 12, y: y + bandH / 2 + 4 }, g).textContent = s.label;
         svgEl('text', { class: 'band-contents', x: STACK.x + 170, y: y + bandH / 2 + 4 }, g).textContent = s.contents;
 
-        // Companies for this band MUST be both:
-        //   (a) listed against this stack layer (companiesForStack), AND
-        //   (b) participate in at least one active scenario step.
-        // No fallback to the unfiltered list — bands without any
-        // scenario-relevant company examples render the empty sentinel
-        // so the chips visibly differ across scenarios.
-        var stackCos = sortCompanies(filteredCompanies(companiesForStack(s.id)));
-        var cosForBand = stackCos.filter(function (c) {
-          return (c.process_step_ids || []).some(function (sid) { return activeStepIds.indexOf(sid) >= 0; });
-        }).slice(0, 4);
+        // Scenario-specific band chips, capped at 2 visible.
+        //
+        // For this band, intersect the band's audit layers with the set
+        // of audit layers covered by the ACTIVE scenario steps. From the
+        // resulting layer set, pick the first layer's visible pair (max 2).
+        // If after DVC filter there are none, the band shows '—' so chips
+        // visibly differ by scenario.
+        var bandLayers = (DATA.stackToLayers && DATA.stackToLayers[s.id]) || [];
+        var activeLayerSet = {};
+        activeStepIds.forEach(function (sid) {
+          ((DATA.stepToLayers || {})[sid] || []).forEach(function (lid) { activeLayerSet[lid] = true; });
+        });
+        var matchedLayers = bandLayers.filter(function (lid) { return !!activeLayerSet[lid]; });
+        var bandResolved = resolveLayerCompanies(matchedLayers, { maxDrawer: 4 });
+        var cosForBand = bandResolved.visible.slice(0, 2);
+        if (state.companyFilter === 'dvc') {
+          cosForBand = cosForBand.filter(function (c) { return c.group === 'dvc'; });
+        }
 
         if (cosForBand.length === 0) {
           svgEl('text', { class: 'band-co-empty', x: STACK.x + STACK.w - 12, y: y + bandH / 2 + 4, 'text-anchor': 'end' }, g)
