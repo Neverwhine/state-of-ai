@@ -870,8 +870,8 @@
       ai_surface_ids: [],
       stack_ids: ['stack_infra'],
       buyer_user: 'Pharmacy', value_capture: 'Hardware + service' },
-    { id: 'co_curex',           name: 'Curex',                group: 'dvc',    role: 'drawer',    layer_id: 'L20_specialty_telehealth', tag: 'DVC portfolio · Drawer · Specialty (allergy)',
-      short_description: 'Specialty allergy telehealth: AI-assisted sublingual immunotherapy. Drawer-only — narrow vertical, not a generic Rx leader.',
+    { id: 'co_curex',           name: 'Curex',                group: 'dvc',    role: 'drawer',    layer_id: 'L20_specialty_telehealth', tag: 'DVC portfolio · More example · Specialty (allergy)',
+      short_description: 'Specialty allergy telehealth: AI-assisted sublingual immunotherapy. Narrow vertical, not a generic Rx leader.',
       money_pool_ids: ['pool_clinical_labor','pool_drugs_biologics'],
       destination_ids: ['dest_physician'],
       process_step_ids: ['C6','C7','P4'],
@@ -1254,7 +1254,7 @@
     // ===================================================================
     // LAYER 22 — Skincare / beauty (DRAWER ONLY — outside scope)
     // ===================================================================
-    { id: 'co_lovi',            name: 'Lovi',                 group: 'dvc',    role: 'drawer',    layer_id: 'L22_skincare', tag: 'DVC portfolio · Drawer only · Consumer wellness',
+    { id: 'co_lovi',            name: 'Lovi',                 group: 'dvc',    role: 'drawer',    layer_id: 'L22_skincare', tag: 'DVC portfolio · More example · Consumer wellness',
       short_description: 'Consumer wellness AI: skin analysis and skincare recommendations. Wellness app, not regulated diagnostics.',
       money_pool_ids: ['pool_supplies_devices','pool_it_data'],
       destination_ids: ['dest_nondurable'],
@@ -1314,7 +1314,7 @@
       pair: [null, null], drawer: ['co_curex'] },
     L21_sleep:                 { label: 'Sleep / rest',                 destinations: ['dest_dme'],                 pools: ['pool_supplies_devices'],   stack_ids: ['stack_infra','stack_data'],
       pair: ['co_resmed','co_eight_sleep'], drawer: ['co_big_health','co_neera'] },
-    L22_skincare:              { label: 'Skincare / beauty (drawer-only)', destinations: ['dest_nondurable'],       pools: [],                          stack_ids: [],
+    L22_skincare:              { label: 'Skincare / beauty (more examples)', destinations: ['dest_nondurable'],       pools: [],                          stack_ids: [],
       pair: [null, null], drawer: ['co_lovi'] }
   };
 

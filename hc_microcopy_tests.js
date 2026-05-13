@@ -137,6 +137,92 @@ check('healthcare.css collapses empty insight on mobile',
 check('healthcare.css defines .hc-loop-grid',
   cssSrc.indexOf('.hc-loop-grid') > -1);
 
+console.log('--- Test: Companies mode is drawer-only on the Money River ---');
+// buildCompanyOverlay must not render company badges/chips on the
+// Sankey canvas. The only on-canvas element allowed is the dashed
+// purple pool ring (.hc-co-node-ring), and the (now-removed) biotech
+// sidecar card must not be re-introduced.
+var buildCoBody = (hcSrc.match(/function buildCompanyOverlay\s*\(\s*\)\s*\{([\s\S]*?)\n    \}\n/) || [])[1] || '';
+check('buildCompanyOverlay function is present', buildCoBody.length > 0);
+check('Companies overlay does NOT create hc-co-badge nodes on the canvas',
+  buildCoBody.indexOf("'hc-co-badge'") === -1 && buildCoBody.indexOf('hc-co-badge') === -1,
+  'found hc-co-badge in buildCompanyOverlay body');
+check('Companies overlay does NOT create the more-▸ pool hint on the canvas',
+  buildCoBody.indexOf('hc-co-more') === -1 && buildCoBody.indexOf('More ▸') === -1);
+check('Companies overlay does NOT instantiate biotech sidecar on the canvas',
+  buildCoBody.indexOf('buildBiotechSidecar') === -1 && buildCoBody.indexOf('hc-biotech-sidecar') === -1);
+check('Companies overlay still renders the dashed purple pool ring',
+  buildCoBody.indexOf('hc-co-node-ring') > -1);
+check('buildBiotechSidecar function is removed entirely',
+  hcSrc.indexOf('function buildBiotechSidecar') === -1);
+
+console.log('--- Test: drawers still render company examples after selection ---');
+// Verify the drawer renderers call companyDrawerHTML — companies must
+// remain reachable behind a click on flows, nodes, pools, steps, and
+// stacks. (renderFlowDrawer is a separate function — companies in
+// flows come via the destination/pool drawers reached from a flow.)
+check('renderNodeDrawer reads company examples via companyDrawerHTML',
+  hcSrc.match(/function renderNodeDrawer[\s\S]{0,4000}companyDrawerHTML/));
+check('renderAiDrawer reads company examples',
+  hcSrc.match(/function renderAiDrawer[\s\S]{0,4000}companyDrawerHTML/));
+check('renderStepDrawer reads company examples',
+  hcSrc.match(/function renderStepDrawer[\s\S]{0,4000}companyDrawerHTML/));
+check('renderStackDrawer reads company examples',
+  hcSrc.match(/function renderStackDrawer[\s\S]{0,4000}companyDrawerHTML/));
+check('openBiotechDrawer remains reachable for outside-NHE biotech examples',
+  hcSrc.indexOf('function openBiotechDrawer') > -1);
+check('Retail-Rx destination drawer offers a biotech jump link',
+  hcSrc.indexOf("data-action=\"biotech\"") > -1);
+check('biotech action wired in the insight pill handler',
+  hcSrc.match(/action === 'biotech'[\s\S]{0,80}openBiotechDrawer/));
+
+console.log('--- Test: DVC-only filter narrows DRAWER companies (not canvas) ---');
+// The DVC filter still works because companyDrawerHTML filters by
+// state.companyFilter and the canvas no longer renders badges that
+// would need filtering at all.
+check('companyDrawerHTML filters by state.companyFilter for DVC mode',
+  hcSrc.match(/function companyDrawerHTML[\s\S]{0,800}state\.companyFilter\s*===\s*'dvc'/));
+check('refreshOverlayVisibility rebuilds the companies group (so DVC filter narrows pool rings)',
+  hcSrc.match(/refreshOverlayVisibility[\s\S]{0,500}hc-co-grp[\s\S]{0,300}remove\(\)/));
+
+console.log('--- Test: jargon — "Drawer only" is replaced with friendlier copy ---');
+// We allow `role: 'drawer'` in data (that is an internal semantic),
+// but user-facing strings should not literally read "Drawer only".
+check('healthcare.js no longer surfaces literal "Drawer only" copy',
+  hcSrc.indexOf("'Drawer only'") === -1 && hcSrc.indexOf('"Drawer only"') === -1);
+check('healthcare.js uses "More examples" section header',
+  hcSrc.indexOf('More examples') > -1);
+var hcDataSrc = fs.readFileSync('./healthcare-data.js', 'utf8');
+check('healthcare-data.js no longer uses literal "Drawer only" in tags',
+  hcDataSrc.indexOf('Drawer only') === -1);
+// "drawer-only" is allowed in developer comments; the user-facing
+// surface is the data fields `label`, `tag`, and `short_description`.
+// Use single-line scanning so we only flag the literal string when it
+// would appear in user-visible copy (a quoted string on a line that
+// is not a stand-alone comment).
+var leakedDrawerOnly = hcDataSrc.split('\n').filter(function (line) {
+  if (/drawer-only/i.test(line) === false) return false;
+  // Skip pure comment lines
+  if (/^\s*\/\//.test(line)) return false;
+  return true;
+});
+check('healthcare-data.js no longer uses "drawer-only" in user-facing fields',
+  leakedDrawerOnly.length === 0, leakedDrawerOnly.join(' | '));
+
+console.log('--- Test: default insight has a Companies-mode hint ---');
+check('defaultInsight has Companies-mode-specific empty-state copy',
+  hcSrc.match(/defaultInsight[\s\S]{0,1200}view\s*===\s*'companies'[\s\S]{0,500}company examples/i));
+check('defaultInsight re-runs when view changes with no selection',
+  hcSrc.match(/refreshOverlayVisibility\(\);[\s\S]{0,200}defaultInsight\(\)/));
+
+console.log('--- Test: Companies mode dims river via CSS but no canvas chips ---');
+check('healthcare.css dims the river in Companies mode',
+  cssSrc.match(/view-companies[\s\S]{0,200}stroke-opacity:\s*0\.10/));
+check('healthcare.css no longer defines biotech sidecar styles',
+  cssSrc.indexOf('hc-biotech-sidecar') === -1 && cssSrc.indexOf('hc-biotech-card') === -1);
+check('healthcare.css no longer defines hc-co-badge canvas styles',
+  cssSrc.match(/\.hc-co-badge\s*\{/) === null);
+
 if (FAIL) {
   console.log('\n', FAIL, 'failure(s)');
   process.exit(1);

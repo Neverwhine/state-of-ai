@@ -119,6 +119,21 @@
     function clearLoopInsight() { if (loopInsightEl) loopInsightEl.innerHTML = ''; }
 
     function defaultInsight() {
+      if (state && state.view === 'companies') {
+        setInsight(
+          '<div class="hc-insight-empty">' +
+            '<div class="hc-insight-empty-row">' +
+              '<span class="hc-insight-empty-icon" aria-hidden="true">▸</span>' +
+              '<span><strong>Click a flow or node</strong> to see precise company examples. We keep companies off the river to avoid logo clutter.</span>' +
+            '</div>' +
+            '<div class="hc-insight-empty-row">' +
+              '<span class="hc-insight-empty-icon" aria-hidden="true">▸</span>' +
+              '<span>Dashed purple rings mark pools that host examples. Use <em>DVC only</em> to filter inside the drawer.</span>' +
+            '</div>' +
+          '</div>'
+        );
+        return;
+      }
       setInsight(
         '<div class="hc-insight-empty">' +
           '<div class="hc-insight-empty-row">' +
@@ -311,8 +326,8 @@
              '</button>';
     }
 
-    // Render visible-pair first, drawer-only second. `resolved` is the
-    // return value of resolveForElement / resolveLayerCompanies.
+    // Render visible-pair first, then the broader "More examples" set.
+    // `resolved` is the return value of resolveForElement / resolveLayerCompanies.
     function companyDrawerHTML(resolved) {
       if (!resolved) return '<p class="hc-empty">No company examples linked here.</p>';
       var visible = resolved.visible || [];
@@ -328,7 +343,7 @@
         out += '<div class="hc-co-list">' + visible.map(companyChipHTML).join('') + '</div>';
       }
       if (drawer.length) {
-        out += '<div class="hc-co-section-h">More in this layer</div>';
+        out += '<div class="hc-co-section-h">More examples</div>';
         out += '<div class="hc-co-list">' + drawer.map(companyChipHTML).join('') + '</div>';
       }
       return out;
@@ -612,8 +627,10 @@
     //               rings + teal chips on the right gutter
     //   Incentives: amber HATCHED stripe drawn on top of each anchored
     //               node (no flow halos), plus amber chips above the node
-    //   Companies:  on-chart badge clusters next to each pool with the
-    //               company initials visible; DVC vs leader tinting
+    //   Companies:  river dims and a subtle purple ring marks pools that
+    //               host companies. Company examples are NEVER drawn on
+    //               the canvas — they live in the drawer behind a click
+    //               on a flow, destination, pool, loop step, or stack band.
 
     function poolLabelGap() { return 130; } // approx pool label width
     function poolOverlayX(p) {
@@ -777,28 +794,25 @@
     }
 
     function buildCompanyOverlay() {
-      // Visible-overlay rule: each cost-pool element shows AT MOST 2 badges
-      // (incumbent + AI-native) — drawn from the FIRST audit layer that
-      // applies to that pool. A 3rd DVC badge can appear only when the DVC
-      // pin is the *most precise* leader for the pool (see resolveLayerCompanies).
-      // Drawer-only companies live behind a click on the pool node.
+      // Companies mode is intentionally CLUTTER-FREE: no company badges,
+      // chips, or logos are drawn on the canvas. The river dims (via CSS)
+      // and a subtle purple ring marks pools that host examples; the
+      // actual company examples live in the drawer behind a click on a
+      // flow, destination, pool, loop step, or stack band.
       var grp = overlayG.append('g').attr('class', 'hc-co-grp');
 
-      function shortName(name) {
-        var t = name.replace(/\s*\+\s*/g, '+').trim();
-        return t.length > 12 ? t.slice(0, 11) + '…' : t;
-      }
-
-      // 1. Purple ring on pool nodes that have any visible companies.
-      var poolBadges = {}; // pId -> visible[]
+      // Purple ring on pool nodes that have any company examples in the
+      // current filter. Pointer-events:none — the ring is a hint, the
+      // pool node itself is the click target.
       Object.keys(poolPositions).forEach(function (pId) {
         var resolved = resolveForElement('pool', pId);
         var vis = resolved.visible;
-        if (state.companyFilter === 'dvc') vis = vis.filter(function (c) { return c.group === 'dvc'; });
-        poolBadges[pId] = vis;
-      });
-      Object.keys(poolBadges).forEach(function (pId) {
-        if (!poolBadges[pId].length) return;
+        var drw = resolved.drawer;
+        if (state.companyFilter === 'dvc') {
+          vis = vis.filter(function (c) { return c.group === 'dvc'; });
+          drw = drw.filter(function (c) { return c.group === 'dvc'; });
+        }
+        if (!vis.length && !drw.length) return;
         var p = poolPositions[pId]; if (!p) return;
         grp.append('rect')
           .attr('class', 'hc-co-node-ring')
@@ -808,157 +822,18 @@
           .attr('height', (p.y1 - p.y0) + 6)
           .attr('rx', 3)
           .attr('fill', 'none')
-          .attr('stroke', 'rgba(124,77,255,0.85)')
-          .attr('stroke-width', 2)
+          .attr('stroke', 'rgba(124,77,255,0.7)')
+          .attr('stroke-width', 1.5)
+          .attr('stroke-dasharray', '3 2')
           .attr('pointer-events', 'none');
       });
-
-      // 2. Render up to 3 badges per pool (cap enforced by resolver).
-      var pillW = 96, pillH = 18, gapY = 3;
-      var clusterRightInset = 8;
-      var vbBox = moneySvgEl.viewBox.baseVal;
-      var vbHeight = (vbBox && vbBox.height) ? vbBox.height : 720;
-
-      Object.keys(poolBadges).forEach(function (pId) {
-        var list = poolBadges[pId];
-        if (!list.length) return;
-        var p = poolPositions[pId]; if (!p) return;
-        var midY = (p.y0 + p.y1) / 2;
-        var poolGrp = grp.append('g').attr('class', 'hc-co-pool').attr('data-pool', pId);
-
-        var clusterH = list.length * pillH + (list.length - 1) * gapY;
-        var startX = p.x0 - clusterRightInset - pillW;
-        var startY = midY - clusterH / 2;
-        if (startY < 4) startY = 4;
-        if (startY + clusterH > vbHeight - 4) startY = vbHeight - 4 - clusterH;
-
-        list.forEach(function (c, i) {
-          var y = startY + i * (pillH + gapY);
-          var g = poolGrp.append('g')
-            .attr('class', 'hc-co-badge')
-            .attr('data-company', c.id)
-            .attr('data-group', c.group)
-            .attr('data-role', c.role || '')
-            .attr('tabindex', 0)
-            .attr('role', 'button')
-            .attr('aria-label', c.name + ' — ' + roleTagText(c))
-            .attr('transform', 'translate(' + startX + ',' + y + ')');
-          g.append('rect').attr('width', pillW).attr('height', pillH).attr('rx', 4);
-          g.append('text').attr('x', pillW / 2).attr('y', pillH / 2 + 3.5)
-            .attr('text-anchor', 'middle').text(shortName(c.name));
-          g.on('mouseenter', function (ev) { showTip(companyTip(c), ev.clientX, ev.clientY); })
-           .on('mouseleave', hideTip)
-           .on('click', function (ev) { ev.stopPropagation(); selectCompany(c.id); })
-           .on('keydown', function (ev) { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); selectCompany(c.id); } });
-        });
-
-        // Single, compact "more in drawer" hint that opens the pool drawer.
-        var moreY = startY + clusterH + gapY + 2;
-        if (moreY + pillH > vbHeight - 4) moreY = vbHeight - 4 - pillH;
-        var moreG = poolGrp.append('g')
-          .attr('class', 'hc-co-badge hc-co-more')
-          .attr('data-pool', pId)
-          .attr('tabindex', 0)
-          .attr('role', 'button')
-          .attr('aria-label', 'More companies in this pool — open drawer')
-          .attr('transform', 'translate(' + startX + ',' + moreY + ')');
-        moreG.append('rect').attr('width', pillW).attr('height', pillH).attr('rx', 4);
-        moreG.append('text').attr('x', pillW / 2).attr('y', pillH / 2 + 3.5)
-          .attr('text-anchor', 'middle').text('More ▸');
-        moreG.on('click', function (ev) { ev.stopPropagation(); selectNode(pId); })
-          .on('keydown', function (ev) { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); selectNode(pId); } });
-      });
-
-      // 3. Biotech sidecar — upstream of NHE, linked to dest_rx.
-      buildBiotechSidecar(grp);
     }
 
-    // ===================================================================
-    // BIOTECH SIDECAR — Drug discovery + pharma intelligence, OUTSIDE NHE.
-    // Renders next to the Retail-Rx destination node with a visual link
-    // making the boundary explicit.
-    // ===================================================================
-    function buildBiotechSidecar(parentGrp) {
-      var sc = DATA.biotechSidecar; if (!sc || !sankeyGraph) return;
-      var rxNode = sankeyGraph.nodes.find(function (n) { return n.id === sc.linked_destination; });
-      if (!rxNode) return;
-      var d3 = window.d3;
-      var sg = parentGrp.append('g').attr('class', 'hc-biotech-sidecar')
-        .attr('data-anchor', sc.linked_destination);
-
-      var cardW = 230, cardH = 168;
-      var cardX = rxNode.x0 - cardW - 28;
-      var cardY = rxNode.y0 - cardH - 20;
-      // Clamp into viewBox
-      var vb = moneySvgEl.viewBox.baseVal || { width: 1380, height: 720 };
-      if (cardX < 8) cardX = 8;
-      if (cardY < 8) cardY = 8;
-      if (cardY + cardH > vb.height - 8) cardY = vb.height - 8 - cardH;
-
-      // Dashed link to the linked destination (cardX+cardW -> rxNode.x0)
-      sg.append('path')
-        .attr('class', 'hc-biotech-link')
-        .attr('d', 'M ' + (cardX + cardW) + ' ' + (cardY + cardH / 2) +
-                   ' Q ' + (rxNode.x0 - 16) + ' ' + (cardY + cardH / 2) +
-                   ' '  + rxNode.x0 + ' ' + ((rxNode.y0 + rxNode.y1) / 2))
-        .attr('fill', 'none')
-        .attr('stroke', 'rgba(124,77,255,0.5)')
-        .attr('stroke-width', 1.5)
-        .attr('stroke-dasharray', '4 4')
-        .attr('pointer-events', 'none');
-
-      var card = sg.append('g').attr('transform', 'translate(' + cardX + ',' + cardY + ')');
-      card.append('rect').attr('class', 'hc-biotech-card')
-        .attr('width', cardW).attr('height', cardH).attr('rx', 8)
-        .attr('fill', 'rgba(124,77,255,0.06)')
-        .attr('stroke', 'rgba(124,77,255,0.55)')
-        .attr('stroke-width', 1);
-      card.append('text').attr('class', 'hc-biotech-kind').attr('x', 12).attr('y', 16).text('OUTSIDE $5.3T NHE');
-      card.append('text').attr('class', 'hc-biotech-title').attr('x', 12).attr('y', 36).text(sc.title);
-      // Wrap body into lines (~32 chars)
-      wrapText(card, sc.body, 12, 56, cardW - 24, 13, 'hc-biotech-body', 5);
-
-      // Render up to 3 visible badges (1 from L14, 1 from L13, 1 DVC pin)
-      var pinIds = [];
-      var L14 = DATA.companyLayers.L14_drug_discovery, L13 = DATA.companyLayers.L13_pharma_intel;
-      if (L14 && L14.pair[1]) pinIds.push(L14.pair[1]);   // AI-native drug discovery (Isomorphic)
-      if (L14 && L14.drawer && L14.drawer.length) {
-        // Promote DVC drug discovery pin if available
-        var dvcKerna = (L14.drawer || []).find(function (id) { var c = coById[id]; return c && c.group === 'dvc'; });
-        if (dvcKerna) pinIds.push(dvcKerna);
-      }
-      if (L13 && L13.pair[1]) pinIds.push(L13.pair[1]);   // AI-native pharma intel (AlphaSense)
-      // Dedup and cap at 3
-      var seen = {};
-      pinIds = pinIds.filter(function (id) { if (seen[id]) return false; seen[id] = true; return !!coById[id]; }).slice(0, 3);
-
-      var badgeY = cardH - 30;
-      var badgeW = 64, badgeH = 18, bg = 6;
-      var bx = 12;
-      pinIds.forEach(function (cid, i) {
-        var c = coById[cid];
-        var bgGrp = card.append('g')
-          .attr('class', 'hc-co-badge hc-biotech-badge')
-          .attr('data-company', c.id)
-          .attr('data-group', c.group)
-          .attr('transform', 'translate(' + bx + ',' + badgeY + ')')
-          .attr('tabindex', 0).attr('role', 'button')
-          .attr('aria-label', c.name + ' — biotech sidecar (outside NHE)');
-        bgGrp.append('rect').attr('width', badgeW).attr('height', badgeH).attr('rx', 4);
-        bgGrp.append('text').attr('x', badgeW / 2).attr('y', badgeH / 2 + 3.5)
-          .attr('text-anchor', 'middle').text(c.name.length > 9 ? c.name.slice(0, 8) + '…' : c.name);
-        bgGrp.on('mouseenter', function (ev) { showTip(companyTip(c), ev.clientX, ev.clientY); })
-          .on('mouseleave', hideTip)
-          .on('click', function (ev) { ev.stopPropagation(); selectCompany(c.id); })
-          .on('keydown', function (ev) { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); selectCompany(c.id); } });
-        bx += badgeW + bg;
-      });
-
-      // Header click opens combined biotech drawer
-      card.style('cursor', 'pointer');
-      card.on('click', function (ev) { ev.stopPropagation(); openBiotechDrawer(); });
-    }
-
+    // The biotech sidecar (drug discovery + pharma intelligence) lives
+    // OUTSIDE the $5.3T NHE system. It was previously drawn as a card on
+    // the canvas in Companies mode; we now expose it only as a drawer
+    // (openBiotechDrawer) reachable from the Retail-Rx destination
+    // drawer to keep the canvas free of company clutter.
     function wrapText(parent, text, x, y, maxW, lineH, cls, maxLines) {
       var words = String(text).split(/\s+/);
       var lines = [];
@@ -988,7 +863,7 @@
       if (c.role === 'incumbent') return 'Incumbent';
       if (c.role === 'ai-native') return 'AI-native leader';
       if (c.group === 'dvc' && c.role === 'dvc') return 'DVC emerging';
-      if (c.role === 'drawer')   return 'Drawer only';
+      if (c.role === 'drawer')   return 'More example';
       return c.group === 'dvc' ? 'DVC portfolio' : 'Leader';
     }
     function companyTip(c) {
@@ -1004,14 +879,10 @@
       var showCo  = state.view === 'companies';
       overlayG.select('.hc-ai-grp').style('display', showAi ? null : 'none');
       overlayG.select('.hc-inc-grp').style('display', showInc ? null : 'none');
-      overlayG.select('.hc-co-grp').style('display', showCo ? null : 'none');
-      // DVC filter — hide non-DVC badges and the corresponding pool ring is
-      // unaffected (pool may still host DVC companies).
-      overlayG.selectAll('.hc-co-badge').style('display', function () {
-        if (!showCo) return 'none';
-        if (state.companyFilter === 'dvc' && this.getAttribute('data-group') !== 'dvc') return 'none';
-        return null;
-      });
+      // Companies mode: rebuild the (tiny) ring overlay so the DVC-only
+      // filter narrows which pools display the ring.
+      overlayG.select('.hc-co-grp').remove();
+      if (showCo) buildCompanyOverlay();
       reflectViewClass();
     }
 
@@ -1193,8 +1064,15 @@
                     return '<button type="button" class="hc-pill" data-action="ai" data-id="' + a.id + '">' + escapeHtml(a.label) + '</button>';
                   }).join('') + '</div>';
         }
-        // Company examples — primary pair + drawer-only set
+        // Company examples — primary pair + more examples set
         html += '<h5>Who is building here</h5>' + companyDrawerHTML(resolveForElement('destination', n.id));
+        // Retail Rx is the NHE-side anchor for biotech R&D / pharma
+        // intelligence (which sit OUTSIDE NHE). Offer a clearly labeled
+        // jump into the biotech drawer rather than putting that content
+        // on the canvas.
+        if (n.id === (DATA.biotechSidecar && DATA.biotechSidecar.linked_destination)) {
+          html += '<p class="hc-aside"><button type="button" class="hc-link-btn" data-action="biotech">View biotech (outside NHE) →</button> Drug discovery & pharma intelligence sit upstream of retail dispensing.</p>';
+        }
       } else {
         // Cost pool: inbound from destinations
         var feeders = DATA.moneyLinksBC
@@ -1592,8 +1470,9 @@
             else filter.setAttribute('hidden', '');
           }
           refreshOverlayVisibility();
-          // Switching view does not count as a selection
-          // but preserves selected element if it still exists
+          // Switching view does not count as a selection but refreshes
+          // the empty-state hint so Companies mode shows its message.
+          if (!state.selection) defaultInsight();
         });
       });
       var segFilter = root.querySelectorAll('#hc-company-filter .hc-seg[data-filter]');
@@ -1624,6 +1503,7 @@
       else if (s.kind === 'company') selectCompany(s.id);
       else if (s.kind === 'step') selectStep(s.id);
       else if (s.kind === 'stack') selectStackLayer(s.id);
+      else if (s.kind === 'biotech') openBiotechDrawer();
     }
 
     // Insight panel pill/button delegation (shared handler for both the
@@ -1640,6 +1520,7 @@
       else if (action === 'company') selectCompany(id);
       else if (action === 'step') selectStep(id);
       else if (action === 'stack') selectStackLayer(id);
+      else if (action === 'biotech') openBiotechDrawer();
     }
     if (insightEl) insightEl.addEventListener('click', pillClickHandler);
     if (loopInsightEl) loopInsightEl.addEventListener('click', pillClickHandler);
