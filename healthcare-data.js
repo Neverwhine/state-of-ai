@@ -1344,9 +1344,14 @@
     pool_clinical_labor:       ['L3_ambient_doc','L2_physician_groups','L17_virtual_pcp','L19_mental_health'],
     pool_provider_admin:       ['L7_provider_rcm','L7b_patient_billing','L8_denials_prior_auth','L1_hospital_ops'],
     pool_payer_admin:          ['L9_payer_ops','L8_denials_prior_auth','L10_vbc_ma'],
-    pool_drugs_biologics:      ['L11_retail_pharmacy','L12_pbm'],
+    // Therapeutic product value is upstream — biotech sidecar owns this
+    // pool's leadership; don't repeat retail-pharmacy leaders here.
+    pool_drugs_biologics:      [],
     pool_supplies_devices:     ['L5_imaging','L16_consumer_prevention','L18_dental','L21_sleep','L6_lab_genomics'],
-    pool_facilities_capital:   ['L1_hospital_ops'],
+    // Facilities/capital has no AI-native leader pair; leave empty so the
+    // overlay doesn't bleed hospital-ops badges into a pool where they
+    // don't precisely belong (hospital ops still surfaces on dest_hospital).
+    pool_facilities_capital:   [],
     pool_it_data:              ['L15_ehr_data','L4_cds_evidence','L9_payer_ops'],
     pool_pharma_channel:       ['L11_retail_pharmacy','L12_pbm'],
     pool_public_health_research:[],

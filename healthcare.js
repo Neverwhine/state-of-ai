@@ -186,22 +186,37 @@
 
     // Returns { visible: [...co], drawer: [...co], layerIds: [...] }
     // visible has at most 2 companies (incumbent + ai-native).
+    //
+    // opts.exclude    — Set/object of company IDs already claimed elsewhere
+    //                   in this scenario (used by the loop's band walker to
+    //                   prevent the same company appearing in adjacent
+    //                   stack bands). Excluded companies are skipped for the
+    //                   visible slot and the resolver advances to the next
+    //                   matching layer until it finds a fresh pair.
+    // opts.promoteDvc — when true, allow a 3rd DVC visible slot if the DVC
+    //                   pin is the most precise leader. Defaults to false
+    //                   (visible cap = 2). DVC drawer pins always remain
+    //                   in the drawer.
     function resolveLayerCompanies(layerIds, opts) {
       opts = opts || {};
       var maxDrawer = opts.maxDrawer != null ? opts.maxDrawer : 4;
+      var promoteDvc = opts.promoteDvc === true;
+      var exclude = opts.exclude || {};
       var visible = [];
       var seen = {};
       var firstLayerWithPair = null;
       for (var i = 0; i < layerIds.length; i++) {
         var L = DATA.companyLayers[layerIds[i]];
         if (!L) continue;
-        if (!firstLayerWithPair && L.pair && (L.pair[0] || L.pair[1])) {
-          firstLayerWithPair = layerIds[i];
-          (L.pair || []).forEach(function (cid) {
-            if (cid && coById[cid] && !seen[cid]) { seen[cid] = true; visible.push(coById[cid]); }
-          });
-          break;
-        }
+        var pair = (L.pair || []).filter(function (cid) {
+          return cid && coById[cid] && !seen[cid] && !exclude[cid];
+        });
+        if (!pair.length) continue;
+        firstLayerWithPair = layerIds[i];
+        pair.forEach(function (cid) {
+          if (!seen[cid]) { seen[cid] = true; visible.push(coById[cid]); }
+        });
+        break;
       }
       // Drawer: drawer entries from the first layer (with pair), then drawer
       // entries from subsequent layers, then any leftover pair members from
@@ -211,11 +226,9 @@
         if (!cid || !coById[cid] || seen[cid]) return;
         seen[cid] = true; drawer.push(coById[cid]);
       }
-      // Drawer entries for visible-pair layer first
       if (firstLayerWithPair) {
         (DATA.companyLayers[firstLayerWithPair].drawer || []).forEach(pushIfNew);
       }
-      // Then drawer/pair from subsequent layers
       for (var j = 0; j < layerIds.length; j++) {
         if (layerIds[j] === firstLayerWithPair) continue;
         var L2 = DATA.companyLayers[layerIds[j]];
@@ -223,31 +236,24 @@
         (L2.pair || []).forEach(pushIfNew);
         (L2.drawer || []).forEach(pushIfNew);
       }
-      // Apply DVC filter (only filters the visible set + drawer if the user is
-      // in "DVC only" mode). Always show DVC pin in drawer slot if precise.
       if (state.companyFilter === 'dvc') {
         visible = visible.filter(function (c) { return c.group === 'dvc'; });
         drawer  = drawer.filter(function (c) { return c.group === 'dvc'; });
       }
-      // Promote a DVC drawer pin into the visible slot only when:
-      //   - there is no DVC already in visible
-      //   - there is a DVC drawer entry that maps to one of the supplied
-      //     layers as its primary layer (which is always true by construction)
-      //   - visible has <3 entries
-      //   - the DVC pin is the *most precise* leader (i.e. its layer is the
-      //     first one in layerIds)
-      if (visible.length < 3 && firstLayerWithPair) {
+      // Optional 3rd DVC slot — disabled by default. The Money River and
+      // loop bands both use the default (cap = 2) to avoid heterogeneous
+      // 3-badge clusters on shared infra nodes.
+      if (promoteDvc && visible.length < 3 && firstLayerWithPair) {
         var dvcPin = drawer.find(function (c) {
-          return c.group === 'dvc' && c.layer_id === firstLayerWithPair;
+          return c.group === 'dvc' && c.layer_id === firstLayerWithPair && !exclude[c.id];
         });
         if (dvcPin && visible.indexOf(dvcPin) < 0) {
           visible.push(dvcPin);
           drawer = drawer.filter(function (c) { return c.id !== dvcPin.id; });
         }
       }
-      // Cap visible at 3 absolute (1 incumbent + 1 ai-native + at most 1 DVC).
+      if (visible.length > 2 && !promoteDvc) visible = visible.slice(0, 2);
       if (visible.length > 3) visible = visible.slice(0, 3);
-      // Cap drawer
       drawer = drawer.slice(0, maxDrawer);
       return { visible: visible, drawer: drawer, layerIds: layerIds, primaryLayer: firstLayerWithPair };
     }
@@ -1742,6 +1748,12 @@
       svgEl('text', { class: 'rail-sub', x: STACK.x + STACK.w - 6, y: STACK.y - 18, 'text-anchor': 'end' }, stackG)
         .textContent = 'Highlighted bands and companies update with patient scenario';
 
+      // Scenario claim-tracking: a company shown in one band cannot
+      // reappear in any later band for the same scenario. This is a
+      // stricter version of "no same company in adjacent bands" and
+      // makes the per-band chip mix visibly differ across the stack.
+      var scenarioClaimed = {};
+
       DATA.sharedStack.forEach(function (s, idx) {
         var y = bandY(idx);
         var active = !!stackActive[s.id];
@@ -1750,24 +1762,24 @@
         svgEl('text', { class: 'band-label', x: STACK.x + 12, y: y + bandH / 2 + 4 }, g).textContent = s.label;
         svgEl('text', { class: 'band-contents', x: STACK.x + 170, y: y + bandH / 2 + 4 }, g).textContent = s.contents;
 
-        // Scenario-specific band chips, capped at 2 visible.
-        //
-        // For this band, intersect the band's audit layers with the set
-        // of audit layers covered by the ACTIVE scenario steps. From the
-        // resulting layer set, pick the first layer's visible pair (max 2).
-        // If after DVC filter there are none, the band shows '—' so chips
-        // visibly differ by scenario.
+        // Scenario-specific band chips, capped at 2 visible. Same company
+        // never appears in more than one band per scenario (see
+        // scenarioClaimed map).
         var bandLayers = (DATA.stackToLayers && DATA.stackToLayers[s.id]) || [];
         var activeLayerSet = {};
         activeStepIds.forEach(function (sid) {
           ((DATA.stepToLayers || {})[sid] || []).forEach(function (lid) { activeLayerSet[lid] = true; });
         });
         var matchedLayers = bandLayers.filter(function (lid) { return !!activeLayerSet[lid]; });
-        var bandResolved = resolveLayerCompanies(matchedLayers, { maxDrawer: 4 });
+        var bandResolved = resolveLayerCompanies(matchedLayers, {
+          maxDrawer: 4,
+          exclude: scenarioClaimed
+        });
         var cosForBand = bandResolved.visible.slice(0, 2);
         if (state.companyFilter === 'dvc') {
           cosForBand = cosForBand.filter(function (c) { return c.group === 'dvc'; });
         }
+        cosForBand.forEach(function (c) { scenarioClaimed[c.id] = true; });
 
         if (cosForBand.length === 0) {
           svgEl('text', { class: 'band-co-empty', x: STACK.x + STACK.w - 12, y: y + bandH / 2 + 4, 'text-anchor': 'end' }, g)
