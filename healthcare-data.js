@@ -1,21 +1,17 @@
 /* =====================================================================
-   HEALTHCARE AI — DATA MODEL (multi-stop rebuild)
-   Three-layer Sankey:
-     A) Payment channels      (Official, 2024 CMS NHE)
-     B) Destination categories(Official, 2024 CMS NHE)
-     C) Operating cost pools  (Modeled, constrained to Layer B totals)
-   Plus: AI surfaces (overlay, not a money layer), patient loop, companies.
+   HEALTHCARE AI — DATA MODEL
+   Money River: payments -> destinations -> cost pools
+   Node totals are 2024 CMS NHE; internal routing is modeled and
+   constrained to official totals.
    ===================================================================== */
 (function (root) {
   'use strict';
 
-  // ------- Sources -------------------------------------------------------
   var SRC = {
     nhe:        'https://www.cms.gov/data-research/statistics-trends-and-reports/national-health-expenditure-data/nhe-fact-sheet',
     highlights: 'https://www.cms.gov/files/document/highlights.pdf',
     historical: 'https://www.cms.gov/data-research/statistics-trends-and-reports/national-health-expenditure-data/historical',
     mlr:        'https://www.cms.gov/marketplace/private-health-insurance/medical-loss-ratio',
-    kff:        'https://www.kff.org/health-costs/key-facts-about-hospitals/?entry=hospital-finances-profit-margins',
     kff2024:    'https://www.healthsystemtracker.org/chart-collection/u-s-spending-healthcare-changed-time/',
     phti:       'https://phti.org/administrative-ai-current-use-and-potential-impact/',
     mgma:       'https://www.mgma.com/mgma-stat/medical-practice-operating-costs-are-still-rising-in-2025-heres-how-to-control-them',
@@ -26,129 +22,103 @@
     doctronic:  'https://commerce.utah.gov/2026/01/06/news-release-utah-and-doctronic-announce-groundbreaking-partnership-for-ai-prescription-medication-renewals/'
   };
 
-  // ------- Headline stats ------------------------------------------------
   var headlineStats = [
-    { label: 'US national health expenditure', value: '$5.3T',   sub: '2024 CMS NHE',  evidence: 'official', src: SRC.nhe },
-    { label: 'Per person',                     value: '$15,474', sub: '2024 CMS NHE',  evidence: 'official', src: SRC.nhe },
-    { label: 'Share of GDP',                   value: '18.0%',   sub: '2024 CMS NHE',  evidence: 'official', src: SRC.nhe },
-    { label: 'Healthcare AI spend (survey)',   value: '$1.4B',   sub: 'Menlo 2025',    evidence: 'vc_survey', src: SRC.menlo },
-    { label: 'US digital health funding, 2025',value: '$14.2B',  sub: 'Rock Health',   evidence: 'context',   src: SRC.rock }
-  ];
-
-  // ------- Sponsor strip (context, not Sankey) ---------------------------
-  var sponsors = [
-    { id: 'sponsor_federal', label: 'Federal government', display: '$1.7T', value_b: 1700, evidence: 'official',
-      tooltip: 'Federal programs and subsidies are the largest ultimate sponsor of US healthcare spending. 2024 CMS NHE.' },
-    { id: 'sponsor_households', label: 'Households', display: '$1.5T', value_b: 1500, evidence: 'official',
-      tooltip: 'Households fund healthcare through premiums, taxes, out-of-pocket payments, and payroll contributions. 2024 CMS NHE.' },
-    { id: 'sponsor_private_business', label: 'Private business / employers', display: '$967B', value_b: 967, evidence: 'official',
-      tooltip: 'Employers fund a large share of private insurance and sit upstream of commercial healthcare incentives. 2024 CMS NHE.' },
-    { id: 'sponsor_state_local', label: 'State / local governments', display: '$860B', value_b: 860, evidence: 'official',
-      tooltip: 'State and local governments fund Medicaid, public programs, and public employee coverage. 2024 CMS NHE.' },
-    { id: 'sponsor_other_private', label: 'Other private revenues', display: '$318B', value_b: 318, evidence: 'official',
-      tooltip: 'Philanthropy, research funds, and other private sources. 2024 CMS NHE.' }
+    { label: 'US national health expenditure', value: '$5.3T',   sub: '2024 CMS NHE', evidence: 'official', src: SRC.nhe },
+    { label: 'Per person',                     value: '$15,474', sub: '2024 CMS NHE', evidence: 'official', src: SRC.nhe },
+    { label: 'Share of GDP',                   value: '18.0%',   sub: '2024 CMS NHE', evidence: 'official', src: SRC.nhe },
+    { label: 'Healthcare AI spend (survey)',   value: '$1.4B',   sub: 'Menlo 2025',   evidence: 'vc_survey', src: SRC.menlo },
+    { label: 'US digital health funding, 2025',value: '$14.2B',  sub: 'Rock Health',  evidence: 'context',   src: SRC.rock }
   ];
 
   // =====================================================================
-  // LAYER A — Payment channels (Official 2024 CMS NHE source-of-funds)
+  // PAYMENT CHANNELS (2024 CMS NHE source-of-funds)
   // =====================================================================
   var paymentChannels = [
     { id: 'pay_private_insurance', label: 'Private health insurance', value_b: 1644.6, display: '$1,644.6B',
-      evidence: 'official', src: SRC.nhe, tooltip_id: 'tt_private_insurance',
-      description: 'Commercial insurance, often employer-sponsored, that pays for covered medical care.' },
+      role: 'private', evidence: 'official', src: SRC.nhe, tooltip_id: 'tt_private_insurance',
+      description: 'Commercial coverage, often employer-sponsored.' },
     { id: 'pay_medicare', label: 'Medicare', value_b: 1118.0, display: '$1,118.0B',
-      evidence: 'official', src: SRC.nhe, tooltip_id: 'tt_medicare',
-      description: 'Federal health insurance program primarily for people 65+ and some disabled people.' },
+      role: 'public', evidence: 'official', src: SRC.nhe, tooltip_id: 'tt_medicare',
+      description: 'Federal coverage for older adults and some disabled people.' },
     { id: 'pay_medicaid', label: 'Medicaid', value_b: 931.7, display: '$931.7B',
-      evidence: 'official', src: SRC.nhe, tooltip_id: 'tt_medicaid',
-      description: 'Joint federal-state program for low-income and eligible populations.' },
+      role: 'public', evidence: 'official', src: SRC.nhe, tooltip_id: 'tt_medicaid',
+      description: 'Joint federal-state coverage for eligible low-income populations.' },
     { id: 'pay_out_of_pocket', label: 'Out-of-pocket', value_b: 556.6, display: '$556.6B',
-      evidence: 'official', src: SRC.nhe, tooltip_id: 'tt_out_of_pocket',
-      description: 'Spending paid directly by patients — deductibles, copays, coinsurance, uncovered services.' },
-    { id: 'pay_other_public_private', label: 'Other third-party payers, programs & public health', value_b: 590.5, display: '$590.5B',
-      evidence: 'official', src: SRC.nhe,
-      description: 'VA, IHS, workers\' compensation, public health activity, and other third-party programs.' },
+      role: 'oop', evidence: 'official', src: SRC.nhe, tooltip_id: 'tt_out_of_pocket',
+      description: 'Direct patient spending.' },
+    { id: 'pay_other_public_private', label: 'Other third-party payers & programs', value_b: 590.5, display: '$590.5B',
+      role: 'other', evidence: 'official', src: SRC.nhe,
+      description: 'VA, IHS, workers compensation, public health activity, and other third-party programs.' },
     { id: 'pay_residual', label: 'Other NHE / reconciliation', value_b: 458.6, display: '$458.6B',
-      evidence: 'modeled_residual',
-      description: 'Residual derived as $5.3T minus listed source-of-funds categories so the graph balances to total NHE.' }
+      role: 'other', evidence: 'modeled_residual',
+      description: 'Residual so the graph balances to total NHE.' }
   ];
 
   // =====================================================================
-  // LAYER B — Destination categories (Official 2024 CMS type-of-service)
+  // DESTINATION CATEGORIES (2024 CMS type-of-service)
   // =====================================================================
   var destinations = [
     { id: 'dest_hospital', label: 'Hospital care', value_b: 1634.7, display: '$1,634.7B',
-      evidence: 'official', src: SRC.highlights,
+      evidence: 'official', src: SRC.highlights, tooltip_id: 'tt_hospital',
       description: 'Inpatient, outpatient, and emergency services delivered by hospitals.' },
     { id: 'dest_physician', label: 'Physician & clinical services', value_b: 1109.7, display: '$1,109.7B',
-      evidence: 'official', src: SRC.highlights,
+      evidence: 'official', src: SRC.highlights, tooltip_id: 'tt_physician',
       description: 'Office visits, procedures, and clinical services billed by physicians and clinical groups.' },
     { id: 'dest_rx', label: 'Retail prescription drugs', value_b: 467.0, display: '$467.0B',
-      evidence: 'official', src: SRC.highlights,
+      evidence: 'official', src: SRC.highlights, tooltip_id: 'tt_rx',
       description: 'Outpatient prescription drugs dispensed by retail pharmacies.' },
     { id: 'dest_residential_personal', label: 'Other health, residential & personal care', value_b: 320.5, display: '$320.5B',
       evidence: 'official', src: SRC.highlights,
-      description: 'Home- and community-based care, residential and personal services. ~62% Medicaid funded.' },
+      description: 'Home- and community-based care, residential and personal services.' },
     { id: 'dest_nursing', label: 'Nursing care facilities & CCRCs', value_b: 219.9, display: '$219.9B',
       evidence: 'official', src: SRC.highlights,
       description: 'Skilled nursing facilities and continuing care retirement communities.' },
     { id: 'dest_dental', label: 'Dental services', value_b: 189.2, display: '$189.2B',
       evidence: 'official', src: SRC.highlights,
-      description: 'Dental services. ~80% paid by out-of-pocket + private insurance.' },
+      description: 'Dental services.' },
     { id: 'dest_other_professional', label: 'Other professional services', value_b: 184.9, display: '$184.9B',
       evidence: 'official', src: SRC.highlights,
-      description: 'Services from non-physician professionals (PT/OT, optometry, podiatry).' },
+      description: 'Services from non-physician professionals (PT, OT, optometry, podiatry).' },
     { id: 'dest_home_health', label: 'Home health care', value_b: 169.4, display: '$169.4B',
       evidence: 'official', src: SRC.highlights,
       description: 'Skilled medical services and personal care delivered in the home.' },
     { id: 'dest_nondurable', label: 'Other non-durable medical products', value_b: 128.7, display: '$128.7B',
       evidence: 'official', src: SRC.highlights,
-      description: 'OTC drugs and other non-durable medical goods. ~96% out-of-pocket.' },
+      description: 'OTC drugs and other non-durable medical goods.' },
     { id: 'dest_dme', label: 'Durable medical equipment', value_b: 86.4, display: '$86.4B',
       evidence: 'official', src: SRC.highlights,
       description: 'Long-use medical equipment such as wheelchairs, CPAPs, glucose monitors.' },
-    { id: 'dest_residual', label: 'Admin, public health, investment & other NHE', value_b: 789.6, display: '$789.6B',
+    { id: 'dest_residual', label: 'Admin, public health, investment & other', value_b: 789.6, display: '$789.6B',
       evidence: 'modeled_residual',
-      description: 'Residual derived as $5.3T minus listed type-of-service/product categories. Includes net cost of insurance, public health, structures, equipment, and research.' }
+      description: 'Net cost of insurance, public health, structures, equipment, and research.' }
   ];
 
   // =====================================================================
-  // LAYER C — Operating cost pools (Modeled, totals constrained to Layer B)
+  // COST POOLS (modeled, balanced to destination totals)
   // =====================================================================
   var costPools = [
-    { id: 'pool_clinical_labor',       label: 'Clinical labor & professional comp',
-      description: 'Physicians, nurses, APPs, dentists, pharmacists, therapists, care teams. The wages that show up at the bedside, the chair, or the exam room.',
-      ai_relevance: 'Copilots, ambient documentation, clinical decision support, throughput.' },
-    { id: 'pool_provider_admin',       label: 'Provider admin, RCM, coding & compliance',
-      description: 'Billing staff, coders, prior-auth teams, schedulers, compliance, and provider-side bureaucracy.',
-      ai_relevance: 'RCM automation, coding, prior auth, patient billing.' },
-    { id: 'pool_payer_admin',          label: 'Payer operations & insurance admin',
-      description: 'Claims processing, utilization management, plan admin, fraud review, customer service.',
-      ai_relevance: 'Claims AI, payment integrity, prior-auth review, downcoding.' },
-    { id: 'pool_drugs_biologics',      label: 'Drugs, biologics & therapeutic products',
-      description: 'Retail Rx, provider-administered drugs, vaccines, injectables, specialty therapies.',
-      ai_relevance: 'Drug discovery, formulary AI, adherence, precision therapies.' },
-    { id: 'pool_supplies_devices',     label: 'Supplies, diagnostics, equipment & devices',
-      description: 'Consumables, DME, imaging equipment, lab supplies, dental equipment.',
-      ai_relevance: 'Diagnostics AI, device/wearable data, inventory automation.' },
-    { id: 'pool_facilities_capital',   label: 'Facilities, capital & site-of-care',
-      description: 'Hospitals, clinics, rent, utilities, depreciation, beds, ORs, imaging suites.',
-      ai_relevance: 'Capacity optimization, site-of-care shift, remote monitoring.' },
-    { id: 'pool_it_data',              label: 'IT, EHR, data & cybersecurity',
-      description: 'EHRs, data warehouses, interoperability, security, cloud, workflow systems.',
-      ai_relevance: 'AI deployment substrate and platform layer.' },
-    { id: 'pool_pharma_channel',       label: 'Pharmacy / PBM / wholesale channel',
-      description: 'Pharmacies, wholesalers, PBM services, rebates and discount infrastructure, channel economics.',
-      ai_relevance: 'PBM analytics, drug access, cash-pay bypass, transparency.' },
-    { id: 'pool_public_health_research',label: 'Public health, research & investment',
-      description: 'Public health activity, research, facilities investment.',
-      ai_relevance: 'Population health AI, surveillance, R&D infrastructure.' },
-    { id: 'pool_margin_other',         label: 'Margin, retained earnings & other overhead',
-      description: 'Residual economics not cleanly allocated. Explains why cost savings do not always become lower prices.',
-      ai_relevance: 'Margin transparency and downstream economic capture.' }
+    { id: 'pool_clinical_labor', label: 'Clinical labor', tooltip_id: 'tt_clinical_labor',
+      description: 'Doctors, nurses, APPs, dentists, therapists, pharmacists, and care teams.' },
+    { id: 'pool_provider_admin', label: 'Provider admin', tooltip_id: 'tt_provider_admin',
+      description: 'Provider-side coding, billing, scheduling, prior auth, compliance, and collections.' },
+    { id: 'pool_payer_admin', label: 'Payer operations', tooltip_id: 'tt_payer_admin',
+      description: 'Claims, utilization management, payment integrity, customer service, and plan admin.' },
+    { id: 'pool_drugs_biologics', label: 'Drugs & biologics', tooltip_id: 'tt_drugs_biologics',
+      description: 'Therapeutic product value.' },
+    { id: 'pool_supplies_devices', label: 'Supplies & devices', tooltip_id: 'tt_supplies_devices',
+      description: 'Medical supplies, equipment, diagnostics, wearables, dental devices, and DME.' },
+    { id: 'pool_facilities_capital', label: 'Facilities & capital',
+      description: 'Hospitals, clinics, rent, utilities, depreciation, beds, ORs, imaging suites.' },
+    { id: 'pool_it_data', label: 'IT & data', tooltip_id: 'tt_it_data',
+      description: 'EHRs, data warehouses, interoperability, security, cloud, and workflow software.' },
+    { id: 'pool_pharma_channel', label: 'Pharmacy / PBM channel',
+      description: 'Pharmacies, wholesalers, PBM services, rebates, and channel economics.' },
+    { id: 'pool_public_health_research', label: 'Public health & research',
+      description: 'Public health activity, research, and facilities investment.' },
+    { id: 'pool_margin_other', label: 'Margin & other',
+      description: 'Residual economics not cleanly allocated; helps explain why cost savings do not always become lower prices.' }
   ];
 
-  // Destination → cost pool modeled allocations (rows sum to 1.0)
   var destToPoolWeights = {
     dest_hospital:              { pool_clinical_labor: 0.43, pool_provider_admin: 0.13, pool_drugs_biologics: 0.10, pool_supplies_devices: 0.12, pool_facilities_capital: 0.14, pool_it_data: 0.03, pool_margin_other: 0.05 },
     dest_physician:             { pool_clinical_labor: 0.52, pool_provider_admin: 0.18, pool_drugs_biologics: 0.06, pool_supplies_devices: 0.05, pool_facilities_capital: 0.08, pool_it_data: 0.03, pool_margin_other: 0.08 },
@@ -163,7 +133,6 @@
     dest_residual:              { pool_payer_admin: 0.47, pool_facilities_capital: 0.12, pool_it_data: 0.08, pool_public_health_research: 0.23, pool_margin_other: 0.10 }
   };
 
-  // Payment → destination modeled weights (used for layer A→B IPF)
   var paymentToDestWeights = {
     pay_private_insurance: {
       dest_hospital: 0.34, dest_physician: 0.30, dest_rx: 0.10, dest_dental: 0.06, dest_other_professional: 0.05,
@@ -188,7 +157,6 @@
     pay_residual: { dest_residual: 1.0 }
   };
 
-  // ------- Build balanced links via iterative proportional fitting -------
   function buildAB(payments, dests, w) {
     var rowT = {}, colT = {};
     payments.forEach(function (p) { rowT[p.id] = p.value_b; });
@@ -197,7 +165,7 @@
     payments.forEach(function (p) {
       var row = w[p.id] || {};
       Object.keys(row).forEach(function (dId) {
-        links.push({ source: p.id, target: dId, value_b: rowT[p.id] * row[dId], evidence: 'modeled' });
+        links.push({ source: p.id, target: dId, value_b: rowT[p.id] * row[dId], span: 'AB' });
       });
     });
     for (var i = 0; i < 16; i++) {
@@ -210,17 +178,17 @@
         if (s > 0) { var f = colT[d.id] / s; links.forEach(function (l) { if (l.target === d.id) l.value_b *= f; }); }
       });
     }
+    links.forEach(function (l) { l.id = 'fl_' + l.source + '__' + l.target; });
     return links;
   }
   function buildBC(dests, w) {
     var links = [];
     dests.forEach(function (d) {
       var row = w[d.id] || {};
-      // Normalise weights to 1.0 first
       var ws = 0; Object.keys(row).forEach(function (k) { ws += row[k]; });
       if (ws <= 0) return;
       Object.keys(row).forEach(function (poolId) {
-        links.push({ source: d.id, target: poolId, value_b: d.value_b * (row[poolId] / ws), evidence: 'modeled' });
+        links.push({ id: 'fl_' + d.id + '__' + poolId, source: d.id, target: poolId, value_b: d.value_b * (row[poolId] / ws), span: 'BC' });
       });
     });
     return links;
@@ -230,391 +198,523 @@
   var moneyLinksBC = buildBC(destinations, destToPoolWeights);
 
   // =====================================================================
-  // AI SURFACES (overlay, not money-balanced)
+  // AI SURFACES (overlay, not money nodes; no TAM)
   // =====================================================================
   var aiSurfaces = [
-    { id: 'ai_scribes_copilots', label: 'Clinical copilots & scribes',
+    { id: 'ai_scribes_copilots', label: 'Clinical copilots',
       attach_pools: ['pool_clinical_labor','pool_it_data'],
       attach_steps: ['C4','C5','F3'],
-      message: 'Near-term ROI comes from clinician time, documentation, and safer access to evidence.' },
-    { id: 'ai_admin_rcm', label: 'Admin, RCM, coding & prior auth',
+      what: 'Evidence search, scribing, decision support, encounter documentation.',
+      buyer: 'Clinician / health system.',
+      adoption: 'Near-term ROI from clinician time. Workflow fit and liability gate adoption.' },
+    { id: 'ai_admin_rcm', label: 'Admin / RCM',
       attach_pools: ['pool_provider_admin','pool_payer_admin'],
       attach_steps: ['F2','F3','F4','F5','F6'],
-      message: 'The first major automation battleground. Can become an arms race between provider and payer AI.' },
-    { id: 'ai_patient_access', label: 'Patient access & navigation',
+      what: 'Prior auth, coding, billing, claims, denials, collections.',
+      buyer: 'Provider RCM teams; payer ops.',
+      adoption: 'High ROI per workflow; can become an arms race between provider and payer AI.' },
+    { id: 'ai_patient_access', label: 'Access / navigation',
       attach_pools: ['pool_provider_admin','pool_it_data'],
       attach_steps: ['C2','C3','F1'],
-      message: 'AI changes the front door before it changes the hospital core.' },
-    { id: 'ai_financial_engagement', label: 'Patient financial engagement',
+      what: 'Triage, scheduling, routing, benefits navigation.',
+      buyer: 'Health system / employer / patient.',
+      adoption: 'Changes the front door before it changes the hospital core.' },
+    { id: 'ai_financial_engagement', label: 'Patient payments',
       attach_pools: ['pool_provider_admin','pool_payer_admin'],
       attach_steps: ['F6','F7'],
-      message: 'Collecting patient responsibility and explaining bills is a software workflow.' },
-    { id: 'ai_diagnostics', label: 'Diagnostics & signal interpretation',
+      what: 'Bills, payment plans, collections, eligibility, affordability.',
+      buyer: 'Provider RCM teams.',
+      adoption: 'Operational ROI is direct; consumer trust matters.' },
+    { id: 'ai_diagnostics', label: 'Diagnostics',
       attach_pools: ['pool_supplies_devices','pool_clinical_labor','pool_it_data'],
       attach_steps: ['C1','C5','C8'],
-      message: 'AI reads signals from images, labs, dental scans, pathology, and devices.' },
-    { id: 'ai_prevention', label: 'Prevention & continuous monitoring',
+      what: 'Imaging, labs, pathology, dental, signal interpretation.',
+      buyer: 'Health system / specialist.',
+      adoption: 'Regulated; needs evidence, oversight, auditability.' },
+    { id: 'ai_prevention', label: 'Prevention',
       attach_pools: ['pool_clinical_labor','pool_it_data','pool_supplies_devices'],
       attach_steps: ['C8','P1','P2','P3','P4','V2','V3','V5'],
-      message: 'Prevention becomes systemic only when someone can capture avoided downstream cost.' },
-    { id: 'ai_techbio', label: 'Techbio, drug discovery & precision medicine',
+      what: 'Monitoring, coaching, adherence, risk management.',
+      buyer: 'Consumer (private pay) or risk-bearing entity.',
+      adoption: 'Systemic only when someone captures avoided downstream cost.' },
+    { id: 'ai_techbio', label: 'Techbio',
       attach_pools: ['pool_drugs_biologics','pool_public_health_research','pool_it_data'],
       attach_steps: ['C5','C6','P3'],
-      message: 'AI moves upstream into target discovery, molecule design, diagnostics, and personalized treatment.' },
-    { id: 'ai_site_of_care', label: 'Site-of-care shift & capacity',
+      what: 'Target discovery, molecule design, diagnostics, precision medicine.',
+      buyer: 'Pharma / research.',
+      adoption: 'Long cycles; gated by trial design and regulation.' },
+    { id: 'ai_site_of_care', label: 'Site of care',
       attach_pools: ['pool_facilities_capital','pool_clinical_labor','pool_it_data'],
       attach_steps: ['C3','C6','C7'],
-      message: 'AI can route care away from expensive settings when incentives and clinical safety allow.' }
-  ];
-
-  // ------- Money River callouts -----------------------------------------
-  var moneyCallouts = [
-    { id: 'callout_buyer_user_payer', title: 'Buyer, user, payer, beneficiary split',
-      copy: 'Healthcare AI adoption depends on who pays, who uses, and who benefits. These are often different actors.' },
-    { id: 'callout_admin_paradox', title: 'Admin savings ≠ system savings',
-      copy: 'AI can reduce internal task cost, but it can also increase coding, claim volume, denial volume, and utilization review. This is an arms race, not a guaranteed cost cure.' },
-    { id: 'callout_mlr', title: 'Insurer MLR is not provider margin',
-      copy: 'ACA medical loss ratio rules govern many insurers (80% / 85% of premium on care + quality). Hospitals and physicians are not bound by the same rule. Different incentives.' },
-    { id: 'callout_private_pay', title: 'Private pay is the experimental frontier',
-      copy: 'Consumer health, longevity, lab uploads, CGMs, and AI coaching scale first where consumers pay directly. Reimbursement may follow when outcomes are measurable.' },
-    { id: 'callout_vbc', title: 'Value-based care is the bridge to prevention',
-      copy: 'Prevention becomes systemic when someone takes risk for downstream cost. VBC, Medicare Advantage, ACOs, employers, and CMS digital models can make prevention rational.' }
+      what: 'Routing, capacity, home/virtual shift, utilization management.',
+      buyer: 'Health system / payer.',
+      adoption: 'Hard without incentive to move volume off the highest-margin site.' }
   ];
 
   // =====================================================================
-  // PATIENT LOOP — canonical IDs C1-C8 / F1-F8 / P1-P5 / V1-V5
+  // INCENTIVE CHIPS (regulatory / structural)
+  // =====================================================================
+  var incentives = [
+    { id: 'inc_mlr', label: 'MLR rules',
+      attach_pools: ['pool_payer_admin'],
+      attach_nodes: ['pay_private_insurance'],
+      message: 'Insurer margins are constrained by medical loss ratio rules, so cost reduction does not behave like ordinary SaaS margin expansion. Applies to insurers, not hospitals.' },
+    { id: 'inc_admin_arms_race', label: 'Admin arms race',
+      attach_pools: ['pool_provider_admin','pool_payer_admin'],
+      attach_nodes: [],
+      message: 'AI can lower task cost but increase transaction volume: more coding, more prior-auth packets, more denials, more appeals.' },
+    { id: 'inc_fee_for_service', label: 'Fee-for-service inertia',
+      attach_pools: ['pool_clinical_labor'],
+      attach_nodes: ['dest_hospital','dest_physician'],
+      message: 'If payment is tied to events and services, prevention has weak economics unless risk shifts.' },
+    { id: 'inc_vbc', label: 'Value-based care bridge',
+      attach_pools: ['pool_clinical_labor','pool_payer_admin'],
+      attach_nodes: [],
+      message: 'Prevention becomes financeable when someone bears risk for downstream cost and can measure avoided events.' },
+    { id: 'inc_cash_pay', label: 'Cash-pay bypass',
+      attach_pools: ['pool_supplies_devices','pool_pharma_channel'],
+      attach_nodes: ['pay_out_of_pocket','dest_rx'],
+      message: 'Consumers can adopt wellness, labs, CGMs, and AI guidance faster than reimbursement systems can approve them.' },
+    { id: 'inc_regulated_safety', label: 'Regulated safety',
+      attach_pools: ['pool_clinical_labor','pool_it_data'],
+      attach_nodes: [],
+      message: 'Clinical claims require evidence, oversight, auditability, and sometimes FDA or regulatory pathways.' }
+  ];
+
+  // =====================================================================
+  // PATIENT LOOP
   // =====================================================================
   var patientStates = [
     { id: 'state_healthy',     label: 'Healthy',     prompt: 'No acute event. Continuous consumer signal.', color: '#4ECDC4' },
     { id: 'state_at_risk',     label: 'At risk',     prompt: 'Lab, wearable, family history, or genomics indicates elevated risk.', color: '#F5C542' },
     { id: 'state_symptomatic', label: 'Symptomatic', prompt: 'Patient experiences symptoms and seeks help.', color: '#FF8C42' },
-    { id: 'state_diagnosed',   label: 'Diagnosed',   prompt: 'A condition is now named and treatment begins.', color: '#4A90D9' },
+    { id: 'state_diagnosed',   label: 'Diagnosed',   prompt: 'A condition is named and treatment begins.', color: '#4A90D9' },
     { id: 'state_chronic',     label: 'Chronic',     prompt: 'Longitudinal management across visits and data streams.', color: '#7C4DFF' },
     { id: 'state_acute',       label: 'Acute',       prompt: 'High-intensity episode mobilizes hospital/urgent workflow.', color: '#E8837C' }
   ];
 
-  // Care loop — clockwise upper half (canonical positions per spec)
+  // Care loop — clockwise upper ellipse
   var careLoop = [
-    { id: 'C1', n: 1, label: 'Signal',            x: 220, y: 260, description: 'Symptom, wearable alert, lab abnormality, patient concern.', ai: ['ai_diagnostics','ai_prevention'] },
-    { id: 'C2', n: 2, label: 'Search / triage',   x: 285, y: 145, description: 'Patient or clinician seeks guidance.', ai: ['ai_patient_access','ai_scribes_copilots'] },
-    { id: 'C3', n: 3, label: 'Access / scheduling',x: 420, y: 85,  description: 'Find the right care setting.', ai: ['ai_patient_access','ai_site_of_care'] },
-    { id: 'C4', n: 4, label: 'Encounter',         x: 560, y: 65,  description: 'Visit, telehealth, hospital, dental, diagnostic event.', ai: ['ai_scribes_copilots'] },
-    { id: 'C5', n: 5, label: 'Diagnosis / orders',x: 700, y: 85,  description: 'Labs, imaging, Rx, referral, treatment plan.', ai: ['ai_diagnostics','ai_techbio','ai_scribes_copilots'] },
-    { id: 'C6', n: 6, label: 'Treatment',         x: 835, y: 145, description: 'Medication, procedure, therapy, behavior change, digital tool.', ai: ['ai_techbio','ai_site_of_care'] },
-    { id: 'C7', n: 7, label: 'Follow-up',         x: 900, y: 260, description: 'Refill, referral, escalation, monitoring, adherence.', ai: ['ai_site_of_care'] },
-    { id: 'C8', n: 8, label: 'Monitor / prevent', x: 760, y: 365, description: 'Continuous or episodic monitoring and risk reduction.', ai: ['ai_prevention','ai_diagnostics'] }
+    { id: 'C1', n: 1, label: 'Signal',           x: 230, y: 270, description: 'Symptom, wearable alert, lab abnormality, patient concern.', ai: ['ai_diagnostics','ai_prevention'] },
+    { id: 'C2', n: 2, label: 'Triage',           x: 305, y: 150, description: 'Patient or clinician asks what to do next.', ai: ['ai_patient_access','ai_scribes_copilots'] },
+    { id: 'C3', n: 3, label: 'Access',           x: 445, y: 95,  description: 'Scheduling, routing, telehealth, right site of care.', ai: ['ai_patient_access','ai_site_of_care'] },
+    { id: 'C4', n: 4, label: 'Encounter',        x: 560, y: 80,  description: 'Visit, admission, dental visit, diagnostic appointment.', ai: ['ai_scribes_copilots'] },
+    { id: 'C5', n: 5, label: 'Diagnosis/orders', x: 675, y: 95,  description: 'Labs, imaging, prescription, referral, treatment plan.', ai: ['ai_diagnostics','ai_techbio','ai_scribes_copilots'] },
+    { id: 'C6', n: 6, label: 'Treatment',        x: 815, y: 150, description: 'Drug, procedure, therapy, behavior change, digital tool.', ai: ['ai_techbio','ai_site_of_care'] },
+    { id: 'C7', n: 7, label: 'Follow-up',        x: 890, y: 270, description: 'Refill, adherence, escalation, monitoring, care plan adjustment.', ai: ['ai_site_of_care'] },
+    { id: 'C8', n: 8, label: 'Monitor/prevent',  x: 770, y: 390, description: 'Continuous or episodic risk management.', ai: ['ai_prevention','ai_diagnostics'] }
   ];
 
-  // Financial loop — counterclockwise lower half
+  // Financial loop — counterclockwise lower ellipse
   var financialLoop = [
-    { id: 'F1', n: 1, label: 'Eligibility / benefits',     x: 220, y: 340, description: 'Determine coverage, network, deductible, and patient responsibility.', ai: ['ai_patient_access'] },
-    { id: 'F2', n: 2, label: 'Prior authorization',        x: 285, y: 455, description: 'Payer approval before selected care, tests, or drugs.', ai: ['ai_admin_rcm'] },
-    { id: 'F3', n: 3, label: 'Documentation / coding',     x: 420, y: 515, description: 'Convert care into notes, codes, quality measures, billable records.', ai: ['ai_admin_rcm','ai_scribes_copilots'] },
-    { id: 'F4', n: 4, label: 'Claim submission',           x: 560, y: 535, description: 'Provider submits claim to payer or patient.', ai: ['ai_admin_rcm'] },
-    { id: 'F5', n: 5, label: 'Adjudication / denial',      x: 700, y: 515, description: 'Payer pays, adjusts, denies, requests more info, or downcodes.', ai: ['ai_admin_rcm'] },
-    { id: 'F6', n: 6, label: 'Patient bill',               x: 835, y: 455, description: 'Remaining patient responsibility becomes bill or payment plan.', ai: ['ai_financial_engagement','ai_admin_rcm'] },
-    { id: 'F7', n: 7, label: 'Payment / collection',       x: 900, y: 340, description: 'Payment is collected, reconciled, or written off.', ai: ['ai_financial_engagement'] },
-    { id: 'F8', n: 8, label: 'Quality / risk / outcomes',  x: 760, y: 235, description: 'Outcomes, risk, and quality data feed future payment.', ai: ['ai_prevention'] }
+    { id: 'F1', n: 1, label: 'Eligibility',  x: 230, y: 355, description: 'Coverage, network, deductible, patient responsibility.', ai: ['ai_patient_access'] },
+    { id: 'F2', n: 2, label: 'Prior auth',   x: 305, y: 475, description: 'Approval before selected care, tests, or drugs.', ai: ['ai_admin_rcm'] },
+    { id: 'F3', n: 3, label: 'Coding',       x: 445, y: 530, description: 'Translate care into documentation and billable codes.', ai: ['ai_admin_rcm','ai_scribes_copilots'] },
+    { id: 'F4', n: 4, label: 'Claim',        x: 560, y: 545, description: 'Submit claim to payer or patient.', ai: ['ai_admin_rcm'] },
+    { id: 'F5', n: 5, label: 'Adjudication', x: 675, y: 530, description: 'Pay, deny, downcode, audit, or request more information.', ai: ['ai_admin_rcm'] },
+    { id: 'F6', n: 6, label: 'Patient bill', x: 815, y: 475, description: 'Remaining responsibility becomes bill or payment plan.', ai: ['ai_financial_engagement','ai_admin_rcm'] },
+    { id: 'F7', n: 7, label: 'Collection',   x: 890, y: 355, description: 'Payment, reconciliation, collection, write-off.', ai: ['ai_financial_engagement'] },
+    { id: 'F8', n: 8, label: 'Quality/risk', x: 770, y: 235, description: 'Outcomes, quality, risk adjustment, VBC reporting.', ai: ['ai_prevention'] }
   ];
 
   // Private-pay prevention orbit (right rail)
   var preventionOrbit = [
-    { id: 'P1', label: 'Health AI assistant',           x: 990, y: 165, description: 'Patient asks questions, uploads labs, summarizes symptoms, tracks goals.', examples: 'OpenEvidence-like workflows, consumer AI assistants' },
-    { id: 'P2', label: 'Wearables & home signals',      x: 990, y: 240, description: 'Continuous signals from WHOOP, Oura, Apple Watch, CGM, BP cuffs.', examples: 'WHOOP, Oura, Nutrisense, Neera' },
-    { id: 'P3', label: 'Labs · genetics · omics',       x: 990, y: 315, description: 'Consumers or clinicians use richer biological data to personalize guidance.', examples: 'Function Health, genomics, precision diagnostics' },
-    { id: 'P4', label: 'Personalized coaching',         x: 990, y: 390, description: 'AI or human coaches turn data into behavior, nutrition, sleep, exercise.', examples: 'Nutrisense, Curex, wellness apps' },
-    { id: 'P5', label: 'Escalation to clinician',       x: 990, y: 465, description: 'AI flags risk or symptoms that require licensed clinician review.', examples: 'Doctronic, telehealth, primary care' }
+    { id: 'P1', label: 'Consumer AI assistant', x: 955, y: 155, description: 'Patient asks questions, uploads labs, tracks goals.', ai: ['ai_patient_access','ai_prevention'] },
+    { id: 'P2', label: 'Wearables/home signals',x: 1000, y: 235, description: 'Sleep, HRV, CGM, activity, BP, recovery, symptoms.', ai: ['ai_prevention','ai_diagnostics'] },
+    { id: 'P3', label: 'Labs/omics',            x: 1015, y: 315, description: 'Rich biological data for risk and personalization.', ai: ['ai_diagnostics','ai_techbio'] },
+    { id: 'P4', label: 'Coaching/adherence',    x: 990, y: 395, description: 'Behavior, nutrition, sleep, allergy care, follow-up.', ai: ['ai_prevention'] },
+    { id: 'P5', label: 'Escalation',            x: 940, y: 475, description: 'AI routes to licensed clinician or care setting.', ai: ['ai_patient_access'] }
   ];
 
-  // VBC bridge (left rail — annotation, not money flow)
+  // VBC bridge (left rail)
   var vbcBridge = [
-    { id: 'V1', label: 'Fee-for-service default',       x: 130, y: 165, description: 'System mostly pays when care is delivered after an event.' },
-    { id: 'V2', label: 'Risk-bearing contracts',        x: 130, y: 240, description: 'Payers, providers, or employers have financial upside from avoided events.' },
-    { id: 'V3', label: 'MA / ACO / employer risk',      x: 130, y: 315, description: 'Places where prevention, care management, and risk scoring affect economics.' },
-    { id: 'V4', label: 'Digital reimbursement',         x: 130, y: 390, description: 'RTM, digital mental health codes, CMS ACCESS, similar models.' },
-    { id: 'V5', label: 'Prevention becomes financeable',x: 130, y: 465, description: 'Prevention scales when someone can measure and capture avoided cost.' }
+    { id: 'V1', label: 'FFS default',           x: 80,  y: 170, description: 'Fee-for-service pays when services happen. Prevention has weak economics.' },
+    { id: 'V2', label: 'Risk contract',         x: 115, y: 250, description: 'Someone bears downstream cost and can benefit from avoided events.' },
+    { id: 'V3', label: 'MA / ACO / employer',   x: 145, y: 330, description: 'Common places where risk, quality, and prevention can matter.' },
+    { id: 'V4', label: 'Digital reimbursement', x: 175, y: 410, description: 'RTM, digital mental health, and CMS models create partial reimbursement paths.' },
+    { id: 'V5', label: 'Prevention financeable',x: 205, y: 490, description: 'Prevention becomes investable when outcomes and avoided cost are measurable.' }
   ];
 
-  // Shared stack (bottom rail)
+  // Shared stack — order matches spec (top to bottom = layer 1 to 7)
   var sharedStack = [
-    { id: 'stack_data',       label: 'Data',                contents: 'EHR · claims · labs · imaging · genomics · pharmacy · wearables', why: 'AI performance depends on access to complete, timely, permissioned data.' },
-    { id: 'stack_workflow',   label: 'Workflow',            contents: 'Scheduling · intake · orders · referrals · documentation · refills', why: 'Healthcare AI wins when it changes workflow, not just answers questions.' },
-    { id: 'stack_admin',      label: 'Admin / reimbursement',contents: 'Benefits · prior auth · coding · claims · denials · RCM · billing', why: 'Near-term AI ROI but also arms-race risk.' },
-    { id: 'stack_decision',   label: 'Decision',            contents: 'Guidelines · evidence · payer rules · risk scores', why: 'AI systems must reason inside clinical and reimbursement rules.' },
-    { id: 'stack_ai',         label: 'AI / app layer',      contents: 'Copilots · agents · retrieval · automation · prediction', why: 'The visible product layer, but only works if connected to the stack below.' },
-    { id: 'stack_governance', label: 'Governance & trust',  contents: 'HIPAA · FDA · audit · liability · safety', why: 'Healthcare AI needs trust, control, auditability, and regulated deployment.' },
-    { id: 'stack_infra',      label: 'Infrastructure',      contents: 'APIs · cloud · identity · interoperability · security', why: 'The substrate that makes AI deployable across fragmented systems.' }
+    { id: 'stack_ai',         label: 'AI application',       contents: 'Copilots, agents, prediction, summarization, automation' },
+    { id: 'stack_workflow',   label: 'Workflow',             contents: 'Scheduling, intake, notes, orders, referrals, refills, billing workflows' },
+    { id: 'stack_decision',   label: 'Decision',             contents: 'Guidelines, evidence, payer rules, risk scores, clinical pathways' },
+    { id: 'stack_data',       label: 'Data',                 contents: 'EHR, claims, labs, imaging, genomics, pharmacy, wearables' },
+    { id: 'stack_admin',      label: 'Admin / reimbursement',contents: 'Benefits, prior auth, coding, claims, RCM, patient bills' },
+    { id: 'stack_governance', label: 'Governance / trust',   contents: 'HIPAA, FDA, audit logs, liability, model monitoring, human oversight' },
+    { id: 'stack_infra',      label: 'Infrastructure',       contents: 'APIs, cloud, identity, interoperability, security, devices' }
   ];
 
-  // Step ↔ stack dependency hints (used to draw dependency lines)
+  // Step ↔ stack dependency mapping (per spec)
   var stepStackDeps = {
-    C1: ['stack_data','stack_infra'],
-    C2: ['stack_ai','stack_decision','stack_workflow'],
-    C3: ['stack_workflow','stack_admin'],
-    C4: ['stack_workflow','stack_data','stack_ai'],
-    C5: ['stack_data','stack_decision','stack_ai'],
-    C6: ['stack_workflow','stack_decision'],
-    C7: ['stack_workflow','stack_data'],
-    C8: ['stack_data','stack_ai','stack_infra'],
-    F1: ['stack_admin','stack_data'],
-    F2: ['stack_admin','stack_decision','stack_ai'],
-    F3: ['stack_admin','stack_ai','stack_workflow'],
-    F4: ['stack_admin'],
-    F5: ['stack_admin','stack_ai','stack_decision'],
+    C1: ['stack_data','stack_ai','stack_infra'],
+    C2: ['stack_ai','stack_decision','stack_data','stack_governance'],
+    C3: ['stack_workflow','stack_admin','stack_data'],
+    C4: ['stack_workflow','stack_ai','stack_data','stack_governance'],
+    C5: ['stack_decision','stack_data','stack_ai','stack_governance'],
+    C6: ['stack_decision','stack_workflow','stack_data'],
+    C7: ['stack_workflow','stack_data','stack_admin'],
+    C8: ['stack_data','stack_ai','stack_workflow','stack_infra'],
+    F1: ['stack_admin','stack_data','stack_workflow'],
+    F2: ['stack_admin','stack_decision','stack_data'],
+    F3: ['stack_admin','stack_workflow','stack_ai','stack_data'],
+    F4: ['stack_admin','stack_workflow','stack_data'],
+    F5: ['stack_admin','stack_decision','stack_ai','stack_data'],
     F6: ['stack_admin','stack_workflow'],
-    F7: ['stack_admin'],
-    F8: ['stack_data','stack_decision','stack_governance']
+    F7: ['stack_admin','stack_workflow'],
+    F8: ['stack_decision','stack_data','stack_admin'],
+    P1: ['stack_ai','stack_data','stack_governance'],
+    P2: ['stack_data','stack_infra','stack_ai'],
+    P3: ['stack_data','stack_decision','stack_governance'],
+    P4: ['stack_workflow','stack_ai','stack_data'],
+    P5: ['stack_workflow','stack_admin','stack_governance'],
+    V1: ['stack_admin'],
+    V2: ['stack_admin','stack_decision'],
+    V3: ['stack_admin','stack_data','stack_decision'],
+    V4: ['stack_admin','stack_workflow'],
+    V5: ['stack_decision','stack_data','stack_ai']
   };
 
-  // State-driven scenario paths (canonical IDs)
   var stateScenarios = {
-    state_healthy:     { care: ['C8','C2'],                         financial: ['F1'],                                  prevention: ['P1','P2','P4'],                  vbc: ['V1'],          private_pay_emphasis: true,  scenario: 'Continuous consumer monitoring with no acute event. Risk reduction is private-pay.' },
-    state_at_risk:     { care: ['C1','C2','C5','C8'],               financial: ['F1','F8'],                              prevention: ['P2','P3'],                       vbc: ['V2','V3','V5'],private_pay_emphasis: true,  scenario: 'Risk signals trigger consultation and monitoring. VBC bridge is the lever that funds prevention.' },
-    state_symptomatic: { care: ['C1','C2','C3','C4'],               financial: ['F1','F2','F3'],                         prevention: ['P1','P5'],                       vbc: ['V1'],          private_pay_emphasis: false, scenario: 'Patient seeks help. Front-door AI shapes triage and access while admin gates activate.' },
-    state_diagnosed:   { care: ['C5','C6','C7'],                    financial: ['F3','F4','F5','F6'],                    prevention: ['P4'],                            vbc: ['V4'],          private_pay_emphasis: false, scenario: 'Condition is named. Diagnosis, treatment, and claims/billing run in parallel.' },
-    state_chronic:     { care: ['C8','C7','C6','C5'],               financial: ['F8','F4','F5','F6'],                    prevention: ['P2','P4'],                       vbc: ['V2','V3','V5'],private_pay_emphasis: false, scenario: 'Longitudinal management. Risk and quality reporting feed future payment.' },
-    state_acute:       { care: ['C1','C3','C4','C5','C6'],          financial: ['F1','F2','F3','F4','F5'],               prevention: ['P5'],                            vbc: ['V1'],          private_pay_emphasis: false, scenario: 'High-intensity episode. Hospital workflow and full admin chain activate.' }
+    state_healthy:     { care: ['C8'],                              financial: [],                                       prevention: ['P1','P2','P3','P4'], vbc: ['V1'],          scenario: 'Health starts outside the system: consumer data, labs, coaching, and self-pay prevention.' },
+    state_at_risk:     { care: ['C1','C2','C5','C8'],               financial: ['F1','F8'],                              prevention: ['P2','P3'],           vbc: ['V2','V3','V5'],scenario: 'Risk signals become valuable when someone can fund prevention before an event.' },
+    state_symptomatic: { care: ['C1','C2','C3','C4'],               financial: ['F1','F2','F3'],                         prevention: ['P1','P5'],           vbc: ['V1'],          scenario: 'A symptom triggers both care access and coverage/admin checks.' },
+    state_diagnosed:   { care: ['C5','C6','C7'],                    financial: ['F3','F4','F6'],                         prevention: ['P4'],                vbc: ['V4'],          scenario: 'Treatment creates documentation, claims, follow-up, and patient responsibility.' },
+    state_chronic:     { care: ['C8','C7','C6','C5'],               financial: ['F8','F4','F5','F6'],                    prevention: ['P2','P4'],           vbc: ['V2','V3','V5'],scenario: 'Chronic care is a loop: monitoring, adjustment, claims, and risk reporting.' },
+    state_acute:       { care: ['C1','C3','C4','C5','C6'],          financial: ['F1','F2','F3','F4','F5'],               prevention: ['P5'],                vbc: ['V1'],          scenario: 'Acute care compresses the whole system into speed, triage, documentation, and payment.' }
   };
 
   // =====================================================================
-  // TOOLTIPS (term dictionary)
+  // TOOLTIPS — title + body (<= 45 words) only
   // =====================================================================
   var tooltips = {
-    tt_nhe:               { term: 'National Health Expenditure', def: 'Official CMS estimate of total US healthcare spending across goods, services, administration, public health, and investment.', why: 'This is the size of the system AI is entering, but not the size of the AI market.' },
-    tt_private_insurance: { term: 'Private health insurance', def: 'Commercial insurance, often employer-sponsored, that pays for covered medical care.', why: 'Large software budgets and administrative workflows make this a major AI target.' },
-    tt_medicare:          { term: 'Medicare', def: 'Federal health insurance program primarily for people 65+ and some disabled people.', why: 'Medicare shapes reimbursement, risk models, and provider economics.' },
-    tt_medicaid:          { term: 'Medicaid', def: 'Joint federal-state program for low-income and eligible populations.', why: 'Medicaid-heavy categories create different budget constraints and adoption paths.' },
-    tt_out_of_pocket:     { term: 'Out-of-pocket', def: 'Spending paid directly by patients — deductibles, copays, coinsurance, uncovered services.', why: 'Private-pay AI can scale here without waiting for reimbursement.' },
-    tt_mlr:               { term: 'Medical loss ratio (MLR)', def: 'ACA rule requiring many insurers to spend 80% or 85% of premium dollars on care and quality.', why: 'It changes insurer incentives: cost savings do not behave like ordinary SaaS margins.' },
-    tt_pbm:               { term: 'Pharmacy benefit manager', def: 'Intermediary that manages drug benefits, formularies, rebates, and pharmacy networks.', why: 'PBMs sit between payers, pharma, pharmacies, and patients.' },
-    tt_prior_auth:        { term: 'Prior authorization', def: 'Payer approval required before certain drugs, tests, or services are covered.', why: 'AI attacks both sides: providers automate submissions, payers automate review.' },
-    tt_rcm:               { term: 'Revenue cycle management', def: 'Provider-side process for coding, billing, collecting, and reconciling payment.', why: 'High-labor workflow with direct ROI, making it a near-term AI wedge.' },
-    tt_vbc:               { term: 'Value-based care', def: 'Payment model where economics depend on outcomes, quality, risk, or total cost.', why: 'It is the bridge that can make prevention financially rational.' },
-    tt_modeled:           { term: 'Modeled allocation', def: 'Link width constrained to official CMS node totals but allocated using cost-structure assumptions.', why: 'CMS does not publish a complete payer-to-service or service-to-cost-pool matrix.' }
+    tt_private_insurance: { title: 'Private health insurance', body: 'Commercial coverage, often employer-sponsored. A major channel for provider revenue, payer operations, prior auth, claims, and patient navigation.' },
+    tt_medicare:          { title: 'Medicare',                 body: 'Federal coverage mainly for older adults and some disabled people. Important for reimbursement, risk scoring, chronic care, and value-based models.' },
+    tt_medicaid:          { title: 'Medicaid',                 body: 'Joint federal-state coverage for eligible low-income populations. Often shapes long-term care, home health, and safety-net economics.' },
+    tt_out_of_pocket:     { title: 'Out-of-pocket',            body: 'Direct patient spending: deductibles, copays, uncovered care, cash-pay wellness, labs, devices, and supplements.' },
+    tt_hospital:          { title: 'Hospital care',            body: 'The largest destination category. It contains labor, facilities, supplies, drugs, administration, IT, and margin, not one single AI market.' },
+    tt_physician:         { title: 'Physician & clinical services', body: 'Clinics and professional services. Labor-heavy, workflow-heavy, and a major surface for copilots, access, documentation, and billing.' },
+    tt_rx:                { title: 'Retail prescription drugs',body: 'Pharmacy-dispensed drugs. The value chain includes manufacturers, pharmacies, wholesalers, PBMs, rebates, formularies, and patient cost-sharing.' },
+    tt_clinical_labor:    { title: 'Clinical labor',           body: 'Doctors, nurses, APPs, dentists, therapists, pharmacists, and care teams. AI can augment time and decisions but must fit workflow and liability.' },
+    tt_provider_admin:    { title: 'Provider admin',           body: 'Provider-side coding, billing, scheduling, prior auth, compliance, and collections. A near-term AI battleground.' },
+    tt_payer_admin:       { title: 'Payer operations',         body: 'Claims, utilization management, payment integrity, customer service, fraud review, and plan administration. Often responds defensively to provider automation.' },
+    tt_drugs_biologics:   { title: 'Drugs and biologics',      body: 'Therapeutic product value. AI can move upstream into discovery, trial design, precision medicine, and adherence.' },
+    tt_supplies_devices:  { title: 'Supplies and devices',     body: 'Medical supplies, equipment, diagnostics, wearables, dental devices, and DME. AI often enters through signal interpretation and monitoring.' },
+    tt_it_data:           { title: 'IT and data',              body: 'EHRs, data warehouses, interoperability, cybersecurity, cloud, and workflow software. A small cost pool but huge control point.' },
+    tt_mlr:               { title: 'Medical loss ratio',       body: 'Many insurers must spend 80% or 85% of premiums on care and quality improvement. This shapes savings incentives.' },
+    tt_vbc:               { title: 'Value-based care',         body: 'Payment tied to outcomes, quality, risk, or total cost. It is the bridge from event-driven care to prevention.' }
   };
 
   // =====================================================================
-  // COMPANIES — normalized to spec schema, neutral by default
+  // COMPANIES — market leaders FIRST, DVC examples second.
+  // group: 'leader' | 'dvc'.  Companies are neutral by default; group label
+  // only appears inside drawer (Market leader / benchmark vs DVC portfolio).
   // =====================================================================
-  // group: 'dvc' | 'benchmark'
-  // money_pool_ids point to Layer C pool ids; destination_ids point to Layer B
-  // ai_surface_ids to AI surface ids; process_step_ids to canonical C/F/P/V ids
   var companies = [
-    // --- DVC portfolio ---
-    { id: 'company_qualified_health', name: 'Qualified Health', group: 'dvc',
-      short_description: 'Enterprise AI operating layer for health systems — agent dev, automation, safeguards, monitoring.',
-      money_pool_ids: ['pool_provider_admin','pool_it_data','pool_clinical_labor'],
-      destination_ids: ['dest_hospital','dest_physician'],
-      process_step_ids: ['C4','F3','F4','F5'],
-      ai_surface_ids: ['ai_admin_rcm','ai_scribes_copilots'],
-      buyer_user: 'Health system',
-      value_capture: 'workflow control',
-      evidence: 'company_claim',
-      public_note: 'Reported $125M Series B and 500,000+ users (company-disclosed).' },
-    { id: 'company_doctronic', name: 'Doctronic', group: 'dvc',
-      short_description: 'AI primary care / access layer; Utah partnership for guideline-based Rx renewals under licensed oversight.',
-      money_pool_ids: ['pool_clinical_labor','pool_provider_admin'],
-      destination_ids: ['dest_physician'],
-      process_step_ids: ['C2','C3','P5'],
-      ai_surface_ids: ['ai_patient_access'],
-      buyer_user: 'Patient / clinician',
-      value_capture: 'private pay',
-      evidence: 'official',
-      public_note: 'Utah Department of Commerce announced partnership for AI prescription renewals.' },
-    { id: 'company_collectly', name: 'Collectly', group: 'dvc',
-      short_description: 'Patient billing & financial engagement / RCM workflow.',
-      money_pool_ids: ['pool_provider_admin'],
-      destination_ids: ['dest_hospital','dest_physician'],
-      process_step_ids: ['F6','F7'],
-      ai_surface_ids: ['ai_financial_engagement'],
-      buyer_user: 'Health system',
-      value_capture: 'revenue capture',
-      evidence: 'company_claim',
-      public_note: 'Patient billing automation; category placement only.' },
-    { id: 'company_redskyhealth', name: 'RedSkyHealth', group: 'dvc',
-      short_description: 'Denial remediation and claims automation; provider-side financial workflow.',
-      money_pool_ids: ['pool_provider_admin','pool_payer_admin'],
-      destination_ids: ['dest_hospital','dest_physician'],
-      process_step_ids: ['F4','F5'],
-      ai_surface_ids: ['ai_admin_rcm'],
-      buyer_user: 'Health system',
-      value_capture: 'revenue capture',
-      evidence: 'context',
-      public_note: 'Claims/denials automation; category placement.' },
-    { id: 'company_workdn', name: 'Workdn / WorkDone', group: 'dvc',
-      short_description: 'Hospital and workforce workflow automation.',
-      money_pool_ids: ['pool_provider_admin','pool_it_data'],
-      destination_ids: ['dest_hospital'],
-      process_step_ids: ['C4','F3'],
-      ai_surface_ids: ['ai_admin_rcm'],
-      buyer_user: 'Health system',
-      value_capture: 'labor leverage',
-      evidence: 'context',
-      public_note: 'Hospital workflow operations automation; category placement.' },
-    { id: 'company_denti_ai', name: 'Denti AI', group: 'dvc',
-      short_description: 'Dental imaging / charting AI for provider workflow.',
-      money_pool_ids: ['pool_clinical_labor','pool_supplies_devices'],
-      destination_ids: ['dest_dental'],
-      process_step_ids: ['C4','C5'],
-      ai_surface_ids: ['ai_diagnostics'],
-      buyer_user: 'Clinician',
-      value_capture: 'workflow control',
-      evidence: 'context',
-      public_note: 'Dental diagnostics and provider workflow.' },
-    { id: 'company_curex', name: 'Curex', group: 'dvc',
-      short_description: 'Online allergy care and immunotherapy pathway.',
-      money_pool_ids: ['pool_clinical_labor','pool_drugs_biologics'],
-      destination_ids: ['dest_physician','dest_rx'],
-      process_step_ids: ['C6','C7','P5'],
-      ai_surface_ids: ['ai_patient_access'],
-      buyer_user: 'Patient',
-      value_capture: 'private pay',
-      evidence: 'context',
-      public_note: 'Treatment, adherence, and consumer-pay navigation.' },
-    { id: 'company_nutrisense', name: 'Nutrisense', group: 'dvc',
-      short_description: 'Metabolic health platform using CGM data and coaching.',
-      money_pool_ids: ['pool_it_data','pool_supplies_devices'],
-      destination_ids: ['dest_dme','dest_nondurable'],
-      process_step_ids: ['C8','P2','P4'],
-      ai_surface_ids: ['ai_prevention'],
-      buyer_user: 'Patient',
-      value_capture: 'private pay',
-      evidence: 'context',
-      public_note: 'Consumer prevention and self-pay metabolic platform.' },
-    { id: 'company_neera', name: 'Neera Lab', group: 'dvc',
-      short_description: 'Sleep and prevention technology.',
-      money_pool_ids: ['pool_it_data','pool_supplies_devices'],
-      destination_ids: ['dest_dme'],
-      process_step_ids: ['C8','P2'],
-      ai_surface_ids: ['ai_prevention'],
-      buyer_user: 'Patient',
-      value_capture: 'private pay',
-      evidence: 'context',
-      public_note: 'Private-pay sleep / monitoring.' },
-    { id: 'company_bioptic', name: 'Bioptic', group: 'dvc',
-      short_description: 'AI-native techbio — target & molecule discovery; biological data.',
-      money_pool_ids: ['pool_drugs_biologics','pool_public_health_research','pool_it_data'],
-      destination_ids: ['dest_rx'],
-      process_step_ids: ['C5','C6','P3'],
-      ai_surface_ids: ['ai_techbio'],
-      buyer_user: 'Pharma',
-      value_capture: 'scientific IP',
-      evidence: 'context',
-      public_note: 'Upstream of pharma revenue; techbio discovery.' },
-    { id: 'company_kerna', name: 'Kerna Labs', group: 'dvc',
-      short_description: 'AI-enabled RNA / mRNA therapeutics; personalized therapeutics.',
-      money_pool_ids: ['pool_drugs_biologics','pool_public_health_research'],
-      destination_ids: ['dest_rx'],
-      process_step_ids: ['C6','P3'],
-      ai_surface_ids: ['ai_techbio'],
-      buyer_user: 'Pharma',
-      value_capture: 'scientific IP',
-      evidence: 'context',
-      public_note: 'Techbio / personalized therapeutics.' },
-    { id: 'company_asyliadx', name: 'AsyliaDx', group: 'dvc',
-      short_description: 'Precision diagnostics; immunotherapy-related risk/response analysis.',
-      money_pool_ids: ['pool_it_data','pool_clinical_labor'],
-      destination_ids: ['dest_physician'],
-      process_step_ids: ['C5','P3'],
-      ai_surface_ids: ['ai_diagnostics','ai_techbio'],
-      buyer_user: 'Clinician',
-      value_capture: 'scientific IP',
-      evidence: 'context',
-      public_note: 'Precision diagnostics.' },
-    { id: 'company_novogaia', name: 'Novogaia', group: 'dvc',
-      short_description: 'AI-enabled natural-product / fungi-based discovery.',
-      money_pool_ids: ['pool_drugs_biologics','pool_public_health_research'],
-      destination_ids: ['dest_rx'],
-      process_step_ids: ['C6','P3'],
-      ai_surface_ids: ['ai_techbio'],
-      buyer_user: 'Pharma',
-      value_capture: 'scientific IP',
-      evidence: 'context',
-      public_note: 'Techbio in new therapeutic search spaces.' },
-
-    // --- Benchmarks ---
-    { id: 'company_open_evidence', name: 'OpenEvidence', group: 'benchmark',
+    // ----- Clinical copilots / clinical labor -----
+    { id: 'co_openevidence',    name: 'OpenEvidence',     group: 'leader',
       short_description: 'Clinician-facing medical knowledge and evidence retrieval.',
       money_pool_ids: ['pool_clinical_labor','pool_it_data'],
       destination_ids: ['dest_physician','dest_hospital'],
       process_step_ids: ['C2','C5'],
       ai_surface_ids: ['ai_scribes_copilots'],
+      stack_ids: ['stack_ai','stack_decision'],
       buyer_user: 'Clinician',
-      value_capture: 'labor leverage',
-      evidence: 'context',
-      public_note: 'Clinical decision-support evidence layer.' },
-    { id: 'company_alphafold', name: 'AlphaFold / DeepMind', group: 'benchmark',
-      short_description: 'Foundational protein-structure model that became biotech research infrastructure.',
-      money_pool_ids: ['pool_drugs_biologics','pool_public_health_research','pool_it_data'],
-      destination_ids: ['dest_rx'],
-      process_step_ids: ['C5','C6','P3'],
-      ai_surface_ids: ['ai_techbio'],
-      buyer_user: 'Pharma / research',
-      value_capture: 'scientific IP',
-      evidence: 'official',
-      public_note: 'Open science benchmark for AI-for-biology.' },
-    { id: 'company_isomorphic', name: 'Isomorphic Labs', group: 'benchmark',
-      short_description: 'AI-first drug design building on DeepMind-era scientific modeling.',
-      money_pool_ids: ['pool_drugs_biologics','pool_public_health_research'],
-      destination_ids: ['dest_rx'],
-      process_step_ids: ['C6','P3'],
-      ai_surface_ids: ['ai_techbio'],
-      buyer_user: 'Pharma',
-      value_capture: 'scientific IP',
-      evidence: 'context',
-      public_note: 'Upstream of pharma revenue.' },
-    { id: 'company_abridge', name: 'Abridge', group: 'benchmark',
+      value_capture: 'Subscription / per-user clinical workflow' },
+    { id: 'co_abridge',         name: 'Abridge',          group: 'leader',
       short_description: 'Ambient clinical documentation and encounter summarization.',
       money_pool_ids: ['pool_clinical_labor','pool_provider_admin'],
       destination_ids: ['dest_physician','dest_hospital'],
       process_step_ids: ['C4','F3'],
       ai_surface_ids: ['ai_scribes_copilots','ai_admin_rcm'],
-      buyer_user: 'Clinician',
-      value_capture: 'labor leverage',
-      evidence: 'context',
-      public_note: 'Benchmark for near-term provider ROI.' }
+      stack_ids: ['stack_ai','stack_workflow'],
+      buyer_user: 'Clinician / health system',
+      value_capture: 'Enterprise software seat' },
+    { id: 'co_nuance_dax',      name: 'Nuance DAX',       group: 'leader',
+      short_description: 'Voice-driven ambient documentation embedded in the EHR.',
+      money_pool_ids: ['pool_clinical_labor','pool_it_data'],
+      destination_ids: ['dest_physician','dest_hospital'],
+      process_step_ids: ['C4','F3'],
+      ai_surface_ids: ['ai_scribes_copilots'],
+      stack_ids: ['stack_ai','stack_workflow'],
+      buyer_user: 'Health system',
+      value_capture: 'Per-encounter or per-seat license' },
+
+    // ----- Provider admin / RCM / payer admin -----
+    { id: 'co_waystar',         name: 'Waystar',          group: 'leader',
+      short_description: 'Provider revenue cycle, claims, denials, and patient payments platform.',
+      money_pool_ids: ['pool_provider_admin','pool_payer_admin'],
+      destination_ids: ['dest_hospital','dest_physician'],
+      process_step_ids: ['F2','F3','F4','F5','F6'],
+      ai_surface_ids: ['ai_admin_rcm','ai_financial_engagement'],
+      stack_ids: ['stack_admin','stack_workflow'],
+      buyer_user: 'Provider RCM',
+      value_capture: 'Transaction + SaaS fees' },
+    { id: 'co_cedar',           name: 'Cedar',            group: 'leader',
+      short_description: 'Patient payments, billing, and financial engagement.',
+      money_pool_ids: ['pool_provider_admin'],
+      destination_ids: ['dest_hospital','dest_physician'],
+      process_step_ids: ['F6','F7'],
+      ai_surface_ids: ['ai_financial_engagement'],
+      stack_ids: ['stack_admin','stack_workflow'],
+      buyer_user: 'Provider RCM',
+      value_capture: 'Per-account / transaction' },
+
+    // ----- Patient access / navigation -----
+    { id: 'co_ada',             name: 'Ada Health',       group: 'leader',
+      short_description: 'AI symptom assessment and patient navigation.',
+      money_pool_ids: ['pool_provider_admin','pool_it_data'],
+      destination_ids: ['dest_physician'],
+      process_step_ids: ['C2','C3','F1'],
+      ai_surface_ids: ['ai_patient_access'],
+      stack_ids: ['stack_ai','stack_workflow'],
+      buyer_user: 'Health system / employer',
+      value_capture: 'Enterprise / consumer' },
+    { id: 'co_included',        name: 'Included Health',  group: 'leader',
+      short_description: 'Care navigation and concierge for employers and members.',
+      money_pool_ids: ['pool_provider_admin','pool_it_data'],
+      destination_ids: ['dest_physician'],
+      process_step_ids: ['C2','C3','F1','P5'],
+      ai_surface_ids: ['ai_patient_access'],
+      stack_ids: ['stack_workflow','stack_admin'],
+      buyer_user: 'Employer / plan',
+      value_capture: 'PMPM' },
+
+    // ----- Diagnostics -----
+    { id: 'co_vizai',           name: 'Viz.ai',           group: 'leader',
+      short_description: 'Clinical workflow + imaging triage for time-sensitive conditions.',
+      money_pool_ids: ['pool_clinical_labor','pool_supplies_devices'],
+      destination_ids: ['dest_hospital'],
+      process_step_ids: ['C5','C1'],
+      ai_surface_ids: ['ai_diagnostics'],
+      stack_ids: ['stack_ai','stack_decision'],
+      buyer_user: 'Hospital service line',
+      value_capture: 'Enterprise license + procedure pull-through' },
+    { id: 'co_pathai',          name: 'PathAI',           group: 'leader',
+      short_description: 'AI-powered pathology for diagnostic accuracy and trials.',
+      money_pool_ids: ['pool_clinical_labor','pool_supplies_devices','pool_public_health_research'],
+      destination_ids: ['dest_hospital'],
+      process_step_ids: ['C5'],
+      ai_surface_ids: ['ai_diagnostics','ai_techbio'],
+      stack_ids: ['stack_ai','stack_data'],
+      buyer_user: 'Lab / pharma',
+      value_capture: 'Per-slide + biopharma services' },
+
+    // ----- Prevention / monitoring -----
+    { id: 'co_oura',            name: 'Oura',             group: 'leader',
+      short_description: 'Wearable ring with continuous sleep, HRV, and activity signals.',
+      money_pool_ids: ['pool_supplies_devices','pool_it_data'],
+      destination_ids: ['dest_dme'],
+      process_step_ids: ['C8','P2'],
+      ai_surface_ids: ['ai_prevention'],
+      stack_ids: ['stack_data','stack_infra'],
+      buyer_user: 'Consumer',
+      value_capture: 'Device + subscription' },
+    { id: 'co_whoop',           name: 'WHOOP',            group: 'leader',
+      short_description: 'Recovery and strain monitoring via continuous wearable signals.',
+      money_pool_ids: ['pool_supplies_devices','pool_it_data'],
+      destination_ids: ['dest_dme'],
+      process_step_ids: ['C8','P2'],
+      ai_surface_ids: ['ai_prevention'],
+      stack_ids: ['stack_data','stack_infra'],
+      buyer_user: 'Consumer',
+      value_capture: 'Membership' },
+    { id: 'co_function',        name: 'Function Health',  group: 'leader',
+      short_description: 'Comprehensive consumer lab testing with longitudinal tracking.',
+      money_pool_ids: ['pool_it_data','pool_supplies_devices'],
+      destination_ids: ['dest_other_professional'],
+      process_step_ids: ['P3','C8'],
+      ai_surface_ids: ['ai_prevention','ai_diagnostics'],
+      stack_ids: ['stack_data','stack_decision'],
+      buyer_user: 'Consumer',
+      value_capture: 'Membership' },
+
+    // ----- Techbio / drug discovery -----
+    { id: 'co_alphafold',       name: 'AlphaFold',        group: 'leader',
+      short_description: 'Open protein-structure model that reshaped computational biology.',
+      money_pool_ids: ['pool_drugs_biologics','pool_public_health_research'],
+      destination_ids: ['dest_rx'],
+      process_step_ids: ['C5','C6','P3'],
+      ai_surface_ids: ['ai_techbio'],
+      stack_ids: ['stack_ai','stack_data'],
+      buyer_user: 'Pharma / research',
+      value_capture: 'Open science' },
+    { id: 'co_isomorphic',      name: 'Isomorphic Labs',  group: 'leader',
+      short_description: 'AI-first drug design building on DeepMind-era scientific modeling.',
+      money_pool_ids: ['pool_drugs_biologics','pool_public_health_research'],
+      destination_ids: ['dest_rx'],
+      process_step_ids: ['C6','P3'],
+      ai_surface_ids: ['ai_techbio'],
+      stack_ids: ['stack_ai','stack_decision'],
+      buyer_user: 'Pharma',
+      value_capture: 'Pharma deals / royalties' },
+    { id: 'co_recursion',       name: 'Recursion',        group: 'leader',
+      short_description: 'AI-led drug discovery with industrial-scale phenomics.',
+      money_pool_ids: ['pool_drugs_biologics','pool_public_health_research'],
+      destination_ids: ['dest_rx'],
+      process_step_ids: ['C6','P3'],
+      ai_surface_ids: ['ai_techbio'],
+      stack_ids: ['stack_ai','stack_data'],
+      buyer_user: 'Pharma',
+      value_capture: 'Pipeline + partnerships' },
+    { id: 'co_insitro',         name: 'Insitro',          group: 'leader',
+      short_description: 'Machine learning–driven discovery for diseases with unmet need.',
+      money_pool_ids: ['pool_drugs_biologics','pool_public_health_research'],
+      destination_ids: ['dest_rx'],
+      process_step_ids: ['C6','P3'],
+      ai_surface_ids: ['ai_techbio'],
+      stack_ids: ['stack_ai','stack_data'],
+      buyer_user: 'Pharma',
+      value_capture: 'Pipeline + partnerships' },
+
+    // =================== DVC portfolio ===================
+    { id: 'co_qualified',       name: 'Qualified Health', group: 'dvc',
+      short_description: 'Enterprise AI operating layer for health systems — agent dev, automation, safeguards, monitoring.',
+      money_pool_ids: ['pool_provider_admin','pool_it_data','pool_clinical_labor'],
+      destination_ids: ['dest_hospital','dest_physician'],
+      process_step_ids: ['C4','F2','F3','F8'],
+      ai_surface_ids: ['ai_admin_rcm','ai_scribes_copilots'],
+      stack_ids: ['stack_ai','stack_governance','stack_infra'],
+      buyer_user: 'Health system',
+      value_capture: 'Enterprise platform' },
+    { id: 'co_doctronic',       name: 'Doctronic',        group: 'dvc',
+      short_description: 'AI primary-care access; Utah partnership for guideline-based Rx renewals under licensed oversight.',
+      money_pool_ids: ['pool_clinical_labor','pool_provider_admin'],
+      destination_ids: ['dest_physician'],
+      process_step_ids: ['C2','C3','F1','P1','P5'],
+      ai_surface_ids: ['ai_patient_access'],
+      stack_ids: ['stack_workflow','stack_ai'],
+      buyer_user: 'Patient / clinician',
+      value_capture: 'Cash-pay consumer' },
+    { id: 'co_collectly',       name: 'Collectly',        group: 'dvc',
+      short_description: 'Patient billing and financial engagement / RCM workflow.',
+      money_pool_ids: ['pool_provider_admin'],
+      destination_ids: ['dest_hospital','dest_physician'],
+      process_step_ids: ['F6','F7'],
+      ai_surface_ids: ['ai_financial_engagement'],
+      stack_ids: ['stack_admin','stack_workflow'],
+      buyer_user: 'Provider RCM',
+      value_capture: 'Per-account fee' },
+    { id: 'co_redsky',          name: 'RedSkyHealth',     group: 'dvc',
+      short_description: 'Denial remediation and claims automation; provider-side financial workflow.',
+      money_pool_ids: ['pool_provider_admin','pool_payer_admin'],
+      destination_ids: ['dest_hospital','dest_physician'],
+      process_step_ids: ['F4','F5'],
+      ai_surface_ids: ['ai_admin_rcm'],
+      stack_ids: ['stack_admin','stack_ai'],
+      buyer_user: 'Provider RCM',
+      value_capture: 'Performance-based RCM' },
+    { id: 'co_workdn',          name: 'Workdn',           group: 'dvc',
+      short_description: 'Hospital and workforce workflow automation.',
+      money_pool_ids: ['pool_provider_admin','pool_it_data'],
+      destination_ids: ['dest_hospital'],
+      process_step_ids: ['C4','F3'],
+      ai_surface_ids: ['ai_admin_rcm'],
+      stack_ids: ['stack_workflow','stack_ai'],
+      buyer_user: 'Health system',
+      value_capture: 'Workflow automation' },
+    { id: 'co_denti',           name: 'Denti AI',         group: 'dvc',
+      short_description: 'Dental imaging and charting AI for provider workflow.',
+      money_pool_ids: ['pool_clinical_labor','pool_supplies_devices'],
+      destination_ids: ['dest_dental'],
+      process_step_ids: ['C4','C5'],
+      ai_surface_ids: ['ai_diagnostics'],
+      stack_ids: ['stack_ai','stack_workflow'],
+      buyer_user: 'Dental practice',
+      value_capture: 'Per-chair subscription' },
+    { id: 'co_asyliadx',        name: 'AsyliaDx',         group: 'dvc',
+      short_description: 'Precision diagnostics; immunotherapy-related risk and response analysis.',
+      money_pool_ids: ['pool_it_data','pool_clinical_labor'],
+      destination_ids: ['dest_physician'],
+      process_step_ids: ['C5','P3'],
+      ai_surface_ids: ['ai_diagnostics','ai_techbio'],
+      stack_ids: ['stack_data','stack_decision'],
+      buyer_user: 'Specialist / pharma',
+      value_capture: 'Test + pharma partnerships' },
+    { id: 'co_nutrisense',      name: 'Nutrisense',       group: 'dvc',
+      short_description: 'Metabolic health platform using CGM data and coaching.',
+      money_pool_ids: ['pool_it_data','pool_supplies_devices'],
+      destination_ids: ['dest_dme','dest_nondurable'],
+      process_step_ids: ['C8','P2','P4'],
+      ai_surface_ids: ['ai_prevention'],
+      stack_ids: ['stack_data','stack_workflow'],
+      buyer_user: 'Consumer',
+      value_capture: 'Membership + device' },
+    { id: 'co_neera',           name: 'Neera Lab',        group: 'dvc',
+      short_description: 'Sleep and prevention technology.',
+      money_pool_ids: ['pool_it_data','pool_supplies_devices'],
+      destination_ids: ['dest_dme'],
+      process_step_ids: ['C8','P2'],
+      ai_surface_ids: ['ai_prevention'],
+      stack_ids: ['stack_data','stack_ai'],
+      buyer_user: 'Consumer',
+      value_capture: 'Consumer device + service' },
+    { id: 'co_curex',           name: 'Curex',            group: 'dvc',
+      short_description: 'Online allergy care and immunotherapy pathway.',
+      money_pool_ids: ['pool_clinical_labor','pool_drugs_biologics'],
+      destination_ids: ['dest_physician','dest_rx'],
+      process_step_ids: ['C6','C7','P4','P5'],
+      ai_surface_ids: ['ai_patient_access','ai_prevention'],
+      stack_ids: ['stack_workflow','stack_ai'],
+      buyer_user: 'Patient',
+      value_capture: 'Cash-pay therapy plan' },
+    { id: 'co_bioptic',         name: 'Bioptic',          group: 'dvc',
+      short_description: 'AI-native techbio — target and molecule discovery; biological data.',
+      money_pool_ids: ['pool_drugs_biologics','pool_public_health_research','pool_it_data'],
+      destination_ids: ['dest_rx'],
+      process_step_ids: ['C5','C6','P3'],
+      ai_surface_ids: ['ai_techbio'],
+      stack_ids: ['stack_ai','stack_data'],
+      buyer_user: 'Pharma',
+      value_capture: 'Pharma partnerships' },
+    { id: 'co_kerna',           name: 'Kerna Labs',       group: 'dvc',
+      short_description: 'AI-enabled RNA and mRNA therapeutics; personalized therapeutics.',
+      money_pool_ids: ['pool_drugs_biologics','pool_public_health_research'],
+      destination_ids: ['dest_rx'],
+      process_step_ids: ['C6','P3'],
+      ai_surface_ids: ['ai_techbio'],
+      stack_ids: ['stack_ai','stack_data'],
+      buyer_user: 'Pharma',
+      value_capture: 'Pipeline / partnerships' },
+    { id: 'co_novogaia',        name: 'Novogaia',         group: 'dvc',
+      short_description: 'AI-enabled natural-product / fungi-based discovery.',
+      money_pool_ids: ['pool_drugs_biologics','pool_public_health_research'],
+      destination_ids: ['dest_rx'],
+      process_step_ids: ['C6','P3'],
+      ai_surface_ids: ['ai_techbio'],
+      stack_ids: ['stack_ai','stack_data'],
+      buyer_user: 'Pharma',
+      value_capture: 'Discovery partnerships' }
   ];
 
-  // ------- Key takeaways -------------------------------------------------
   var takeaways = [
-    { title: 'Follow the money, then the patient', copy: 'Healthcare AI adoption depends less on technical elegance than on who pays, who uses, and who captures the value.' },
-    { title: 'Admin AI is an arms race', copy: 'Prior auth, coding, claims, and RCM are high-ROI AI surfaces, but automation on one side often triggers automation on the other.' },
+    { title: 'Follow the money, then the patient', copy: 'Adoption depends less on technical elegance than on who pays, who uses, and who captures the value.' },
+    { title: 'Admin AI is an arms race', copy: 'Prior auth, coding, claims, and RCM are high-ROI surfaces — automation on one side often triggers automation on the other.' },
     { title: 'Prevention needs a payer', copy: 'Consumer prevention scales through private pay. Systemic prevention requires VBC, employers, Medicare Advantage, ACOs, or CMS reimbursement.' },
-    { title: 'The data layer is shared, not separate', copy: 'Care, payment, prevention, research, and admin loops all compete over the same records, claims, labs, devices, and workflow data.' },
-    { title: 'AI moves both downstream and upstream', copy: 'Near-term wins are documentation and admin. The long-term shift is upstream into diagnostics, drug discovery, precision medicine, and continuous prevention.' }
+    { title: 'The data layer is shared', copy: 'Care, payment, prevention, research, and admin all compete over the same records, claims, labs, devices, and workflow data.' },
+    { title: 'Near-term wins differ from long-term shift', copy: 'Near-term wins are documentation and admin. The long-term shift is upstream into diagnostics, drug discovery, and continuous prevention.' }
   ];
 
-  // ------- Sources -------------------------------------------------------
   var sources = [
-    { label: 'CMS NHE Fact Sheet (2024)',          url: SRC.nhe },
-    { label: 'CMS 2024 NHE Highlights PDF',        url: SRC.highlights },
-    { label: 'CMS historical NHE data',            url: SRC.historical },
-    { label: 'CMS Medical Loss Ratio',             url: SRC.mlr },
-    { label: 'KFF / Health System Tracker',        url: SRC.kff2024 },
-    { label: 'PHTI — Administrative AI',           url: SRC.phti },
-    { label: 'MGMA — medical practice op costs',   url: SRC.mgma },
-    { label: 'HHS/ASPE pharmaceutical supply chain', url: SRC.aspe_pharma },
-    { label: 'Menlo Ventures — AI in Healthcare',  url: SRC.menlo },
-    { label: 'Rock Health — 2025 digital health funding', url: SRC.rock },
-    { label: 'CMS ACCESS model',                   url: SRC.access },
-    { label: 'Utah · Doctronic partnership',       url: SRC.doctronic }
+    { label: 'CMS NHE Fact Sheet',                       url: SRC.nhe },
+    { label: 'CMS 2024 NHE Highlights',                  url: SRC.highlights },
+    { label: 'Health System Tracker / KFF',              url: SRC.kff2024 },
+    { label: 'PHTI — Administrative AI',                 url: SRC.phti },
+    { label: 'MGMA — medical practice operating costs',  url: SRC.mgma },
+    { label: 'HHS/ASPE pharmaceutical supply chain',     url: SRC.aspe_pharma }
   ];
 
-  // ------- Export --------------------------------------------------------
   root.HEALTHCARE_DATA = {
     SRC: SRC,
     headlineStats: headlineStats,
-    sponsors: sponsors,
-
     paymentChannels: paymentChannels,
     destinations: destinations,
     costPools: costPools,
     moneyLinksAB: moneyLinksAB,
     moneyLinksBC: moneyLinksBC,
-
     aiSurfaces: aiSurfaces,
-    moneyCallouts: moneyCallouts,
-
+    incentives: incentives,
     patientStates: patientStates,
     careLoop: careLoop,
     financialLoop: financialLoop,
@@ -623,7 +723,6 @@
     sharedStack: sharedStack,
     stepStackDeps: stepStackDeps,
     stateScenarios: stateScenarios,
-
     tooltips: tooltips,
     companies: companies,
     takeaways: takeaways,

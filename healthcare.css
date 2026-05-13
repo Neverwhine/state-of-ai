@@ -806,3 +806,446 @@
 @media (min-width: 900px) {
   .hc-bottom-sheet { display: none; }
 }
+
+/* =====================================================================
+   CLEAN REBUILD ADDITIONS (segmented toolbar, drawer, stack bands)
+   ===================================================================== */
+
+/* Hero ---------------------------------------------------------------- */
+.hc-hero {
+  max-width: 820px;
+  margin: 0 auto 1.6rem;
+}
+.hc-hero p {
+  color: #C8CCD4;
+  font-size: 1.05rem;
+  line-height: 1.65;
+  margin: 0 0 0.8rem;
+}
+.hc-hero p:last-child { margin-bottom: 0; }
+
+/* Segmented control --------------------------------------------------- */
+.hc-controls-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  align-items: center;
+  margin: 0 0 1rem;
+}
+.hc-segmented {
+  display: inline-flex;
+  border: 1px solid rgba(160, 168, 188, 0.35);
+  border-radius: 9px;
+  overflow: hidden;
+  background: rgba(45, 49, 66, 0.5);
+}
+.hc-segmented[hidden],
+.hc-reset[hidden],
+.hc-bottom-sheet-backdrop[hidden] { display: none !important; }
+.hc-seg {
+  background: transparent;
+  border: none;
+  border-right: 1px solid rgba(160, 168, 188, 0.2);
+  color: var(--hc-text-soft, #C8CCD4);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 0.5rem 1rem;
+  transition: background 0.15s, color 0.15s;
+}
+.hc-seg:last-child { border-right: none; }
+.hc-seg:hover,
+.hc-seg:focus-visible {
+  background: rgba(78, 205, 196, 0.10);
+  color: var(--hc-text, #E8E9ED);
+  outline: none;
+}
+.hc-seg.is-active {
+  background: rgba(78, 205, 196, 0.20);
+  color: var(--hc-teal, #4ECDC4);
+  font-weight: 700;
+}
+.hc-segmented--filter .hc-seg.is-active {
+  background: rgba(245, 197, 66, 0.20);
+  color: var(--hc-gold, #F5C542);
+}
+
+.hc-reset {
+  background: transparent;
+  color: var(--hc-text-mute, #A0A8BC);
+  border: 1px solid rgba(160, 168, 188, 0.4);
+  border-radius: 9px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.78rem;
+  padding: 0.45rem 0.9rem;
+  transition: all 0.15s;
+}
+.hc-reset:hover,
+.hc-reset:focus-visible {
+  color: var(--hc-gold, #F5C542);
+  border-color: rgba(245, 197, 66, 0.6);
+  outline: none;
+}
+
+/* Method line and sources disclosure ---------------------------------- */
+.hc-method-line {
+  margin: 0.6rem 0 0;
+  color: var(--hc-text-mute, #A0A8BC);
+  font-size: 0.78rem;
+  line-height: 1.55;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.6rem 1rem;
+}
+.hc-method-disclosure {
+  display: inline-block;
+}
+.hc-method-disclosure summary {
+  color: var(--hc-teal, #4ECDC4);
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+.hc-method-disclosure summary::-webkit-details-marker { display: none; }
+.hc-method-list {
+  list-style: none;
+  padding: 0;
+  margin: 0.5rem 0 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.3rem 1rem;
+}
+.hc-method-list li a {
+  font-size: 0.78rem;
+  color: var(--hc-text-soft, #C8CCD4);
+  border-bottom: 1px dotted rgba(78, 205, 196, 0.35);
+}
+.hc-method-fine {
+  margin-top: 0.5rem;
+  font-size: 0.72rem;
+  color: var(--hc-text-mute, #A0A8BC);
+  font-style: italic;
+}
+
+/* Drawer (replaces the old hc-insight visual treatment) --------------- */
+.hc-drawer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  font-size: 0.86rem;
+  line-height: 1.5;
+  color: var(--hc-text-soft, #C8CCD4);
+}
+.hc-drawer-kind {
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--hc-teal, #4ECDC4);
+}
+.hc-drawer-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--hc-text, #E8E9ED);
+  line-height: 1.3;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+.hc-drawer-value {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--hc-gold, #F5C542);
+  font-variant-numeric: tabular-nums;
+}
+.hc-drawer p { margin: 0; }
+.hc-drawer h5 {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--hc-text-mute, #A0A8BC);
+  margin: 0.5rem 0 0.2rem;
+}
+.hc-drawer .hc-aside {
+  border-left: 2px solid rgba(78, 205, 196, 0.4);
+  padding-left: 0.7rem;
+  color: var(--hc-text-mute, #A0A8BC);
+  font-style: italic;
+  font-size: 0.82rem;
+}
+.hc-drawer .hc-evidence {
+  margin-top: 0.4rem;
+  font-size: 0.74rem;
+  color: var(--hc-text-mute, #A0A8BC);
+}
+.hc-flow-shares {
+  display: flex;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+  font-size: 0.82rem;
+  color: var(--hc-text-soft, #C8CCD4);
+}
+.hc-flow-shares strong { color: var(--hc-text, #E8E9ED); }
+
+.hc-insight-empty p {
+  color: var(--hc-text-mute, #A0A8BC);
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+.hc-insight-empty .hc-insight-hint {
+  margin-top: 0.5rem;
+  font-size: 0.78rem;
+}
+
+/* Composition tables --------------------------------------------------- */
+.hc-comp {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.78rem;
+  margin-top: 0.2rem;
+}
+.hc-comp th {
+  text-align: left;
+  font-weight: 600;
+  color: var(--hc-text-mute, #A0A8BC);
+  padding: 0.15rem 0.4rem;
+  border-bottom: 1px solid rgba(160, 168, 188, 0.18);
+}
+.hc-comp td {
+  padding: 0.2rem 0.4rem;
+  border-bottom: 1px solid rgba(160, 168, 188, 0.08);
+  color: var(--hc-text-soft, #C8CCD4);
+  vertical-align: top;
+}
+.hc-comp .num { text-align: right; }
+.hc-comp .tabnum { font-variant-numeric: tabular-nums; }
+.hc-link-btn {
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  color: var(--hc-text-soft, #C8CCD4);
+  font-family: inherit;
+  font-size: inherit;
+  text-align: left;
+}
+.hc-link-btn:hover,
+.hc-link-btn:focus-visible {
+  color: var(--hc-teal, #4ECDC4);
+  text-decoration: underline;
+  outline: none;
+}
+
+/* Pills used inside drawer -------------------------------------------- */
+.hc-pill-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+.hc-pill {
+  background: transparent;
+  border: 1px solid rgba(78, 205, 196, 0.4);
+  border-radius: 16px;
+  color: var(--hc-teal, #4ECDC4);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.74rem;
+  padding: 0.25rem 0.7rem;
+  font-weight: 600;
+}
+.hc-pill:hover,
+.hc-pill:focus-visible {
+  background: rgba(78, 205, 196, 0.18);
+  outline: none;
+}
+
+/* Company chip in drawer ---------------------------------------------- */
+.hc-co-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+.hc-co-chip {
+  background: rgba(45, 49, 66, 0.4);
+  border: 1px solid rgba(160, 168, 188, 0.25);
+  border-radius: 8px;
+  padding: 0.4rem 0.6rem;
+  text-align: left;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.4rem;
+  cursor: pointer;
+  font-family: inherit;
+  color: var(--hc-text-soft, #C8CCD4);
+}
+.hc-co-chip:hover,
+.hc-co-chip:focus-visible {
+  border-color: rgba(78, 205, 196, 0.5);
+  outline: none;
+}
+.hc-co-chip-name {
+  font-weight: 700;
+  color: var(--hc-text, #E8E9ED);
+  font-size: 0.82rem;
+}
+.hc-co-chip-desc {
+  flex: 1 1 100%;
+  color: var(--hc-text-mute, #A0A8BC);
+  font-size: 0.74rem;
+}
+.hc-co-grouptag {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.08rem 0.45rem;
+  border-radius: 4px;
+}
+.hc-co-grouptag.dvc {
+  background: rgba(245, 197, 66, 0.15);
+  color: var(--hc-gold, #F5C542);
+}
+.hc-co-grouptag.leader {
+  background: rgba(160, 168, 188, 0.15);
+  color: var(--hc-text-mute, #A0A8BC);
+}
+
+/* Sankey hit area + highlight ----------------------------------------- */
+.hc-sankey-svg .hc-link-hits path { cursor: pointer; }
+.hc-sankey-svg .hc-link-group.is-dim .link-base { stroke-opacity: 0.06; }
+.hc-sankey-svg .hc-link-group.is-hi .link-base  { stroke-opacity: 0.85; }
+.hc-sankey-svg .node.is-dim rect { opacity: 0.25; }
+.hc-sankey-svg .node.is-dim text { opacity: 0.32; }
+.hc-sankey-svg .node.is-hi rect { stroke: var(--hc-gold, #F5C542); stroke-width: 2; }
+
+/* AI / Incentive chips ------------------------------------------------- */
+.hc-ai-chip { cursor: pointer; }
+.hc-ai-chip rect {
+  fill: rgba(78, 205, 196, 0.10);
+  stroke: rgba(78, 205, 196, 0.6);
+  stroke-width: 1;
+}
+.hc-ai-chip text { fill: var(--hc-teal, #4ECDC4); font-size: 10px; font-weight: 700; letter-spacing: 0.04em; }
+.hc-ai-chip:hover rect, .hc-ai-chip:focus rect { fill: rgba(78, 205, 196, 0.25); }
+
+.hc-inc-chip { cursor: pointer; }
+.hc-inc-chip rect {
+  fill: rgba(245, 197, 66, 0.10);
+  stroke: rgba(245, 197, 66, 0.6);
+  stroke-width: 1;
+}
+.hc-inc-chip text { fill: var(--hc-gold, #F5C542); font-size: 10px; font-weight: 700; letter-spacing: 0.04em; }
+.hc-inc-chip:hover rect, .hc-inc-chip:focus rect { fill: rgba(245, 197, 66, 0.25); }
+
+.hc-co-badge { cursor: pointer; }
+.hc-co-badge circle { fill: rgba(232, 233, 237, 0.55); stroke: rgba(232, 233, 237, 0.8); }
+.hc-co-badge[data-group="dvc"] circle { fill: rgba(245, 197, 66, 0.55); stroke: rgba(245, 197, 66, 0.9); }
+.hc-co-badge:hover circle, .hc-co-badge:focus circle { transform: scale(1.4); transform-origin: center; }
+
+/* Patient loop: stacked bands ----------------------------------------- */
+.hc-loop-svg .stack-band rect.band-bg {
+  fill: rgba(45, 49, 66, 0.55);
+  stroke: rgba(160, 168, 188, 0.18);
+  stroke-width: 1;
+  transition: fill 0.2s, stroke 0.2s;
+}
+.hc-loop-svg .stack-band.is-active rect.band-bg {
+  fill: rgba(78, 205, 196, 0.12);
+  stroke: rgba(78, 205, 196, 0.5);
+}
+.hc-loop-svg .stack-band.is-focus rect.band-bg {
+  stroke: var(--hc-gold, #F5C542);
+  stroke-width: 2;
+}
+.hc-loop-svg .stack-band:hover rect.band-bg {
+  fill: rgba(78, 205, 196, 0.18);
+  cursor: pointer;
+}
+.hc-loop-svg .band-label {
+  fill: var(--hc-text, #E8E9ED);
+  font-size: 12px;
+  font-weight: 700;
+}
+.hc-loop-svg .band-contents {
+  fill: var(--hc-text-mute, #A0A8BC);
+  font-size: 10px;
+}
+.hc-loop-svg .band-co-chip rect {
+  fill: rgba(232, 233, 237, 0.10);
+  stroke: rgba(232, 233, 237, 0.25);
+}
+.hc-loop-svg .band-co-chip text {
+  fill: var(--hc-text-soft, #C8CCD4);
+  font-size: 9px;
+  font-weight: 600;
+}
+.hc-loop-svg .band-co-chip:hover rect {
+  fill: rgba(78, 205, 196, 0.25);
+  stroke: rgba(78, 205, 196, 0.6);
+  cursor: pointer;
+}
+.hc-loop-svg .band-co-chip.is-focus rect {
+  stroke: var(--hc-gold, #F5C542);
+  stroke-width: 1.5;
+}
+.hc-loop-svg .rail-title {
+  fill: var(--hc-text, #E8E9ED);
+  font-size: 12px;
+  font-weight: 700;
+}
+.hc-loop-svg .rail-sub {
+  fill: var(--hc-text-mute, #A0A8BC);
+  font-size: 9.5px;
+}
+.hc-loop-svg .loop-label {
+  fill: var(--hc-text-mute, #A0A8BC);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+.hc-loop-svg .loop-label.care { fill: var(--hc-teal, #4ECDC4); }
+.hc-loop-svg .loop-label.fin  { fill: var(--hc-gold, #F5C542); }
+
+/* Bottom-sheet backdrop ----------------------------------------------- */
+.hc-bottom-sheet-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 9997;
+  cursor: pointer;
+}
+@media (min-width: 900px) {
+  .hc-bottom-sheet-backdrop { display: none; }
+}
+
+/* Tooltip refinements -------------------------------------------------- */
+.hc-tooltip-body {
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+
+/* Hide old/legacy block sub if present (defensive) -------------------- */
+.hc-block-sub:empty { display: none; }
+
+/* Mobile loop scroll container ---------------------------------------- */
+@media (max-width: 767px) {
+  .hc-loop-diagram {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .hc-loop-svg { min-width: 1120px; }
+}
+
+/* Ensure tooltips never show on coarse pointer */
+@media (pointer: coarse) {
+  .hc-tooltip { display: none !important; }
+}
