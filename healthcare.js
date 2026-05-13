@@ -740,10 +740,14 @@
     //      bounded number of attempts and clamp to safe bounds.
     //   4. The result is stable for stable input ordering.
     function layoutIncentiveChips(specs, vbW, vbH) {
-      var PAD = 4;
+      var PAD = 8;
       var CHIP_H = 18;
       var CHIP_GAP_X = 6;
       var CHIP_GAP_Y = 4;
+      // Hard width cap. A chip wider than the safe canvas is meaningless and
+      // guarantees right-edge clipping when nudged. We cap to MAX_CHIP_W and
+      // also to (vbW - 2*PAD) so a chip can always fit inside the viewBox.
+      var MAX_CHIP_W = 150;
       var ROW = CHIP_H + CHIP_GAP_Y;
       var sorted = specs.slice().sort(function (a, b) {
         if (a.idealCx !== b.idealCx) return a.idealCx - b.idealCx;
@@ -760,7 +764,9 @@
       }
       function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
       sorted.forEach(function (s) {
-        var w = Math.max(120, s.label.length * 6.4 + 18);
+        var maxAllowedW = Math.max(60, vbW - 2 * PAD);
+        var w = Math.min(MAX_CHIP_W, maxAllowedW,
+          Math.max(80, s.label.length * 6.4 + 18));
         var h = CHIP_H;
         var idealX = s.idealCx - w / 2;
         var x = clamp(idealX, PAD, vbW - PAD - w);
@@ -789,6 +795,11 @@
           }
           attempts++;
         }
+        // Final hard clamp so a chip can never exit the safe viewBox even
+        // if the nudge loop bailed early. This is what prevents the right
+        // edge of the rect (and its text) from being clipped by the SVG.
+        x = clamp(x, PAD, vbW - PAD - w);
+        y = clamp(y, PAD, vbH - PAD - h);
         placed.push({ id: s.id, label: s.label, x: x, y: y, w: w, h: h });
       });
       return placed;

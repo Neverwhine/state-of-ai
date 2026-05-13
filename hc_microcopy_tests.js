@@ -315,6 +315,54 @@ if (layoutFnSrc) {
   }
   check('real incentive data lays out with no overlaps', realNoOverlap,
     'overlap count > 0');
+
+  // Right-edge clipping guard: place every real incentive chip at an
+  // idealCx near the right edge of the viewBox. Every resulting rect
+  // (including label width) must fit fully inside [PAD, vbW - PAD].
+  // This catches the "Fee-for-service inc..." truncation regression
+  // where a long label was clamped past the right canvas boundary.
+  var vbW = 1380, vbH = 720, PAD = 8;
+  var rightEdgeSpecs = D.incentives.map(function (inc) {
+    return { id: inc.id, label: inc.label, idealCx: vbW - 20, anchorTop: 60 };
+  });
+  var rightPlaced = layoutIncentiveChips(rightEdgeSpecs, vbW, vbH);
+  var rightInside = rightPlaced.every(function (p) {
+    return p.x >= PAD && p.x + p.w <= vbW - PAD;
+  });
+  check('right-edge-anchored real chips are not clipped by the viewBox',
+    rightInside,
+    'placed: ' + JSON.stringify(rightPlaced.map(function (p) {
+      return { id: p.id, x: p.x, w: p.w, right: p.x + p.w };
+    })));
+
+  // Hard width cap: no real incentive label should produce a chip wider
+  // than the documented MAX_CHIP_W. This is what guarantees the chip
+  // can always be nudged inside the viewBox without truncation.
+  var MAX_CHIP_W = 150;
+  var allCapped = rightPlaced.every(function (p) { return p.w <= MAX_CHIP_W; });
+  check('real chip widths respect MAX_CHIP_W cap (' + MAX_CHIP_W + ')',
+    allCapped,
+    'widths: ' + rightPlaced.map(function (p) { return p.id + '=' + p.w; }).join(', '));
+
+  // Label-length guard: every real incentive label must be short enough
+  // that, at the chip text size, it fits the cap. We allow up to 22
+  // chars (≈22*6.4 + 18 = ~159, close to MAX_CHIP_W; the cap clamps
+  // longer labels but the chip rect would visually crowd the canvas).
+  var LABEL_MAX = 22;
+  var lengthOK = D.incentives.every(function (inc) { return inc.label.length <= LABEL_MAX; });
+  check('every incentive label is <= ' + LABEL_MAX + ' chars (right-edge friendly)',
+    lengthOK,
+    'too long: ' + D.incentives
+      .filter(function (i) { return i.label.length > LABEL_MAX; })
+      .map(function (i) { return i.id + '=' + i.label.length; })
+      .join(', '));
+
+  // Fee-for-service must use the concise label form so the top-right
+  // chip can never be clipped by the river/canvas boundary.
+  var ffs = D.incentives.find(function (i) { return i.id === 'inc_fee_for_service'; });
+  check('inc_fee_for_service uses the concise "FFS inertia" label',
+    !!ffs && ffs.label === 'FFS inertia',
+    'got: ' + (ffs && ffs.label));
 }
 
 console.log('--- Test: Incentive overlay still encodes the structural tensions ---');
