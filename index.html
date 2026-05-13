@@ -4778,19 +4778,16 @@ body.embed-mode { padding: 0 !important; margin: 0 !important; }
     <!-- BLOCK 2: MONEY RIVER           -->
     <!-- ============================== -->
     <div class="hc-block anim-fade">
-      <h3 class="hc-block-h">Money River — who funds the system, and where it lands</h3>
+      <h3 class="hc-block-h">Money River — three stops: payments → destinations → cost pools</h3>
       <p class="hc-block-sub">
-        Payment channels and destinations are <span class="hc-term" data-tt="tt_nhe">official CMS values</span>. Link widths are
-        <em>modeled allocations</em> tuned to payer-mix hints in the CMS highlights; node totals balance to <strong>$5.3T</strong>.
-        Toggle the overlays to add <span class="hc-term" data-tt="tt_prior_auth">admin gates</span>,
-        AI surfaces, and company badges. Click any node to lock the insight panel.
+        Layer A (payment channels) and Layer B (destination categories) use <span class="hc-term" data-tt="tt_nhe">official 2024 CMS NHE</span> totals. Layer C decomposes each destination into <em>modeled</em> operating cost pools — what the dollars actually fund. All links are modeled allocations constrained to the official node totals, shown with a subtle diagonal hatch. DVC/portfolio status never colors the money flow.
       </p>
 
-      <div class="hc-view-controls" role="tablist" aria-label="Money River views">
-        <button type="button" class="hc-view-btn is-active" data-view="money" role="tab">Money only</button>
-        <button type="button" class="hc-view-btn" data-view="gates" role="tab">Admin gates</button>
-        <button type="button" class="hc-view-btn" data-view="ai" role="tab">AI surfaces</button>
-        <button type="button" class="hc-view-btn" data-view="companies" role="tab">Companies</button>
+      <div class="hc-view-controls" role="group" aria-label="Money River toggles">
+        <button type="button" class="hc-view-btn is-active" data-toggle="moneyOnly" aria-pressed="true">Money only</button>
+        <button type="button" class="hc-view-btn" data-toggle="ai" aria-pressed="false">Show AI surfaces</button>
+        <button type="button" class="hc-view-btn" data-toggle="companies" aria-pressed="false">Show company examples</button>
+        <button type="button" class="hc-view-btn" data-toggle="portfolioOnly" aria-pressed="false">Portfolio only</button>
       </div>
 
       <!-- Sponsor strip -->
@@ -4799,22 +4796,21 @@ body.embed-mode { padding: 0 !important; margin: 0 !important; }
       <div class="hc-money">
         <div class="hc-money-grid">
           <div class="hc-sankey-wrap" id="hc-sankey-wrap">
-            <svg class="hc-sankey-svg" id="hc-sankey-svg" role="img" aria-label="Money River — Sankey of CMS payment channels to destinations"></svg>
+            <svg class="hc-sankey-svg" id="hc-sankey-svg" role="img" aria-label="Three-layer Money River Sankey: CMS payment channels, CMS destinations, and modeled cost pools"></svg>
           </div>
           <aside class="hc-insight" id="hc-insight" role="complementary" aria-live="polite"></aside>
         </div>
 
         <div class="hc-legend" aria-label="Legend">
-          <span class="hc-legend-item"><span class="hc-legend-swatch payment"></span>Payment channel</span>
-          <span class="hc-legend-item"><span class="hc-legend-swatch dest"></span>Destination</span>
+          <span class="hc-legend-item"><span class="hc-legend-swatch payment"></span>Layer A · payment channel</span>
+          <span class="hc-legend-item"><span class="hc-legend-swatch dest"></span>Layer B · destination</span>
+          <span class="hc-legend-item"><span class="hc-legend-swatch pool"></span>Layer C · cost pool (modeled)</span>
           <span class="hc-legend-item"><span class="hc-legend-swatch oop"></span>Out-of-pocket flow</span>
           <span class="hc-legend-item"><span class="hc-legend-swatch residual"></span>Residual / reconciliation</span>
-          <span class="hc-legend-item"><span class="hc-legend-swatch gate"></span>Admin gate</span>
-          <span class="hc-legend-item"><span class="hc-legend-swatch ai"></span>AI surface</span>
-          <span class="hc-legend-item"><span class="hc-badge hc-badge--official">Official</span></span>
+          <span class="hc-legend-item"><span class="hc-legend-swatch modeled-link"></span>Modeled link (hatched)</span>
+          <span class="hc-legend-item"><span class="hc-badge hc-badge--official">Official, 2024 CMS NHE</span></span>
           <span class="hc-legend-item"><span class="hc-badge hc-badge--modeled">Modeled</span></span>
-          <span class="hc-legend-item"><span class="hc-badge hc-badge--dvc">DVC</span></span>
-          <span class="hc-legend-item"><span class="hc-badge hc-badge--bench">Benchmark</span></span>
+          <span class="hc-legend-note">Layer A and B node totals match official CMS 2024 NHE values. All link widths are <strong>modeled allocations</strong> constrained to those official totals — CMS does not publish a complete payer-to-service or service-to-cost-pool matrix. Layer C totals balance to Layer B by construction.</span>
         </div>
 
         <!-- Static fallback (hidden once JS initialises the chart) -->
@@ -4860,41 +4856,17 @@ body.embed-mode { padding: 0 !important; margin: 0 !important; }
     <div class="hc-block anim-fade">
       <h3 class="hc-block-h">Patient Event to Prevention Loop</h3>
       <p class="hc-block-sub">
-        A patient state triggers a <em>care loop</em> (clockwise) and a <em>financial loop</em> (counterclockwise) over the same shared stack of data, workflow, admin, decision, AI, governance, and infrastructure.
-        Private-pay prevention orbits outside the traditional payer/provider loops. <span class="hc-term" data-tt="tt_vbc">Value-based care</span> is the bridge that can pull prevention back into the reimbursed system.
+        A patient state triggers a <em>care loop</em> (clockwise, C1–C8) and a <em>financial / admin loop</em> (counterclockwise, F1–F8) over a shared stack. The right rail is the <strong>private-pay prevention orbit</strong> anchored to <span class="hc-term" data-tt="tt_out_of_pocket">out-of-pocket</span> spending; the left rail is the <span class="hc-term" data-tt="tt_vbc">VBC</span> reimbursement-model annotation that can pull prevention into the reimbursed system. Click any step to see attached AI surfaces and example companies.
       </p>
 
       <div class="hc-loop">
         <div class="hc-state-selector" id="hc-state-selector" role="tablist" aria-label="Patient state"></div>
 
-        <div class="hc-loop-grid">
-          <div class="hc-loop-vbc hc-side-card" id="hc-loop-vbc"></div>
-
-          <div class="hc-loop-diagram">
-            <svg class="hc-loop-svg" id="hc-loop-svg" role="img" aria-label="Patient event to prevention loop diagram"></svg>
-          </div>
-
-          <div class="hc-loop-prevention hc-side-card" id="hc-loop-prevention"></div>
-
-          <div class="hc-loop-stack hc-side-card" id="hc-loop-stack"></div>
+        <div class="hc-loop-diagram">
+          <svg class="hc-loop-svg" id="hc-loop-svg" role="img" aria-label="Directional patient event to prevention loop diagram with care loop, financial loop, VBC bridge, prevention orbit, and shared stack"></svg>
         </div>
-      </div>
-    </div>
 
-    <!-- ============================== -->
-    <!-- BLOCK 5: COMPANY EXPLORER      -->
-    <!-- ============================== -->
-    <div class="hc-block anim-fade">
-      <h3 class="hc-block-h">Company explorer</h3>
-      <p class="hc-block-sub">DVC portfolio and benchmark companies, placed where they actually capture value. Click any card to see its placements across the Money River and Patient Loop.</p>
-
-      <div class="hc-companies">
-        <div class="hc-company-filters" id="hc-company-filters" role="tablist" aria-label="Company filter">
-          <button type="button" class="hc-company-filter is-active" data-filter="all" role="tab">All</button>
-          <button type="button" class="hc-company-filter" data-filter="dvc" role="tab">DVC portfolio</button>
-          <button type="button" class="hc-company-filter" data-filter="bench" role="tab">Benchmarks</button>
-        </div>
-        <div class="hc-company-grid" id="hc-company-grid"></div>
+        <div class="hc-loop-fallback" id="hc-loop-fallback" aria-live="polite"></div>
       </div>
     </div>
 
