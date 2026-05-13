@@ -109,17 +109,30 @@
     // MONEY RIVER
     // ===================================================================
     var insightEl  = root.querySelector('#hc-insight');
+    var loopInsightEl = root.querySelector('#hc-loop-insight');
     var moneySvgEl = root.querySelector('#hc-sankey-svg');
     var fallbackEl = root.querySelector('#hc-fallback');
 
     // Drawer helpers ----------------------------------------------------
     function setInsight(html) { if (insightEl) insightEl.innerHTML = html; }
+    function setLoopInsight(html) { if (loopInsightEl) loopInsightEl.innerHTML = html; }
+    function clearLoopInsight() { if (loopInsightEl) loopInsightEl.innerHTML = ''; }
 
     function defaultInsight() {
       setInsight(
         '<div class="hc-insight-empty">' +
-          '<p>Click any payment, destination, cost pool, or flow to see what it means and what AI does there.</p>' +
-          '<p class="hc-insight-hint">Switch view to <strong>AI opportunities</strong>, <strong>Incentives</strong>, or <strong>Companies</strong> for overlays.</p>' +
+          '<div class="hc-insight-empty-row">' +
+            '<span class="hc-insight-empty-icon" aria-hidden="true">▸</span>' +
+            '<span><strong>Click a flow.</strong> Get the payer logic, recipient logic, structural tension, and the AI wedge for each $-stream.</span>' +
+          '</div>' +
+          '<div class="hc-insight-empty-row">' +
+            '<span class="hc-insight-empty-icon" aria-hidden="true">▸</span>' +
+            '<span><strong>Click a node.</strong> See where that channel routes, who fronts admin and labor costs, and which AI surfaces attach.</span>' +
+          '</div>' +
+          '<div class="hc-insight-empty-row">' +
+            '<span class="hc-insight-empty-icon" aria-hidden="true">▸</span>' +
+            '<span><strong>Switch view</strong> to <em>AI opportunities</em>, <em>Incentives</em>, or <em>Companies</em> for overlays.</span>' +
+          '</div>' +
         '</div>'
       );
     }
@@ -1054,6 +1067,7 @@
       state.selection = null;
       clearHighlight();
       defaultInsight();
+      clearLoopInsight();
       closeSheet();
       reflectResetButton();
       updateLoopForSelection();
@@ -1219,6 +1233,25 @@
       return out;
     }
 
+    // Pick the most appropriate microcopy entry for a flow. AB links (payer →
+    // destination) are keyed directly by the flow id; BC links (destination →
+    // cost pool) have no payer counterpart, so we fall back to the generic
+    // template. Out-of-pocket flows use the direct_pay_flow fallback.
+    function pickFlowMicrocopy(f) {
+      var copy = (DATA.flowMicrocopy && DATA.flowMicrocopy[f.id]) || null;
+      if (copy) return { copy: copy, fallback: false };
+      if (f.span === 'AB') {
+        if (String(f.source).indexOf('pay_out_of_pocket') === 0) {
+          return { copy: DATA.flowMicrocopyFallback.direct_pay_flow, fallback: true };
+        }
+        if (String(f.source).indexOf('pay_medicare') === 0 || String(f.source).indexOf('pay_medicaid') === 0 ||
+            String(f.source).indexOf('pay_other_public_private') === 0 || String(f.source).indexOf('pay_residual') === 0) {
+          return { copy: DATA.flowMicrocopyFallback.low_volume_government_flow, fallback: true };
+        }
+      }
+      return { copy: DATA.flowMicrocopyFallback.generic_flow, fallback: true };
+    }
+
     function renderFlowDrawer(f) {
       var s = findNode(f.source), t = findNode(f.target);
       // Compute source/target shares
@@ -1252,26 +1285,51 @@
         else relevantResolved = resolveForElement('destination', t.id);
       }
 
-      var why = whyFlowMatters(f);
+      var picked = pickFlowMicrocopy(f);
+      var copy = picked.copy;
+      var callout = (DATA.flowMicrocopyCallouts && DATA.flowMicrocopyCallouts[f.id]) || null;
 
-      var html = '<div class="hc-drawer">' +
-        '<div class="hc-drawer-kind">Flow</div>' +
-        '<div class="hc-drawer-title">' + escapeHtml(s ? s.label : f.source) + ' → ' + escapeHtml(t ? t.label : f.target) + '</div>' +
-        '<div class="hc-drawer-value tabnum">' + fmtUSD(f.value_b) + ' modeled</div>' +
-        '<div class="hc-flow-shares">' +
-          (srcShare != null ? '<span><strong class="tabnum">' + srcShare + '%</strong> of ' + escapeHtml(s ? s.label : '') + '</span>' : '') +
-          (tgtShare != null ? '<span><strong class="tabnum">' + tgtShare + '%</strong> of ' + escapeHtml(t ? t.label : '') + '</span>' : '') +
+      function bullets(arr) {
+        if (!arr || !arr.length) return '';
+        return '<ul class="hc-flow-bullets">' +
+          arr.map(function (b) { return '<li>' + escapeHtml(b) + '</li>'; }).join('') +
+          '</ul>';
+      }
+
+      var title = (copy && copy.title) || ((s ? s.label : f.source) + ' → ' + (t ? t.label : f.target));
+      var pathLabel = (s ? s.label : f.source) + ' → ' + (t ? t.label : f.target);
+
+      var html = '<div class="hc-drawer hc-flow-drawer">' +
+        '<div class="hc-drawer-kind">Flow' + (picked.fallback ? ' · summary' : '') + '</div>' +
+        '<div class="hc-drawer-title">' + escapeHtml(title) + '</div>' +
+        '<div class="hc-drawer-sub">' + escapeHtml(pathLabel) + '</div>' +
+        '<div class="hc-drawer-value tabnum">' + fmtUSD(f.value_b) + ' modeled' +
+          (srcShare != null ? ' · <span class="hc-flow-share">' + srcShare + '% of ' + escapeHtml(s ? s.label : '') + '</span>' : '') +
+          (tgtShare != null ? ' · <span class="hc-flow-share">' + tgtShare + '% of ' + escapeHtml(t ? t.label : '') + '</span>' : '') +
         '</div>' +
-        (why ? '<p>' + escapeHtml(why) + '</p>' : '') +
+        (copy && copy.what_it_is ? '<p>' + escapeHtml(copy.what_it_is) + '</p>' : '') +
+        (callout
+          ? '<div class="hc-flow-callout"><span class="hc-flow-callout-tag">' + escapeHtml(callout.type.replace(/_/g, ' ')) + '</span>' +
+            '<strong>' + escapeHtml(callout.headline) + '</strong>' +
+            '<p>' + escapeHtml(callout.body) + '</p></div>'
+          : '') +
+        (copy && copy.payer_incentive && copy.payer_incentive.length
+          ? '<h5>Payer logic</h5>' + bullets(copy.payer_incentive) : '') +
+        (copy && copy.recipient_incentive && copy.recipient_incentive.length
+          ? '<h5>Recipient logic</h5>' + bullets(copy.recipient_incentive) : '') +
+        (copy && copy.tension ? '<h5>Tension</h5><p>' + escapeHtml(copy.tension) + '</p>' : '') +
+        (copy && copy.ai_wedge ? '<h5>AI wedge</h5><p>' + escapeHtml(copy.ai_wedge) + '</p>' : '') +
         (relevantAi.length
-          ? '<h5>AI opportunities</h5><div class="hc-pill-row">' +
-            relevantAi.map(function (a) {
+          ? '<h5>AI surfaces nearby</h5><div class="hc-pill-row">' +
+            relevantAi.slice(0, 4).map(function (a) {
               return '<button type="button" class="hc-pill" data-action="ai" data-id="' + a.id + '">' + escapeHtml(a.label) + '</button>';
             }).join('') + '</div>'
           : '') +
         (relevantResolved && (relevantResolved.visible.length || relevantResolved.drawer.length)
           ? '<h5>Who is building here</h5>' + companyDrawerHTML(relevantResolved) : '') +
-        methodNote() +
+        (copy && copy.source_note
+          ? '<p class="hc-evidence">' + escapeHtml(copy.source_note) + '</p>'
+          : methodNote()) +
         '</div>';
       setInsight(html);
       maybeOpenSheet(html);
@@ -1412,30 +1470,68 @@
           ? '<h5>Who is building here</h5>' + companyDrawerHTML(resolved) : '') +
         '</div>';
       setInsight(html);
+      setLoopInsight(html);
       maybeOpenSheet(html);
+    }
+
+    function whyStackLayerMatters(stackId) {
+      switch (stackId) {
+        case 'stack_ai':         return 'This is the application surface — copilots, agents, predictions. Without it nothing automates; with it, every workflow above can be reshaped.';
+        case 'stack_workflow':   return 'Where tasks actually happen. Most measurable ROI lives here: scheduling, intake, notes, orders, refills, billing.';
+        case 'stack_decision':   return 'Guidelines, payer rules, risk scores. Whoever owns the rules decides what gets paid and what gets done.';
+        case 'stack_data':       return 'EHR, claims, labs, imaging, wearables. Whoever owns the data substrate owns the model’s reach.';
+        case 'stack_admin':      return 'Benefits, prior auth, coding, claims, RCM. The largest dollar drag in the system and the most direct AI wedge.';
+        case 'stack_governance': return 'HIPAA, FDA, audit logs, human oversight. The gate that decides whether an AI feature can ship in clinical settings.';
+        case 'stack_infra':      return 'APIs, cloud, identity, interoperability, security. The substrate every other layer assumes.';
+        default: return '';
+      }
     }
 
     function renderStackDrawer(sl) {
       if (!sl) return;
-      var resolved = resolveForElement('stack', sl.id);
+      var scenario = DATA.stateScenarios[currentLoopState] || { care: [], financial: [], prevention: [], vbc: [] };
+      var activeStepIds = scenario.care.concat(scenario.financial, scenario.prevention, scenario.vbc);
+      var activeForThisLayer = activeStepIds.filter(function (sid) {
+        return (DATA.stepStackDeps[sid] || []).indexOf(sl.id) >= 0;
+      });
+      var resolved = resolveForElement('stack', sl.id, { maxDrawer: 5 });
+
       var stepsHere = [];
       Object.keys(DATA.stepStackDeps).forEach(function (sid) {
         if (DATA.stepStackDeps[sid].indexOf(sl.id) >= 0) stepsHere.push(sid);
       });
+
+      var scenarioLabel = (DATA.patientStates.find(function (x) { return x.id === currentLoopState; }) || {}).label || '';
+      var isActive = activeForThisLayer.length > 0;
+
       var html = '<div class="hc-drawer">' +
-        '<div class="hc-drawer-kind">Stack layer</div>' +
+        '<div class="hc-drawer-kind">Stack layer' + (isActive ? ' · active' : '') + '</div>' +
         '<div class="hc-drawer-title">' + escapeHtml(sl.label) + '</div>' +
         '<p>' + escapeHtml(sl.contents) + '</p>' +
-        (stepsHere.length
-          ? '<h5>Loop steps that depend on this layer</h5><div class="hc-pill-row">' +
-            stepsHere.map(function (sid) {
+        (whyStackLayerMatters(sl.id)
+          ? '<h5>Why this layer matters</h5><p>' + escapeHtml(whyStackLayerMatters(sl.id)) + '</p>' : '') +
+        '<h5>In this scenario · ' + escapeHtml(scenarioLabel) + '</h5>' +
+        (activeForThisLayer.length
+          ? '<p>Active for ' + activeForThisLayer.length + ' step' + (activeForThisLayer.length === 1 ? '' : 's') + ' in this scenario.</p>' +
+            '<div class="hc-pill-row">' +
+            activeForThisLayer.map(function (sid) {
               var st = findStep(sid);
-              return '<button type="button" class="hc-pill" data-action="step" data-id="' + sid + '">' + escapeHtml(sid + (st ? ' · ' + st.label : '')) + '</button>';
-            }).join('') + '</div>' : '') +
+              return '<button type="button" class="hc-pill" data-action="step" data-id="' + sid + '">' +
+                escapeHtml(sid + (st ? ' · ' + st.label : '')) + '</button>';
+            }).join('') + '</div>'
+          : '<p class="hc-empty">Not directly activated for the current patient state.</p>') +
         ((resolved.visible.length || resolved.drawer.length)
           ? '<h5>Who is building here</h5>' + companyDrawerHTML(resolved) : '') +
+        (stepsHere.length
+          ? '<h5>All loop steps that depend on this layer</h5><div class="hc-pill-row">' +
+            stepsHere.map(function (sid) {
+              var st = findStep(sid);
+              return '<button type="button" class="hc-pill" data-action="step" data-id="' + sid + '">' +
+                escapeHtml(sid + (st ? ' · ' + st.label : '')) + '</button>';
+            }).join('') + '</div>' : '') +
         '</div>';
       setInsight(html);
+      setLoopInsight(html);
       maybeOpenSheet(html);
     }
 
@@ -1530,22 +1626,23 @@
       else if (s.kind === 'stack') selectStackLayer(s.id);
     }
 
-    // Insight panel pill/button delegation
-    if (insightEl) {
-      insightEl.addEventListener('click', function (ev) {
-        var t = ev.target.closest('[data-action]');
-        if (!t) return;
-        var action = t.dataset.action, id = t.dataset.id;
-        ev.stopPropagation();
-        if (action === 'node' || action === 'pool') selectNode(id);
-        else if (action === 'flow') selectFlow(id);
-        else if (action === 'ai') selectAi(id);
-        else if (action === 'incentive') selectIncentive(id);
-        else if (action === 'company') selectCompany(id);
-        else if (action === 'step') selectStep(id);
-        else if (action === 'stack') selectStackLayer(id);
-      });
+    // Insight panel pill/button delegation (shared handler for both the
+    // global Money River insight panel and the per-loop drawer panel).
+    function pillClickHandler(ev) {
+      var t = ev.target.closest('[data-action]');
+      if (!t) return;
+      var action = t.dataset.action, id = t.dataset.id;
+      ev.stopPropagation();
+      if (action === 'node' || action === 'pool') selectNode(id);
+      else if (action === 'flow') selectFlow(id);
+      else if (action === 'ai') selectAi(id);
+      else if (action === 'incentive') selectIncentive(id);
+      else if (action === 'company') selectCompany(id);
+      else if (action === 'step') selectStep(id);
+      else if (action === 'stack') selectStackLayer(id);
     }
+    if (insightEl) insightEl.addEventListener('click', pillClickHandler);
+    if (loopInsightEl) loopInsightEl.addEventListener('click', pillClickHandler);
 
     // Escape clears selection
     document.addEventListener('keydown', function (ev) {

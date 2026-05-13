@@ -1437,3 +1437,233 @@
 @media (pointer: coarse) {
   .hc-tooltip { display: none !important; }
 }
+
+/* ====================================================================
+   FLOW DRAWER + LAYOUT REFIT (May 2026)
+   ==================================================================== */
+
+/* Better empty-state for #hc-insight: small, useful, doesn't dominate */
+.hc-insight-empty {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  padding: 0.2rem 0.1rem;
+}
+.hc-insight-empty-row {
+  display: flex;
+  gap: 0.55rem;
+  align-items: flex-start;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: var(--hc-text-soft, #C8CCD4);
+  padding: 0.55rem 0.7rem;
+  background: rgba(0, 0, 0, 0.18);
+  border: 1px solid var(--hc-line-soft);
+  border-radius: 8px;
+}
+.hc-insight-empty-row strong { color: var(--hc-text, #E8E9ED); }
+.hc-insight-empty-row em     { color: var(--hc-teal, #4ECDC4); font-style: normal; font-weight: 700; }
+.hc-insight-empty-icon {
+  color: var(--hc-teal, #4ECDC4);
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+/* Make the right panel size honestly when empty.
+   Previously it had min-height:360px and could look like a big blank square. */
+.hc-insight { min-height: 0; }
+.hc-insight:has(.hc-insight-empty) { min-height: 0; }
+
+/* Flow drawer: payer/recipient bullets, tension, AI wedge */
+.hc-flow-drawer .hc-drawer-sub {
+  font-size: 0.72rem;
+  color: var(--hc-text-mute, #A0A8BC);
+  margin-bottom: 0.3rem;
+}
+.hc-flow-share {
+  color: var(--hc-teal, #4ECDC4);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  font-size: 0.78rem;
+}
+.hc-flow-bullets {
+  margin: 0.1rem 0 0.6rem 0;
+  padding: 0;
+  list-style: none;
+}
+.hc-flow-bullets li {
+  position: relative;
+  padding: 0.18rem 0 0.18rem 0.95rem;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: var(--hc-text-soft, #C8CCD4);
+}
+.hc-flow-bullets li::before {
+  content: "•";
+  color: var(--hc-teal, #4ECDC4);
+  position: absolute;
+  left: 0.15rem;
+  top: 0.18rem;
+  font-weight: 800;
+}
+.hc-flow-callout {
+  margin: 0.6rem 0 0.7rem;
+  padding: 0.65rem 0.8rem;
+  background: linear-gradient(180deg, rgba(245, 197, 66, 0.10), rgba(245, 197, 66, 0.02));
+  border-left: 3px solid rgba(245, 197, 66, 0.7);
+  border-radius: 6px;
+}
+.hc-flow-callout-tag {
+  display: inline-block;
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(245, 197, 66, 0.95);
+  margin-bottom: 0.25rem;
+}
+.hc-flow-callout strong { color: var(--hc-text, #E8E9ED); font-size: 0.92rem; display: block; margin-bottom: 0.3rem; }
+.hc-flow-callout p { font-size: 0.8rem; color: var(--hc-text-soft, #C8CCD4); margin: 0; line-height: 1.45; }
+
+/* Patient loop: side-by-side diagram + drawer on desktop, stacked on mobile */
+.hc-loop-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 340px);
+  gap: 1rem;
+  align-items: start;
+}
+@media (max-width: 1000px) {
+  .hc-loop-grid { grid-template-columns: 1fr; }
+}
+.hc-loop-insight {
+  position: sticky;
+  top: 80px;
+  background: var(--hc-panel);
+  border: 1px solid var(--hc-line);
+  border-radius: 12px;
+  padding: 1rem 1.1rem;
+  font-size: 0.86rem;
+  color: var(--hc-text-soft, #C8CCD4);
+  max-height: calc(100vh - 120px);
+  overflow: auto;
+}
+.hc-loop-insight:empty::before {
+  content: "Click a process step or a tech-stack band below to see how it works in this scenario.";
+  display: block;
+  color: var(--hc-text-mute, #A0A8BC);
+  font-size: 0.82rem;
+  font-style: italic;
+}
+/* Reuse drawer typography inside the loop drawer */
+.hc-loop-insight .hc-drawer-kind {
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--hc-teal, #4ECDC4);
+  font-weight: 800;
+  margin-bottom: 0.2rem;
+}
+.hc-loop-insight .hc-drawer-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--hc-text, #E8E9ED);
+  margin: 0 0 0.35rem;
+  line-height: 1.25;
+}
+.hc-loop-insight h5 {
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--hc-text-mute, #A0A8BC);
+  margin: 0.8rem 0 0.3rem;
+}
+.hc-loop-insight p { margin: 0.3rem 0; line-height: 1.5; }
+.hc-loop-insight .hc-pill-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin: 0.3rem 0;
+}
+.hc-loop-insight .hc-pill {
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.22rem 0.5rem;
+  border-radius: 999px;
+  border: 1px solid rgba(78, 205, 196, 0.4);
+  background: rgba(78, 205, 196, 0.07);
+  color: var(--hc-teal, #4ECDC4);
+  cursor: pointer;
+}
+.hc-loop-insight .hc-pill:hover { background: rgba(78, 205, 196, 0.15); }
+
+/* Make sure stack bands receive clicks across their whole width — text
+   inside the band group should not eat hover but should pass clicks to
+   the band group via bubbling. Setting pointer-events:visible on labels
+   keeps tooltips working but ensures the band gets the click target. */
+.hc-loop-svg .stack-band { cursor: pointer; }
+.hc-loop-svg .stack-band rect.band-bg { pointer-events: all; cursor: pointer; }
+.hc-loop-svg .stack-band .band-label,
+.hc-loop-svg .stack-band .band-contents,
+.hc-loop-svg .stack-band .band-co-empty {
+  pointer-events: none;
+}
+/* A "tap to explore" affordance hint */
+.hc-loop-svg .stack-band:hover rect.band-bg,
+.hc-loop-svg .stack-band:focus rect.band-bg {
+  filter: brightness(1.18);
+}
+.hc-loop-svg .stack-band:focus-visible {
+  outline: none;
+}
+.hc-loop-svg .stack-band:focus-visible rect.band-bg {
+  stroke: var(--hc-gold, #F5C542);
+  stroke-width: 2;
+}
+
+/* Mobile Money River layout: stop the right panel from being a big grey square.
+   On narrow widths the panel collapses to compact auto-height under the river. */
+@media (max-width: 1000px) {
+  .hc-money-grid { gap: 0.9rem; }
+  .hc-insight {
+    position: static;
+    max-height: none;
+    min-height: 0;
+    padding: 0.9rem 1rem;
+  }
+  /* When empty on mobile, render as a thin tip strip not a card */
+  .hc-insight:has(.hc-insight-empty) {
+    background: transparent;
+    border: 1px dashed rgba(160, 168, 188, 0.28);
+    padding: 0.6rem 0.7rem;
+  }
+}
+
+/* Smaller mobile loop insight panel */
+@media (max-width: 1000px) {
+  .hc-loop-insight {
+    position: static;
+    max-height: none;
+    min-height: 0;
+    padding: 0.8rem 1rem;
+  }
+  .hc-loop-insight:empty {
+    background: transparent;
+    border: 1px dashed rgba(160, 168, 188, 0.28);
+    padding: 0.5rem 0.7rem;
+  }
+}
+
+/* Label the legend row so it doesn't look like a turquoise progress bar */
+.hc-legend {
+  position: relative;
+}
+.hc-legend::before {
+  content: "Legend · ";
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 800;
+  color: var(--hc-text-mute, #A0A8BC);
+  margin-right: 0.35rem;
+}

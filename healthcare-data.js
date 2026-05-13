@@ -1401,6 +1401,477 @@
     layers: ['L14_drug_discovery','L13_pharma_intel']
   };
 
+  var flowMicrocopy = {
+      "fl_pay_medicaid__dest_dental": {
+        title: "Medicaid Dental (Adults & CHIP)",
+        what_it_is: "Medicaid covers dental for children (EPSDT mandate) and offers optional adult dental benefits that vary by state; CHIP covers pediatric dental comprehensively.",
+        payer_incentive: ["EPSDT mandates comprehensive preventive and restorative dental for all Medicaid children; states must cover it even if below cost.", "Adult dental is optional; most states offer limited benefits (emergency extraction only in some); expansion of adult dental is a key equity policy lever."],
+        recipient_incentive: ["Dentist participation in Medicaid is low due to low fees and administrative burden; FQHCs and community health centers are primary dental access points for Medicaid patients.", "Children's dental practices specializing in Medicaid patients (often corporate-affiliated) earn volume-based revenue under EPSDT."],
+        tension: "EPSDT guarantees pediatric dental coverage, but provider shortage and low rates create access gaps; adult Medicaid dental coverage is a state-by-state patchwork.",
+        ai_wedge: "AI dental triage via telehealth enables FQHC-based dental care navigation and early-stage intervention before expensive ER dental visits.",
+        source_note: "Dental = $189.2B in 2024; Medicaid adult dental coverage varies widely by state. Source: https://www.cms.gov/files/document/highlights.pdf"
+      },
+      "fl_pay_medicaid__dest_dme": {
+        title: "Medicaid Covering Medical Equipment",
+        what_it_is: "Medicaid pays DME suppliers for prescribed devices—power wheelchairs, home ventilators, orthotics, hearing aids—often at rates higher than Medicare competitive bid prices due to complex patient populations.",
+        payer_incentive: ["States set DME fees; prior auth is required for most high-cost items; Medicaid MCOs often have their own DME formularies.", "Medicaid covers hearing aids and pediatric equipment that Medicare excludes—a broader benefit that reflects the population's needs."],
+        recipient_incentive: ["Complex rehab technology (CRT) suppliers argue Medicaid rates don't cover cost of service for highly customized equipment for disabled populations.", "Pediatric DME suppliers face particular margin pressure; some exit Medicaid markets, creating access deserts."],
+        tension: "DME access for disabled Medicaid beneficiaries is genuinely constrained by low rates and supplier market withdrawal—a policy tension with ADA obligations.",
+        ai_wedge: "AI clinical documentation tools for complex rehab technology streamline the prior auth and appeal process, reducing delays for vulnerable beneficiaries.",
+        source_note: "Medicaid covers a broader DME benefit than Medicare (e.g., hearing aids, pediatric equipment); DME total = $86.4B in 2024. Source: https://www.cms.gov/files/document/highlights.pdf"
+      },
+      "fl_pay_medicaid__dest_home_health": {
+        title: "Medicaid Funding Home & HCBS",
+        what_it_is: "Medicaid funds skilled home health visits and, more significantly, a broad array of Home and Community-Based Services (HCBS) through 1915(c) waivers—including personal care aides, adult day services, and supported living—for elderly and disabled beneficiaries.",
+        payer_incentive: ["HCBS is structurally cheaper than nursing home care; states actively seek HCBS waiver expansion to shift Medicaid long-term care spending.", "State-directed payments through MCOs allow states to fund higher aide wages to address workforce shortages."],
+        recipient_incentive: ["Home health agencies and HCBS providers face severe workforce challenges—aide wages are low relative to competing labor markets.", "Personal care organizations earn per-hour rates; high aide turnover is a persistent quality and cost problem."],
+        tension: "HCBS wait lists in many states mean eligible beneficiaries cannot access community care and default to more expensive institutional settings.",
+        ai_wedge: "AI-enabled care coordination platforms match beneficiaries to available HCBS providers and flag care plan gaps before crises escalate to hospitalization.",
+        source_note: "Medicaid home health spending grew faster in 2024 than prior year; HCBS now a majority of Medicaid long-term care spending in most states. Source: https://www.cms.gov/files/document/highlights.pdf"
+      },
+      "fl_pay_medicaid__dest_hospital": {
+        title: "Medicaid Paying Hospitals",
+        what_it_is: "Medicaid (federal-state partnership) pays hospitals for inpatient and outpatient care for low-income, disabled, and dual-eligible beneficiaries through state fee schedules and managed care organization (MCO) contracts.",
+        payer_incentive: ["States set Medicaid fee schedules, often significantly below Medicare and commercial rates; hospitals serving high Medicaid populations rely on Disproportionate Share Hospital (DSH) payments as a supplement.", "MCO capitation shifts risk to managed care plans; states benefit when MCOs manage utilization and avoid hospitalization through preventive care."],
+        recipient_incentive: ["Hospitals lose money on many Medicaid cases at fee schedule rates; they cross-subsidize from commercial and Medicare volume.", "Safety-net hospitals and FQHCs have mission obligation to serve Medicaid populations even at financial loss; DSH payments partially compensate."],
+        tension: "Medicaid rates below cost create access barriers; hospitals accept Medicaid partly for DSH payments, partly for mission, partly because EMTALA requires emergency care regardless of payer.",
+        ai_wedge: "AI care management platforms targeting Medicaid high-utilizers (super-users driving disproportionate cost) reduce avoidable ED visits and hospitalizations.",
+        source_note: "Medicaid = $931.7B (18% of 2024 NHE), grew 6.6%; hospital care is primary Medicaid spending category. Source: https://www.cms.gov/data-research/statistics-trends-and-reports/national-health-expenditure-data/nhe-fact-sheet"
+      },
+      "fl_pay_medicaid__dest_nursing": {
+        title: "Medicaid: Long-Term Care Giant",
+        what_it_is: "Medicaid is by far the largest payer for long-term custodial nursing home care, covering beneficiaries who have spent down assets below state thresholds—a program that effectively serves as the US's de facto long-term care insurance system.",
+        payer_incentive: ["States pay SNF daily rates that are below private-pay rates; HCBS (Home and Community-Based Services) waivers are the preferred state strategy to shift care to lower-cost settings.", "Money Follows the Person and HCBS expansion under ARP represents a structural shift away from institutional nursing home care."],
+        recipient_incentive: ["Nursing homes rely on private-pay residents and Medicare SNF stays for financial survival; Medicaid-only residents often generate negative margins.", "The Medicaid nursing home bed supply has been declining as facilities close or convert; HCBS providers are expanding into the gap."],
+        tension: "Medicaid is the payer of last resort for the most expensive, most vulnerable population; states face structural fiscal pressure between bed-based and community care models.",
+        ai_wedge: "AI-assisted functional assessment and care planning in HCBS settings enables earlier intervention, better outcomes, and delayed or avoided nursing home placement.",
+        source_note: "Medicaid is the dominant payer for custodial nursing home care; nursing & CCRC = ~$230B (4% of NHE). HCBS now exceeds institutional spend in many states. Source: https://www.cms.gov/files/document/highlights.pdf"
+      },
+      "fl_pay_medicaid__dest_other_professional": {
+        title: "Medicaid: Allied Health Providers",
+        what_it_is: "Medicaid pays for physical therapy, occupational therapy, speech therapy, behavioral health counselors, and other non-physician licensed professionals for eligible beneficiaries through state fee schedules.",
+        payer_incentive: ["EPSDT mandates coverage of any medically necessary service for children, including PT/OT/SLP—states cannot limit these services for kids.", "For adults, states have more flexibility to limit frequency and scope; coverage varies widely."],
+        recipient_incentive: ["Medicaid rates for therapy services are among the lowest in the market; many private PT and mental health practices do not participate.", "School districts receive Medicaid reimbursement for school-based services (IEP-mandated PT, OT, SLP) under Early Periodic Screening provisions."],
+        tension: "EPSDT mandate creates open-ended children's coverage obligation; state budget pressure leads to administrative barriers and prior auth that delay access.",
+        ai_wedge: "AI-powered digital therapy tools (virtual PT, app-based speech therapy) extend reach for Medicaid populations with limited in-person provider access.",
+        source_note: "Other professional services = $184.9B total in 2024; Medicaid and private insurance all grew double-digits for this category. Source: https://www.cms.gov/files/document/highlights.pdf"
+      },
+      "fl_pay_medicaid__dest_physician": {
+        title: "Medicaid Paying Physicians",
+        what_it_is: "Medicaid pays physicians through state fee schedules—typically the lowest payer in the market—and through Medicaid MCOs that reimburse participating providers at negotiated rates.",
+        payer_incentive: ["States control rates; when rates are below cost of care, physician participation is voluntarily constrained, creating access problems.", "Section 1115 waivers and FQHC prospective payment systems (PPS) provide enhanced rates to safety-net providers."],
+        recipient_incentive: ["Many specialists refuse Medicaid due to low reimbursement; primary care and FQHCs are primary access points, often under financial strain.", "Medicaid VBC/ACO programs (in participating states) create shared savings incentives for care coordination and prevention."],
+        tension: "Medicaid physician rates are structurally inadequate relative to cost of care—access barriers are the direct result, not an accident of the system.",
+        ai_wedge: "AI clinical decision support in FQHCs and safety-net clinics improves care quality without adding physician headcount; virtual care expands access in low-provider areas.",
+        source_note: "Medicaid enrollee count declined to ~84.5M in 2024 post-continuous enrollment unwinding. Source: https://www.cms.gov/data-research/statistics-trends-and-reports/national-health-expenditure-data/nhe-fact-sheet"
+      },
+      "fl_pay_medicaid__dest_residential_personal": {
+        title: "Medicaid: Behavioral & Residential Care",
+        what_it_is: "Medicaid is the dominant payer (62% share) for non-traditional care settings—residential SUD treatment, community mental health, supported employment, school-based services—where no other payer exists at scale.",
+        payer_incentive: ["States use 1915(i) and 1115 waivers to fund community behavioral health; capitated MCOs manage behavioral health carve-outs under behavioral health organization (BHO) contracts.", "Section 1115 SUD waivers expanded Medicaid coverage of residential treatment (IMD exclusion partially waived), increasing state investment in SUD care."],
+        recipient_incentive: ["Residential SUD and mental health facilities earn daily/episode rates; many are non-profits with mission-driven, not profit-maximizing, behavior.", "Community mental health centers (CMHCs) and certified community behavioral health clinics (CCBHCs) have bundled/enhanced rate structures."],
+        tension: "Demand for behavioral health residential and community services vastly exceeds supply; Medicaid rates have been too low to attract for-profit capital at scale.",
+        ai_wedge: "AI crisis line triage and mobile crisis team routing reduce unnecessary ED psychiatric holds and improve placement in appropriate level-of-care settings.",
+        source_note: "Other health, residential & personal care = $320.5B in 2024; Medicaid = 62% share ($~199B). Source: https://www.cms.gov/files/document/highlights.pdf"
+      },
+      "fl_pay_medicaid__dest_rx": {
+        title: "Medicaid Covering Prescriptions",
+        what_it_is: "Medicaid pays retail pharmacies for covered outpatient drugs through the Medicaid Drug Rebate Program (MDRP), where manufacturers pay rebates to CMS and states in exchange for formulary inclusion.",
+        payer_incentive: ["MDRP rebates—minimum 23.1% of AMP for brand drugs—are the primary cost-control mechanism; states can negotiate supplemental rebates beyond the federal floor.", "Preferred Drug Lists (PDLs) in Medicaid MCOs create tiered access with lower-cost alternatives first."],
+        recipient_incentive: ["Pharmacies earn dispensing fees; mail order is less dominant in Medicaid than in commercial due to population mobility and access issues.", "Drug manufacturers must participate in MDRP to have drugs covered by Medicaid—exclusion is commercially unacceptable for mainstream drugs."],
+        tension: "MDRP rebates create a complex net price dynamic; high-list-price drugs may still be preferred after rebates, and rebate calculations create transparency gaps.",
+        ai_wedge: "AI medication adherence tools and automated pharmacy outreach improve chronic disease management in a population with high non-adherence rates.",
+        source_note: "Medicaid Drug Rebate Program covers nearly all FDA-approved outpatient drugs. Source: https://www.cms.gov/data-research/statistics-trends-and-reports/national-health-expenditure-data/nhe-fact-sheet"
+      },
+      "fl_pay_medicare__dest_dental": {
+        title: "Medicare & Dental (Limited Coverage)",
+        what_it_is: "Traditional Medicare does not cover routine dental; some Medicare Advantage plans offer supplemental dental benefits as a competitive differentiator, paying contracted dentists for covered services.",
+        payer_incentive: ["MA plans offer dental as an enrollment sweetener; actual covered benefits vary widely and are often limited in scope (preventive only in many plans).", "IRA/Build Back Better attempts to add dental to traditional Medicare have stalled; the coverage gap remains a policy debate."],
+        recipient_incentive: ["Dentists participating in MA dental networks trade lower reimbursement for volume; many opt out due to administrative complexity.", "Beneficiaries who lack dental coverage may defer care, leading to costly oral-systemic health complications."],
+        tension: "Oral health is clinically linked to cardiovascular, diabetic, and perioperative outcomes—but Medicare's structural exclusion of dental creates a gap in whole-person care.",
+        ai_wedge: "AI dental diagnostics embedded in MA plan apps can flag oral health risk and connect beneficiaries to in-network dental care before costly complications develop.",
+        source_note: "Traditional Medicare excludes routine dental; MA dental supplements vary. Dental total = $189.2B in 2024. Source: https://www.cms.gov/files/document/highlights.pdf"
+      },
+      "fl_pay_medicare__dest_dme": {
+        title: "Medicare Covering Medical Equipment",
+        what_it_is: "Medicare Part B pays DME suppliers for physician-prescribed equipment—wheelchairs, CPAP, oxygen concentrators, infusion pumps—using competitive bidding prices for commodity items.",
+        payer_incentive: ["CMS competitive bidding dramatically reduced DME prices for commodity items; fraud-prone codes are subject to prior auth and mandatory claims review.", "Medicare DME historically had high fraud rates; CMS pre-payment review and surety bonding are standard controls."],
+        recipient_incentive: ["Accredited DME suppliers earn competitive bid rates; margins are thin on commodity items and suppliers compete on service/delivery.", "High-value devices (power wheelchairs, complex rehab) retain higher margins and are subject to detailed documentation requirements."],
+        tension: "Competitive bidding reduced supplier margins to the point of supply-chain fragility; access problems emerged in rural areas with limited qualified suppliers.",
+        ai_wedge: "AI automated prior auth—particularly for CPAP based on sleep study documentation—removes weeks of manual delay and supplier administrative burden.",
+        source_note: "DME = $86.4B in 2024, grew 5.4%; Medicare and Medicaid are primary payers. Source: https://www.cms.gov/files/document/highlights.pdf"
+      },
+      "fl_pay_medicare__dest_home_health": {
+        title: "Medicare Funding Home Health",
+        what_it_is: "Medicare pays Medicare-certified home health agencies under the Patient-Driven Groupings Model (PDGM) for skilled nursing, therapy, and aide visits to homebound beneficiaries following qualifying hospital or SNF stays.",
+        payer_incentive: ["PDGM shifted payment from visit-volume to patient condition/functional status, reducing incentive for unnecessary visits.", "CMS OASIS assessments and outcome reporting drive quality measurement and star ratings used in consumer selection."],
+        recipient_incentive: ["Agencies are incentivized to optimize PDGM grouping (accurate diagnosis coding and functional scoring) to maximize episodic payment.", "Workforce shortages constrain capacity; labor costs are the primary operating expense."],
+        tension: "Medicare home health benefits require 'homebound' status and skilled care—criteria that constrain access and drive underutilization of a cost-effective post-acute channel.",
+        ai_wedge: "AI remote monitoring combined with nurse-alert algorithms enables fewer in-person visits while catching deterioration earlier, improving PDGM outcomes scores.",
+        source_note: "Home health = $169.4B (3% of 2024 NHE), grew 10.2%; Medicaid and Medicare are dominant payers. Source: https://www.cms.gov/files/document/highlights.pdf"
+      },
+      "fl_pay_medicare__dest_hospital": {
+        title: "Medicare Paying Hospitals",
+        what_it_is: "Medicare pays hospitals through the Inpatient Prospective Payment System (IPPS) for acute inpatient care and the Outpatient Prospective Payment System (OPPS) for outpatient visits, using fixed DRG-based rates.",
+        payer_incentive: ["CMS sets rates by DRG and adjusts for quality (Hospital Value-Based Purchasing, Readmissions Reduction Program); hospitals face financial penalties for excess readmissions and poor quality scores.", "Medicare Advantage (MA) plans—covering ~55% of Medicare beneficiaries—negotiate rates and use prior auth/UM tools similar to commercial insurance, creating a hybrid incentive structure."],
+        recipient_incentive: ["Under fee-for-service, hospitals maximize DRG revenue through accurate coding, high-complexity case mix, and volume; under MA, they accept capitated or reduced rates in exchange for predictable volume.", "Hospital systems with market concentration negotiate higher MA rates, limiting CMS cost-containment leverage."],
+        tension: "Fee-for-service DRGs incentivize complexity and volume; quality programs and readmission penalties push toward care coordination and prevention—these two logics coexist uneasily in every hospital.",
+        ai_wedge: "AI-assisted clinical documentation improvement (CDI) captures accurate DRG severity; predictive readmission models drive discharge care coordination before penalties accrue.",
+        source_note: "Medicare = $1.12T (21% of 2024 NHE), grew 7.8%; hospital care is the largest Medicare spend category. Source: https://www.cms.gov/data-research/statistics-trends-and-reports/national-health-expenditure-data/nhe-fact-sheet"
+      },
+      "fl_pay_medicare__dest_nursing": {
+        title: "Medicare Covering Skilled Nursing",
+        what_it_is: "Medicare Part A covers up to 100 days of skilled nursing facility care following a qualifying 3-day hospital inpatient stay, paying SNFs under the Patient-Driven Payment Model (PDPM) based on clinical complexity.",
+        payer_incentive: ["PDPM replaced volume-based RUG system; CMS incentivizes accurate clinical coding that reflects patient complexity without driving unnecessary therapy volume.", "CMS quality reporting (5-star) and value-based purchasing for SNFs tie a portion of payment to outcomes metrics."],
+        recipient_incentive: ["SNFs optimize PDPM case-mix by accurate coding of clinical categories (PT/OT/SLP, nursing, NTA); high-complexity cases generate higher daily rates.", "After day 100, all Medicare coverage stops; long-term custodial care shifts entirely to Medicaid (post-spend-down) or private pay."],
+        tension: "100-day cap creates abrupt coverage cliff; beneficiaries and families are often unaware of the transition to self-pay/Medicaid, generating ethical and financial stress.",
+        ai_wedge: "AI discharge readiness scoring predicts optimal SNF-to-home transition timing, reducing unnecessary extended SNF days and preventing inappropriate returns to acute care.",
+        source_note: "Nursing care & CCRC = ~$230B (4% of NHE); Medicare covers short-term skilled, Medicaid covers long-term custodial. Source: https://www.cms.gov/files/document/highlights.pdf"
+      },
+      "fl_pay_medicare__dest_other_professional": {
+        title: "Medicare: Allied Health & Therapy",
+        what_it_is: "Medicare Part B pays for physical therapy, occupational therapy, speech-language pathology, optometry, podiatry, and chiropractic services under the physician fee schedule or separate Part B payment methodologies.",
+        payer_incentive: ["Therapy caps (repealed in 2018) have been replaced by KX modifier medical necessity requirements and targeted medical review for high-volume therapy.", "Mental health parity under Medicare has expanded behavioral health coverage, including for telehealth; CMS uses coverage determinations to gate higher-cost services."],
+        recipient_incentive: ["Therapists earn per-visit fees; documentation of medical necessity is burdensome and a compliance risk.", "Behavioral health providers face chronic Medicare rate inadequacy, contributing to access shortfalls."],
+        tension: "Demand for mental health and PT is high; Medicare rates for these services are below market, creating access gaps and driving providers to private-pay or out-of-network billing.",
+        ai_wedge: "AI-generated treatment plan documentation and progress notes reduce therapist administrative time and improve audit defensibility.",
+        source_note: "Other professional services = $184.9B in 2024, +10.8%; Medicare covers PT, OT, SLP, behavioral health. Source: https://www.cms.gov/files/document/highlights.pdf"
+      },
+      "fl_pay_medicare__dest_physician": {
+        title: "Medicare Paying Physicians",
+        what_it_is: "Medicare pays physicians and clinicians under the Medicare Physician Fee Schedule (MPFS)—a resource-based relative value scale (RBRVS) setting rates by CPT code—and through alternative payment models (APMs) including ACOs.",
+        payer_incentive: ["MACRA/MIPS ties physician payment to quality, cost, and interoperability measures; ACO Shared Savings creates explicit financial incentives for reducing total cost of care.", "CMS uses prior auth for selected procedures (imaging, PT) and deploys clinical decision support via LCD/NCD coverage determinations."],
+        recipient_incentive: ["RBRVS historically over-values procedural work; primary care physicians are structurally underpaid relative to specialists, creating a specialist-heavy supply imbalance.", "ACO physicians sharing savings have strong incentives for preventive care, care coordination, and avoiding avoidable specialist referrals and hospitalizations."],
+        tension: "The fee schedule was designed for volume; MACRA/ACO reform is nudging toward value—but most physicians still earn primarily on activity, not outcomes.",
+        ai_wedge: "AI ambient scribing reduces documentation burden enabling more patient encounters; AI-assisted care gap closure in ACOs drives quality measure performance and shared savings bonuses.",
+        source_note: "Physician & clinical = $1.11T (21% of 2024 NHE); Medicare covers ~66.6 million beneficiaries. Source: https://www.cms.gov/data-research/statistics-trends-and-reports/national-health-expenditure-data/nhe-fact-sheet"
+      },
+      "fl_pay_medicare__dest_residential_personal": {
+        title: "Medicare: Ambulance & Specialty Care",
+        what_it_is: "Medicare covers ambulance transport, outpatient behavioral health in community mental health centers, and selected residential treatment programs—paying per-transport or per-service under Part B.",
+        payer_incentive: ["Medicare ambulance costs are subject to prior auth in certain states/situations; fraud in ambulance billing has historically been significant.", "Community mental health center (CMHC) rates and partial hospitalization programs (PHP) are covered; CMS monitors for inappropriate utilization."],
+        recipient_incentive: ["Ambulance providers earn per-transport; suppliers have incentive to transport even when alternative transport is available.", "Behavioral health facilities earn per-day rates for PHP/IOP; documentation burden is high."],
+        tension: "Ambulance is a high-fraud category; behavioral health is a high-access-deficit category—Medicare policy must balance fraud control with ensuring adequate access.",
+        ai_wedge: "AI triage routing tools redirect behavioral health crises to community alternatives rather than ambulance/ER transport, reducing costs and improving care appropriateness.",
+        source_note: "Other health, residential & personal care = $320.5B in 2024; Medicaid dominates (62% share), Medicare covers specific acute/behavioral sub-categories. Source: https://www.cms.gov/files/document/highlights.pdf"
+      },
+      "fl_pay_medicare__dest_residual": {
+        title: "Medicare Admin & CMS Operations",
+        what_it_is: "CMS administrative costs—contractor operations, fraud prevention, IT systems, and public health activities funded through Medicare trust fund—represent the overhead cost of operating the program.",
+        payer_incentive: ["CMS administrative cost ratio is ~1.4% of Medicare spending—far below private insurance—creating structural pressure on providers to prove efficiency vs. private payers.", "Program integrity investment (HEAT taskforce, RAC auditors) generates recoveries that offset admin costs."],
+        recipient_incentive: ["Medicare Administrative Contractors (MACs) earn performance-based contracts for processing accuracy and timeliness.", "RAC auditors earn a contingency percentage of recovered overpayments, creating incentive for aggressive audit activity."],
+        tension: "RAC audit aggressiveness creates provider burden; hospitals spend significant resources on denial management that generates no patient care value.",
+        ai_wedge: "AI-powered compliance monitoring identifies coding and billing anomalies before audit, reducing recovery exposure and denials.",
+        source_note: "CMS admin ratio ~1.4% vs. private insurance 15–20% non-medical spend. Source: https://www.cms.gov/marketplace/private-health-insurance/medical-loss-ratio"
+      },
+      "fl_pay_medicare__dest_rx": {
+        title: "Medicare Part D Drug Coverage",
+        what_it_is: "Medicare Part D pays PDP plans and MA-PD plans that in turn reimburse retail and mail-order pharmacies for covered outpatient drugs for beneficiaries, with CMS-negotiated prices under the IRA for selected drugs.",
+        payer_incentive: ["The Inflation Reduction Act (IRA, 2022) enables Medicare to directly negotiate prices for high-cost drugs and caps beneficiary out-of-pocket at $2,000/year; the federal government bears more financial risk post-IRA.", "PDP/MA-PD plans manage formularies and negotiate rebates with manufacturers, but IRA negotiated prices override rebates for covered drugs."],
+        recipient_incentive: ["Retail and mail-order pharmacies earn dispensing fees; mail order is preferred by plans for chronic maintenance drugs.", "Drug manufacturers face IRA negotiation pressure on high-revenue drugs, creating incentive to launch new indications or formulations to reset negotiation timelines."],
+        tension: "IRA negotiation represents a structural shift in pricing power toward CMS; manufacturers are adapting launch and patent strategies to mitigate.",
+        ai_wedge: "AI adherence prediction and automated refill outreach improve medication adherence, reducing hospitalizations attributable to poor chronic disease management.",
+        source_note: "Retail Rx = $467B in 2024; IRA Part D redesign shifted cost from beneficiaries to federal government and manufacturers. Source: https://www.cms.gov/files/document/highlights.pdf"
+      },
+      "fl_pay_other_public_private__dest_hospital": {
+        title: "Workers' Comp & VA Paying Hospitals",
+        what_it_is: "Workers' compensation insurers, the Department of Veterans Affairs, TRICARE (DoD), and other federal/state programs pay hospitals for covered populations under program-specific fee schedules.",
+        payer_incentive: ["Workers' comp payers prioritize return-to-work outcomes; opioid prescribing and prolonged disability are key cost drivers that incentivize payers to invest in active case management.", "VA and TRICARE are federally administered with specific rates and community care programs when VA facilities are unavailable."],
+        recipient_incentive: ["Hospitals earn program-specific rates that vary widely; VA community care rates are set by fee schedules; workers' comp rates are often above Medicare.", "Trauma centers and specialty hospitals serve disproportionate shares of VA/TRICARE volume."],
+        tension: "Workers' comp payers have strong return-to-work incentives that can conflict with provider treatment decisions; utilization management is adversarial in disputed claims.",
+        ai_wedge: "AI claims severity prediction and automated return-to-work assessment improve workers' comp case management efficiency and reduce prolonged disability duration.",
+        source_note: "Other third-party payers = $590.5B total (11% of 2024 NHE), declined 7% in 2024 as COVID-era programs wound down. Source: https://www.cms.gov/data-research/statistics-trends-and-reports/national-health-expenditure-data/nhe-fact-sheet"
+      },
+      "fl_pay_other_public_private__dest_physician": {
+        title: "Other Programs Paying Clinicians",
+        what_it_is: "TRICARE, Indian Health Service (IHS), CHAMPVA, workers' compensation, and other federal/state programs pay physicians and clinicians under program-specific rates and coverage rules.",
+        payer_incentive: ["IHS serves American Indian/Alaska Native populations with a chronically underfunded appropriated budget—access is constrained by resources, not benefit design.", "TRICARE uses commercial managed care contractors; rates and access are designed to parallel private insurance for military families."],
+        recipient_incentive: ["Physicians participating in IHS are often federal employees rather than contractors; mission-driven and government-pay scale.", "TRICARE-participating providers accept set rates; like Medicare, some providers limit their TRICARE volume."],
+        tension: "IHS is structurally underfunded relative to the population it serves; per-capita spending for IHS beneficiaries is among the lowest of any payer in the US.",
+        ai_wedge: "AI telehealth and remote diagnostic tools extend clinical reach in geographically isolated IHS and rural TRICARE settings.",
+        source_note: "Other third-party programs include IHS, VA, TRICARE, workers' comp, CHAMPVA. Total category = $590.5B in 2024. Source: https://www.cms.gov/data-research/statistics-trends-and-reports/national-health-expenditure-data/nhe-fact-sheet"
+      },
+      "fl_pay_other_public_private__dest_residential_personal": {
+        title: "Other Programs: Community Care",
+        what_it_is: "School-based health programs, maternal and child health (Title V), vocational rehabilitation, and Indian Health Service community programs fund non-traditional health services outside standard insurance channels.",
+        payer_incentive: ["Title V MCH block grants fund state maternal and child health programs with flexible spending authority; preventive and developmental services are the focus.", "Vocational rehabilitation programs prioritize employment outcomes; medical expenditures are tied to return-to-work potential."],
+        recipient_incentive: ["Community health workers, school nurses, and public health programs earn grant-funded salaries; they operate largely outside revenue-cycle incentives.", "These programs often serve as safety net access points before clinical needs escalate."],
+        tension: "Fragmented funding streams (block grants, federal programs, local health departments) create administrative complexity and limit scale; COVID-era public health investment declined 7% in 2024.",
+        ai_wedge: "AI population health tools identify high-risk community members for outreach by community health workers before clinical deterioration.",
+        source_note: "Other third-party total = $590.5B, declined 7% in 2024 reflecting wind-down of COVID-era programs. Source: https://www.cms.gov/data-research/statistics-trends-and-reports/national-health-expenditure-data/nhe-fact-sheet"
+      },
+      "fl_pay_other_public_private__dest_rx": {
+        title: "Other Programs: Drug Benefits",
+        what_it_is: "TRICARE pharmacy benefits, VA drug formulary (through VA pharmacies rather than retail), and workers' comp drug programs pay for outpatient prescriptions under program-specific pricing.",
+        payer_incentive: ["VA negotiates drug prices directly with manufacturers—the most aggressive federal price negotiation outside IRA—resulting in prices below Medicare Part D.", "TRICARE pharmacy benefits are administered through Express Scripts; mail order and home delivery are primary channels."],
+        recipient_incentive: ["VA pharmacies are operated directly by VA; retail is secondary (mail order for non-emergency). Pharmaceutical companies sell to VA at mandatory ceiling prices.", "Workers' comp drug programs (PBMs) manage formularies and combat opioid overprescribing, a historic cost driver in workers' comp."],
+        tension: "VA's drug pricing advantage is a policy reference point—advocates use VA prices to argue for broader public drug price negotiation.",
+        ai_wedge: "AI opioid risk scoring in workers' comp pharmacy programs identifies at-risk patients before dependence develops.",
+        source_note: "VA drug prices are set under Section 602 of the Veterans Health Care Act, at or below FSS prices. Source: https://www.cms.gov/data-research/statistics-trends-and-reports/national-health-expenditure-data/nhe-fact-sheet"
+      },
+      "fl_pay_out_of_pocket__dest_dental": {
+        title: "Patients Paying for Dental Care",
+        what_it_is: "Patients pay dentists directly—as the primary payer for major restorative, cosmetic, and orthodontic work after insurance benefits are exhausted—and as fully uninsured dental patients.",
+        payer_incentive: ["Dental care is the largest category of elective health spending; patients defer care based on out-of-pocket cost, creating a price-elastic demand curve unlike most medical care.", "Dental savings plans (non-insurance discount plans) are a growing alternative for cost-sensitive consumers outside insurance networks."],
+        recipient_incentive: ["Dentists earn premium margins on cash-pay patients—no insurance negotiation, no denial risk, immediate payment.", "Cosmetic dentistry (teeth whitening, veneers, aligners) is fully cash-pay and a high-margin growth segment."],
+        tension: "Out-of-pocket dental spending reflects a market failure—nearly 70M Americans have no dental coverage, and cost deferral leads to preventable systemic health complications.",
+        ai_wedge: "AI-powered virtual dental triage and remote monitoring enable preventive intervention and patient education before costly in-person treatment is needed.",
+        source_note: "Dental OOP grew 5.8% in 2024; OOP + private insurance = 80% of total dental spending. Source: https://www.cms.gov/files/document/highlights.pdf"
+      },
+      "fl_pay_out_of_pocket__dest_dme": {
+        title: "Patients Buying Medical Equipment",
+        what_it_is: "Patients pay for durable and non-durable medical equipment directly—over-the-counter mobility aids, CPAP supplies beyond coverage, hearing aids outside Medicare, diabetic supplies, and consumer health devices.",
+        payer_incentive: ["OTC hearing aids (FDA-regulated since 2022) and direct-to-consumer CGMs have created consumer electronics-style retail markets for previously prescription-only devices.", "HSA/FSA funds allow tax-advantaged purchasing of DME, increasing effective consumer purchasing power."],
+        recipient_incentive: ["Consumer medical device companies earn retail margins; Apple Watch, Dexcom, and Libre compete in direct-to-consumer health device markets.", "Traditional DME suppliers are threatened by consumer channels; specialized suppliers defend through prescription-required products and clinical services."],
+        tension: "FDA OTC device liberalization (hearing aids, CGMs) is disrupting traditional DME supplier channels—consumer pricing is rapidly driving down costs.",
+        ai_wedge: "AI-enabled wearables and consumer health devices generate longitudinal data streams that inform clinical care when connected to EHRs and care teams.",
+        source_note: "OTC hearing aid rules effective October 2022 created a new consumer DME channel; DME total = $86.4B in 2024. Source: https://www.cms.gov/files/document/highlights.pdf"
+      },
+      "fl_pay_out_of_pocket__dest_hospital": {
+        title: "Patients Paying Hospitals Directly",
+        what_it_is: "Patients pay hospitals directly through cost-sharing (deductibles, copays, coinsurance) for insured care, or as self-pay patients paying negotiated cash prices or inflated chargemaster rates.",
+        payer_incentive: ["High-deductible health plans (HDHPs) shift substantial first-dollar cost to patients, giving consumers a cost-consciousness incentive they lack when insured.", "Price transparency regulations (Hospital Price Transparency Rule) require hospitals to publish machine-readable prices; comparison-shopping is nascent."],
+        recipient_incentive: ["Hospitals have strong collection incentive; bad debt and charity care erode margins for safety-net hospitals.", "Chargemaster prices for uninsured are often 2–5x what insurers pay; the No Surprises Act limited surprise billing for emergency care."],
+        tension: "Hospital pricing opacity has been systemic; price transparency mandates are legally contested but progressively enforced—consumer price sensitivity is growing but far from perfect.",
+        ai_wedge: "AI-powered patient cost estimation tools (pre-service estimates, benefits check) reduce billing surprises and improve collections and patient financial experience.",
+        source_note: "Out-of-pocket = $556.6B (11% of 2024 NHE); hospital cost-sharing is a major component for insured patients. Source: https://www.cms.gov/data-research/statistics-trends-and-reports/national-health-expenditure-data/nhe-fact-sheet"
+      },
+      "fl_pay_out_of_pocket__dest_nondurable": {
+        title: "Patients Buying OTC Products",
+        what_it_is: "Patients purchase over-the-counter medicines, vitamins, supplements, wound care supplies, and other non-prescription health products directly at retail pharmacies, big-box stores, and online.",
+        payer_incentive: ["Consumers are fully price-sensitive in OTC markets; brand loyalty, convenience, and physician recommendations drive purchasing decisions.", "CARES Act HSA/FSA expansion (2020) broadened eligible OTC product categories, increasing tax-advantaged purchasing power."],
+        recipient_incentive: ["OTC manufacturers earn retail margins; private-label store brands compete aggressively on price, compressing brand margins.", "Pharmacies earn front-end margin on OTC products—higher than Rx dispensing margins—making OTC placement strategically important."],
+        tension: "Supplement and wellness market sits outside insurance coverage and FDA drug regulation, creating a consumer information gap and potential safety concerns.",
+        ai_wedge: "AI-powered medication interaction checkers and personalized supplement recommendation engines improve consumer product decisions and reduce adverse event risk.",
+        source_note: "Other non-durable products = $128.7B in 2024, grew 4.4%. Source: https://www.cms.gov/files/document/highlights.pdf"
+      },
+      "fl_pay_out_of_pocket__dest_nursing": {
+        title: "Private Pay for Long-Term Care",
+        what_it_is: "Seniors and families pay nursing homes and CCRCs directly from personal savings, retirement assets, and long-term care insurance until assets are depleted and Medicaid eligibility is reached.",
+        payer_incentive: ["Private-pay residents subsidize Medicaid residents; facilities actively market to private-pay populations and price accordingly (~$100K+/year for memory care).", "Long-term care insurance was historically available but the market largely collapsed due to pricing misjudgment; new hybrid products are growing slowly."],
+        recipient_incentive: ["CCRCs earn entrance fees ($200K–$600K) and monthly fees ($3K–$10K); they target wealthy retirees who can fund the full continuum without spend-down.", "Private-pay nursing homes compete on quality/amenities; Medicaid-dependent facilities compete on access and staff ratios."],
+        tension: "Private pay is how most Americans enter nursing home care; within 12–18 months, most have spent down to Medicaid—the transition is financially devastating for middle-class families.",
+        ai_wedge: "AI financial planning tools for long-term care cost estimation and care coordination help families plan transitions and avoid rushed spend-down.",
+        source_note: "Nursing & CCRC = ~$230B in 2024; private pay is the entry point before Medicaid spend-down. Source: https://www.cms.gov/files/document/highlights.pdf"
+      },
+      "fl_pay_out_of_pocket__dest_other_professional": {
+        title: "Patients Paying Allied Providers",
+        what_it_is: "Patients pay directly for physical therapy, mental health counseling, chiropractic, acupuncture, and optometry—often out-of-network or for services with limited insurance coverage.",
+        payer_incentive: ["Consumers increasingly pay cash for mental health therapy (therapists opt out of insurance), PT, and integrative medicine where in-network options are scarce or have long waits.", "Telehealth platforms offer subscription or per-session cash pricing for behavioral health, creating consumer-direct markets outside insurance."],
+        recipient_incentive: ["Out-of-network and cash-pay therapists and PTs earn higher per-session rates with no billing friction; patient relationship is direct and unmediated.", "Mental health providers disproportionately opt out of insurance due to low Medicaid/insurance rates relative to the cash market."],
+        tension: "Behavioral health workforce shortages and low insurance rates have created a two-tier system: insured patients with limited in-network access vs. cash-pay patients with immediate access.",
+        ai_wedge: "AI-powered mental health apps (text-based CBT, mood tracking, peer support) serve as effective lower-acuity digital therapy alternatives, extending reach below what licensed providers can serve.",
+        source_note: "Other professional services = $184.9B, +10.8% in 2024; OOP grew double-digits in this category. Source: https://www.cms.gov/files/document/highlights.pdf"
+      },
+      "fl_pay_out_of_pocket__dest_physician": {
+        title: "Patients Paying Physicians Directly",
+        what_it_is: "Patients pay physicians and clinics directly through co-pays, deductibles, and coinsurance for insured visits, or as direct-pay patients in cash-pay and concierge practices.",
+        payer_incentive: ["HDHP design makes consumers price-sensitive for below-deductible office visits; direct primary care (DPC) subscriptions create a consumer relationship outside insurance.", "Consumer demand for telehealth convenience and transparent cash pricing is growing in the direct-pay segment."],
+        recipient_incentive: ["Concierge and DPC physicians earn monthly subscription fees independent of visit volume; consumer trust, access, and preventive care drive retention.", "Traditional fee-for-service physicians value prompt payment—out-of-pocket/cash is administratively simpler than insurance billing."],
+        tension: "DPC and concierge create a two-tier access dynamic: wealthier patients buy more primary care access, potentially exacerbating health equity gaps.",
+        ai_wedge: "AI-powered symptom checkers and asynchronous care platforms extend physician reach in the direct-pay market and improve care navigation for consumer decisions.",
+        source_note: "Out-of-pocket for physician/clinical services is significant; price transparency for outpatient services remains limited. Source: https://www.cms.gov/data-research/statistics-trends-and-reports/national-health-expenditure-data/nhe-fact-sheet"
+      },
+      "fl_pay_out_of_pocket__dest_rx": {
+        title: "Patients Paying for Prescriptions",
+        what_it_is: "Patients pay retail pharmacies directly for prescription drugs through cost-sharing (co-pays, co-insurance, deductibles) or as uninsured cash-pay patients—a category where GoodRx and discount programs have become major intermediaries.",
+        payer_incentive: ["Part D IRA out-of-pocket cap ($2,000 for Medicare beneficiaries in 2025) reduces catastrophic drug cost burden; no equivalent cap exists for commercial insurance patients.", "GoodRx, Mark Cuban's Cost Plus Drugs, and direct pharmacy pricing apps have created price transparency and direct-pay alternatives to insurance adjudication."],
+        recipient_incentive: ["Retail pharmacies earn margin on cash transactions; GoodRx rebates have transformed the pharmacy economics landscape—some pharmacies lose money filling GoodRx prescriptions.", "Manufacturers offer patient assistance programs and co-pay cards to insured patients to offset cost-sharing, particularly for specialty drugs."],
+        tension: "The insured price (with PBM adjudication) is often higher than the cash GoodRx price—a pricing anomaly that reveals systemic distortion in the rebate ecosystem.",
+        ai_wedge: "AI drug price comparison engines and adherence prediction tools optimize patient medication decisions and reduce cost-driven non-adherence.",
+        source_note: "Retail Rx out-of-pocket growth slowed in 2024 partly due to Part D redesign shifting cost to federal government. Source: https://www.cms.gov/files/document/highlights.pdf"
+      },
+      "fl_pay_private_insurance__dest_dental": {
+        title: "Insurers Covering Dental Care",
+        what_it_is: "Private dental insurers pay dentists and dental practices for covered preventive, restorative, and orthodontic services up to annual benefit maximums.",
+        payer_incentive: ["Annual maximum benefit caps ($1,000–$2,000 typical) limit insurer exposure and shift most major work to out-of-pocket; there is no MLR mandate for standalone dental.", "Payers benefit from preventive utilization (lower downstream restorative costs) and in-network steering."],
+        recipient_incentive: ["Dentists maximize revenue through volume, higher-value restorative and cosmetic procedures, and upsell of services not covered by insurance.", "Dental practices frequently operate outside insurance altogether (fee-for-service cash) to avoid reimbursement constraints."],
+        tension: "Low annual caps push patients into out-of-pocket for major procedures, limiting insurer influence and driving consumers toward dental discount plans or uninsured care.",
+        ai_wedge: "AI diagnostic imaging (cavity/pathology detection from X-rays) improves detection rates and reduces unnecessary procedures.",
+        source_note: "Dental services = $189B (4% of 2024 NHE); private insurance + OOP = 80% of dental spending in 2024. Source: https://www.cms.gov/files/document/highlights.pdf"
+      },
+      "fl_pay_private_insurance__dest_dme": {
+        title: "Insurers Covering Medical Equipment",
+        what_it_is: "Private insurers reimburse durable medical equipment suppliers for devices prescribed by physicians—wheelchairs, CPAP machines, oxygen, infusion pumps—under formulary and prior auth controls.",
+        payer_incentive: ["Competitive bidding programs and national mail-order contracts push commodity DME prices down; prior auth gates high-cost items.", "Fraud and billing abuse in DME is historically high, so payers invest heavily in audit and prepayment review."],
+        recipient_incentive: ["DME suppliers earn on volume and per-item margins; mail-order and direct-to-consumer channels bypass traditional suppliers.", "Manufacturers of high-value devices (implantables, robotic surgery) earn separately via hospital capital budgets, not this channel."],
+        tension: "Payer wants commodity pricing and generic equivalents; suppliers defend brand margins and upsell ancillary supplies.",
+        ai_wedge: "AI-automated prior auth for standard DME orders (e.g., CPAP based on sleep study data) removes manual friction and reduces supplier backlogs.",
+        source_note: "DME = $86.4B in 2024, grew 5.4%. Source: https://www.cms.gov/files/document/highlights.pdf"
+      },
+      "fl_pay_private_insurance__dest_home_health": {
+        title: "Insurers Funding Home Health",
+        what_it_is: "Private insurers pay home health agencies for skilled nursing visits, physical therapy, and aide services in a patient's home, typically following hospitalization.",
+        payer_incentive: ["Home health is a key post-acute cost-shifting lever: insurers prefer home-based recovery over costly skilled nursing facility days.", "Under MLR rules, payer incentive is to substitute lower-cost home care for inpatient; coordination with hospital discharge planners is key."],
+        recipient_incentive: ["Home health agencies earn per-visit or episodic payment; higher visit frequency and skilled nursing mix improve revenue.", "Workforce scarcity (aide shortages) constrains supply and gives agencies pricing leverage."],
+        tension: "Insurer wants minimal skilled visits; agency earns more on higher visit counts; patient safety requires adequate but not excessive skilled touch.",
+        ai_wedge: "Remote patient monitoring + AI triage flags deteriorating patients before rehospitalization, reducing insurer costs and improving outcomes.",
+        source_note: "Home health = $169B (3% of 2024 NHE), grew 10.2%. Source: https://www.cms.gov/files/document/highlights.pdf"
+      },
+      "fl_pay_private_insurance__dest_hospital": {
+        title: "Insurers Paying Hospitals",
+        what_it_is: "Private health insurers reimburse hospitals for inpatient stays, surgeries, emergency visits, and outpatient procedures under negotiated contract rates.",
+        payer_incentive: ["ACA MLR rules require ≥80–85% of premiums spent on care, so the lever is not blanket cost-cutting but managing medical expense through network design, prior authorization, and risk selection.", "Payers benefit from steering volume to lower-cost, higher-quality network hospitals and from denying/delaying medically unnecessary admissions."],
+        recipient_incentive: ["Hospitals earn margin primarily through volume and case complexity (DRG/CPT mix) in fee-for-service; higher-acuity cases and longer stays inflate revenue.", "Hospitals negotiate chargemaster rates and strive for in-network status to protect volume, while pursuing quality bonuses in value-based contracts."],
+        tension: "Insurers want to shift volume to lower-cost sites and deny high-cost admissions; hospitals want every in-network case filled to cover large fixed labor and facility costs.",
+        ai_wedge: "AI-driven prior authorization triage, real-time utilization management, and discharge prediction reduce avoidable days and denials disputes.",
+        source_note: "Hospital care = $1.63T (31% of 2024 NHE); private insurance hospital spending grew 10.4% in 2024. Source: https://www.cms.gov/data-research/statistics-trends-and-reports/national-health-expenditure-data/nhe-fact-sheet"
+      },
+      "fl_pay_private_insurance__dest_nondurable": {
+        title: "Insurers & OTC / Non-Durable Products",
+        what_it_is: "Private insurers cover a small slice of non-durable medical products—primarily through FSA/HSA benefit structures—for items like surgical dressings, ostomy supplies, and diabetic test strips.",
+        payer_incentive: ["Coverage here is narrow; most non-durable products are out-of-pocket or FSA/HSA pass-through.", "Mail-order and value-based insurance design can steer patients to lower-cost generic supplies."],
+        recipient_incentive: ["Retailers and mail-order suppliers prefer volume; branded medical supply companies defend premium pricing on specialty items.", "Pharmacies bundle non-durable products with Rx pickup to drive store traffic."],
+        tension: "Minimal insurer engagement; most value is consumer-direct and price-transparent in retail settings.",
+        ai_wedge: "AI-powered supply recommendation engines in patient portals optimize product selection and reduce waste for chronic disease management (e.g., wound care, diabetes supplies).",
+        source_note: "Other non-durable medical products = $128.7B in 2024, grew 4.4%. Source: https://www.cms.gov/files/document/highlights.pdf"
+      },
+      "fl_pay_private_insurance__dest_nursing": {
+        title: "Insurers & Skilled Nursing / CCRC",
+        what_it_is: "Private health insurers cover short-term skilled nursing facility (SNF) stays for post-acute rehab; long-term nursing home care is almost entirely out-of-pocket or Medicaid.",
+        payer_incentive: ["Benefit is typically capped at 20–100 SNF days; payers push early discharge to home health or outpatient rehab to limit exposure.", "There is minimal private insurance penetration in custodial long-term care (LTC insurance market largely collapsed)."],
+        recipient_incentive: ["SNFs maximize occupied beds and daily rates; Medicare SNF rates significantly exceed Medicaid, creating payer-mix pressure.", "CCRCs earn entrance fees and monthly fees largely outside insurance, relying on private wealth."],
+        tension: "For SNF stays, insurer wants rapid transition to home care; for CCRCs and custodial nursing, the flow is almost entirely self-pay or Medicaid—private insurance is nearly absent.",
+        ai_wedge: "AI-based rehabilitation progress scoring accelerates discharge planning and appropriate SNF-to-home transitions.",
+        source_note: "Nursing care facilities & CCRC = ~$230B (4% of 2024 NHE). Source: https://www.cms.gov/files/document/highlights.pdf"
+      },
+      "fl_pay_private_insurance__dest_other_professional": {
+        title: "Insurers Paying Allied Health Providers",
+        what_it_is: "Private insurers reimburse non-physician, non-dental licensed clinicians—physical therapists, optometrists, chiropractors, mental health therapists, podiatrists—for covered services.",
+        payer_incentive: ["Visit limits and prior auth control utilization; payers benefit when PT and behavioral health prevent higher-cost specialist or ER use.", "Mental health parity laws (MHPAEA) require comparable limits to medical/surgical, creating compliance obligations and broadening coverage."],
+        recipient_incentive: ["Therapists and optometrists earn per visit; high out-of-pocket cost-sharing pushes patients out of insurance toward cash-pay.", "Many behavioral health providers deliberately opt out of insurance panels to avoid low reimbursement and administrative burden."],
+        tension: "Demand for mental health and PT far exceeds in-network supply; parity compliance remains a litigation and regulatory risk for payers.",
+        ai_wedge: "AI-guided digital therapeutics (CBT apps, virtual PT) extend coverage reach and reduce cost per episode of care.",
+        source_note: "Other professional services = $184.9B (4% of 2024 NHE), grew 10.8%—fastest-growing category. Source: https://www.cms.gov/files/document/highlights.pdf"
+      },
+      "fl_pay_private_insurance__dest_physician": {
+        title: "Insurers Paying Physicians & Clinics",
+        what_it_is: "Private insurers reimburse physician offices, medical groups, outpatient clinics, and ambulatory surgery centers for office visits, diagnostics, and procedures at contracted fee schedules.",
+        payer_incentive: ["MLR-constrained payers optimize by narrowing networks to lower-cost, higher-value physicians and by deploying step therapy, prior auth, and formulary controls.", "Value-based care contracts (shared savings, bundled payments) let payers shift risk to physician groups, aligning cost-reduction incentives."],
+        recipient_incentive: ["Fee-for-service physicians maximize revenue through visit volume, higher-complexity codes (E&M upcoding risk), and ancillary service referrals.", "In VBC/capitation, physicians earn bonuses for preventive care, chronic disease management, and avoiding costly downstream utilization."],
+        tension: "Fee-for-service incentivizes volume and complexity; value-based contracts incentivize prevention—most practices straddle both simultaneously.",
+        ai_wedge: "Ambient clinical documentation (AI scribing) cuts physician admin time; AI-assisted coding reduces undercoding and compliance risk; CDS tools support evidence-based prescribing.",
+        source_note: "Physician & clinical services = $1.11T (21% of 2024 NHE), grew 8.1% in 2024. Source: https://www.cms.gov/data-research/statistics-trends-and-reports/national-health-expenditure-data/nhe-fact-sheet"
+      },
+      "fl_pay_private_insurance__dest_residential_personal": {
+        title: "Insurers & Non-Traditional Care Settings",
+        what_it_is: "Private insurers fund services in non-traditional care settings including school-based health, workplace clinics, ambulance services, and some residential mental health/substance abuse facilities.",
+        payer_incentive: ["Workplace and school-based care can reduce downstream claims; payers contract with on-site clinic operators as a cost-containment and engagement strategy.", "Ambulance costs are a denials battleground; surprise billing rules (No Surprises Act) restrict insurer ability to deny ground ambulance claims."],
+        recipient_incentive: ["Ambulance services, residential SUD facilities, and mental health programs earn largely through bed-days and encounter rates; Medicaid is the dominant payer in this category.", "On-site clinic operators earn per-employee-per-month fees from employers, partially outside insurance."],
+        tension: "Private insurance covers only a fraction of this category; Medicaid-heavy mix means private payer leverage is limited.",
+        ai_wedge: "AI crisis triage tools route patients to appropriate-level care (avoiding unnecessary ER use for behavioral health crises).",
+        source_note: "Other health, residential & personal care = $320.5B (6% of 2024 NHE), grew 9.1%. Source: https://www.cms.gov/files/document/highlights.pdf"
+      },
+      "fl_pay_private_insurance__dest_residual": {
+        title: "Insurer Admin & Operating Costs",
+        what_it_is: "The administrative, marketing, profit, and investment portion of private insurance premiums that does not flow to care—capped by ACA MLR rules.",
+        payer_incentive: ["MLR rules cap non-medical spend at 15% (large group) or 20% (small group/individual); payers must rebate excess to enrollees, so admin efficiency is structurally mandated.", "Investment income on premium float is a secondary revenue source; larger reserves generate more investment return."],
+        recipient_incentive: ["Insurer shareholders and management benefit from the 15–20% non-MLR margin; there is incentive to grow premium revenue (the base) rather than cut it.", "Brokers, consultants, and third-party administrators capture portions of the admin margin."],
+        tension: "MLR caps constrain profit per premium dollar, so growth strategy shifts to enrollment volume, risk selection, and investment income rather than margin expansion.",
+        ai_wedge: "AI claims automation, fraud detection, and member engagement reduce administrative cost below the cap, converting savings to profit or premium reductions.",
+        source_note: "ACA MLR: 80% small-group/individual, 85% large-group. $1.1B in MLR rebates estimated for 2024. Sources: https://www.cms.gov/marketplace/private-health-insurance/medical-loss-ratio | https://www.kff.org/affordable-care-art/explaining-health-care-reform-medical-loss-ratio-mlr/"
+      },
+      "fl_pay_private_insurance__dest_rx": {
+        title: "Insurers Covering Retail Prescriptions",
+        what_it_is: "Private insurers—operating through pharmacy benefit managers (PBMs)—pay retail pharmacies for covered outpatient drugs after rebates, copays, and formulary adjudication.",
+        payer_incentive: ["PBM rebate negotiations, tiered formularies, and mandatory generic/biosimilar substitution allow payers to manage net drug spend while maintaining MLR compliance.", "Prior auth and step therapy on high-cost specialty drugs (GLP-1s, biologics) gate access to the most expensive therapies."],
+        recipient_incentive: ["Retail pharmacies earn dispensing fees and prefer high-volume brand drugs with better margins; specialty pharmacies capture larger revenue per fill.", "Drug manufacturers offer rebates to PBMs in exchange for preferred formulary placement, creating incentives independent of clinical efficacy."],
+        tension: "The rebate-driven formulary system can favor high-list-price drugs with large rebates over lower-list-price drugs with smaller ones, misaligning drug cost and patient value.",
+        ai_wedge: "AI-powered formulary optimization, adherence prediction, and automated PA approvals for evidence-based therapies accelerate access and reduce plan cost.",
+        source_note: "Retail Rx = $467B (9% of 2024 NHE), grew 7.9%; GLP-1 demand a key driver. Source: https://www.cms.gov/data-research/statistics-trends-and-reports/national-health-expenditure-data/nhe-fact-sheet"
+      },
+      "fl_pay_residual__dest_residual": {
+        title: "Public Health & System Infrastructure",
+        what_it_is: "Federal and state government spending on public health departments, health research (NIH), public health surveillance, health information infrastructure, and regulatory operations—distinct from clinical care expenditures.",
+        payer_incentive: ["Public health spending generates broad population-level returns but is politically constrained; COVID-era surge spending has wound down, with public health share of NHE declining.", "NIH and AHRQ fund research that eventually informs clinical guidelines and coverage decisions—a long-cycle ROI."],
+        recipient_incentive: ["Academic medical centers, public health labs, and federal agencies are primary recipients; grant-based funding creates different incentives than fee-for-service clinical care.", "Government administration (CMS, state Medicaid agencies) spending covers operational infrastructure that enables $5.3T in health payments."],
+        tension: "Public health investment is chronically underfunded relative to its population health return; each pandemic resets political will temporarily before reverting.",
+        ai_wedge: "AI epidemiological surveillance and outbreak detection systems enhance public health capacity at marginal cost versus building headcount.",
+        source_note: "Government administration and public health = a smaller share of NHE in 2024 than 2022; spending on public health activities declined. Source: https://www.cms.gov/files/document/highlights.pdf"
+      },
+    };
+  
+    var flowMicrocopyFallback = {
+      "generic_flow": {
+        title: "Health Payment Flow",
+        what_it_is: "A payer transfers funds to a healthcare provider or supplier for goods or services delivered to a covered individual.",
+        payer_incentive: ["Payers optimize for clinical value, cost efficiency, and regulatory compliance for this flow.", "Coverage rules, fee schedules, and prior authorization govern what is reimbursable."],
+        recipient_incentive: ["Providers and suppliers earn revenue through accurate billing, service volume, and negotiated rates.", "Quality-based or value-based contract provisions may create additional incentives tied to outcomes."],
+        tension: "Payer cost-containment goals and provider revenue-maximization goals create ongoing negotiation over rates, coverage, and medical necessity.",
+        ai_wedge: "AI can reduce administrative friction in claims processing, prior authorization, and care documentation in this flow.",
+        source_note: "US NHE = $5.3T in 2024. For more: https://www.cms.gov/data-research/statistics-trends-and-reports/national-health-expenditure-data/nhe-fact-sheet"
+      },
+      "low_volume_government_flow": {
+        title: "Federal / State Program Payment",
+        what_it_is: "A federal or state health program pays providers under program-specific eligibility rules, fee schedules, and coverage determinations for a defined covered population.",
+        payer_incentive: ["Government programs prioritize access, equity, and compliance with statutory mandates.", "Budget appropriations and matching-fund structures constrain spending growth."],
+        recipient_incentive: ["Providers serving government program populations often accept below-market rates in exchange for stable volume or mission obligations.", "Documentation and compliance requirements are typically more intensive than commercial payers."],
+        tension: "Rate inadequacy in government programs constrains provider participation and creates access barriers for covered populations.",
+        ai_wedge: "AI-assisted compliance documentation and care gap identification help providers maximize quality performance in complex government program settings.",
+        source_note: "Federal government funds 31% of US healthcare; state/local funds 16%. Source: https://www.cms.gov/data-research/statistics-trends-and-reports/national-health-expenditure-data/nhe-fact-sheet"
+      },
+      "direct_pay_flow": {
+        title: "Consumer Direct Payment",
+        what_it_is: "An individual pays a healthcare provider or product supplier directly from personal funds, without insurance intermediation.",
+        payer_incentive: ["Consumer is directly price-sensitive; convenience, trust, price transparency, and quality reputation drive provider choice.", "HSA/FSA funds provide tax-advantaged consumer purchasing power."],
+        recipient_incentive: ["Cash-pay eliminates billing complexity, improves cash flow, and avoids insurance administrative burden.", "Direct-pay providers can price to market rather than accepting insurance fee schedules."],
+        tension: "Direct-pay access favors consumers with financial resources; health equity implications are significant when direct-pay replaces insurance coverage.",
+        ai_wedge: "AI price transparency and health navigation tools help consumers make informed direct-pay decisions and find appropriate care.",
+        source_note: "Out-of-pocket = $556.6B (11% of NHE) in 2024. Source: https://www.cms.gov/data-research/statistics-trends-and-reports/national-health-expenditure-data/nhe-fact-sheet"
+      },
+    };
+  
+    var flowMicrocopyCallouts = {
+      "fl_pay_private_insurance__dest_hospital": {
+        type: "scale_callout",
+        headline: "The Biggest Flow in US Healthcare",
+        body: "Private insurers + Medicare together pay for ~60% of the $1.63T in hospital spending. This single destination absorbs 40% of all NHE growth between 2022–2024. Every efficiency gain here—prior auth automation, denials reduction, discharge prediction—moves the needle at national scale.",
+        source: "https://www.cms.gov/data-research/statistics-trends-and-reports/national-health-expenditure-data/nhe-fact-sheet"
+      },
+      "fl_pay_private_insurance__dest_residual": {
+        type: "regulatory_callout",
+        headline: "MLR: The Rule That Shapes All Private Insurance Behavior",
+        body: "The ACA's medical loss ratio requirement (80% for small group/individual, 85% for large group) means private insurer incentives are not simply 'deny every claim.' Payers must spend most premium revenue on care. The real game is premium pricing, risk selection, network design, and admin efficiency—not cutting medical spend below the MLR floor.",
+        source: "https://www.cms.gov/marketplace/private-health-insurance/medical-loss-ratio"
+      },
+      "fl_pay_medicaid__dest_nursing": {
+        type: "systemic_risk_callout",
+        headline: "Medicaid Is America's Long-Term Care Insurance (By Default)",
+        body: "No country designed its long-term care system this way. Middle-class Americans spend down savings to qualify for Medicaid nursing home coverage. HCBS waiver expansion is the policy lever to shift this—and the AI wedge is in care coordination and functional assessment that delays or avoids institutional placement.",
+        source: "https://www.cms.gov/files/document/highlights.pdf"
+      },
+      "fl_pay_medicare__dest_physician": {
+        type: "incentive_tension_callout",
+        headline: "Fee-for-Service vs. Value-Based: Most Physicians Live in Both",
+        body: "The same physician group may have traditional Medicare FFS patients (incentivized by volume), MA patients (under prior auth), ACO patients (incentivized by shared savings), and commercial patients (under MLR-constrained payer). AI ambient documentation tools improve economics in all four simultaneously—the rare horizontal wedge across incentive regimes.",
+        source: "https://www.cms.gov/data-research/statistics-trends-and-reports/national-health-expenditure-data/nhe-fact-sheet"
+      },
+      "fl_pay_out_of_pocket__dest_rx": {
+        type: "market_disruption_callout",
+        headline: "The GoodRx Anomaly: Cash Is Cheaper Than Insurance",
+        body: "For many generic drugs, GoodRx and Cost Plus Drugs prices are lower than the insured co-pay. This pricing inversion—impossible in a rational market—reveals how rebate economics distort list prices. AI drug price comparison tools that operate at the point of prescribing can route patients to lowest-cost options regardless of insurance adjudication.",
+        source: "https://www.kff.org/affordable-care-art/explaining-health-care-reform-medical-loss-ratio-mlr/"
+      },
+      "fl_pay_medicaid__dest_residential_personal": {
+        type: "access_gap_callout",
+        headline: "Medicaid Pays 62% of Non-Traditional Care—Where AI Access Tools Matter Most",
+        body: "Community behavioral health, SUD residential, crisis services, and school-based care are overwhelmingly Medicaid-funded. These settings have the lowest technology penetration and the highest unmet need. AI crisis triage, care routing, and community health worker support tools can deliver outsized impact here relative to commercial healthcare AI investments.",
+        source: "https://www.cms.gov/files/document/highlights.pdf"
+      },
+      "fl_pay_medicare__dest_rx": {
+        type: "policy_shift_callout",
+        headline: "IRA Drug Negotiation: The First Structural Change to US Drug Pricing in Decades",
+        body: "The Inflation Reduction Act's Medicare drug price negotiation and $2,000 out-of-pocket cap for Part D represents the most significant shift in pharmaceutical pricing policy since Part D was created in 2003. AI pharmacoeconomic modeling will help manufacturers forecast negotiation outcomes and payers optimize formulary design under the new framework.",
+        source: "https://www.cms.gov/data-research/statistics-trends-and-reports/national-health-expenditure-data/nhe-fact-sheet"
+      },
+      "fl_pay_private_insurance__dest_other_professional": {
+        type: "growth_trend_callout",
+        headline: "Allied Health Is the Fastest-Growing Spend Category at +10.8%",
+        body: "Other professional services—PT, behavioral health, optometry, chiropractic—grew 10.8% in 2024, the highest rate among all destination categories. Mental health parity enforcement, telehealth normalization, and post-pandemic behavioral health demand are driving this. AI digital therapeutics are the capital-light wedge to serve demand that licensed providers cannot meet.",
+        source: "https://www.cms.gov/files/document/highlights.pdf"
+      },
+    };
+
   var takeaways = [
     { title: 'Follow the money, then the patient', copy: 'Adoption depends less on technical elegance than on who pays, who uses, and who captures the value.' },
     { title: 'Admin AI is an arms race', copy: 'The CMS NHE admin line is ~$371B; total addressable admin drag (provider billing + payer ops + clinical documentation) is ~$800-900B per Commonwealth Fund. Prior auth, coding, claims, and RCM are the highest-ROI surfaces, and automation on one side often triggers automation on the other.' },
@@ -1447,6 +1918,9 @@
     stackToLayers: stackToLayers,
     biotechSidecar: biotechSidecar,
     takeaways: takeaways,
-    sources: sources
+    sources: sources,
+    flowMicrocopy: flowMicrocopy,
+    flowMicrocopyFallback: flowMicrocopyFallback,
+    flowMicrocopyCallouts: flowMicrocopyCallouts
   };
 })(typeof window !== 'undefined' ? window : this);
