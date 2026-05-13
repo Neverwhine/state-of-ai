@@ -213,7 +213,7 @@
     dots.forEach((dot) => {
       const idx = dot.dataset.section;
       const sec = document.getElementById('sec-' + idx);
-      if (sec) sections.push({ dot, sec, idx: parseInt(idx) });
+      if (sec) sections.push({ dot, sec, idx });
 
       dot.addEventListener('click', () => {
         if (sec) {
@@ -225,7 +225,7 @@
     function updateActive() {
       const scrollY = window.scrollY + window.innerHeight / 3;
 
-      let activeIdx = 0;
+      let activeIdx = sections.length ? sections[0].idx : null;
       for (const s of sections) {
         if (scrollY >= s.sec.offsetTop) {
           activeIdx = s.idx;
@@ -233,7 +233,7 @@
       }
 
       dots.forEach((d) => {
-        d.classList.toggle('active', parseInt(d.dataset.section) === activeIdx);
+        d.classList.toggle('active', d.dataset.section === activeIdx);
       });
     }
 

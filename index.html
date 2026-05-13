@@ -34,6 +34,7 @@
   <link rel="stylesheet" href="sec8.css">
   <link rel="stylesheet" href="sec13.css">
   <link rel="stylesheet" href="attack-angles.css">
+  <link rel="stylesheet" href="healthcare.css">
   <link rel="stylesheet" href="mobile.css">
 <!-- ===== EMBED MODE (used by slides.html iframes) =====
      URL: index.html?embed=sec-7  →  shows ONLY #sec-7, hides nav, hero, footer, slideshow link.
@@ -133,6 +134,7 @@ body.embed-mode { padding: 0 !important; margin: 0 !important; }
     <div class="nav-dot" data-section="10"><span>Incumbents</span></div>
     <div class="nav-dot" data-section="11"><span>Geopolitics</span></div>
     <div class="nav-dot" data-section="12"><span>Risks</span></div>
+    <div class="nav-dot" data-section="healthcare-ai"><span>Healthcare and AI</span></div>
     <div class="nav-dot" data-section="13"><span>DVC Portfolio</span></div>
     <div class="nav-dot" data-section="14"><span>5-Year Outlook</span></div>
     <div class="nav-dot" data-section="15"><span>Closing</span></div>
@@ -144,8 +146,8 @@ body.embed-mode { padding: 0 !important; margin: 0 !important; }
 <!-- ============================== -->
 
 <section class="section section--hero section--hero-dvc" id="sec-0">
-  <a href="slides.html" style="position:fixed;top:1.25rem;right:1.5rem;z-index:1000;font-family:'Inter',sans-serif;font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:#4ECDC4;text-decoration:none;padding:0.5rem 0.85rem;border:1px solid rgba(78,205,196,0.4);border-radius:6px;background:rgba(45,49,66,0.7);backdrop-filter:blur(8px);transition:all 0.2s ease" onmouseover="this.style.background='rgba(78,205,196,0.15)';this.style.borderColor='#4ECDC4'" onmouseout="this.style.background='rgba(45,49,66,0.7)';this.style.borderColor='rgba(78,205,196,0.4)'">▶ 20-min Slideshow</a>
-  <a href="whats-new.html" style="position:fixed;top:3.5rem;right:1.5rem;z-index:1000;font-family:'Inter',sans-serif;font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:#F5C542;text-decoration:none;padding:0.5rem 0.85rem;border:1px solid rgba(245,197,66,0.4);border-radius:6px;background:rgba(45,49,66,0.7);backdrop-filter:blur(8px);transition:all 0.2s ease" onmouseover="this.style.background='rgba(245,197,66,0.15)';this.style.borderColor='#F5C542'" onmouseout="this.style.background='rgba(45,49,66,0.7)';this.style.borderColor='rgba(245,197,66,0.4)'">✦ What's new &middot; May 6</a>
+  <a href="slides.html" style="position:absolute;top:1.25rem;right:1.5rem;z-index:1000;font-family:'Inter',sans-serif;font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:#4ECDC4;text-decoration:none;padding:0.5rem 0.85rem;border:1px solid rgba(78,205,196,0.4);border-radius:6px;background:rgba(45,49,66,0.7);backdrop-filter:blur(8px);transition:all 0.2s ease" onmouseover="this.style.background='rgba(78,205,196,0.15)';this.style.borderColor='#4ECDC4'" onmouseout="this.style.background='rgba(45,49,66,0.7)';this.style.borderColor='rgba(78,205,196,0.4)'">▶ 20-min Slideshow</a>
+  <a href="whats-new.html" style="position:absolute;top:3.5rem;right:1.5rem;z-index:1000;font-family:'Inter',sans-serif;font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:#F5C542;text-decoration:none;padding:0.5rem 0.85rem;border:1px solid rgba(245,197,66,0.4);border-radius:6px;background:rgba(45,49,66,0.7);backdrop-filter:blur(8px);transition:all 0.2s ease" onmouseover="this.style.background='rgba(245,197,66,0.15)';this.style.borderColor='#F5C542'" onmouseout="this.style.background='rgba(45,49,66,0.7)';this.style.borderColor='rgba(78,205,196,0.4)'">✦ What's new &middot; May 6</a>
   <div class="hero-blocks">
     <div class="hero-block hero-block--white">
       <div class="hero-block-inner">
@@ -4752,6 +4754,158 @@ body.embed-mode { padding: 0 !important; margin: 0 !important; }
 </section>
 
 
+<!-- ============================== -->
+<!-- HEALTHCARE AI                  -->
+<!-- ============================== -->
+<section class="section section--dark healthcare-ai-section" id="sec-healthcare-ai" data-section="healthcare-ai">
+  <div class="container">
+
+    <!-- Section Bridge -->
+    <div class="section-bridge anim-fade">
+      <p>Pricing noise aside, some industries reward AI more than others. Healthcare is the largest, the most regulated, and the most structurally strange.</p>
+    </div>
+
+    <h2 class="section-headline anim-fade">HEALTHCARE AI: FOLLOW THE <span class="accent-teal">MONEY</span>, THEN FOLLOW THE <span class="accent-gold">PATIENT EVENT</span></h2>
+
+    <div class="hc-hero anim-fade">
+      <p>Healthcare AI is not one market. It enters a <strong class="tabnum">$5.3T</strong> system where the buyer, user, payer, and beneficiary are often different entities.</p>
+      <p>Follow the money to see where value can be captured. Follow the patient event to see why adoption is shaped by workflow, reimbursement, data, and trust.</p>
+    </div>
+
+    <!-- Headline stat row -->
+    <div class="hc-stats-row anim-fade" id="hc-stats-row" role="list">
+      <!-- populated by healthcare.js -->
+    </div>
+
+    <!-- ============================== -->
+    <!-- BLOCK 2: MONEY RIVER           -->
+    <!-- ============================== -->
+    <div class="hc-block anim-fade">
+      <h3 class="hc-block-h">Where the money flows</h3>
+
+      <div class="hc-controls-row" role="toolbar" aria-label="Money River view controls">
+        <div class="hc-segmented" role="radiogroup" aria-label="View">
+          <button type="button" class="hc-seg is-active" data-view="money" role="radio" aria-checked="true">Money</button>
+          <button type="button" class="hc-seg" data-view="ai" role="radio" aria-checked="false">AI opportunities</button>
+          <button type="button" class="hc-seg" data-view="incentives" role="radio" aria-checked="false">Incentives</button>
+          <button type="button" class="hc-seg" data-view="companies" role="radio" aria-checked="false">Companies</button>
+        </div>
+        <div class="hc-segmented hc-segmented--filter" id="hc-company-filter" role="radiogroup" aria-label="Company filter" hidden>
+          <button type="button" class="hc-seg is-active" data-filter="all" role="radio" aria-checked="true">All examples</button>
+          <button type="button" class="hc-seg" data-filter="dvc" role="radio" aria-checked="false">DVC only</button>
+        </div>
+        <button type="button" class="hc-reset" id="hc-reset" hidden>Reset</button>
+      </div>
+
+      <div class="hc-money">
+        <div class="hc-money-grid">
+          <div class="hc-sankey-wrap" id="hc-sankey-wrap">
+            <svg class="hc-sankey-svg" id="hc-sankey-svg" role="img" aria-label="US health spending: payment channels, destinations, and what the dollars fund"></svg>
+          </div>
+          <aside class="hc-insight" id="hc-insight" role="complementary" aria-live="polite"></aside>
+        </div>
+
+        <div class="hc-legend" aria-label="Legend">
+          <span class="hc-legend-item"><span class="hc-legend-swatch payment"></span>Payment channel</span>
+          <span class="hc-legend-item"><span class="hc-legend-swatch dest"></span>Destination</span>
+          <span class="hc-legend-item"><span class="hc-legend-swatch pool"></span>Cost pool</span>
+          <span class="hc-legend-item"><span class="hc-legend-swatch oop"></span>Out-of-pocket</span>
+        </div>
+
+        <div class="hc-method-line">
+          <span>Node totals use 2024 CMS National Health Expenditure data. Internal routing and operating-cost decomposition are modeled for explanation and constrained to official totals.</span>
+          <details class="hc-method-disclosure">
+            <summary>Sources and method</summary>
+            <ul class="hc-method-list" id="hc-sources-list"></ul>
+            <p class="hc-method-fine">Modeled allocation constrained to official 2024 CMS NHE node totals. CMS does not publish a complete payer-to-service or service-to-cost-pool matrix.</p>
+          </details>
+        </div>
+
+        <!-- Static fallback (hidden once JS initialises the chart) -->
+        <div class="hc-fallback" id="hc-fallback">
+          <div class="hc-fallback-grid">
+            <table>
+              <caption>Payment channels — 2024 CMS NHE (billions USD)</caption>
+              <thead><tr><th>Channel</th><th class="val">Value</th></tr></thead>
+              <tbody>
+                <tr><td>Private health insurance</td><td class="val">$1,644.6</td></tr>
+                <tr><td>Medicare</td><td class="val">$1,118.0</td></tr>
+                <tr><td>Medicaid</td><td class="val">$931.7</td></tr>
+                <tr><td>Out-of-pocket</td><td class="val">$556.6</td></tr>
+                <tr><td>Other third-party payers &amp; programs</td><td class="val">$590.5</td></tr>
+                <tr><td>Other NHE / reconciliation</td><td class="val">$458.6</td></tr>
+              </tbody>
+            </table>
+            <table>
+              <caption>Destinations — 2024 CMS NHE (billions USD)</caption>
+              <thead><tr><th>Destination</th><th class="val">Value</th></tr></thead>
+              <tbody>
+                <tr><td>Hospital care</td><td class="val">$1,634.7</td></tr>
+                <tr><td>Physician &amp; clinical services</td><td class="val">$1,109.7</td></tr>
+                <tr><td>Retail prescription drugs</td><td class="val">$467.0</td></tr>
+                <tr><td>Other health, residential &amp; personal care</td><td class="val">$320.5</td></tr>
+                <tr><td>Nursing care facilities &amp; CCRCs</td><td class="val">$219.9</td></tr>
+                <tr><td>Dental services</td><td class="val">$189.2</td></tr>
+                <tr><td>Other professional services</td><td class="val">$184.9</td></tr>
+                <tr><td>Home health care</td><td class="val">$169.4</td></tr>
+                <tr><td>Other non-durable medical products</td><td class="val">$128.7</td></tr>
+                <tr><td>Durable medical equipment</td><td class="val">$86.4</td></tr>
+                <tr><td>Admin, public health, investment &amp; other</td><td class="val">$789.6</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- BLOCK 4: PATIENT EVENT LOOP    -->
+    <!-- ============================== -->
+    <div class="hc-block anim-fade">
+      <h3 class="hc-block-h">What a patient event triggers</h3>
+
+      <div class="hc-loop">
+        <div class="hc-state-selector" id="hc-state-selector" role="tablist" aria-label="Patient state"></div>
+
+        <div class="hc-loop-grid">
+          <div class="hc-loop-diagram" id="hc-loop-diagram">
+            <svg class="hc-loop-svg" id="hc-loop-svg" role="img" aria-label="Patient event: care loop, financial loop, prevention orbit, VBC bridge, and shared stack"></svg>
+          </div>
+          <aside class="hc-loop-insight" id="hc-loop-insight" role="complementary" aria-live="polite"></aside>
+        </div>
+
+        <div class="hc-loop-fallback" id="hc-loop-fallback" aria-live="polite"></div>
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- BLOCK 6: KEY TAKEAWAYS         -->
+    <!-- ============================== -->
+    <div class="hc-block anim-fade">
+      <h3 class="hc-block-h">From event-driven care to prevention</h3>
+      <div class="hc-takeaways" id="hc-takeaways"></div>
+    </div>
+
+    <!-- Sources disclosure (compact, small-print) -->
+    <details class="hc-sources">
+      <summary>Method and sources</summary>
+      <p class="hc-sources-note">
+        Node totals match official CMS 2024 NHE data. Internal routing and operating-cost decomposition are modeled allocations constrained to those official totals.
+      </p>
+      <ul id="hc-sources-list-bottom"></ul>
+    </details>
+
+  </div>
+
+  <!-- Mobile bottom sheet (with backdrop) -->
+  <div class="hc-bottom-sheet-backdrop" id="hc-bottom-sheet-backdrop" hidden></div>
+  <div class="hc-bottom-sheet" id="hc-bottom-sheet" role="dialog" aria-modal="false" aria-label="Detail panel" aria-hidden="true">
+    <button type="button" class="hc-bottom-sheet-close" aria-label="Close detail panel">&times;</button>
+    <div class="hc-bottom-sheet-body"></div>
+  </div>
+</section>
+
+
 <section class="section section--dark section--portfolio" id="sec-13">
   <div class="container">
     <!-- Section Bridge -->
@@ -5006,5 +5160,9 @@ body.embed-mode { padding: 0 !important; margin: 0 !important; }
   <script src="sec8.js"></script>
   <script src="sec13.js"></script>
   <script src="attack-angles.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+  <script src="https://cdn.jsdelivr.net/npm/d3-sankey@0.12.3/dist/d3-sankey.min.js"></script>
+  <script src="healthcare-data.js"></script>
+  <script src="healthcare.js"></script>
 </body>
 </html>
