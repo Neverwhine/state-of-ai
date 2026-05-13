@@ -302,48 +302,52 @@
   ];
 
   // Care loop — clockwise upper ellipse
+  // Centred on x=620 so VBC rail on the left and prevention loop on the
+  // right both have clear gutters at desktop widths.
   var careLoop = [
-    { id: 'C1', n: 1, label: 'Signal',           x: 230, y: 270, description: 'Symptom, wearable alert, lab abnormality, patient concern.', ai: ['ai_diagnostics','ai_prevention'] },
-    { id: 'C2', n: 2, label: 'Triage',           x: 305, y: 150, description: 'Patient or clinician asks what to do next.', ai: ['ai_patient_access','ai_scribes_copilots'] },
-    { id: 'C3', n: 3, label: 'Access',           x: 445, y: 95,  description: 'Scheduling, routing, telehealth, right site of care.', ai: ['ai_patient_access','ai_site_of_care'] },
-    { id: 'C4', n: 4, label: 'Encounter',        x: 560, y: 80,  description: 'Visit, admission, dental visit, diagnostic appointment.', ai: ['ai_scribes_copilots'] },
-    { id: 'C5', n: 5, label: 'Diagnosis/orders', x: 675, y: 95,  description: 'Labs, imaging, prescription, referral, treatment plan.', ai: ['ai_diagnostics','ai_techbio','ai_scribes_copilots'] },
-    { id: 'C6', n: 6, label: 'Treatment',        x: 815, y: 150, description: 'Drug, procedure, therapy, behavior change, digital tool.', ai: ['ai_techbio','ai_site_of_care'] },
-    { id: 'C7', n: 7, label: 'Follow-up',        x: 890, y: 270, description: 'Refill, adherence, escalation, monitoring, care plan adjustment.', ai: ['ai_site_of_care'] },
-    { id: 'C8', n: 8, label: 'Monitor/prevent',  x: 770, y: 390, description: 'Continuous or episodic risk management.', ai: ['ai_prevention','ai_diagnostics'] }
+    { id: 'C1', n: 1, label: 'Signal',           x: 320, y: 280, description: 'Symptom, wearable alert, lab abnormality, patient concern.', ai: ['ai_diagnostics','ai_prevention'] },
+    { id: 'C2', n: 2, label: 'Triage',           x: 380, y: 165, description: 'Patient or clinician asks what to do next.', ai: ['ai_patient_access','ai_scribes_copilots'] },
+    { id: 'C3', n: 3, label: 'Access',           x: 500, y: 110, description: 'Scheduling, routing, telehealth, right site of care.', ai: ['ai_patient_access','ai_site_of_care'] },
+    { id: 'C4', n: 4, label: 'Encounter',        x: 620, y: 95,  description: 'Visit, admission, dental visit, diagnostic appointment.', ai: ['ai_scribes_copilots'] },
+    { id: 'C5', n: 5, label: 'Diagnosis/orders', x: 740, y: 110, description: 'Labs, imaging, prescription, referral, treatment plan.', ai: ['ai_diagnostics','ai_techbio','ai_scribes_copilots'] },
+    { id: 'C6', n: 6, label: 'Treatment',        x: 860, y: 165, description: 'Drug, procedure, therapy, behavior change, digital tool.', ai: ['ai_techbio','ai_site_of_care'] },
+    { id: 'C7', n: 7, label: 'Follow-up',        x: 920, y: 280, description: 'Refill, adherence, escalation, monitoring, care plan adjustment.', ai: ['ai_site_of_care'] },
+    { id: 'C8', n: 8, label: 'Monitor/prevent',  x: 800, y: 395, description: 'Continuous or episodic risk management.', ai: ['ai_prevention','ai_diagnostics'] }
   ];
 
   // Financial loop — counterclockwise lower ellipse
   var financialLoop = [
-    { id: 'F1', n: 1, label: 'Eligibility',  x: 230, y: 355, description: 'Coverage, network, deductible, patient responsibility.', ai: ['ai_patient_access'] },
-    { id: 'F2', n: 2, label: 'Prior auth',   x: 305, y: 475, description: 'Approval before selected care, tests, or drugs.', ai: ['ai_admin_rcm'] },
-    { id: 'F3', n: 3, label: 'Coding',       x: 445, y: 530, description: 'Translate care into documentation and billable codes.', ai: ['ai_admin_rcm','ai_scribes_copilots'] },
-    { id: 'F4', n: 4, label: 'Claim',        x: 560, y: 545, description: 'Submit claim to payer or patient.', ai: ['ai_admin_rcm'] },
-    { id: 'F5', n: 5, label: 'Adjudication', x: 675, y: 530, description: 'Pay, deny, downcode, audit, or request more information.', ai: ['ai_admin_rcm'] },
-    { id: 'F6', n: 6, label: 'Patient bill', x: 815, y: 475, description: 'Remaining responsibility becomes bill or payment plan.', ai: ['ai_financial_engagement','ai_admin_rcm'] },
-    { id: 'F7', n: 7, label: 'Collection',   x: 890, y: 355, description: 'Payment, reconciliation, collection, write-off.', ai: ['ai_financial_engagement'] },
-    { id: 'F8', n: 8, label: 'Quality/risk', x: 770, y: 235, description: 'Outcomes, quality, risk adjustment, VBC reporting.', ai: ['ai_prevention'] }
+    { id: 'F1', n: 1, label: 'Eligibility',  x: 320, y: 360, description: 'Coverage, network, deductible, patient responsibility.', ai: ['ai_patient_access'] },
+    { id: 'F2', n: 2, label: 'Prior auth',   x: 380, y: 475, description: 'Approval before selected care, tests, or drugs.', ai: ['ai_admin_rcm'] },
+    { id: 'F3', n: 3, label: 'Coding',       x: 500, y: 530, description: 'Translate care into documentation and billable codes.', ai: ['ai_admin_rcm','ai_scribes_copilots'] },
+    { id: 'F4', n: 4, label: 'Claim',        x: 620, y: 545, description: 'Submit claim to payer or patient.', ai: ['ai_admin_rcm'] },
+    { id: 'F5', n: 5, label: 'Adjudication', x: 740, y: 530, description: 'Pay, deny, downcode, audit, or request more information.', ai: ['ai_admin_rcm'] },
+    { id: 'F6', n: 6, label: 'Patient bill', x: 860, y: 475, description: 'Remaining responsibility becomes bill or payment plan.', ai: ['ai_financial_engagement','ai_admin_rcm'] },
+    { id: 'F7', n: 7, label: 'Collection',   x: 920, y: 360, description: 'Payment, reconciliation, collection, write-off.', ai: ['ai_financial_engagement'] },
+    { id: 'F8', n: 8, label: 'Quality/risk', x: 800, y: 245, description: 'Outcomes, quality, risk adjustment, VBC reporting.', ai: ['ai_prevention'] }
   ];
 
-  // Private-pay prevention orbit (right rail)
-  // Prevention / monitoring loop. Positioned as a true loop to the right
-  // of the patient card so it visually belongs to the diagram rather than
-  // floating as an orphan rail. Closes via P5 → triage and C8 → P1.
+  // Prevention / monitoring loop — drawn as a closed loop to the right of
+  // the care loop. P1..P5 step clockwise and P5 closes back to P1. The
+  // loop is linked to the care loop at C8 → P1/P2 and P5 → C2 so it
+  // never reads as a floating orbit.
   var preventionOrbit = [
-    { id: 'P1', label: 'Consumer AI assistant', x: 990, y: 175, description: 'Patient asks questions, uploads labs, tracks goals.', ai: ['ai_patient_access','ai_prevention'] },
-    { id: 'P2', label: 'Wearables/home signals',x: 1030, y: 250, description: 'Sleep, HRV, CGM, activity, BP, recovery, symptoms.', ai: ['ai_prevention','ai_diagnostics'] },
-    { id: 'P3', label: 'Labs/omics',            x: 1030, y: 330, description: 'Rich biological data for risk and personalization.', ai: ['ai_diagnostics','ai_techbio'] },
-    { id: 'P4', label: 'Coaching/adherence',    x: 990, y: 405, description: 'Behavior, nutrition, sleep, allergy care, follow-up.', ai: ['ai_prevention'] },
-    { id: 'P5', label: 'Escalation → triage',   x: 920, y: 470, description: 'AI routes to licensed clinician or care setting. Feeds the care loop at triage.', ai: ['ai_patient_access'] }
+    { id: 'P1', label: 'Consumer AI assistant', x: 1040, y: 200, description: 'Patient asks questions, uploads labs, tracks goals.', ai: ['ai_patient_access','ai_prevention'] },
+    { id: 'P2', label: 'Wearables/home signals',x: 1075, y: 290, description: 'Sleep, HRV, CGM, activity, BP, recovery, symptoms.', ai: ['ai_prevention','ai_diagnostics'] },
+    { id: 'P3', label: 'Labs/omics',            x: 1075, y: 365, description: 'Rich biological data for risk and personalization.', ai: ['ai_diagnostics','ai_techbio'] },
+    { id: 'P4', label: 'Coaching/adherence',    x: 1040, y: 440, description: 'Behavior, nutrition, sleep, allergy care, follow-up.', ai: ['ai_prevention'] },
+    { id: 'P5', label: 'Escalation → triage',   x: 970, y: 520, description: 'AI routes to licensed clinician or care setting. Feeds the care loop at triage.', ai: ['ai_patient_access'] }
   ];
 
-  // VBC bridge (left rail)
+  // VBC / risk bridge (left rail). Drawn flush-left so the rail label and
+  // V1 box never crowd C2/Triage. Hull sits well to the left of the care
+  // loop.
   var vbcBridge = [
-    { id: 'V1', label: 'FFS default',           x: 80,  y: 170, description: 'Fee-for-service pays when services happen. Prevention has weak economics.' },
-    { id: 'V2', label: 'Risk contract',         x: 115, y: 250, description: 'Someone bears downstream cost and can benefit from avoided events.' },
-    { id: 'V3', label: 'MA / ACO / employer',   x: 145, y: 330, description: 'Common places where risk, quality, and prevention can matter.' },
-    { id: 'V4', label: 'Digital reimbursement', x: 175, y: 410, description: 'RTM, digital mental health, and CMS models create partial reimbursement paths.' },
-    { id: 'V5', label: 'Prevention financeable',x: 205, y: 490, description: 'Prevention becomes investable when outcomes and avoided cost are measurable.' }
+    { id: 'V1', label: 'FFS default',           x: 100, y: 200, description: 'Fee-for-service pays when services happen. Prevention has weak economics.' },
+    { id: 'V2', label: 'Risk contract',         x: 110, y: 285, description: 'Someone bears downstream cost and can benefit from avoided events.' },
+    { id: 'V3', label: 'MA / ACO / employer',   x: 130, y: 365, description: 'Common places where risk, quality, and prevention can matter.' },
+    { id: 'V4', label: 'Digital reimbursement', x: 145, y: 445, description: 'RTM, digital mental health, and CMS models create partial reimbursement paths.' },
+    { id: 'V5', label: 'Prevention financeable',x: 165, y: 525, description: 'Prevention becomes investable when outcomes and avoided cost are measurable.' }
   ];
 
   // Shared stack — order matches spec (top to bottom = layer 1 to 7)

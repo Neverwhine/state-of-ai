@@ -425,6 +425,50 @@ check('healthcare.js draws a stack-divider between process map and stack',
 check('renderStepDrawer no longer uses the orphan "Prevention orbit" copy',
   hcSrc.indexOf('Prevention orbit') === -1);
 
+console.log('--- Test: loop layout fits within the expanded viewBox ---');
+// viewBox is 1180 x 880 — every node rectangle must sit inside that
+// box with breathing room so nothing clips at desktop or mobile.
+var VB_W = 1180, VB_H = 880;
+function within(p, w, h, label) {
+  check(label + ' (' + p.id + ' @ ' + p.x + ',' + p.y + ') inside viewBox',
+    p.x - w / 2 >= 10 && p.x + w / 2 <= VB_W - 10 &&
+    p.y - h / 2 >= 30 && p.y + h / 2 <= VB_H - 10);
+}
+D.careLoop.forEach(function (s)        { within(s, 110, 36, 'care node'); });
+D.financialLoop.forEach(function (s)   { within(s, 110, 36, 'financial node'); });
+D.preventionOrbit.forEach(function (s) { within(s, 150, 32, 'prevention node'); });
+D.vbcBridge.forEach(function (s)       { within(s, 150, 32, 'vbc node'); });
+
+console.log('--- Test: nodes do not collide across tracks ---');
+// Pairwise distance between every step in different tracks must be
+// at least the sum of half-widths plus a small gutter.
+function rectsOverlap(ax, ay, aw, ah, bx, by, bw, bh, pad) {
+  return Math.abs(ax - bx) * 2 < (aw + bw + pad * 2) &&
+         Math.abs(ay - by) * 2 < (ah + bh + pad * 2);
+}
+var allWithSize = []
+  .concat(D.careLoop.map(function (s)        { return { s: s, w: 110, h: 36, k: 'care' }; }))
+  .concat(D.financialLoop.map(function (s)   { return { s: s, w: 110, h: 36, k: 'fin'  }; }))
+  .concat(D.preventionOrbit.map(function (s) { return { s: s, w: 150, h: 32, k: 'prev' }; }))
+  .concat(D.vbcBridge.map(function (s)       { return { s: s, w: 150, h: 32, k: 'vbc'  }; }));
+var crossCollisions = 0;
+for (var ai = 0; ai < allWithSize.length; ai++) {
+  for (var bi = ai + 1; bi < allWithSize.length; bi++) {
+    var A = allWithSize[ai], B = allWithSize[bi];
+    if (A.k === B.k) continue;
+    if (rectsOverlap(A.s.x, A.s.y, A.w, A.h, B.s.x, B.s.y, B.w, B.h, 6)) {
+      crossCollisions++;
+    }
+  }
+}
+check('no cross-track node rectangles overlap', crossCollisions === 0);
+
+console.log('--- Test: viewBox and aspect-ratio match in CSS/JS ---');
+check('healthcare.js declares the 1180 x 880 viewBox',
+  hcSrc.indexOf("LOOP_VB = { w: 1180, h: 880 }") > -1);
+check('healthcare.css aspect-ratio matches viewBox',
+  cssSrc.indexOf('aspect-ratio: 1180 / 880') > -1);
+
 console.log('--- Test: Dmitry sourced callouts exist and are wired ---');
 check('loopCallouts data is present', Array.isArray(D.loopCallouts) && D.loopCallouts.length >= 5);
 var calloutIds = (D.loopCallouts || []).map(function (c) { return c.id; });

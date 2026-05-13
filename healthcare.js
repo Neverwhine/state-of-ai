@@ -1692,11 +1692,11 @@
     var loopOrderedFallback = root.querySelector('#hc-loop-fallback');
     var currentLoopState = 'state_at_risk';
 
-    // Geometry: 1120 x 820 viewBox.
-    //   Top zone   y < 580   — care loop, financial loop, VBC rail, prevention loop
-    //   Stack zone y >= 600  — tech stack bands, visually separated
-    var LOOP_VB = { w: 1120, h: 820 };
-    var STACK = { x: 160, y: 620, w: 800, h: 175, bands: 7 };
+    // Geometry: 1180 x 880 viewBox.
+    //   Top zone   y <= 595   — care loop, financial loop, VBC rail, prevention loop
+    //   Stack zone y >= 660   — tech stack bands, visually separated by divider
+    var LOOP_VB = { w: 1180, h: 880 };
+    var STACK = { x: 60, y: 695, w: 1060, h: 175, bands: 7 };
 
     function renderStateSelector() {
       if (!stateSelector) return;
@@ -1779,39 +1779,44 @@
       function hullPath(d, cls) {
         return svgEl('path', { class: cls, d: d, fill: 'none' }, hullG);
       }
-      // Care loop hull — upper arc around C1..C7 + C8 inside.
+      // Care loop hull — upper arc around C1..C7 with C8 tucked inside.
       var careHullActive = groupIsActive('pg_care');
-      hullPath('M 200 270 Q 200 60 560 60 Q 920 60 920 270 Q 920 410 770 410',
+      hullPath('M 285 285 Q 285 70 620 70 Q 955 70 955 285 Q 955 415 800 415',
         'group-hull is-care' + (careHullActive ? ' is-active' : ' is-dim'));
       // Financial loop hull — lower arc.
       var finHullActive = groupIsActive('pg_financial');
-      hullPath('M 200 355 Q 200 575 560 575 Q 920 575 920 355',
+      hullPath('M 285 360 Q 285 580 620 580 Q 955 580 955 360',
         'group-hull is-fin' + (finHullActive ? ' is-active' : ' is-dim'));
-      // Prevention loop hull — right-side closed loop next to care/finance.
+      // Prevention loop hull — right-side closed loop, set off from
+      // the care loop by a clear gutter and wide enough to contain the
+      // full P node rectangles.
       var prevHullActive = groupIsActive('pg_prevention');
-      hullPath('M 960 175 Q 1075 175 1075 320 Q 1075 470 925 490 Q 880 480 905 425',
+      hullPath('M 960 195 Q 1155 195 1155 360 Q 1155 525 970 555 Q 880 540 905 480',
         'group-hull is-prev' + (prevHullActive ? ' is-active' : ' is-dim'));
-      // VBC bridge hull — left rail.
+      // VBC bridge hull — left rail, flush-left so V1 doesn't crowd Triage.
+      // Hull is wider at the bottom because V3..V5 cascade rightward.
       var vbcHullActive = groupIsActive('pg_vbc');
-      hullPath('M 40 155 L 240 155 L 240 510 L 40 510 Z',
+      hullPath('M 25 180 L 195 180 L 245 555 L 25 555 Z',
         'group-hull is-vbc' + (vbcHullActive ? ' is-active' : ' is-dim'));
 
-      // Track labels — every node belongs to a named process group
-      svgEl('text', { class: 'loop-label care', x: 560, y: 46, 'text-anchor': 'middle' })
+      // Track labels — every node belongs to a named process group.
+      // Placed in dedicated gutters so they never collide with nodes or
+      // bridge edges.
+      svgEl('text', { class: 'loop-label care', x: 620, y: 52, 'text-anchor': 'middle' })
         .textContent = '① CLINICAL CARE LOOP · C1–C8 — patient workflow, clockwise';
-      svgEl('text', { class: 'loop-label fin',  x: 560, y: 600, 'text-anchor': 'middle' })
+      svgEl('text', { class: 'loop-label fin',  x: 620, y: 622, 'text-anchor': 'middle' })
         .textContent = '② FINANCIAL / REIMBURSEMENT LOOP · F1–F8 — counterclockwise';
-      svgEl('text', { class: 'loop-label prev', x: 1075, y: 145, 'text-anchor': 'end' })
+      svgEl('text', { class: 'loop-label prev', x: 1115, y: 170, 'text-anchor': 'end' })
         .textContent = '③ PREVENTION / MONITORING · P1–P5';
-      svgEl('text', { class: 'loop-label prev', x: 1075, y: 158, 'text-anchor': 'end' })
-        .textContent = 'feeds Signal/Triage; receives Discharge/Monitor';
-      svgEl('text', { class: 'loop-label vbc',  x: 140, y: 145, 'text-anchor': 'middle' })
+      svgEl('text', { class: 'loop-label prev sub', x: 1115, y: 183, 'text-anchor': 'end' })
+        .textContent = 'feeds C2 triage · receives C8 discharge';
+      svgEl('text', { class: 'loop-label vbc',  x: 115, y: 170, 'text-anchor': 'middle' })
         .textContent = '④ VBC / RISK BRIDGE · V1–V5';
-      svgEl('text', { class: 'loop-label vbc',  x: 140, y: 158, 'text-anchor': 'middle' })
-        .textContent = 'reimbursement model that funds prevention';
+      svgEl('text', { class: 'loop-label vbc sub', x: 115, y: 183, 'text-anchor': 'middle' })
+        .textContent = 'funds prevention via V5 → C8';
 
       // Center patient card
-      var cardX = 450, cardY = 235, cardW = 220, cardH = 115;
+      var cardX = 510, cardY = 245, cardW = 220, cardH = 115;
       var cg = svgEl('g', { class: 'patient-center', transform: 'translate(' + (cardX + cardW/2) + ',' + (cardY + cardH/2) + ')' });
       svgEl('rect', { x: -cardW/2, y: -cardH/2, width: cardW, height: cardH, rx: 14, fill: 'rgba(0,0,0,0.55)', stroke: stateInfo ? stateInfo.color : '#4ECDC4', 'stroke-width': 2 }, cg);
       svgEl('text', { class: 'patient-label', x: 0, y: -34, 'text-anchor': 'middle' }, cg).textContent = 'Patient state';
@@ -1820,8 +1825,8 @@
       svgEl('text', { class: 'patient-scenario', x: 0, y: 38, 'text-anchor': 'middle' }, cg).textContent = scenario.scenario || '';
 
       // Loop arc geometry (used only for routing — no dashed guide ellipses)
-      var careCx = 560, careCy = 230, careRx = 380, careRy = 170;
-      var finCx  = 560, finCy  = 380, finRx  = 380, finRy  = 170;
+      var careCx = 620, careCy = 245, careRx = 360, careRy = 175;
+      var finCx  = 620, finCy  = 385, finRx  = 360, finRy  = 175;
 
       // Active-only arrows along ellipse paths
       drawLoopActiveArrows(DATA.careLoop, careActive, careCx, careCy, careRx, careRy, true,  'care', 'hcl-arrow-care');
@@ -1851,7 +1856,7 @@
         if (!(prevActive[pa.id] && prevActive[pb.id])) return;
         var mx = (pa.x + pb.x) / 2, my = (pa.y + pb.y) / 2;
         // Bulge outward (to the right) so the arrows clearly trace a loop.
-        var bx = mx + 40, by = my;
+        var bx = mx + 36, by = my;
         svgEl('path', { class: 'prev-link is-active',
           d: 'M ' + pa.x + ' ' + (pa.y + 16) + ' Q ' + bx + ' ' + by + ' ' + pb.x + ' ' + (pb.y - 16),
           fill: 'none', stroke: 'rgba(255,140,66,0.75)', 'stroke-width': 1.6, 'marker-end': 'url(#hcl-arrow-prev)' }, preG);
@@ -1863,7 +1868,7 @@
       if (prevActive.P5 && prevActive.P1) {
         var p5 = DATA.preventionOrbit[4], p1 = DATA.preventionOrbit[0];
         svgEl('path', { class: 'prev-link is-active',
-          d: 'M ' + (p5.x + 60) + ' ' + p5.y + ' C ' + 1095 + ' ' + 400 + ' ' + 1095 + ' ' + 220 + ' ' + (p1.x + 60) + ' ' + p1.y,
+          d: 'M ' + (p5.x - 70) + ' ' + p5.y + ' C ' + 905 + ' ' + 420 + ' ' + 940 + ' ' + 230 + ' ' + (p1.x - 70) + ' ' + p1.y,
           fill: 'none', stroke: 'rgba(255,140,66,0.55)', 'stroke-width': 1.4, 'marker-end': 'url(#hcl-arrow-prev)', 'stroke-dasharray': '4 4' }, preG);
       }
 
@@ -1878,39 +1883,66 @@
       function isStepActive(id) {
         return !!(careActive[id] || finActive[id] || prevActive[id] || vbcActive[id]);
       }
+      // Route bridge edges so the control point bows away from the
+      // patient card and the loop nodes. Label sits offset from the
+      // control point along the perpendicular so it never overlaps
+      // either the edge or the node text.
+      var patientCx = cardX + cardW / 2, patientCy = cardY + cardH / 2;
       (DATA.loopBridgeEdges || []).forEach(function (e) {
         if (!isStepActive(e.from) || !isStepActive(e.to)) return;
         var a = findAnyStep(e.from), b = findAnyStep(e.to);
         if (!a || !b) return;
         var stroke = e.kind === 'bridge' ? 'rgba(124,77,255,0.65)' : 'rgba(255,140,66,0.55)';
         var marker = e.kind === 'bridge' ? 'url(#hcl-arrow-bridge)' : 'url(#hcl-arrow-prev)';
-        var mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2 - 30;
+        var mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2;
+        var ax = mx - patientCx, ay = my - patientCy;
+        var alen = Math.hypot(ax, ay) || 1;
+        // Push control point outward from patient card center.
+        var bow = 38;
+        var cx = mx + (ax / alen) * bow;
+        var cy = my + (ay / alen) * bow;
+        // Trim endpoints to the node rims so arrowheads do not collide
+        // with the node rectangles.
+        function trim(p, tx, ty, r) {
+          var vx = tx - p.x, vy = ty - p.y;
+          var l = Math.hypot(vx, vy) || 1;
+          return { x: p.x + (vx / l) * r, y: p.y + (vy / l) * r };
+        }
+        var startR = 28, endR = 28;
+        var s = trim(a, cx, cy, startR);
+        var t = trim(b, cx, cy, endR);
         svgEl('path', {
           class: 'loop-bridge-edge is-' + e.kind,
-          d: 'M ' + a.x + ' ' + a.y + ' Q ' + mx + ' ' + my + ' ' + b.x + ' ' + b.y,
+          d: 'M ' + s.x + ' ' + s.y + ' Q ' + cx + ' ' + cy + ' ' + t.x + ' ' + t.y,
           fill: 'none', stroke: stroke, 'stroke-width': 1.4,
           'stroke-dasharray': '5 4', 'marker-end': marker
         }, bridgeG);
+        // Place the label outside the control point, perpendicular to
+        // the chord, so it doesn't sit on top of the curve.
+        var lx = cx + (ax / alen) * 8;
+        var ly = cy + (ay / alen) * 8 - 4;
         svgEl('text', {
-          class: 'bridge-label', x: mx, y: my - 2, 'text-anchor': 'middle',
+          class: 'bridge-label', x: lx, y: ly, 'text-anchor': 'middle',
           fill: e.kind === 'bridge' ? 'rgba(124,77,255,0.85)' : 'rgba(255,140,66,0.85)'
         }, bridgeG).textContent = e.label;
       });
 
       // ----- Tech stack underneath the process visual -----
       // Explicit divider so the stack reads as a separate panel below the
-      // process map, not a sixth track competing for attention.
+      // process map, not a sixth track competing for attention. The
+      // divider sits between the financial loop label and the stack
+      // header, with breathing room on either side.
       var bandH = STACK.h / STACK.bands;
-      var dividerY = STACK.y - 32;
+      var dividerY = STACK.y - 38;
       svgEl('line', {
         class: 'stack-divider',
         x1: 40, x2: LOOP_VB.w - 40, y1: dividerY, y2: dividerY,
-        stroke: 'rgba(160,168,188,0.18)', 'stroke-width': 1
+        stroke: 'rgba(160,168,188,0.22)', 'stroke-width': 1
       });
       var stackG = svgEl('g', { class: 'stack-group' });
-      svgEl('text', { class: 'rail-title', x: STACK.x + 6, y: STACK.y - 14, 'text-anchor': 'start' }, stackG).textContent =
+      svgEl('text', { class: 'rail-title', x: STACK.x + 6, y: STACK.y - 16, 'text-anchor': 'start' }, stackG).textContent =
         'TECH STACK — every process above depends on these layers';
-      svgEl('text', { class: 'rail-sub', x: STACK.x + STACK.w - 6, y: STACK.y - 14, 'text-anchor': 'end' }, stackG)
+      svgEl('text', { class: 'rail-sub', x: STACK.x + STACK.w - 6, y: STACK.y - 16, 'text-anchor': 'end' }, stackG)
         .textContent = 'Click any band to see the layer drawer';
 
       // Scenario claim-tracking: a company shown in one band cannot
@@ -1950,9 +1982,9 @@
           svgEl('text', { class: 'band-co-empty', x: STACK.x + STACK.w - 12, y: y + bandH / 2 + 4, 'text-anchor': 'end' }, g)
             .textContent = '—';
         } else {
-          var chipW = 90, chipH = 18, chipGap = 6;
+          var chipW = 96, chipH = 18, chipGap = 6;
           var totalChipsW = cosForBand.length * chipW + (cosForBand.length - 1) * chipGap;
-          var startCX = STACK.x + STACK.w - 12 - totalChipsW;
+          var startCX = STACK.x + STACK.w - 18 - totalChipsW;
           cosForBand.forEach(function (c, ci) {
             var cx = startCX + ci * (chipW + chipGap);
             var chip = svgEl('g', {

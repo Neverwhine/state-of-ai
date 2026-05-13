@@ -641,10 +641,10 @@
 .hc-loop-svg {
   display: block;
   width: 100%;
-  min-width: 1120px;
+  min-width: 1180px;
   height: auto;
-  max-height: 760px;
-  aspect-ratio: 1120 / 760;
+  max-height: 880px;
+  aspect-ratio: 1180 / 880;
 }
 
 .hc-loop-svg .loop-step .bg {
@@ -712,21 +712,22 @@
 .hc-loop-svg .loop-arrow.is-active.is-fin  { filter: drop-shadow(0 0 3px rgba(245, 197, 66, 0.45)); }
 .hc-loop-svg .bridge-label { font-size: 10px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
 
-/* Named-track group hulls. Subtle outlines that confirm every node
-   belongs to exactly one named process path — no orphan boxes. */
+/* Named-track group hulls. Very subtle outlines that confirm every node
+   belongs to exactly one named process path — no orphan boxes. Kept
+   thin and dotted so they read as a hint, not a frame. */
 .hc-loop-svg .group-hull {
-  stroke-width: 1;
-  stroke-dasharray: 4 4;
+  stroke-width: 0.9;
+  stroke-dasharray: 2 5;
   pointer-events: none;
 }
-.hc-loop-svg .group-hull.is-care.is-active { stroke: rgba(78, 205, 196, 0.35); }
-.hc-loop-svg .group-hull.is-care.is-dim    { stroke: rgba(78, 205, 196, 0.14); }
-.hc-loop-svg .group-hull.is-fin.is-active  { stroke: rgba(245, 197, 66, 0.32); }
-.hc-loop-svg .group-hull.is-fin.is-dim     { stroke: rgba(245, 197, 66, 0.12); }
-.hc-loop-svg .group-hull.is-prev.is-active { stroke: rgba(255, 140, 66, 0.40); }
-.hc-loop-svg .group-hull.is-prev.is-dim    { stroke: rgba(255, 140, 66, 0.16); }
-.hc-loop-svg .group-hull.is-vbc.is-active  { stroke: rgba(124, 77, 255, 0.40); }
-.hc-loop-svg .group-hull.is-vbc.is-dim     { stroke: rgba(124, 77, 255, 0.14); }
+.hc-loop-svg .group-hull.is-care.is-active { stroke: rgba(78, 205, 196, 0.28); }
+.hc-loop-svg .group-hull.is-care.is-dim    { stroke: rgba(78, 205, 196, 0.10); }
+.hc-loop-svg .group-hull.is-fin.is-active  { stroke: rgba(245, 197, 66, 0.26); }
+.hc-loop-svg .group-hull.is-fin.is-dim     { stroke: rgba(245, 197, 66, 0.10); }
+.hc-loop-svg .group-hull.is-prev.is-active { stroke: rgba(255, 140, 66, 0.32); }
+.hc-loop-svg .group-hull.is-prev.is-dim    { stroke: rgba(255, 140, 66, 0.12); }
+.hc-loop-svg .group-hull.is-vbc.is-active  { stroke: rgba(124, 77, 255, 0.32); }
+.hc-loop-svg .group-hull.is-vbc.is-dim     { stroke: rgba(124, 77, 255, 0.12); }
 
 .hc-loop-svg .loop-label.prev {
   font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
@@ -735,6 +736,10 @@
 .hc-loop-svg .loop-label.vbc {
   font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
   fill: rgba(124, 77, 255, 0.85);
+}
+.hc-loop-svg .loop-label.sub {
+  font-size: 9.5px; font-weight: 600; letter-spacing: 0.04em; text-transform: none;
+  opacity: 0.75;
 }
 .hc-loop-svg .stack-divider {
   pointer-events: none;
