@@ -302,17 +302,6 @@
   pointer-events: none;
 }
 
-.hc-co-badge {
-  pointer-events: auto;
-  cursor: pointer;
-}
-.hc-co-badge circle {
-  fill: rgba(232, 233, 237, 0.7);
-  stroke: rgba(232, 233, 237, 0.95);
-  stroke-width: 1;
-}
-/* Company badges are NEUTRAL by default. DVC styling only inside the company card. */
-
 /* Insight / sticky panel */
 .hc-insight {
   position: sticky;
@@ -1185,37 +1174,6 @@
   color: var(--hc-text-mute, #A0A8BC);
 }
 
-/* Biotech sidecar */
-.hc-biotech-link { pointer-events: none; }
-.hc-biotech-card { cursor: pointer; }
-.hc-sankey-svg .hc-biotech-sidecar { display: none; }
-.hc-sankey-svg.view-companies .hc-biotech-sidecar { display: block; }
-.hc-biotech-kind {
-  font-size: 9px;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  fill: rgba(124,77,255,0.95);
-  font-family: var(--hc-font, inherit);
-}
-.hc-biotech-title {
-  font-size: 12px;
-  font-weight: 700;
-  fill: #E8E9ED;
-}
-.hc-biotech-body {
-  font-size: 11px;
-  fill: #C8CCD4;
-}
-.hc-biotech-badge rect {
-  fill: rgba(124,77,255,0.18);
-  stroke: rgba(124,77,255,0.6);
-}
-.hc-biotech-badge text {
-  fill: #E8E9ED;
-  font-size: 10px;
-  font-weight: 700;
-}
-
 /* Sankey hit area + highlight ----------------------------------------- */
 .hc-sankey-svg .hc-link-hits path { cursor: pointer; }
 .hc-sankey-svg .hc-link-group.is-dim .link-base { stroke-opacity: 0.06; }
@@ -1274,46 +1232,11 @@
   stroke: var(--hc-gold, #F5C542);
 }
 
-/* Companies mode overlay --- ON-CHART badge clusters LEFT of each pool
-   in the BC-flow area (visible on the chart, not in a far-right gutter).
-   Purple pool ring shows which pools host companies in the filtered set. */
+/* Companies mode overlay --- intentionally minimal. No badges or chips
+   are drawn on the river. A dashed purple pool ring marks which pools
+   host examples; the actual companies live in the drawer behind a
+   click on a flow, destination, pool, loop step, or stack band. */
 .hc-co-node-ring { pointer-events: none; }
-.hc-co-badge { cursor: pointer; pointer-events: auto; }
-.hc-co-badge rect {
-  fill: rgba(45, 49, 66, 0.95);
-  stroke: rgba(200, 204, 212, 0.9);
-  stroke-width: 1;
-}
-.hc-co-badge text {
-  fill: var(--hc-text, #E8E9ED);
-  font-size: 10.5px;
-  font-weight: 700;
-  letter-spacing: 0.01em;
-  pointer-events: none;
-}
-.hc-co-badge[data-group="dvc"] rect {
-  fill: rgba(124, 77, 255, 0.32);
-  stroke: rgba(180, 155, 255, 1);
-  stroke-width: 1.4;
-}
-.hc-co-badge[data-group="dvc"] text {
-  fill: #E2D7FF;
-}
-.hc-co-badge.hc-co-more rect {
-  fill: rgba(0, 0, 0, 0.35);
-  stroke: rgba(160, 168, 188, 0.45);
-  stroke-dasharray: 3 2;
-}
-.hc-co-badge.hc-co-more text {
-  fill: var(--hc-text-mute, #A0A8BC);
-  font-size: 9.5px;
-  font-weight: 600;
-}
-.hc-co-badge:hover rect,
-.hc-co-badge:focus rect {
-  stroke-width: 2;
-  filter: drop-shadow(0 0 4px rgba(124,77,255,0.5));
-}
 
 /* View-mode coloring of the river ------------------------------------- */
 /* Default Money mode: full opacity so dollars read first. */
