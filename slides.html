@@ -25,7 +25,16 @@
 <!-- Top-left: back to full report -->
 <a class="back-link" href="index.html">← Full Report</a>
 
-<!-- Top-right: slide counter -->
+<!-- Top-right: fullscreen toggle + slide counter -->
+<button class="fs-toggle" id="fsToggle" type="button" aria-label="Toggle fullscreen (F)" title="Present / Fullscreen (F)">
+  <svg class="fs-icon fs-icon--enter" width="14" height="14" viewBox="0 0 20 20" aria-hidden="true">
+    <path d="M3 8V3h5M17 8V3h-5M3 12v5h5M17 12v5h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+  <svg class="fs-icon fs-icon--exit" width="14" height="14" viewBox="0 0 20 20" aria-hidden="true">
+    <path d="M8 3v5H3M12 3v5h5M8 17v-5H3M12 17v-5h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+  <span class="fs-toggle-label">Present</span>
+</button>
 <div class="slide-counter"><span id="slideNum">1</span> / <span id="slideTotal">15</span></div>
 
 <!-- Click zones (overlay) -->
@@ -740,7 +749,7 @@
       <div class="iframe-headline">
         <p class="slide-eyebrow">Business models · usage is the engine</p>
         <h1 class="slide-headline">Per-token beats per-seat when AI does the work.</h1>
-        <p class="slide-sub">Anthropic 3&times; in 4 months on per-token API. Perplexity +50% in one month after Computer (per-task work). Subscription is distribution; usage is where revenue scales with value.</p>
+        <p class="slide-sub">Anthropic 3&times; in 4 months on per-token API. Perplexity +50% in a month after Computer. Usage is where revenue scales with value.</p>
       </div>
       <div class="pricing-row pricing-row--compact">
         <div class="pricing-icon pricing-icon--cracked"><div class="pricing-glyph">👤</div><span class="pricing-label">Per-seat</span></div>
@@ -751,7 +760,7 @@
       </div>
       <div class="slide-arpu-block">
         <p class="slide-arpu-intro">
-          The companies winning revenue are the ones charging by the work performed. Anthropic <strong class="tabnum">$30B+</strong> run-rate (3&times; in 4 months, ARPU <strong class="tabnum">$16.20/mo</strong>) on token volume. Perplexity ~<strong class="tabnum">$420M</strong> ARR after Computer launch (per-task work units). OpenAI carries <strong class="tabnum">900M</strong> WAU but only <strong class="tabnum slide-arpu-pct">5.6%</strong> pay — subscription drives distribution, not value capture.
+          Charge for the work. Anthropic: <strong class="tabnum">$30B+</strong> run-rate, <strong class="tabnum">3×</strong> in 4 months, ARPU <strong class="tabnum">$16.20/mo</strong> — per-token. Perplexity: ~<strong class="tabnum">$420M</strong> ARR after Computer (per-task). OpenAI: <strong class="tabnum">900M</strong> WAU, only <strong class="tabnum slide-arpu-pct">5.6%</strong> pay — subscription distributes; usage captures.
         </p>
         <div class="slide-arpu-bars">
           <div class="slide-arpu-row slide-arpu-row--openai">
@@ -796,7 +805,7 @@
           </div>
         </div>
         <p class="slide-arpu-foot">
-          <strong>Subscription caps upside; usage scales with workload.</strong> Anthropic ARPU $16.20/mo (vs OpenAI $2.20, Google $1.10) — premium per-token customers, not free-tier reach. Per-token revenue grows with task volume and compute intensity; flat subs mis-price heavy users. Subscription remains a useful on-ramp/distribution bundle, but the economic engine is usage/work performed.
+          <strong>Subscription caps upside; usage scales with workload.</strong> Anthropic ARPU <strong class="tabnum">$16.20/mo</strong> vs OpenAI <strong class="tabnum">$2.20</strong>, Google <strong class="tabnum">$1.10</strong>. Subs distribute; per-token bills the work.
         </p>
         <span class="stat-source">Source: Counterpoint Research (Apr 2026), Anthropic disclosures, Perplexity (Apr 2026), OpenAI (Feb 2026)</span>
       </div>
@@ -904,13 +913,7 @@
         <h1 class="slide-headline">Three angles. Pick one.</h1>
         <p class="slide-sub">SaaS to incumbents. Vertical agentic. Agentic rollup. The market structure picks the strategy &mdash; not the founder.</p>
       </div>
-      <div class="slide-attack-angles" id="slide12AttackWrap">
-        <div class="slide-attack-angles__scroll" id="slide12AttackScroll" tabindex="0" aria-label="Three attack angles — scroll to see all content">
-          <div class="aa-block anim-fade" id="attack-angles-block"></div>
-        </div>
-        <div class="slide-attack-angles__fade" aria-hidden="true"></div>
-        <div class="slide-attack-angles__hint" aria-hidden="true">Scroll</div>
-      </div>
+      <div class="slide-attack-stage" id="attack-angles-stage" aria-label="Three attack angles — stage view"></div>
     </div>
     <a class="dive-deeper" data-slide-link="13">→ Dive deeper</a>
   </section>

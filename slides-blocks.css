@@ -709,3 +709,87 @@ body:has(.slide[data-slide="12"].is-active) .click-zone--next { width: 64px; }
   .slide-arpu-fill { font-size: 0.66rem; }
   .slide-arpu-track { height: 22px; }
 }
+
+/* ─────────────────────────────────────────────────────────
+   STAGE READABILITY — surgical overrides for projector / fullscreen
+   These bump fonts and reduce density on the worst-offending slides.
+   Desktop-only (mobile keeps existing tighter layout).
+   ───────────────────────────────────────────────────────── */
+@media (min-width: 769px) {
+  /* Slide 8 (Agent anatomy) — bigger layer bars; the slide is meant to
+     read as architecture, not a chip dump. Chips remain in expanded detail.
+     Constrain headline so all 7 layers fit without scroll. */
+  .slide[data-slide="9"] .slide-block-layout { padding-top: 1rem; padding-bottom: 0.9rem; gap: 0.5rem; }
+  .slide[data-slide="9"] .slide-headline { font-size: clamp(26px, 2.8vw, 38px); margin-bottom: 0.15rem; }
+  .slide[data-slide="9"] .slide-sub { font-size: clamp(13px, 1vw, 16px); margin-bottom: 0.3rem; }
+  .slide[data-slide="9"] .aa-stack { max-width: 980px; gap: 5px; }
+  .slide[data-slide="9"] .aa-layer-bar { padding: 10px 16px; gap: 12px; }
+  .slide[data-slide="9"] .aa-layer-num {
+    width: 26px; height: 26px; font-size: 0.78rem;
+  }
+  .slide[data-slide="9"] .aa-layer-icon { width: 22px; height: 22px; }
+  .slide[data-slide="9"] .aa-layer-name { font-size: 1rem; letter-spacing: 0.01em; }
+  .slide[data-slide="9"] .aa-layer-tagline { font-size: 0.84rem; }
+  .slide[data-slide="9"] .aa-layer-chevron { width: 18px; height: 18px; }
+  /* Make the architecture row read as a stack: tint the left border heavier */
+  .slide[data-slide="9"] .aa-layer { border-left-width: 6px; }
+  /* Tame any extra-long chips so an accidental expand doesn't ruin the visual */
+  .slide[data-slide="9"] .aa-tool-chip { font-size: 0.76rem; padding: 3px 9px; }
+
+  /* Slide 10 (Business models) — reduce paragraph density. Cap intro/foot
+     widths so the eye doesn't have to track long lines on stage. Also
+     compress vertical rhythm so the bottom row (OpenAI) is never clipped. */
+  .slide[data-slide="11"] { padding-top: 36px !important; padding-bottom: 24px; }
+  .slide[data-slide="11"] .slide-headline { font-size: clamp(26px, 3vw, 40px); margin-bottom: 4px; }
+  .slide[data-slide="11"] .slide-sub { margin-bottom: 8px; font-size: clamp(13px, 1vw, 15px); }
+  .slide[data-slide="11"] .pricing-row--compact { margin: 0 0 6px; }
+  .slide[data-slide="11"] .slide-arpu-intro,
+  .slide[data-slide="11"] .slide-arpu-foot {
+    max-width: 760px; margin-left: auto; margin-right: auto;
+    line-height: 1.45;
+  }
+  .slide[data-slide="11"] .slide-arpu-intro { font-size: 0.88rem; }
+  .slide[data-slide="11"] .slide-arpu-foot { font-size: 0.84rem; }
+  .slide[data-slide="11"] .slide-arpu-block { gap: 0.45rem; max-width: 860px; }
+  .slide[data-slide="11"] .slide-arpu-label { width: 170px; font-size: 0.88rem; }
+  .slide[data-slide="11"] .slide-arpu-track { height: 28px; }
+  .slide[data-slide="11"] .slide-arpu-fill { font-size: 0.86rem; padding-right: 0.7rem; }
+
+  /* Slide 11 (Services quadrant) — make quadrant labels + dollar figures
+     larger; group the industry chips a bit more legibly. Keep Sequoia framing. */
+  .slide[data-slide="12"] { padding-top: 36px !important; padding-bottom: 28px; }
+  .slide[data-slide="12"] .slide-headline { font-size: clamp(26px, 3vw, 40px); margin-bottom: 4px; }
+  .slide[data-slide="12"] .slide-sub { margin-bottom: 6px; font-size: clamp(13px, 1vw, 15px); }
+  .slide[data-slide="12"] .slide-text { margin-bottom: 6px; }
+  .slide[data-slide="12"] .slide-seq-matrix { padding: 0 0.5rem; }
+  .slide[data-slide="12"] .slide-seq-matrix span[style*="OUTSOURCED"],
+  .slide[data-slide="12"] .slide-seq-matrix span[style*="INSOURCED"],
+  .slide[data-slide="12"] .slide-seq-matrix span[style*="JUDGEMENT"],
+  .slide[data-slide="12"] .slide-seq-matrix span[style*="INTELLIGENCE"] {
+    font-size: 0.82rem !important;
+  }
+  /* Per-quadrant headers (COPILOT TERRITORY / AUTOPILOT TERRITORY / WATCH / NEXT WAVE) */
+  .slide[data-slide="12"] .slide-seq-matrix span[style*="COPILOT TERRITORY"],
+  .slide[data-slide="12"] .slide-seq-matrix span[style*="AUTOPILOT TERRITORY"],
+  .slide[data-slide="12"] .slide-seq-matrix span[style*="WATCH"],
+  .slide[data-slide="12"] .slide-seq-matrix span[style*="NEXT WAVE"] {
+    font-size: 0.88rem !important; letter-spacing: 0.14em !important;
+  }
+  /* The $370B / $700B / etc. */
+  .slide[data-slide="12"] .slide-seq-matrix span.tabnum[style*="font-weight:800"] {
+    font-size: 1.15rem !important;
+  }
+  /* Industry chips — bigger text, tighter padding, fewer-feeling layout */
+  .slide[data-slide="12"] .seq-entry {
+    font-size: 0.84rem !important;
+    padding: 0.4rem 0.7rem !important;
+    border-radius: 8px !important;
+  }
+  .slide[data-slide="12"] .seq-entry .tabnum {
+    font-size: 0.75rem !important;
+  }
+  /* Quadrant tagline (Outsourced × Judgement) */
+  .slide[data-slide="12"] .slide-seq-matrix p[style*="font-style:italic"] {
+    font-size: 0.82rem !important;
+  }
+}

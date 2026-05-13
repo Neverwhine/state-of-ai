@@ -47,6 +47,13 @@
     activeIndex = idx;
     if (numEl) numEl.textContent = idx + 1;
     if (progressEl) progressEl.style.width = (((idx + 1) / total) * 100) + '%';
+    // Update URL hash so deep-links / refresh resume on the same slide
+    try {
+      const desired = '#s' + (idx + 1);
+      if (window.location.hash !== desired) {
+        history.replaceState(null, '', desired);
+      }
+    } catch (_) { /* ignore */ }
     // Stash desired entry state on the multi-state slide BEFORE animation fires
     const slideEl = slides[idx];
     if (slideEl && parseInt(slideEl.dataset.slideStates || '0', 10) > 1) {
@@ -94,14 +101,50 @@
     activate(activeIndex - 1);
   }
 
+  // ── Fullscreen ──
+  function isFullscreen() {
+    return !!(document.fullscreenElement || document.webkitFullscreenElement);
+  }
+  function enterFullscreen() {
+    const el = document.documentElement;
+    const req = el.requestFullscreen || el.webkitRequestFullscreen;
+    if (req) req.call(el).catch(() => {});
+  }
+  function exitFullscreen() {
+    const exit = document.exitFullscreen || document.webkitExitFullscreen;
+    if (exit && isFullscreen()) exit.call(document).catch(() => {});
+  }
+  function toggleFullscreen() {
+    if (isFullscreen()) exitFullscreen(); else enterFullscreen();
+  }
+  function syncFullscreenClass() {
+    document.body.classList.toggle('is-fullscreen', isFullscreen());
+  }
+  document.addEventListener('fullscreenchange', syncFullscreenClass);
+  document.addEventListener('webkitfullscreenchange', syncFullscreenClass);
+
+  const fsBtn = document.getElementById('fsToggle');
+  if (fsBtn) fsBtn.addEventListener('click', toggleFullscreen);
+
   // ── Keyboard ──
   document.addEventListener('keydown', e => {
+    // Don't intercept keys when user is typing in inputs/textareas
+    const t = e.target;
+    if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
     if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
       e.preventDefault(); next();
     } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
       e.preventDefault(); prev();
     } else if (e.key === 'Escape') {
+      // ESC: exit fullscreen if in it; otherwise return to report
+      if (isFullscreen()) {
+        // Browser exits fullscreen automatically on Escape; just sync class
+        // (no explicit nav)
+        return;
+      }
       window.location.href = 'index.html';
+    } else if (e.key === 'f' || e.key === 'F') {
+      e.preventDefault(); toggleFullscreen();
     } else if (e.key === 'Home') {
       activate(0);
     } else if (e.key === 'End') {
@@ -1640,14 +1683,14 @@
     }
   };
 
-  // ─── SLIDE 12 — Three attack angles (NATIVE via attack-angles.js) ───
+  // ─── SLIDE 12 — Three attack angles (stage-compact cards) ───
   ANIMATIONS[13] = function () {
-    if (window.ATTACK_ANGLES && typeof window.ATTACK_ANGLES.render === 'function') {
-      window.ATTACK_ANGLES.render('attack-angles-block');
+    if (window.ATTACK_ANGLES && typeof window.ATTACK_ANGLES.renderStage === 'function') {
+      window.ATTACK_ANGLES.renderStage('attack-angles-stage');
     }
-    const cols = document.querySelectorAll('#slide-13 .aa-col');
-    if (cols.length && window.gsap) {
-      gsap.from(cols, { y: 18, opacity: 0, duration: 0.5, stagger: 0.1, ease: 'power2.out' });
+    const cards = document.querySelectorAll('#slide-13 .aa-stage-card');
+    if (cards.length && window.gsap) {
+      gsap.from(cards, { y: 18, opacity: 0, duration: 0.5, stagger: 0.1, ease: 'power2.out' });
     }
   };
 
@@ -1676,10 +1719,46 @@
   };
 
   // ── Start ──
-  // pick initial slide from hash (#slide-4 etc.)
-  const m = location.hash.match(/^#slide-(\d+)$/);
-  const startIdx = m ? Math.max(0, Math.min(total - 1, parseInt(m[1], 10) - 1)) : 0;
+  // Resolve initial slide from the URL's hash. Capture both location.hash
+  // *and* the raw URL — some browsers/embeddings (notably file://) can
+  // briefly report an empty location.hash at script-eval time, but the hash
+  // is still present in location.href. We try both, then re-check after
+  // DOMContentLoaded / load in case the early read was empty.
+  function idxFromString(s) {
+    if (!s) return -1;
+    const m = String(s).match(/#(?:slide-|s)(\d+)/);
+    return m ? Math.max(0, Math.min(total - 1, parseInt(m[1], 10) - 1)) : -1;
+  }
+  const initialHref = location.href;
+  function bestInitialIdx() {
+    const a = idxFromString(location.hash);
+    if (a >= 0) return a;
+    const b = idxFromString(initialHref);
+    return b >= 0 ? b : 0;
+  }
+  const startIdx = bestInitialIdx();
   activate(startIdx);
+  // Late re-apply: if the early read missed the hash and we landed on
+  // slide 1 by mistake, snap to the correct slide once the document is
+  // ready (and again on full load as a belt-and-braces fallback).
+  function lateApplyHash() {
+    // Use both sources so we don't get fooled if activate() already
+    // overwrote location.hash to match the (wrong) active slide.
+    const want = Math.max(idxFromString(location.hash), idxFromString(initialHref));
+    if (want >= 0 && want !== activeIndex) activate(want);
+  }
+  if (document.readyState !== 'complete') {
+    window.addEventListener('DOMContentLoaded', lateApplyHash, { once: true });
+    window.addEventListener('load', lateApplyHash, { once: true });
+  }
+  // Respond to external hash changes (test harnesses, back/forward nav,
+  // shared links opened mid-session). Compare against location.hash only
+  // here — initialHref is no longer authoritative once the user navigates.
+  window.addEventListener('hashchange', () => {
+    const i = idxFromString(location.hash);
+    if (i >= 0 && i !== activeIndex) activate(i);
+  });
+  syncFullscreenClass();
 
   // expose for debugging
   window.__deck = { activate, next, prev, get index() { return activeIndex; } };

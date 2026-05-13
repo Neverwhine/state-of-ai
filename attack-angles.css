@@ -297,3 +297,126 @@ body.embed-mode .aa-bar { height: 6px; }
 body.embed-mode .aa-chip { padding: 4px 7px; font-size: 0.7rem; }
 body.embed-mode .aa-chip-detail { font-size: 0.65rem; }
 body.embed-mode .aa-chips { gap: 4px; }
+
+/* ─── Slide 13 stage view — 3 large illustrative cards (no chip dump) ─── */
+.slide-attack-stage {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+.aa-stage-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.1rem;
+  width: 100%;
+}
+.aa-stage-card {
+  background: #383E52;
+  border-radius: 16px;
+  border: 1px solid rgba(160,168,188,0.14);
+  border-top: 4px solid var(--aa-accent, #4ECDC4);
+  padding: 1.25rem 1.25rem 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  transition: transform 220ms ease, box-shadow 220ms ease;
+}
+.aa-stage-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 36px rgba(0,0,0,0.28);
+}
+.aa-stage-card-head {
+  display: flex; flex-direction: column; gap: 0.35rem;
+}
+.aa-stage-glyph {
+  color: var(--aa-accent, #4ECDC4);
+  margin-bottom: 0.1rem;
+}
+.aa-stage-glyph svg { width: 44px; height: 44px; }
+.aa-stage-card-title {
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  color: var(--aa-accent, #4ECDC4);
+  margin: 0;
+  text-transform: uppercase;
+}
+.aa-stage-card-tagline {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+  line-height: 1.3;
+}
+.aa-stage-facts {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+.aa-stage-facts li {
+  display: grid;
+  grid-template-columns: 92px 1fr;
+  gap: 0.55rem;
+  align-items: baseline;
+}
+.aa-stage-fact-label {
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  color: #6F7891;
+  text-transform: uppercase;
+}
+.aa-stage-fact-value {
+  font-size: 0.92rem;
+  color: #E8ECEF;
+  line-height: 1.35;
+}
+.aa-stage-examples {
+  margin-top: auto;
+  padding-top: 0.7rem;
+  border-top: 1px solid rgba(160,168,188,0.12);
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+.aa-stage-examples-label {
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  color: var(--aa-accent, #4ECDC4);
+  text-transform: uppercase;
+}
+.aa-stage-examples-list {
+  font-size: 0.88rem;
+  color: #C8CCD4;
+  line-height: 1.35;
+}
+.aa-stage-footer {
+  margin: 0.5rem 0 0;
+  text-align: center;
+  font-size: 0.88rem;
+  color: #A0A8BC;
+  line-height: 1.4;
+}
+.aa-stage-footer-note {
+  display: block;
+  margin-top: 0.2rem;
+  font-size: 0.78rem;
+  color: #6F7891;
+}
+
+/* Mobile: stack cards vertically; trim a bit */
+@media (max-width: 768px) {
+  .aa-stage-cards { grid-template-columns: 1fr; gap: 0.85rem; }
+  .aa-stage-card { padding: 1rem 1rem 1.1rem; gap: 0.7rem; }
+  .aa-stage-card-tagline { font-size: 1rem; }
+  .aa-stage-facts li { grid-template-columns: 80px 1fr; gap: 0.4rem; }
+  .aa-stage-fact-value { font-size: 0.84rem; }
+}

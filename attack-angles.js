@@ -213,13 +213,52 @@
     el.dataset.aaRendered = '1';
   }
 
+  // Compact stage-only renderer: 3 illustrative cards, no chip-dump.
+  // Speech: "do not read every company in the table now; point is the lens."
+  function renderStage(target) {
+    const el = (typeof target === 'string') ? document.getElementById(target) : target;
+    if (!el) return;
+    if (el.dataset.aaStageRendered === '1') return;
+
+    el.innerHTML = `
+      <div class="aa-stage-cards">
+        ${ANGLES.map(a => `
+          <article class="aa-stage-card" style="--aa-accent:${a.color}">
+            <header class="aa-stage-card-head">
+              <div class="aa-stage-glyph">${GLYPHS[a.glyph]}</div>
+              <h4 class="aa-stage-card-title">${a.title}</h4>
+              <p class="aa-stage-card-tagline">${a.tagline}</p>
+            </header>
+            <ul class="aa-stage-facts">
+              <li><span class="aa-stage-fact-label">Customer</span><span class="aa-stage-fact-value">${a.customer}</span></li>
+              <li><span class="aa-stage-fact-label">Best when</span><span class="aa-stage-fact-value">${a.when}</span></li>
+              <li><span class="aa-stage-fact-label">Pricing</span><span class="aa-stage-fact-value">${a.pricing}</span></li>
+              <li><span class="aa-stage-fact-label">Capital</span><span class="aa-stage-fact-value">${a.capital.label}</span></li>
+              <li><span class="aa-stage-fact-label">Margin</span><span class="aa-stage-fact-value tabnum">Gross ${a.grossMarginLabel} · EBITDA ${a.ebitdaLabel}</span></li>
+            </ul>
+            <div class="aa-stage-examples">
+              <span class="aa-stage-examples-label">Examples</span>
+              <span class="aa-stage-examples-list">${a.comps.slice(0, 3).map(c => c.name).join(' · ')}</span>
+            </div>
+          </article>
+        `).join('')}
+      </div>
+      <p class="aa-stage-footer">Market structure picks the strategy — not the founder. <span class="aa-stage-footer-note">Full company map in the report.</span></p>
+    `;
+    el.dataset.aaStageRendered = '1';
+  }
+
   // Expose globally so both index.html and slides.html can call it.
-  window.ATTACK_ANGLES = { ANGLES, render };
+  window.ATTACK_ANGLES = { ANGLES, render, renderStage };
 
   // Auto-render if a default container is present in the page.
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => render('attack-angles-block'));
-  } else {
+  function autoRender() {
     render('attack-angles-block');
+    renderStage('attack-angles-stage');
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', autoRender);
+  } else {
+    autoRender();
   }
 })();

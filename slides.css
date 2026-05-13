@@ -60,6 +60,51 @@ body { position: relative; }
 }
 .slide-counter span { color: var(--text); }
 
+/* ─── FULLSCREEN TOGGLE ─── */
+.fs-toggle {
+  position: fixed; top: 14px; right: 80px; z-index: 60;
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 10px;
+  font: inherit; font-size: 12px; font-weight: 600;
+  color: var(--text-mute);
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border); border-radius: 6px;
+  cursor: pointer; letter-spacing: 0.04em;
+  transition: color 200ms, border-color 200ms, background 200ms;
+}
+.fs-toggle:hover { color: var(--teal); border-color: var(--teal); background: rgba(78,205,196,0.08); }
+.fs-toggle .fs-icon { display: block; }
+.fs-toggle .fs-icon--exit { display: none; }
+body.is-fullscreen .fs-toggle .fs-icon--enter { display: none; }
+body.is-fullscreen .fs-toggle .fs-icon--exit { display: block; }
+body.is-fullscreen .fs-toggle .fs-toggle-label::before { content: 'Exit '; }
+body.is-fullscreen .fs-toggle .fs-toggle-label { font-size: 0; }
+body.is-fullscreen .fs-toggle .fs-toggle-label::before { font-size: 12px; }
+
+/* Fullscreen mode: hide distracting chrome, give slides safe stage margins */
+body.is-fullscreen .back-link { display: none; }
+body.is-fullscreen .slide-counter {
+  top: 14px; right: 24px;
+  opacity: 0.55;
+  font-size: 12px;
+}
+body.is-fullscreen .fs-toggle {
+  opacity: 0.45;
+  transition: opacity 220ms;
+}
+body.is-fullscreen .fs-toggle:hover,
+body.is-fullscreen .fs-toggle:focus { opacity: 1; }
+body.is-fullscreen .dive-deeper {
+  opacity: 0.35;
+  transition: opacity 220ms;
+}
+body.is-fullscreen .dive-deeper:hover { opacity: 1; }
+body.is-fullscreen .nav-hint { display: none; }
+
+@media (max-width: 768px) {
+  .fs-toggle { display: none; } /* mobile relies on browser fullscreen */
+}
+
 .nav-hint {
   position: fixed; bottom: 14px; left: 50%; transform: translateX(-50%);
   font-size: 11px; color: var(--text-mute); opacity: 0.5;
@@ -1249,10 +1294,12 @@ body { position: relative; }
 .slide[data-slide="11"] { align-items: flex-start; padding-top: 60px; }
 .slide[data-slide="11"] .slide-inner { gap: 12px; }
 
-/* Attack angles slide (12) — top-anchor + slimmer headline since the iframe carries the visual weight */
-.slide[data-slide="13"] { align-items: flex-start; padding-top: 50px; }
-.slide[data-slide="13"] .slide-headline { font-size: clamp(34px, 3.8vw, 52px); margin-bottom: 8px; }
-.slide[data-slide="13"] .slide-sub { margin-bottom: 14px; }
+/* Attack angles slide (12) — top-anchor + slimmer headline since the cards carry the visual weight */
+.slide[data-slide="13"] { align-items: flex-start; padding-top: 40px; padding-bottom: 60px; }
+.slide[data-slide="13"] .slide-inner { gap: 12px; }
+.slide[data-slide="13"] .slide-headline { font-size: clamp(26px, 3vw, 40px); margin-bottom: 4px; }
+.slide[data-slide="13"] .slide-sub { margin-bottom: 8px; font-size: clamp(13px, 1vw, 15px); }
+.slide[data-slide="13"] .iframe-headline { margin-bottom: 6px; }
 
 /* Physical AI (13) — centered vertically; tiles + strip share the slide.
    Close slide (14) — top-anchored because Key Learnings cards need top space. */
