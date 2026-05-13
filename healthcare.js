@@ -176,9 +176,8 @@
     }
 
     function companyChipHTML(c) {
-      var groupTag = c.group === 'dvc'
-        ? '<span class="hc-co-grouptag dvc">DVC portfolio</span>'
-        : '<span class="hc-co-grouptag leader">Market leader</span>';
+      var groupLabel = c.tag || (c.group === 'dvc' ? 'DVC portfolio' : 'Market leader');
+      var groupTag = '<span class="hc-co-grouptag ' + (c.group === 'dvc' ? 'dvc' : 'leader') + '">' + escapeHtml(groupLabel) + '</span>';
       return '<button type="button" class="hc-co-chip" data-action="company" data-id="' + c.id + '">' +
                '<span class="hc-co-chip-name">' + escapeHtml(c.name) + '</span>' +
                groupTag +
@@ -865,8 +864,8 @@
     function whyFlowMatters(f) {
       var sId = f.source, tId = f.target;
       if (tId === 'pool_clinical_labor') return 'This is where scribes, clinical copilots, staffing, throughput, and care-team automation attach.';
-      if (tId === 'pool_provider_admin') return 'Near-term AI ROI for providers: documentation, coding, billing, prior auth, and patient billing.';
-      if (tId === 'pool_payer_admin')    return 'Payer-side ops: claims, utilization management, fraud, and customer service. Often defensive AI against provider automation.';
+      if (tId === 'pool_provider_admin') return 'Near-term AI ROI for providers: documentation, coding, billing, prior auth, and patient billing. Note the visible CMS admin line is ~$371B but the broader provider+payer admin drag is ~$800-900B (Commonwealth Fund / JAMA).';
+      if (tId === 'pool_payer_admin')    return 'Payer-side ops: claims, utilization management, fraud, and customer service. Often defensive AI against provider automation. The CMS admin line is the visible piece; addressable admin drag is broader.';
       if (tId === 'pool_drugs_biologics')return 'Therapeutic value. AI moves upstream into discovery, trial design, precision medicine, and adherence.';
       if (tId === 'pool_supplies_devices') return 'Diagnostics, imaging, wearables, and devices. AI enters via signal interpretation and monitoring.';
       if (tId === 'pool_it_data')        return 'Small in dollars, huge in control: EHRs, interoperability, security, and the AI deployment substrate.';
@@ -930,9 +929,8 @@
 
     function renderCompanyDrawer(c) {
       if (!c) return;
-      var groupTag = c.group === 'dvc'
-        ? '<span class="hc-co-grouptag dvc">DVC portfolio</span>'
-        : '<span class="hc-co-grouptag leader">Market leader / benchmark</span>';
+      var groupLabel = c.tag || (c.group === 'dvc' ? 'DVC portfolio' : 'Market leader / benchmark');
+      var groupTag = '<span class="hc-co-grouptag ' + (c.group === 'dvc' ? 'dvc' : 'leader') + '">' + escapeHtml(groupLabel) + '</span>';
       var pools = (c.money_pool_ids || []).map(function (id) { return DATA.costPools.find(function (p) { return p.id === id; }); }).filter(Boolean);
       var steps = (c.process_step_ids || []).map(findStep).filter(Boolean);
       var ais = (c.ai_surface_ids || []).map(findAi).filter(Boolean);
