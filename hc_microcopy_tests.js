@@ -373,6 +373,147 @@ var incIds = D.incentives.map(function (i) { return i.id; });
   check('incentive ' + id + ' is still present', incIds.indexOf(id) > -1);
 });
 
+console.log('--- Test: every loop node belongs to a named process group ---');
+// Dmitry note: every box in the loop chart must be part of some named
+// process path; prevention nodes must not float.
+check('processGroups data is present', Array.isArray(D.processGroups) && D.processGroups.length >= 4,
+  'got ' + (D.processGroups || []).length);
+var groupedStepIds = {};
+(D.processGroups || []).forEach(function (g) {
+  check('processGroup ' + g.id + ' has label', !!g.label);
+  check('processGroup ' + g.id + ' has color', !!g.color);
+  check('processGroup ' + g.id + ' has steps', Array.isArray(g.steps) && g.steps.length > 0);
+  (g.steps || []).forEach(function (sid) { groupedStepIds[sid] = g.id; });
+});
+var allLoopNodes = D.careLoop.concat(D.financialLoop, D.preventionOrbit, D.vbcBridge);
+var orphans = allLoopNodes.filter(function (s) { return !groupedStepIds[s.id]; });
+check('no loop node is orphaned (every box belongs to a process group)',
+  orphans.length === 0, 'orphans: ' + orphans.map(function (o) { return o.id; }).join(','));
+// Each track has its expected step ids.
+var pgCare = (D.processGroups.find(function (g) { return g.id === 'pg_care'; }) || {}).steps || [];
+var pgFin  = (D.processGroups.find(function (g) { return g.id === 'pg_financial'; }) || {}).steps || [];
+var pgPrev = (D.processGroups.find(function (g) { return g.id === 'pg_prevention'; }) || {}).steps || [];
+var pgVbc  = (D.processGroups.find(function (g) { return g.id === 'pg_vbc'; }) || {}).steps || [];
+check('pg_care covers C1..C8', pgCare.join(',') === 'C1,C2,C3,C4,C5,C6,C7,C8');
+check('pg_financial covers F1..F8', pgFin.join(',') === 'F1,F2,F3,F4,F5,F6,F7,F8');
+check('pg_prevention covers P1..P5 (no orphan prevention nodes)', pgPrev.join(',') === 'P1,P2,P3,P4,P5');
+check('pg_vbc covers V1..V5', pgVbc.join(',') === 'V1,V2,V3,V4,V5');
+
+console.log('--- Test: prevention loop is tied to the care loop via bridge edges ---');
+check('loopBridgeEdges data is present', Array.isArray(D.loopBridgeEdges) && D.loopBridgeEdges.length >= 1);
+var bridges = D.loopBridgeEdges || [];
+var hasC8ToP = bridges.some(function (e) { return e.from === 'C8' && /^P/.test(e.to); });
+var hasPtoTriage = bridges.some(function (e) { return /^P/.test(e.from) && e.to === 'C2'; });
+var hasVbcToCare = bridges.some(function (e) { return /^V/.test(e.from) && /^C/.test(e.to); });
+check('care discharge (C8) feeds prevention loop', hasC8ToP);
+check('prevention escalation feeds triage (C2)', hasPtoTriage);
+check('VBC bridges into the care loop', hasVbcToCare);
+
+console.log('--- Test: loop renderer wires groups, bridges, and prevention as a real loop ---');
+check('healthcare.js draws group hulls', hcSrc.indexOf('group-hull') > -1);
+check('healthcare.js reads loopBridgeEdges from data', hcSrc.indexOf('loopBridgeEdges') > -1);
+check('healthcare.js closes the prevention loop (P5 -> P1)',
+  hcSrc.indexOf("prevActive.P5 && prevActive.P1") > -1);
+check('healthcare.js renders named track labels (Clinical care loop)',
+  hcSrc.indexOf('CLINICAL CARE LOOP') > -1);
+check('healthcare.js renders named prevention/monitoring loop label',
+  hcSrc.indexOf('PREVENTION / MONITORING') > -1);
+check('healthcare.js renders the VBC / risk bridge label',
+  hcSrc.indexOf('VBC / RISK BRIDGE') > -1);
+check('healthcare.js draws a stack-divider between process map and stack',
+  hcSrc.indexOf('stack-divider') > -1);
+check('renderStepDrawer no longer uses the orphan "Prevention orbit" copy',
+  hcSrc.indexOf('Prevention orbit') === -1);
+
+console.log('--- Test: Dmitry sourced callouts exist and are wired ---');
+check('loopCallouts data is present', Array.isArray(D.loopCallouts) && D.loopCallouts.length >= 5);
+var calloutIds = (D.loopCallouts || []).map(function (c) { return c.id; });
+['cl_workforce','cl_cms_rht','cl_claude_health','cl_palantir_r1','cl_behavioral_telehealth'].forEach(function (id) {
+  check('callout ' + id + ' is present', calloutIds.indexOf(id) > -1);
+});
+(D.loopCallouts || []).forEach(function (c) {
+  check('callout ' + c.id + ' has body', !!c.body);
+  check('callout ' + c.id + ' has source_url', !!c.source_url);
+  check('callout ' + c.id + ' has source_label', !!c.source_label);
+  check('callout ' + c.id + ' attaches to a real process group',
+    !!(D.processGroups || []).find(function (g) { return g.id === c.group; }));
+});
+// Substance checks: the figures Dmitry asked for are present in callout bodies.
+var allCalloutText = (D.loopCallouts || []).map(function (c) { return [c.title, c.stat, c.body].join(' '); }).join(' ');
+check('HRSA workforce callout includes the 141,160 physician FTE shortage figure',
+  /141,?160/.test(allCalloutText));
+check('CMS RHT callout cites $50B and FY2026 timeframe',
+  /\$50B/.test(allCalloutText) && /FY2026/.test(allCalloutText));
+check('Claude for Healthcare callout cites prior authorization and FHIR',
+  /prior auth/i.test(allCalloutText) && /FHIR/i.test(allCalloutText));
+check('Palantir / R1 callout names the R37 AI Lab partnership',
+  /R37 AI Lab/i.test(allCalloutText));
+check('Behavioral health callout cites 66.4M vs 62.8M visit figure',
+  /66\.4M/.test(allCalloutText) && /62\.8M/.test(allCalloutText));
+
+check('index.html has the loop-callouts container', indexSrc.indexOf('id="hc-loop-callouts"') > -1);
+check('healthcare.css styles hc-loop-callout cards', cssSrc.indexOf('.hc-loop-callout') > -1);
+check('healthcare.js renders callouts into #hc-loop-callouts',
+  hcSrc.indexOf("'#hc-loop-callouts'") > -1 && hcSrc.indexOf('loopCallouts') > -1);
+
+console.log('--- Test: new companies (Claude for Healthcare, Palantir, Adentris) ---');
+var companyIds = D.companies.map(function (c) { return c.id; });
+check('Claude for Healthcare company present', companyIds.indexOf('co_claude_health') > -1);
+check('Palantir / R1 company present',         companyIds.indexOf('co_palantir')      > -1);
+check('Adentris company present',              companyIds.indexOf('co_adentris')      > -1);
+// Adentris is in RCM/documentation, not generic SaaS
+var ade = D.companies.find(function (c) { return c.id === 'co_adentris'; });
+check('Adentris sits in the Provider RCM layer',
+  !!ade && ade.layer_id === 'L7_provider_rcm', 'got ' + (ade && ade.layer_id));
+check('Adentris description mentions real-time documentation compliance',
+  !!ade && /real-time/i.test(ade.short_description) && /document/i.test(ade.short_description));
+// Claude for Healthcare sits in prior-auth/payer admin
+var claudeCo = D.companies.find(function (c) { return c.id === 'co_claude_health'; });
+check('Claude for Healthcare sits in prior-auth / payer-admin layer',
+  !!claudeCo && claudeCo.layer_id === 'L8_denials_prior_auth');
+check('Claude for Healthcare description cites HIPAA-ready',
+  !!claudeCo && /HIPAA/i.test(claudeCo.short_description));
+// Palantir is RCM
+var pl = D.companies.find(function (c) { return c.id === 'co_palantir'; });
+check('Palantir / R1 sits in the Provider RCM layer',
+  !!pl && pl.layer_id === 'L7_provider_rcm');
+check('Palantir description names R37 AI Lab partnership',
+  !!pl && /R37 AI Lab/.test(pl.short_description));
+// Layers expose the new companies in their drawer set
+check('L7 RCM drawer surfaces Palantir',  (D.companyLayers.L7_provider_rcm.drawer || []).indexOf('co_palantir')      > -1);
+check('L7 RCM drawer surfaces Adentris',  (D.companyLayers.L7_provider_rcm.drawer || []).indexOf('co_adentris')      > -1);
+check('L8 prior auth drawer surfaces Claude for Healthcare',
+  (D.companyLayers.L8_denials_prior_auth.drawer || []).indexOf('co_claude_health') > -1);
+
+console.log('--- Test: Workdn / WorkDone renamed to Adentris in healthcare data ---');
+// Per Dmitry: Workdn/WorkDone is renamed to Adentris. The healthcare data
+// and user-facing healthcare copy must not surface the old name.
+check('healthcare-data.js does not contain user-facing "Workdn"',
+  hcDataSrc.indexOf('Workdn') === -1 && hcDataSrc.indexOf('workdn') === -1);
+// "WorkDone" appears once in Adentris's short_description as a historical
+// note (formerly WorkDone). That's the only acceptable mention — confirm
+// it is exactly one mention and it is attached to Adentris.
+var wdMentions = (hcDataSrc.match(/WorkDone/g) || []).length;
+check('"WorkDone" appears at most once in healthcare-data.js (historical note)',
+  wdMentions <= 1, 'count=' + wdMentions);
+check('healthcare.js does not surface Workdn/WorkDone in user-facing copy',
+  hcSrc.indexOf('Workdn') === -1 && hcSrc.indexOf('WorkDone') === -1);
+
+console.log('--- Test: new sources are present in the sources list ---');
+var srcLabels = (D.sources || []).map(function (s) { return s.label; });
+check('HRSA workforce source listed',
+  srcLabels.some(function (l) { return /HRSA/i.test(l); }));
+check('CMS Rural Health Transformation source listed',
+  srcLabels.some(function (l) { return /Rural Health Transformation/i.test(l); }));
+check('Anthropic healthcare source listed',
+  srcLabels.some(function (l) { return /Anthropic/i.test(l) && /healthcare/i.test(l); }));
+check('Palantir / R1 source listed',
+  srcLabels.some(function (l) { return /Palantir/i.test(l); }));
+check('AHA / behavioral telehealth source listed',
+  srcLabels.some(function (l) { return /behavioral/i.test(l) || /AHA/i.test(l); }));
+check('Adentris source listed',
+  srcLabels.some(function (l) { return /Adentris/i.test(l); }));
+
 if (FAIL) {
   console.log('\n', FAIL, 'failure(s)');
   process.exit(1);

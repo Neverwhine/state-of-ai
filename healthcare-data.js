@@ -21,7 +21,13 @@
     access:     'https://www.cms.gov/priorities/innovation/innovation-models/access',
     doctronic:  'https://www.statnews.com/2026/03/23/ai-doctor-startup-doctronic-raises-40-million/',
     commonwealth:'https://www.commonwealthfund.org/publications/issue-briefs/2023/oct/high-us-health-care-spending-where-is-it-all-going',
-    naic_mlr:   'https://content.naic.org/insurance-topics/medical-loss-ratio'
+    naic_mlr:   'https://content.naic.org/insurance-topics/medical-loss-ratio',
+    hrsa_workforce:'https://bhw.hrsa.gov/data-research/projecting-health-workforce-supply-demand',
+    cms_rht:    'https://www.cms.gov/priorities/innovation/innovation-models/rural-health-transformation-program',
+    anthropic_health:'https://www.anthropic.com/solutions/healthcare-life-sciences',
+    palantir_r1:'https://investors.palantir.com/news-details/2025/R1-Launches-R37-AI-Lab-with-Palantir/default.aspx',
+    aha_telehealth:'https://www.aha.org/aha-center-health-innovation-market-scan/2025-02-04-behavioral-health-visits-surpass-primary-care',
+    adentris:   'https://www.adentris.com/'
   };
 
   var headlineStats = [
@@ -320,12 +326,15 @@
   ];
 
   // Private-pay prevention orbit (right rail)
+  // Prevention / monitoring loop. Positioned as a true loop to the right
+  // of the patient card so it visually belongs to the diagram rather than
+  // floating as an orphan rail. Closes via P5 → triage and C8 → P1.
   var preventionOrbit = [
-    { id: 'P1', label: 'Consumer AI assistant', x: 955, y: 155, description: 'Patient asks questions, uploads labs, tracks goals.', ai: ['ai_patient_access','ai_prevention'] },
-    { id: 'P2', label: 'Wearables/home signals',x: 1000, y: 235, description: 'Sleep, HRV, CGM, activity, BP, recovery, symptoms.', ai: ['ai_prevention','ai_diagnostics'] },
-    { id: 'P3', label: 'Labs/omics',            x: 1015, y: 315, description: 'Rich biological data for risk and personalization.', ai: ['ai_diagnostics','ai_techbio'] },
-    { id: 'P4', label: 'Coaching/adherence',    x: 990, y: 395, description: 'Behavior, nutrition, sleep, allergy care, follow-up.', ai: ['ai_prevention'] },
-    { id: 'P5', label: 'Escalation',            x: 940, y: 475, description: 'AI routes to licensed clinician or care setting.', ai: ['ai_patient_access'] }
+    { id: 'P1', label: 'Consumer AI assistant', x: 990, y: 175, description: 'Patient asks questions, uploads labs, tracks goals.', ai: ['ai_patient_access','ai_prevention'] },
+    { id: 'P2', label: 'Wearables/home signals',x: 1030, y: 250, description: 'Sleep, HRV, CGM, activity, BP, recovery, symptoms.', ai: ['ai_prevention','ai_diagnostics'] },
+    { id: 'P3', label: 'Labs/omics',            x: 1030, y: 330, description: 'Rich biological data for risk and personalization.', ai: ['ai_diagnostics','ai_techbio'] },
+    { id: 'P4', label: 'Coaching/adherence',    x: 990, y: 405, description: 'Behavior, nutrition, sleep, allergy care, follow-up.', ai: ['ai_prevention'] },
+    { id: 'P5', label: 'Escalation → triage',   x: 920, y: 470, description: 'AI routes to licensed clinician or care setting. Feeds the care loop at triage.', ai: ['ai_patient_access'] }
   ];
 
   // VBC bridge (left rail)
@@ -1262,6 +1271,36 @@
       ai_surface_ids: ['ai_prevention'],
       stack_ids: ['stack_ai','stack_data'],
       buyer_user: 'Consumer', value_capture: 'Subscription' },
+
+    // ===================================================================
+    // INFRASTRUCTURE / MODEL EXAMPLES — added to RCM, prior auth, and
+    // payer-admin layers. Companies are surfaced in drawers, not on the
+    // Money River canvas.
+    // ===================================================================
+    { id: 'co_claude_health',   name: 'Claude for Healthcare', group: 'leader', role: 'ai-native', layer_id: 'L8_denials_prior_auth', tag: 'Model infrastructure · HIPAA-ready',
+      short_description: 'Anthropic Claude is HIPAA-ready for healthcare; prior-authorization review, claims appeals, CMS Coverage Database, ICD-10, NPI, and FHIR skills/connectors.',
+      money_pool_ids: ['pool_payer_admin','pool_provider_admin'],
+      destination_ids: ['dest_residual','dest_hospital','dest_physician'],
+      process_step_ids: ['F2','F3','F5','F8','C5'],
+      ai_surface_ids: ['ai_admin_rcm','ai_scribes_copilots'],
+      stack_ids: ['stack_ai','stack_governance','stack_admin','stack_decision'],
+      buyer_user: 'Payer / provider admin', value_capture: 'Model API + skills' },
+    { id: 'co_palantir',        name: 'Palantir / R1 R37 AI Lab', group: 'leader', role: 'ai-native', layer_id: 'L7_provider_rcm', tag: 'Enterprise RCM AI · Exclusive R1 partner',
+      short_description: 'R1 RCM launched R37 AI Lab in exclusive partnership with Palantir to transform healthcare financial performance.',
+      money_pool_ids: ['pool_provider_admin'],
+      destination_ids: ['dest_hospital','dest_physician'],
+      process_step_ids: ['F3','F4','F5','F7'],
+      ai_surface_ids: ['ai_admin_rcm'],
+      stack_ids: ['stack_admin','stack_ai','stack_data'],
+      buyer_user: 'Health system', value_capture: 'Enterprise platform + RCM services' },
+    { id: 'co_adentris',        name: 'Adentris',             group: 'dvc',    role: 'drawer',    layer_id: 'L7_provider_rcm', tag: 'DVC portfolio · Early stage · Documentation compliance',
+      short_description: 'Real-time AI compliance for medical documentation. EHR-integrated; catches documentation issues before denials, audits, or lawsuits. Formerly WorkDone (YC).',
+      money_pool_ids: ['pool_provider_admin','pool_clinical_labor'],
+      destination_ids: ['dest_hospital','dest_physician'],
+      process_step_ids: ['F3','F4','F8'],
+      ai_surface_ids: ['ai_admin_rcm','ai_scribes_copilots'],
+      stack_ids: ['stack_admin','stack_workflow','stack_ai'],
+      buyer_user: 'Health system / physician group', value_capture: 'SaaS / per-encounter' }
   ];
 
   // =====================================================================
@@ -1283,11 +1322,11 @@
     L6_lab_genomics:           { label: 'Lab / genomics / precision diagnostics', destinations: ['dest_other_professional'], pools: ['pool_supplies_devices'], stack_ids: ['stack_ai','stack_data'],
       pair: ['co_roche_foundation','co_tempus'], drawer: ['co_guardant','co_pathai','co_asyliadx'] },
     L7_provider_rcm:           { label: 'Provider RCM',                 destinations: ['dest_hospital','dest_physician'], pools: ['pool_provider_admin'], stack_ids: ['stack_admin','stack_workflow'],
-      pair: ['co_r1rcm','co_thoughtful'], drawer: ['co_waystar','co_fathom','co_smarterdx'] },
+      pair: ['co_r1rcm','co_thoughtful'], drawer: ['co_palantir','co_waystar','co_fathom','co_smarterdx','co_adentris'] },
     L7b_patient_billing:       { label: 'Patient billing / out-of-pocket collection', destinations: ['dest_hospital','dest_physician'], pools: ['pool_provider_admin'], stack_ids: ['stack_admin','stack_workflow'],
       pair: ['co_cedar','co_collectly'], drawer: [] },
     L8_denials_prior_auth:     { label: 'Denials / prior auth',         destinations: ['dest_rx','dest_residual','dest_hospital','dest_physician'], pools: ['pool_provider_admin','pool_payer_admin'], stack_ids: ['stack_admin','stack_decision','stack_ai'],
-      pair: ['co_surescripts','co_cohere'], drawer: ['co_infinitus','co_redsky'] },
+      pair: ['co_surescripts','co_cohere'], drawer: ['co_claude_health','co_infinitus','co_redsky'] },
     L9_payer_ops:              { label: 'Payer claims / admin',         destinations: ['dest_residual'],            pools: ['pool_payer_admin'],        stack_ids: ['stack_admin','stack_data'],
       pair: ['co_cotiviti','co_healthedge'], drawer: ['co_zelis','co_innovaccer'] },
     L10_vbc_ma:                { label: 'MA / Medicaid / VBC',          destinations: ['dest_residual','dest_physician'], pools: ['pool_payer_admin','pool_clinical_labor'], stack_ids: ['stack_admin','stack_data','stack_decision'],
@@ -1880,6 +1919,77 @@
     { title: 'Near-term wins differ from long-term shift', copy: 'Near-term wins are documentation and admin. The long-term shift is upstream into diagnostics, drug discovery, and continuous prevention.' }
   ];
 
+  // =====================================================================
+  // PROCESS GROUPS — every loop node belongs to exactly one named track.
+  // The patient event diagram renders these as visually grouped paths so
+  // there are no orphan boxes (prevention/monitoring used to "float").
+  // =====================================================================
+  var processGroups = [
+    { id: 'pg_care',       label: 'Clinical care loop',            short: 'Care',       color: '#4ECDC4',
+      steps: ['C1','C2','C3','C4','C5','C6','C7','C8'] },
+    { id: 'pg_financial',  label: 'Financial / reimbursement loop', short: 'Financial',  color: '#F5C542',
+      steps: ['F1','F2','F3','F4','F5','F6','F7','F8'] },
+    { id: 'pg_prevention', label: 'Prevention / monitoring loop',  short: 'Prevention', color: '#FF8C42',
+      steps: ['P1','P2','P3','P4','P5'] },
+    { id: 'pg_vbc',        label: 'VBC / risk bridge',              short: 'VBC',        color: '#7C4DFF',
+      steps: ['V1','V2','V3','V4','V5'] }
+  ];
+
+  // Cross-track edges that anchor prevention into the clinical loop and
+  // close the VBC → prevention payment loop. Drawn only when both
+  // endpoints are active in the current scenario.
+  var loopBridgeEdges = [
+    { from: 'C8', to: 'P1', label: 'Discharge → prevention', kind: 'prev' },
+    { from: 'C8', to: 'P2', label: 'Remote monitoring',      kind: 'prev' },
+    { from: 'P5', to: 'C2', label: 'Escalation → triage',    kind: 'prev' },
+    { from: 'V5', to: 'C8', label: 'VBC funds prevention',   kind: 'bridge' }
+  ];
+
+  // Callout cards rendered as cards under the loop. Drawer-style depth,
+  // not always-visible chart clutter. Sourced.
+  var loopCallouts = [
+    { id: 'cl_workforce',
+      group: 'pg_care',
+      tag: 'Workforce',
+      title: 'Talent shortage is the binding constraint',
+      stat: '141,160 physician FTE gap by 2038',
+      body: 'HRSA State of US Health Care Workforce 2025: physician shortage 141,160 FTE by 2038; LPN shortage 245,950 FTE; nonmetro RN shortage 11% vs 3% nationally. HPSAs: mental health 137M, primary care 92M, dental 64M.',
+      source_label: 'HRSA State of US Health Care Workforce 2025',
+      source_url: 'https://bhw.hrsa.gov/data-research/projecting-health-workforce-supply-demand' },
+    { id: 'cl_cms_rht',
+      group: 'pg_prevention',
+      tag: 'Rural / prevention funding',
+      title: 'CMS Rural Health Transformation: $50B for FY2026–2030',
+      stat: '$50B · FY2026–2030',
+      body: 'CMS RHT supports AI/robotics, remote monitoring, digital health, cybersecurity, workforce, and chronic disease management in rural settings — a payer-level funding bridge that prevention has historically lacked.',
+      source_label: 'CMS Rural Health Transformation Program',
+      source_url: 'https://www.cms.gov/priorities/innovation/innovation-models/rural-health-transformation-program' },
+    { id: 'cl_claude_health',
+      group: 'pg_financial',
+      tag: 'Payer / admin infrastructure',
+      title: 'Claude for Healthcare: HIPAA-ready model',
+      stat: 'Prior auth · claims appeals · FHIR',
+      body: 'Anthropic positions Claude for healthcare with HIPAA readiness, prior authorization review, claims appeals, CMS Coverage Database, ICD-10, NPI, and FHIR skills/connectors — a model-layer wedge into payer/admin work.',
+      source_label: 'Anthropic — Healthcare & life sciences',
+      source_url: 'https://www.anthropic.com/solutions/healthcare-life-sciences' },
+    { id: 'cl_palantir_r1',
+      group: 'pg_financial',
+      tag: 'Enterprise RCM',
+      title: 'Palantir + R1: R37 AI Lab',
+      stat: 'Exclusive partnership',
+      body: 'R1 RCM launched R37 AI Lab in exclusive partnership with Palantir to transform healthcare financial performance — large-system RCM is consolidating around enterprise AI infrastructure.',
+      source_label: 'Palantir investor relations',
+      source_url: 'https://investors.palantir.com/news-details/2025/R1-Launches-R37-AI-Lab-with-Palantir/default.aspx' },
+    { id: 'cl_behavioral_telehealth',
+      group: 'pg_care',
+      tag: 'Behavioral / telehealth',
+      title: 'Behavioral health overtook primary care in 2024',
+      stat: '66.4M behavioral vs 62.8M PCP visits',
+      body: 'Among commercially insured patients, behavioral health visits surpassed primary care in 2024 (66.4M vs 62.8M); behavioral health was 67% of telehealth encounters. Patient events are no longer just acute clinical episodes.',
+      source_label: 'AHA Market Scan / Trilliant Health',
+      source_url: 'https://www.aha.org/aha-center-health-innovation-market-scan/2025-02-04-behavioral-health-visits-surpass-primary-care' }
+  ];
+
   var sources = [
     { label: 'CMS NHE Fact Sheet (final 2024 data)',     url: SRC.nhe },
     { label: 'CMS 2024 NHE Highlights',                  url: SRC.highlights },
@@ -1888,7 +1998,13 @@
     { label: 'NAIC — Medical Loss Ratio',                url: SRC.naic_mlr },
     { label: 'PHTI — Administrative AI',                 url: SRC.phti },
     { label: 'MGMA — medical practice operating costs',  url: SRC.mgma },
-    { label: 'HHS/ASPE pharmaceutical supply chain',     url: SRC.aspe_pharma }
+    { label: 'HHS/ASPE pharmaceutical supply chain',     url: SRC.aspe_pharma },
+    { label: 'HRSA — State of US Health Care Workforce 2025', url: SRC.hrsa_workforce },
+    { label: 'CMS — Rural Health Transformation Program', url: SRC.cms_rht },
+    { label: 'Anthropic — Healthcare & life sciences',   url: SRC.anthropic_health },
+    { label: 'Palantir IR — R1 R37 AI Lab',              url: SRC.palantir_r1 },
+    { label: 'AHA Market Scan — behavioral vs primary care', url: SRC.aha_telehealth },
+    { label: 'Adentris (real-time medical documentation AI)', url: SRC.adentris }
   ];
 
   root.HEALTHCARE_DATA = {
@@ -1917,6 +2033,9 @@
     stepToLayers: stepToLayers,
     stackToLayers: stackToLayers,
     biotechSidecar: biotechSidecar,
+    processGroups: processGroups,
+    loopBridgeEdges: loopBridgeEdges,
+    loopCallouts: loopCallouts,
     takeaways: takeaways,
     sources: sources,
     flowMicrocopy: flowMicrocopy,

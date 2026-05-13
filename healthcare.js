@@ -105,6 +105,22 @@
       }).join('');
     }
 
+    // Sourced callouts beneath the patient-event loop. Drawer-style depth
+    // (workforce, rural funding, model infra, RCM, behavioral telehealth)
+    // surfaced as cards so the canvas stays calm.
+    var loopCalloutWrap = root.querySelector('#hc-loop-callouts');
+    if (loopCalloutWrap && Array.isArray(DATA.loopCallouts)) {
+      loopCalloutWrap.innerHTML = DATA.loopCallouts.map(function (c) {
+        return '<div class="hc-loop-callout" data-group="' + escapeHtml(c.group) + '" data-callout="' + escapeHtml(c.id) + '">' +
+          '<div class="hc-loop-callout-tag">' + escapeHtml(c.tag) + '</div>' +
+          '<div class="hc-loop-callout-title">' + escapeHtml(c.title) + '</div>' +
+          (c.stat ? '<div class="hc-loop-callout-stat tabnum">' + escapeHtml(c.stat) + '</div>' : '') +
+          '<div class="hc-loop-callout-body">' + escapeHtml(c.body) + '</div>' +
+          '<div class="hc-loop-callout-src">Source: <a href="' + c.source_url + '" target="_blank" rel="noopener">' + escapeHtml(c.source_label) + '</a></div>' +
+        '</div>';
+      }).join('');
+    }
+
     // ===================================================================
     // MONEY RIVER
     // ===================================================================
@@ -1414,10 +1430,10 @@
 
     function renderStepDrawer(s) {
       if (!s) return;
-      var kind = DATA.careLoop.indexOf(s) >= 0 ? 'Care loop'
-              : DATA.financialLoop.indexOf(s) >= 0 ? 'Financial loop'
-              : DATA.preventionOrbit.indexOf(s) >= 0 ? 'Prevention orbit'
-              : 'VBC bridge';
+      var kind = DATA.careLoop.indexOf(s) >= 0 ? 'Clinical care loop · C1–C8'
+              : DATA.financialLoop.indexOf(s) >= 0 ? 'Financial / reimbursement loop · F1–F8'
+              : DATA.preventionOrbit.indexOf(s) >= 0 ? 'Prevention / monitoring loop · P1–P5'
+              : 'VBC / risk bridge · V1–V5';
       var deps = (DATA.stepStackDeps[s.id] || []).map(findStackLayer).filter(Boolean);
       var ais  = (s.ai || []).map(findAi).filter(Boolean);
       var resolved = resolveForElement('step', s.id);
@@ -1676,9 +1692,11 @@
     var loopOrderedFallback = root.querySelector('#hc-loop-fallback');
     var currentLoopState = 'state_at_risk';
 
-    // Geometry per spec: viewBox 1120 x 820
+    // Geometry: 1120 x 820 viewBox.
+    //   Top zone   y < 580   — care loop, financial loop, VBC rail, prevention loop
+    //   Stack zone y >= 600  — tech stack bands, visually separated
     var LOOP_VB = { w: 1120, h: 820 };
-    var STACK = { x: 160, y: 590, w: 800, h: 190, bands: 7 };
+    var STACK = { x: 160, y: 620, w: 800, h: 175, bands: 7 };
 
     function renderStateSelector() {
       if (!stateSelector) return;
@@ -1731,6 +1749,16 @@
         (DATA.stepStackDeps[sid] || []).forEach(function (st) { stackActive[st] = true; });
       });
 
+      // Per-group active counts drive whether a group renders as
+      // "active" (full colour) or "inactive" (muted outline only).
+      var groupActiveCount = {
+        pg_care:       scenario.care.length,
+        pg_financial:  scenario.financial.length,
+        pg_prevention: scenario.prevention.length,
+        pg_vbc:        scenario.vbc.length
+      };
+      function groupIsActive(gid) { return (groupActiveCount[gid] || 0) > 0; }
+
       // arrow defs
       var defs = svgEl('defs', {});
       function marker(id, fill) {
@@ -1740,8 +1768,47 @@
       marker('hcl-arrow-care', '#4ECDC4');
       marker('hcl-arrow-fin',  '#F5C542');
       marker('hcl-arrow-prev', '#FF8C42');
-      marker('hcl-arrow-vbc',  '#F5C542');
+      marker('hcl-arrow-vbc',  '#7C4DFF');
       marker('hcl-arrow-bridge','#7C4DFF');
+
+      // ----- Group hulls (subtle outlines for each named process path)
+      // These give every node a visible group membership even when its
+      // group is inactive for the current patient state. No floating
+      // boxes: every step belongs to exactly one named track.
+      var hullG = svgEl('g', { class: 'loop-hulls' });
+      function hullPath(d, cls) {
+        return svgEl('path', { class: cls, d: d, fill: 'none' }, hullG);
+      }
+      // Care loop hull — upper arc around C1..C7 + C8 inside.
+      var careHullActive = groupIsActive('pg_care');
+      hullPath('M 200 270 Q 200 60 560 60 Q 920 60 920 270 Q 920 410 770 410',
+        'group-hull is-care' + (careHullActive ? ' is-active' : ' is-dim'));
+      // Financial loop hull — lower arc.
+      var finHullActive = groupIsActive('pg_financial');
+      hullPath('M 200 355 Q 200 575 560 575 Q 920 575 920 355',
+        'group-hull is-fin' + (finHullActive ? ' is-active' : ' is-dim'));
+      // Prevention loop hull — right-side closed loop next to care/finance.
+      var prevHullActive = groupIsActive('pg_prevention');
+      hullPath('M 960 175 Q 1075 175 1075 320 Q 1075 470 925 490 Q 880 480 905 425',
+        'group-hull is-prev' + (prevHullActive ? ' is-active' : ' is-dim'));
+      // VBC bridge hull — left rail.
+      var vbcHullActive = groupIsActive('pg_vbc');
+      hullPath('M 40 155 L 240 155 L 240 510 L 40 510 Z',
+        'group-hull is-vbc' + (vbcHullActive ? ' is-active' : ' is-dim'));
+
+      // Track labels — every node belongs to a named process group
+      svgEl('text', { class: 'loop-label care', x: 560, y: 46, 'text-anchor': 'middle' })
+        .textContent = '① CLINICAL CARE LOOP · C1–C8 — patient workflow, clockwise';
+      svgEl('text', { class: 'loop-label fin',  x: 560, y: 600, 'text-anchor': 'middle' })
+        .textContent = '② FINANCIAL / REIMBURSEMENT LOOP · F1–F8 — counterclockwise';
+      svgEl('text', { class: 'loop-label prev', x: 1075, y: 145, 'text-anchor': 'end' })
+        .textContent = '③ PREVENTION / MONITORING · P1–P5';
+      svgEl('text', { class: 'loop-label prev', x: 1075, y: 158, 'text-anchor': 'end' })
+        .textContent = 'feeds Signal/Triage; receives Discharge/Monitor';
+      svgEl('text', { class: 'loop-label vbc',  x: 140, y: 145, 'text-anchor': 'middle' })
+        .textContent = '④ VBC / RISK BRIDGE · V1–V5';
+      svgEl('text', { class: 'loop-label vbc',  x: 140, y: 158, 'text-anchor': 'middle' })
+        .textContent = 'reimbursement model that funds prevention';
 
       // Center patient card
       var cardX = 450, cardY = 235, cardW = 220, cardH = 115;
@@ -1752,12 +1819,9 @@
       svgEl('text', { class: 'patient-prompt', x: 0, y: 14, 'text-anchor': 'middle' }, cg).textContent = stateInfo ? stateInfo.prompt : '';
       svgEl('text', { class: 'patient-scenario', x: 0, y: 38, 'text-anchor': 'middle' }, cg).textContent = scenario.scenario || '';
 
-      // Loop geometry (no dashed guide ellipses — QA confirmed they read
-      // as "always-on connectors". Labels alone suffice).
+      // Loop arc geometry (used only for routing — no dashed guide ellipses)
       var careCx = 560, careCy = 230, careRx = 380, careRy = 170;
       var finCx  = 560, finCy  = 380, finRx  = 380, finRy  = 170;
-      svgEl('text', { class: 'loop-label care', x: 560, y: 50, 'text-anchor': 'middle' }).textContent = 'CARE LOOP — clinical workflow, clockwise';
-      svgEl('text', { class: 'loop-label fin',  x: 560, y: 575, 'text-anchor': 'middle' }).textContent = 'FINANCIAL LOOP — reimbursement, counterclockwise';
 
       // Active-only arrows along ellipse paths
       drawLoopActiveArrows(DATA.careLoop, careActive, careCx, careCy, careRx, careRy, true,  'care', 'hcl-arrow-care');
@@ -1767,53 +1831,87 @@
       DATA.careLoop.forEach(function (s) { drawStepNode(s, 'care', !!careActive[s.id]); });
       DATA.financialLoop.forEach(function (s) { drawStepNode(s, 'fin', !!finActive[s.id]); });
 
-      // VBC bridge (left rail)
+      // VBC bridge (left rail) — drawn as part of the named VBC track
       var vbcG = svgEl('g', { class: 'vbc-bridge' });
-      svgEl('text', { class: 'rail-title', x: 130, y: 125, 'text-anchor': 'middle' }, vbcG).textContent = 'VBC BRIDGE';
-      svgEl('text', { class: 'rail-sub',   x: 130, y: 142, 'text-anchor': 'middle' }, vbcG).textContent = 'Reimbursement model';
       DATA.vbcBridge.forEach(function (v) { drawRailNode(v, 'vbc', !!vbcActive[v.id], vbcG); });
-      // VBC path connectors — only show between sequentially-active steps
       for (var i = 0; i < DATA.vbcBridge.length - 1; i++) {
         var a = DATA.vbcBridge[i], b = DATA.vbcBridge[i + 1];
         var aOn = !!vbcActive[a.id], bOn = !!vbcActive[b.id];
         if (!(aOn && bOn)) continue;
         svgEl('path', { class: 'vbc-link is-active',
           d: 'M ' + a.x + ' ' + (a.y + 16) + ' Q ' + ((a.x + b.x)/2 - 18) + ' ' + ((a.y + b.y)/2) + ' ' + b.x + ' ' + (b.y - 16),
-          fill: 'none', stroke: 'rgba(245,197,66,0.7)', 'stroke-width': 1.6, 'marker-end': 'url(#hcl-arrow-vbc)' }, vbcG);
+          fill: 'none', stroke: 'rgba(124,77,255,0.7)', 'stroke-width': 1.6, 'marker-end': 'url(#hcl-arrow-vbc)' }, vbcG);
       }
 
-      // Prevention orbit (right rail)
+      // Prevention loop — drawn as a real loop on the right.
+      // Sequence: P1 → P2 → P3 → P4 → P5 → (close back to P1).
       var preG = svgEl('g', { class: 'prevention-orbit' });
-      svgEl('text', { class: 'rail-title', x: 990, y: 125, 'text-anchor': 'middle' }, preG).textContent = 'PRIVATE-PAY PREVENTION';
-      svgEl('text', { class: 'rail-sub',   x: 990, y: 142, 'text-anchor': 'middle' }, preG).textContent = 'Out-of-pocket orbit';
       DATA.preventionOrbit.forEach(function (p) { drawRailNode(p, 'prev', !!prevActive[p.id], preG); });
-      // P1->P5 curved connectors — only between sequentially-active orbit nodes
-      for (var j = 0; j < DATA.preventionOrbit.length - 1; j++) {
-        var pa = DATA.preventionOrbit[j], pb = DATA.preventionOrbit[j + 1];
-        if (!(prevActive[pa.id] && prevActive[pb.id])) continue;
+      function preventionEdge(pa, pb) {
+        if (!(prevActive[pa.id] && prevActive[pb.id])) return;
+        var mx = (pa.x + pb.x) / 2, my = (pa.y + pb.y) / 2;
+        // Bulge outward (to the right) so the arrows clearly trace a loop.
+        var bx = mx + 40, by = my;
         svgEl('path', { class: 'prev-link is-active',
-          d: 'M ' + pa.x + ' ' + (pa.y + 16) + ' Q ' + ((pa.x + pb.x)/2 + 18) + ' ' + ((pa.y + pb.y)/2) + ' ' + pb.x + ' ' + (pb.y - 16),
-          fill: 'none', stroke: 'rgba(255,140,66,0.7)', 'stroke-width': 1.6, 'marker-end': 'url(#hcl-arrow-prev)' }, preG);
+          d: 'M ' + pa.x + ' ' + (pa.y + 16) + ' Q ' + bx + ' ' + by + ' ' + pb.x + ' ' + (pb.y - 16),
+          fill: 'none', stroke: 'rgba(255,140,66,0.75)', 'stroke-width': 1.6, 'marker-end': 'url(#hcl-arrow-prev)' }, preG);
+      }
+      for (var j = 0; j < DATA.preventionOrbit.length - 1; j++) {
+        preventionEdge(DATA.preventionOrbit[j], DATA.preventionOrbit[j + 1]);
+      }
+      // Close the prevention loop: P5 → P1 (when both active)
+      if (prevActive.P5 && prevActive.P1) {
+        var p5 = DATA.preventionOrbit[4], p1 = DATA.preventionOrbit[0];
+        svgEl('path', { class: 'prev-link is-active',
+          d: 'M ' + (p5.x + 60) + ' ' + p5.y + ' C ' + 1095 + ' ' + 400 + ' ' + 1095 + ' ' + 220 + ' ' + (p1.x + 60) + ' ' + p1.y,
+          fill: 'none', stroke: 'rgba(255,140,66,0.55)', 'stroke-width': 1.4, 'marker-end': 'url(#hcl-arrow-prev)', 'stroke-dasharray': '4 4' }, preG);
       }
 
-      // VBC bridge → C8 bridge connector when V5 active and care C8 active
-      if (vbcActive.V5 && careActive.C8) {
-        svgEl('path', {
-          class: 'vbc-c8-bridge',
-          d: 'M 205 490 C 360 470 600 430 770 390',
-          fill: 'none', stroke: 'rgba(124,77,255,0.6)', 'stroke-width': 1.6,
-          'stroke-dasharray': '5 4', 'marker-end': 'url(#hcl-arrow-bridge)'
-        });
-        svgEl('text', { class: 'bridge-label', x: 470, y: 432, 'text-anchor': 'middle', fill: 'rgba(124,77,255,0.85)' }).textContent = 'VBC funds prevention';
+      // Cross-track bridge edges (data-driven). These remove the
+      // "prevention orbits in space" impression by tying prevention to
+      // Signal/Triage and to Monitor/Discharge.
+      var bridgeG = svgEl('g', { class: 'loop-bridges' });
+      function findAnyStep(id) {
+        return DATA.careLoop.concat(DATA.financialLoop, DATA.preventionOrbit, DATA.vbcBridge)
+          .find(function (s) { return s.id === id; });
       }
+      function isStepActive(id) {
+        return !!(careActive[id] || finActive[id] || prevActive[id] || vbcActive[id]);
+      }
+      (DATA.loopBridgeEdges || []).forEach(function (e) {
+        if (!isStepActive(e.from) || !isStepActive(e.to)) return;
+        var a = findAnyStep(e.from), b = findAnyStep(e.to);
+        if (!a || !b) return;
+        var stroke = e.kind === 'bridge' ? 'rgba(124,77,255,0.65)' : 'rgba(255,140,66,0.55)';
+        var marker = e.kind === 'bridge' ? 'url(#hcl-arrow-bridge)' : 'url(#hcl-arrow-prev)';
+        var mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2 - 30;
+        svgEl('path', {
+          class: 'loop-bridge-edge is-' + e.kind,
+          d: 'M ' + a.x + ' ' + a.y + ' Q ' + mx + ' ' + my + ' ' + b.x + ' ' + b.y,
+          fill: 'none', stroke: stroke, 'stroke-width': 1.4,
+          'stroke-dasharray': '5 4', 'marker-end': marker
+        }, bridgeG);
+        svgEl('text', {
+          class: 'bridge-label', x: mx, y: my - 2, 'text-anchor': 'middle',
+          fill: e.kind === 'bridge' ? 'rgba(124,77,255,0.85)' : 'rgba(255,140,66,0.85)'
+        }, bridgeG).textContent = e.label;
+      });
 
       // ----- Tech stack underneath the process visual -----
+      // Explicit divider so the stack reads as a separate panel below the
+      // process map, not a sixth track competing for attention.
       var bandH = STACK.h / STACK.bands;
+      var dividerY = STACK.y - 32;
+      svgEl('line', {
+        class: 'stack-divider',
+        x1: 40, x2: LOOP_VB.w - 40, y1: dividerY, y2: dividerY,
+        stroke: 'rgba(160,168,188,0.18)', 'stroke-width': 1
+      });
       var stackG = svgEl('g', { class: 'stack-group' });
-      svgEl('text', { class: 'rail-title', x: STACK.x + 6, y: STACK.y - 18, 'text-anchor': 'start' }, stackG).textContent =
-        'TECH STACK — what every process above depends on';
-      svgEl('text', { class: 'rail-sub', x: STACK.x + STACK.w - 6, y: STACK.y - 18, 'text-anchor': 'end' }, stackG)
-        .textContent = 'Highlighted bands and companies update with patient scenario';
+      svgEl('text', { class: 'rail-title', x: STACK.x + 6, y: STACK.y - 14, 'text-anchor': 'start' }, stackG).textContent =
+        'TECH STACK — every process above depends on these layers';
+      svgEl('text', { class: 'rail-sub', x: STACK.x + STACK.w - 6, y: STACK.y - 14, 'text-anchor': 'end' }, stackG)
+        .textContent = 'Click any band to see the layer drawer';
 
       // Scenario claim-tracking: a company shown in one band cannot
       // reappear in any later band for the same scenario. This is a
@@ -1892,10 +1990,10 @@
         loopOrderedFallback.innerHTML =
           '<h5>Active scenario · ' + escapeHtml(stateInfo.label) + '</h5>' +
           '<p>' + escapeHtml(scenario.scenario) + '</p>' +
-          listFor(DATA.careLoop, careActive, 'Care loop') +
-          listFor(DATA.financialLoop, finActive, 'Financial loop') +
-          listFor(DATA.preventionOrbit, prevActive, 'Prevention orbit') +
-          listFor(DATA.vbcBridge, vbcActive, 'VBC bridge');
+          listFor(DATA.careLoop, careActive, 'Clinical care loop · C1–C8') +
+          listFor(DATA.financialLoop, finActive, 'Financial / reimbursement loop · F1–F8') +
+          listFor(DATA.preventionOrbit, prevActive, 'Prevention / monitoring loop · P1–P5') +
+          listFor(DATA.vbcBridge, vbcActive, 'VBC / risk bridge · V1–V5');
       }
     }
 
