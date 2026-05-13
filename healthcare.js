@@ -124,11 +124,11 @@
           '<div class="hc-insight-empty">' +
             '<div class="hc-insight-empty-row">' +
               '<span class="hc-insight-empty-icon" aria-hidden="true">▸</span>' +
-              '<span><strong>Click a flow or node</strong> to see precise company examples. We keep companies off the river to avoid logo clutter.</span>' +
+              '<span><strong>Click any flow, node, or cost pool</strong> to see company examples in context. Companies are kept off the river to avoid clutter.</span>' +
             '</div>' +
             '<div class="hc-insight-empty-row">' +
               '<span class="hc-insight-empty-icon" aria-hidden="true">▸</span>' +
-              '<span>Dashed purple rings mark pools that host examples. Use <em>DVC only</em> to filter inside the drawer.</span>' +
+              '<span>Use <em>DVC only</em> to narrow the drawer to portfolio companies.</span>' +
             '</div>' +
           '</div>'
         );
@@ -721,14 +721,89 @@
       });
     }
 
+    // Deterministic anti-collision layout for incentive chips.
+    //
+    // Input:  list of { id, label, idealCx, anchorTop } in viewBox coords
+    //         viewBox width/height
+    // Output: list of { id, label, x, y, w, h } with NO overlapping AABBs
+    //         (min gap CHIP_GAP_X / CHIP_GAP_Y) and all rects fully inside
+    //         the safe viewBox (4px inset).
+    //
+    // Rule (pure, deterministic):
+    //   1. Sort by idealCx ascending (ties broken by id).
+    //   2. For each chip, compute its ideal x = idealCx - w/2 and start y
+    //      = anchorTop - h - 6. Clamp x into [PAD, vbW - PAD - w].
+    //   3. While the chip's AABB intersects any already-placed chip's
+    //      AABB (expanded by CHIP_GAP_X / CHIP_GAP_Y), move it up by one
+    //      ROW. If it would leave the top, instead nudge x by one CHIP
+    //      step (alternating right then left) and reset y. Bail after a
+    //      bounded number of attempts and clamp to safe bounds.
+    //   4. The result is stable for stable input ordering.
+    function layoutIncentiveChips(specs, vbW, vbH) {
+      var PAD = 4;
+      var CHIP_H = 18;
+      var CHIP_GAP_X = 6;
+      var CHIP_GAP_Y = 4;
+      var ROW = CHIP_H + CHIP_GAP_Y;
+      var sorted = specs.slice().sort(function (a, b) {
+        if (a.idealCx !== b.idealCx) return a.idealCx - b.idealCx;
+        return a.id < b.id ? -1 : 1;
+      });
+      var placed = [];
+      function overlaps(a, b) {
+        return !(
+          a.x + a.w + CHIP_GAP_X <= b.x ||
+          b.x + b.w + CHIP_GAP_X <= a.x ||
+          a.y + a.h + CHIP_GAP_Y <= b.y ||
+          b.y + b.h + CHIP_GAP_Y <= a.y
+        );
+      }
+      function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
+      sorted.forEach(function (s) {
+        var w = Math.max(120, s.label.length * 6.4 + 18);
+        var h = CHIP_H;
+        var idealX = s.idealCx - w / 2;
+        var x = clamp(idealX, PAD, vbW - PAD - w);
+        var startY = clamp(s.anchorTop - h - 6, PAD, vbH - PAD - h);
+        var y = startY;
+        var attempts = 0;
+        var direction = 1;
+        var nudgeStep = 0;
+        while (attempts < 80) {
+          var candidate = { x: x, y: y, w: w, h: h };
+          var hit = false;
+          for (var i = 0; i < placed.length; i++) {
+            if (overlaps(candidate, placed[i])) { hit = true; break; }
+          }
+          if (!hit) break;
+          // Try moving up one row.
+          if (y - ROW >= PAD) {
+            y -= ROW;
+          } else {
+            // Out of vertical room: nudge x by CHIP_GAP_X + chip width fraction
+            nudgeStep += 1;
+            var dx = direction * nudgeStep * (w / 2 + CHIP_GAP_X);
+            x = clamp(idealX + dx, PAD, vbW - PAD - w);
+            y = startY;
+            direction = -direction;
+          }
+          attempts++;
+        }
+        placed.push({ id: s.id, label: s.label, x: x, y: y, w: w, h: h });
+      });
+      return placed;
+    }
+    // Expose for static testing.
+    if (typeof window !== 'undefined') window.hcLayoutIncentiveChips = layoutIncentiveChips;
+
     function buildIncentiveOverlay() {
       // Group all incentive content under a single mode group so we can
       // toggle the whole layer at once.
       var grp = overlayG.append('g').attr('class', 'hc-inc-grp');
 
-      // For each incentive, render a hatched amber STRIPE across the
-      // affected node (so the constraint is visibly attached to the node)
-      // plus a chip above the node.
+      // 1) Hatched amber stripe on each affected node (visual anchor of
+      //    the constraint to the node). Stripes never overlap each other
+      //    on the same node because they fill the full node rect.
       DATA.incentives.forEach(function (inc) {
         var anchors = [];
         (inc.attach_nodes || []).forEach(function (id) { anchors.push({ id: id, kind: 'node' }); });
@@ -742,8 +817,6 @@
             if (n) nodeRect = { x0: n.x0, x1: n.x1, y0: n.y0, y1: n.y1 };
           }
           if (!nodeRect) return;
-
-          // Stripe overlay on top of the node.
           grp.append('rect')
             .attr('class', 'hc-inc-node-stripe')
             .attr('data-inc', inc.id)
@@ -757,35 +830,67 @@
             .attr('stroke-width', 1)
             .attr('pointer-events', 'none');
         });
+      });
 
-        // Single chip per incentive — anchor to first anchor's position.
+      // 2) Compute ideal anchor (idealCx, anchorTop) for each incentive
+      //    chip, then run the deterministic layout to avoid collisions.
+      var specs = [];
+      DATA.incentives.forEach(function (inc) {
+        var anchors = [];
+        (inc.attach_nodes || []).forEach(function (id) { anchors.push({ id: id, kind: 'node' }); });
+        (inc.attach_pools || []).forEach(function (id) { anchors.push({ id: id, kind: 'pool' }); });
         var first = anchors.find(function (a) {
           if (a.kind === 'pool') return !!poolPositions[a.id];
           return sankeyGraph && sankeyGraph.nodes.find(function (x) { return x.id === a.id; });
         });
         if (!first) return;
-        var firstRect;
-        if (first.kind === 'pool') firstRect = poolPositions[first.id];
-        else firstRect = sankeyGraph.nodes.find(function (x) { return x.id === first.id; });
-        var cx = (firstRect.x0 + firstRect.x1) / 2;
-        var w = Math.max(120, inc.label.length * 6.4 + 18);
-        var h = 18;
-        var x = cx - w / 2;
-        var svgBBox = moneySvgEl.viewBox.baseVal;
-        var vbW = svgBBox && svgBBox.width ? svgBBox.width : 1280;
-        if (x < 4) x = 4;
-        if (x + w > vbW - 4) x = vbW - 4 - w;
-        var y = firstRect.y0 - h - 6;
-        if (y < 4) y = 4;
+        var firstRect = first.kind === 'pool'
+          ? poolPositions[first.id]
+          : sankeyGraph.nodes.find(function (x) { return x.id === first.id; });
+        specs.push({
+          id: inc.id,
+          label: inc.label,
+          message: inc.message,
+          idealCx: (firstRect.x0 + firstRect.x1) / 2,
+          anchorTop: firstRect.y0
+        });
+      });
+
+      var svgBBox = moneySvgEl.viewBox.baseVal;
+      var vbW = svgBBox && svgBBox.width ? svgBBox.width : 1280;
+      var vbH = svgBBox && svgBBox.height ? svgBBox.height : 760;
+      var laid = layoutIncentiveChips(specs, vbW, vbH);
+      var laidById = {};
+      laid.forEach(function (p) { laidById[p.id] = p; });
+
+      // 3) Render chip + tick line back to its ideal anchor so the user
+      //    can still see which node each label refers to even when the
+      //    chip has been shifted upward to clear a collision.
+      specs.forEach(function (s) {
+        var inc = DATA.incentives.find(function (i) { return i.id === s.id; });
+        var p = laidById[s.id];
+        if (!p) return;
+        var chipMidX = p.x + p.w / 2;
+        var chipBottomY = p.y + p.h;
+        // Tick from the chip bottom to the ideal anchor (top of node).
+        grp.append('line')
+          .attr('class', 'hc-inc-tick')
+          .attr('x1', chipMidX).attr('y1', chipBottomY)
+          .attr('x2', s.idealCx).attr('y2', s.anchorTop - 1)
+          .attr('stroke', 'rgba(245,197,66,0.45)')
+          .attr('stroke-width', 1)
+          .attr('stroke-dasharray', '2 2')
+          .attr('pointer-events', 'none');
+
         var g = grp.append('g')
           .attr('class', 'hc-inc-chip')
           .attr('data-inc', inc.id)
           .attr('tabindex', 0)
           .attr('role', 'button')
           .attr('aria-label', inc.label + ' — incentive')
-          .attr('transform', 'translate(' + x + ',' + y + ')');
-        g.append('rect').attr('width', w).attr('height', h).attr('rx', 9);
-        g.append('text').attr('x', w / 2).attr('y', h / 2 + 3.5).attr('text-anchor', 'middle').text(inc.label);
+          .attr('transform', 'translate(' + p.x + ',' + p.y + ')');
+        g.append('rect').attr('width', p.w).attr('height', p.h).attr('rx', 9);
+        g.append('text').attr('x', p.w / 2).attr('y', p.h / 2 + 3.5).attr('text-anchor', 'middle').text(inc.label);
         g.on('mouseenter', function (ev) { showTip(tipText(inc.label + ' — incentive', inc.message), ev.clientX, ev.clientY); })
          .on('mouseleave', hideTip)
          .on('click', function (ev) { ev.stopPropagation(); selectIncentive(inc.id); })
@@ -794,39 +899,14 @@
     }
 
     function buildCompanyOverlay() {
-      // Companies mode is intentionally CLUTTER-FREE: no company badges,
-      // chips, or logos are drawn on the canvas. The river dims (via CSS)
-      // and a subtle purple ring marks pools that host examples; the
-      // actual company examples live in the drawer behind a click on a
-      // flow, destination, pool, loop step, or stack band.
-      var grp = overlayG.append('g').attr('class', 'hc-co-grp');
-
-      // Purple ring on pool nodes that have any company examples in the
-      // current filter. Pointer-events:none — the ring is a hint, the
-      // pool node itself is the click target.
-      Object.keys(poolPositions).forEach(function (pId) {
-        var resolved = resolveForElement('pool', pId);
-        var vis = resolved.visible;
-        var drw = resolved.drawer;
-        if (state.companyFilter === 'dvc') {
-          vis = vis.filter(function (c) { return c.group === 'dvc'; });
-          drw = drw.filter(function (c) { return c.group === 'dvc'; });
-        }
-        if (!vis.length && !drw.length) return;
-        var p = poolPositions[pId]; if (!p) return;
-        grp.append('rect')
-          .attr('class', 'hc-co-node-ring')
-          .attr('data-pool', pId)
-          .attr('x', p.x0 - 3).attr('y', p.y0 - 3)
-          .attr('width', (p.x1 - p.x0) + 6)
-          .attr('height', (p.y1 - p.y0) + 6)
-          .attr('rx', 3)
-          .attr('fill', 'none')
-          .attr('stroke', 'rgba(124,77,255,0.7)')
-          .attr('stroke-width', 1.5)
-          .attr('stroke-dasharray', '3 2')
-          .attr('pointer-events', 'none');
-      });
+      // Companies mode is intentionally ZERO-OVERLAY on the river. No
+      // badges, chips, rings, pool hints, sidecars, or any company-
+      // dependent SVG content is drawn on the canvas at all. The river
+      // dims via CSS only; company examples live exclusively inside the
+      // drawer behind a click on a flow, destination, pool, loop step,
+      // or stack band. The function is preserved (as a no-op) so the
+      // overlay layer wiring and refresh/visibility code remains stable.
+      return null;
     }
 
     // The biotech sidecar (drug discovery + pharma intelligence) lives
@@ -876,13 +956,11 @@
       if (!overlayG) return;
       var showAi  = state.view === 'ai';
       var showInc = state.view === 'incentives';
-      var showCo  = state.view === 'companies';
       overlayG.select('.hc-ai-grp').style('display', showAi ? null : 'none');
       overlayG.select('.hc-inc-grp').style('display', showInc ? null : 'none');
-      // Companies mode: rebuild the (tiny) ring overlay so the DVC-only
-      // filter narrows which pools display the ring.
-      overlayG.select('.hc-co-grp').remove();
-      if (showCo) buildCompanyOverlay();
+      // Companies mode: nothing on the canvas — buildCompanyOverlay is a
+      // no-op. The DVC filter narrows drawer content only.
+      overlayG.selectAll('.hc-co-grp').remove();
       reflectViewClass();
     }
 

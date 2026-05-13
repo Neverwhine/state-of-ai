@@ -137,22 +137,28 @@ check('healthcare.css collapses empty insight on mobile',
 check('healthcare.css defines .hc-loop-grid',
   cssSrc.indexOf('.hc-loop-grid') > -1);
 
-console.log('--- Test: Companies mode is drawer-only on the Money River ---');
-// buildCompanyOverlay must not render company badges/chips on the
-// Sankey canvas. The only on-canvas element allowed is the dashed
-// purple pool ring (.hc-co-node-ring), and the (now-removed) biotech
-// sidecar card must not be re-introduced.
+console.log('--- Test: Companies mode generates ZERO SVG content on the Money River ---');
+// buildCompanyOverlay must be a no-op: no badges, no rings, no chips,
+// no sidecars, no pool hints, no company-dependent SVG of any kind.
+// Company examples live exclusively in click-drawers.
 var buildCoBody = (hcSrc.match(/function buildCompanyOverlay\s*\(\s*\)\s*\{([\s\S]*?)\n    \}\n/) || [])[1] || '';
 check('buildCompanyOverlay function is present', buildCoBody.length > 0);
 check('Companies overlay does NOT create hc-co-badge nodes on the canvas',
-  buildCoBody.indexOf("'hc-co-badge'") === -1 && buildCoBody.indexOf('hc-co-badge') === -1,
+  buildCoBody.indexOf('hc-co-badge') === -1,
   'found hc-co-badge in buildCompanyOverlay body');
+check('Companies overlay does NOT create hc-co-node-ring on the canvas',
+  buildCoBody.indexOf('hc-co-node-ring') === -1,
+  'found hc-co-node-ring in buildCompanyOverlay body');
 check('Companies overlay does NOT create the more-▸ pool hint on the canvas',
   buildCoBody.indexOf('hc-co-more') === -1 && buildCoBody.indexOf('More ▸') === -1);
 check('Companies overlay does NOT instantiate biotech sidecar on the canvas',
   buildCoBody.indexOf('buildBiotechSidecar') === -1 && buildCoBody.indexOf('hc-biotech-sidecar') === -1);
-check('Companies overlay still renders the dashed purple pool ring',
-  buildCoBody.indexOf('hc-co-node-ring') > -1);
+check('Companies overlay does NOT create any hc-co-grp child via append',
+  buildCoBody.indexOf('.append(') === -1,
+  'buildCompanyOverlay appends SVG children');
+check('Companies overlay does NOT instantiate any d3 selection-like .attr calls',
+  buildCoBody.indexOf('.attr(') === -1,
+  'buildCompanyOverlay sets SVG attrs');
 check('buildBiotechSidecar function is removed entirely',
   hcSrc.indexOf('function buildBiotechSidecar') === -1);
 
@@ -178,12 +184,12 @@ check('biotech action wired in the insight pill handler',
 
 console.log('--- Test: DVC-only filter narrows DRAWER companies (not canvas) ---');
 // The DVC filter still works because companyDrawerHTML filters by
-// state.companyFilter and the canvas no longer renders badges that
-// would need filtering at all.
+// state.companyFilter. The canvas renders no company SVG at all, so
+// the filter has no canvas surface to affect — drawer only.
 check('companyDrawerHTML filters by state.companyFilter for DVC mode',
   hcSrc.match(/function companyDrawerHTML[\s\S]{0,800}state\.companyFilter\s*===\s*'dvc'/));
-check('refreshOverlayVisibility rebuilds the companies group (so DVC filter narrows pool rings)',
-  hcSrc.match(/refreshOverlayVisibility[\s\S]{0,500}hc-co-grp[\s\S]{0,300}remove\(\)/));
+check('refreshOverlayVisibility no longer rebuilds buildCompanyOverlay (drawer-only)',
+  !hcSrc.match(/refreshOverlayVisibility[\s\S]{0,500}showCo[\s\S]{0,200}buildCompanyOverlay/));
 
 console.log('--- Test: jargon — "Drawer only" is replaced with friendlier copy ---');
 // We allow `role: 'drawer'` in data (that is an internal semantic),
@@ -211,7 +217,9 @@ check('healthcare-data.js no longer uses "drawer-only" in user-facing fields',
 
 console.log('--- Test: default insight has a Companies-mode hint ---');
 check('defaultInsight has Companies-mode-specific empty-state copy',
-  hcSrc.match(/defaultInsight[\s\S]{0,1200}view\s*===\s*'companies'[\s\S]{0,500}company examples/i));
+  hcSrc.match(/defaultInsight[\s\S]{0,1500}view\s*===\s*'companies'[\s\S]{0,800}company examples/i));
+check('defaultInsight Companies hint explains companies are off the river',
+  hcSrc.match(/view\s*===\s*'companies'[\s\S]{0,800}off the river/i));
 check('defaultInsight re-runs when view changes with no selection',
   hcSrc.match(/refreshOverlayVisibility\(\);[\s\S]{0,200}defaultInsight\(\)/));
 
@@ -222,6 +230,100 @@ check('healthcare.css no longer defines biotech sidecar styles',
   cssSrc.indexOf('hc-biotech-sidecar') === -1 && cssSrc.indexOf('hc-biotech-card') === -1);
 check('healthcare.css no longer defines hc-co-badge canvas styles',
   cssSrc.match(/\.hc-co-badge\s*\{/) === null);
+check('healthcare.css no longer defines hc-co-node-ring canvas styles',
+  cssSrc.match(/\.hc-co-node-ring\s*\{/) === null);
+check('healthcare.css no longer defines hc-co-more canvas styles',
+  cssSrc.match(/\.hc-co-more\s*\{/) === null);
+
+console.log('--- Test: Incentive overlay uses deterministic anti-collision layout ---');
+// Source-level guarantees: the layout function exists, is named
+// layoutIncentiveChips, is exported on window for test surfaces, and
+// is called from buildIncentiveOverlay.
+check('healthcare.js defines layoutIncentiveChips',
+  hcSrc.indexOf('function layoutIncentiveChips') > -1);
+check('healthcare.js exposes layoutIncentiveChips on window',
+  hcSrc.indexOf('window.hcLayoutIncentiveChips = layoutIncentiveChips') > -1);
+check('buildIncentiveOverlay invokes layoutIncentiveChips',
+  hcSrc.match(/buildIncentiveOverlay[\s\S]{0,4000}layoutIncentiveChips\(/));
+check('buildIncentiveOverlay clamps to viewBox bounds',
+  hcSrc.match(/buildIncentiveOverlay[\s\S]{0,4000}viewBox\.baseVal/));
+
+// Behavioral test: extract layoutIncentiveChips and run it with a
+// dense input where four chips share the same idealCx. Assert no
+// rect overlaps any other, all rects are inside the viewBox, and
+// the output is deterministic.
+var layoutFnSrc = (hcSrc.match(/function layoutIncentiveChips\([\s\S]*?\n    \}\n/) || [])[0];
+check('layoutIncentiveChips function body extractable', !!layoutFnSrc);
+if (layoutFnSrc) {
+  // eslint-disable-next-line no-new-func
+  var fnFactory = new Function(layoutFnSrc + '\nreturn layoutIncentiveChips;');
+  var layoutIncentiveChips = fnFactory();
+  var specs = [
+    { id: 'a', label: 'MLR rules',              idealCx: 200, anchorTop: 100 },
+    { id: 'b', label: 'Admin arms race',        idealCx: 200, anchorTop: 100 },
+    { id: 'c', label: 'Fee-for-service inertia',idealCx: 210, anchorTop: 100 },
+    { id: 'd', label: 'Value-based care bridge',idealCx: 220, anchorTop: 100 },
+    { id: 'e', label: 'Cash-pay bypass',        idealCx: 600, anchorTop: 120 },
+    { id: 'f', label: 'Regulated safety',       idealCx: 600, anchorTop: 120 }
+  ];
+  var placed = layoutIncentiveChips(specs, 1280, 760);
+  check('layout returns one rect per input', placed.length === specs.length);
+  // Bounds check
+  var allInside = placed.every(function (p) {
+    return p.x >= 4 && p.y >= 4 && p.x + p.w <= 1280 - 4 && p.y + p.h <= 760 - 4;
+  });
+  check('all placed rects are inside the safe viewBox', allInside);
+  // Overlap check with min gap
+  var noOverlap = true;
+  for (var i = 0; i < placed.length && noOverlap; i++) {
+    for (var j = i + 1; j < placed.length; j++) {
+      var A = placed[i], B = placed[j];
+      var xOverlap = !(A.x + A.w + 6 <= B.x || B.x + B.w + 6 <= A.x);
+      var yOverlap = !(A.y + A.h + 4 <= B.y || B.y + B.h + 4 <= A.y);
+      if (xOverlap && yOverlap) { noOverlap = false; break; }
+    }
+  }
+  check('no two placed rects overlap (min gap respected)', noOverlap);
+  // Deterministic: run twice, expect identical output.
+  var placed2 = layoutIncentiveChips(specs, 1280, 760);
+  var deterministic = JSON.stringify(placed) === JSON.stringify(placed2);
+  check('layout is deterministic for identical input', deterministic);
+  // No duplicate positions
+  var seenXY = {};
+  var dup = false;
+  placed.forEach(function (p) {
+    var k = p.x + ',' + p.y;
+    if (seenXY[k]) dup = true;
+    seenXY[k] = true;
+  });
+  check('no two placed rects share the same (x,y)', !dup);
+
+  // Also exercise with REAL incentive data anchors stubbed at a few
+  // shared pool positions, to ensure realistic input still resolves.
+  var realSpecs = D.incentives.map(function (inc, i) {
+    return { id: inc.id, label: inc.label, idealCx: 150 + (i % 3) * 30, anchorTop: 90 + (i % 2) * 8 };
+  });
+  var realPlaced = layoutIncentiveChips(realSpecs, 1280, 760);
+  var realNoOverlap = true;
+  for (var ri = 0; ri < realPlaced.length && realNoOverlap; ri++) {
+    for (var rj = ri + 1; rj < realPlaced.length; rj++) {
+      var X = realPlaced[ri], Y = realPlaced[rj];
+      var xo = !(X.x + X.w + 6 <= Y.x || Y.x + Y.w + 6 <= X.x);
+      var yo = !(X.y + X.h + 4 <= Y.y || Y.y + Y.h + 4 <= X.y);
+      if (xo && yo) { realNoOverlap = false; break; }
+    }
+  }
+  check('real incentive data lays out with no overlaps', realNoOverlap,
+    'overlap count > 0');
+}
+
+console.log('--- Test: Incentive overlay still encodes the structural tensions ---');
+// Preserve meaning: the incentive set must still cover MLR, FFS
+// inertia, VBC, cash-pay bypass, admin arms race, and regulated safety.
+var incIds = D.incentives.map(function (i) { return i.id; });
+['inc_mlr','inc_fee_for_service','inc_vbc','inc_cash_pay','inc_admin_arms_race','inc_regulated_safety'].forEach(function (id) {
+  check('incentive ' + id + ' is still present', incIds.indexOf(id) > -1);
+});
 
 if (FAIL) {
   console.log('\n', FAIL, 'failure(s)');

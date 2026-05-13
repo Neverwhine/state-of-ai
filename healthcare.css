@@ -1212,6 +1212,7 @@
 /* Incentives mode overlay --- hatched amber STRIPE on the affected node
    (renders directly on the node, unlike AI which highlights flows). */
 .hc-inc-node-stripe { pointer-events: none; }
+.hc-inc-tick { pointer-events: none; }
 .hc-inc-chip { cursor: pointer; pointer-events: auto; }
 .hc-inc-chip rect {
   fill: rgba(245, 197, 66, 0.20);
@@ -1232,11 +1233,11 @@
   stroke: var(--hc-gold, #F5C542);
 }
 
-/* Companies mode overlay --- intentionally minimal. No badges or chips
-   are drawn on the river. A dashed purple pool ring marks which pools
-   host examples; the actual companies live in the drawer behind a
-   click on a flow, destination, pool, loop step, or stack band. */
-.hc-co-node-ring { pointer-events: none; }
+/* Companies mode overlay --- intentionally ZERO on the river. No
+   badges, chips, rings, sidecars, or other company-dependent SVG is
+   drawn on the canvas. The river dims (rules below) and company
+   examples live exclusively in the drawer behind a click on a flow,
+   destination, pool, loop step, or stack band. */
 
 /* View-mode coloring of the river ------------------------------------- */
 /* Default Money mode: full opacity so dollars read first. */
