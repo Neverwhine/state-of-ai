@@ -425,6 +425,123 @@ check('healthcare.js draws a stack-divider between process map and stack',
 check('renderStepDrawer no longer uses the orphan "Prevention orbit" copy',
   hcSrc.indexOf('Prevention orbit') === -1);
 
+console.log('--- Test: loop node click contract — every C/F/P/V node opens the drawer ---');
+// The bug: clicking on a phase/step in the loop chart was not opening the
+// detail card. The contract below guarantees the wiring stays in place:
+//   1. drawStepNode / drawRailNode emit a <g class="loop-step|rail-step">
+//      with tabindex=0, role=button, an aria-label, and a data-id so
+//      tests + selection code can find it.
+//   2. Each node group is bound to both a click and a keydown handler
+//      that calls selectStep(s.id). Keyboard activation must work via
+//      Enter or Space for accessibility.
+//   3. selectStep funnels through setSelection + renderStepDrawer, so
+//      clicking a node opens the drawer.
+//   4. The node groups are appended LAST in the upper-zone DOM so
+//      decorative overlays (bridge labels, track labels, patient card,
+//      cross-track edges) never paint above the clickable region.
+//   5. Stack band clicks continue to fire via selectStackLayer.
+function hasFn(src, fnName) {
+  return src.indexOf('function ' + fnName) > -1;
+}
+check('healthcare.js defines drawStepNode',  hasFn(hcSrc, 'drawStepNode'));
+check('healthcare.js defines drawRailNode',  hasFn(hcSrc, 'drawRailNode'));
+check('healthcare.js defines selectStep',    hasFn(hcSrc, 'selectStep'));
+check('healthcare.js defines selectStackLayer', hasFn(hcSrc, 'selectStackLayer'));
+
+// drawStepNode contract: class loop-step, tabindex, role, aria-label, data-id, click, keydown
+var drawStepSrc = (hcSrc.match(/function drawStepNode[\s\S]*?\n\s{4}\}\n/) || [])[0] || '';
+check('drawStepNode body found',                 drawStepSrc.length > 0);
+check('drawStepNode emits class "loop-step"',    /class:\s*['"]loop-step\s+is-/.test(drawStepSrc) || /'loop-step '/.test(drawStepSrc) || drawStepSrc.indexOf("'loop-step is-'") > -1 || drawStepSrc.indexOf("loop-step is-") > -1);
+check('drawStepNode sets tabindex on the group', /tabindex:\s*0/.test(drawStepSrc));
+check('drawStepNode sets role="button"',         /role:\s*['"]button['"]/.test(drawStepSrc));
+check('drawStepNode sets data-id from step id',  /['"]data-id['"]:\s*s\.id/.test(drawStepSrc));
+check('drawStepNode sets an aria-label',         /aria-label/.test(drawStepSrc));
+check('drawStepNode binds click handler',        /addEventListener\(['"]click['"]/.test(drawStepSrc));
+check('drawStepNode click handler calls selectStep', /selectStep\(s\.id\)/.test(drawStepSrc));
+check('drawStepNode binds keydown handler',      /addEventListener\(['"]keydown['"]/.test(drawStepSrc));
+check('drawStepNode keydown supports Enter and Space',
+  /ev\.key\s*===\s*['"]Enter['"]/.test(drawStepSrc) && /ev\.key\s*===\s*['"] ['"]/.test(drawStepSrc));
+
+// drawRailNode contract: same pattern, class rail-step
+var drawRailSrc = (hcSrc.match(/function drawRailNode[\s\S]*?\n\s{4}\}\n/) || [])[0] || '';
+check('drawRailNode body found',                  drawRailSrc.length > 0);
+check('drawRailNode emits class "rail-step"',     drawRailSrc.indexOf('rail-step is-') > -1);
+check('drawRailNode sets tabindex on the group',  /tabindex:\s*0/.test(drawRailSrc));
+check('drawRailNode sets role="button"',          /role:\s*['"]button['"]/.test(drawRailSrc));
+check('drawRailNode sets data-id from step id',   /['"]data-id['"]:\s*s\.id/.test(drawRailSrc));
+check('drawRailNode sets an aria-label',          /aria-label/.test(drawRailSrc));
+check('drawRailNode binds click handler',         /addEventListener\(['"]click['"]/.test(drawRailSrc));
+check('drawRailNode click handler calls selectStep', /selectStep\(s\.id\)/.test(drawRailSrc));
+check('drawRailNode binds keydown handler',       /addEventListener\(['"]keydown['"]/.test(drawRailSrc));
+check('drawRailNode keydown supports Enter and Space',
+  /ev\.key\s*===\s*['"]Enter['"]/.test(drawRailSrc) && /ev\.key\s*===\s*['"] ['"]/.test(drawRailSrc));
+
+// selectStep is wired into the drawer
+check('selectStep routes through setSelection',
+  hcSrc.match(/function selectStep[\s\S]{0,300}setSelection\(\{\s*kind:\s*['"]step['"]/));
+check('selectStep opens the step drawer via renderStepDrawer',
+  hcSrc.match(/function selectStep[\s\S]{0,300}renderStepDrawer/));
+check('renderStepDrawer writes HTML into the loop insight panel',
+  hcSrc.match(/function renderStepDrawer[\s\S]{0,4000}setLoopInsight/));
+
+// Render order: the bug only repro'd when bridge labels and other
+// decorative SVG text painted ABOVE the step nodes and intercepted
+// clicks. Lock in the new render order so this can't regress.
+var renderLoopSrc = (hcSrc.match(/function renderLoop[\s\S]*?\n\s{4}\}\n/) || [])[0] || '';
+check('renderLoop body found',                                renderLoopSrc.length > 0);
+var careNodesIdx   = renderLoopSrc.indexOf("'care-nodes'");
+var finNodesIdx    = renderLoopSrc.indexOf("'fin-nodes'");
+var bridgeGIdx     = renderLoopSrc.indexOf("'loop-bridges'");
+check('renderLoop creates a dedicated care-nodes group',      careNodesIdx > -1);
+check('renderLoop creates a dedicated fin-nodes group',       finNodesIdx  > -1);
+check('renderLoop creates a bridges group',                   bridgeGIdx   > -1);
+check('care/fin node groups are drawn AFTER the bridges group',
+  bridgeGIdx > -1 && careNodesIdx > bridgeGIdx && finNodesIdx > bridgeGIdx);
+
+// Pointer-events contract in CSS — decorative overlays must NEVER eat
+// a click destined for a loop/rail node.
+check('healthcare.css disables pointer-events on bridge labels',
+  /\.bridge-label[\s\S]{0,160}pointer-events:\s*none/.test(cssSrc));
+check('healthcare.css disables pointer-events on track labels',
+  /\.loop-label[^{]*\{[^}]*pointer-events:\s*none/.test(cssSrc));
+check('healthcare.css disables pointer-events on the patient card',
+  /\.patient-center[^{]*\{[^}]*pointer-events:\s*none/.test(cssSrc));
+check('healthcare.css disables pointer-events on loop/edge arrows',
+  /\.loop-arrow[^{]*\{[^}]*pointer-events:\s*none/.test(cssSrc));
+check('healthcare.css disables pointer-events on vbc-link / prev-link',
+  /\.vbc-link[\s\S]{0,200}pointer-events:\s*none/.test(cssSrc));
+check('healthcare.css disables pointer-events on rail-title / rail-sub',
+  /\.rail-title[\s\S]{0,200}pointer-events:\s*none/.test(cssSrc));
+check('healthcare.css makes loop-step a clickable group',
+  /\.loop-step[^{]*\{[^}]*pointer-events:\s*all/.test(cssSrc) ||
+  /\.loop-step,\s*[\s\S]{0,200}\.loop-step\s+\.bg[^{]*\{[^}]*pointer-events:\s*all/.test(cssSrc));
+check('healthcare.css makes loop-step text labels non-blocking',
+  /\.loop-step\s+\.num[\s\S]{0,200}pointer-events:\s*none/.test(cssSrc) ||
+  /\.loop-step\s+\.lbl[\s\S]{0,200}pointer-events:\s*none/.test(cssSrc));
+check('healthcare.css makes rail-step a clickable group',
+  /\.rail-step[^{]*\{[^}]*pointer-events:\s*all/.test(cssSrc) ||
+  /\.rail-step,\s*[\s\S]{0,200}\.rail-step\s+\.bg[^{]*\{[^}]*pointer-events:\s*all/.test(cssSrc));
+check('healthcare.css makes rail-step text labels non-blocking',
+  /\.rail-step\s+\.num[\s\S]{0,200}pointer-events:\s*none/.test(cssSrc) ||
+  /\.rail-step\s+\.lbl[\s\S]{0,200}pointer-events:\s*none/.test(cssSrc));
+
+// Stack band clicks must continue to work — explicit regression check.
+check('stack-band click still routes through selectStackLayer',
+  /selectStackLayer\(s\.id\)/.test(hcSrc));
+check('stack-band keydown still supports Enter and Space',
+  /stack-band[\s\S]*?keydown[\s\S]{0,300}Enter[\s\S]{0,80}selectStackLayer/.test(hcSrc) ||
+  hcSrc.match(/addEventListener\('keydown'[\s\S]{0,300}selectStackLayer/));
+
+// SVG root must not hide its interactive descendants from assistive tech.
+// Prior markup used role="img" which framed the whole graphic as a
+// single image; switch to role="group" so the inner role="button"
+// elements stay reachable.
+check('index.html does NOT mark the loop SVG as role="img" (hides interactive children)',
+  indexSrc.indexOf('id="hc-loop-svg" role="img"') === -1);
+check('index.html marks the loop SVG with role="group" or no role',
+  /id="hc-loop-svg"[^>]*role="group"/.test(indexSrc) ||
+  !/id="hc-loop-svg"[^>]*role=/.test(indexSrc));
+
 console.log('--- Test: loop layout fits within the expanded viewBox ---');
 // viewBox is 1180 x 880 — every node rectangle must sit inside that
 // box with breathing room so nothing clips at desktop or mobile.

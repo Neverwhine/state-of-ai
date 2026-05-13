@@ -1828,17 +1828,16 @@
       var careCx = 620, careCy = 245, careRx = 360, careRy = 175;
       var finCx  = 620, finCy  = 385, finRx  = 360, finRy  = 175;
 
-      // Active-only arrows along ellipse paths
+      // Active-only arrows along ellipse paths (drawn first so step nodes
+      // paint on top and always receive clicks).
       drawLoopActiveArrows(DATA.careLoop, careActive, careCx, careCy, careRx, careRy, true,  'care', 'hcl-arrow-care');
       drawLoopActiveArrows(DATA.financialLoop, finActive, finCx, finCy, finRx, finRy, false, 'fin',  'hcl-arrow-fin');
 
-      // Step nodes
-      DATA.careLoop.forEach(function (s) { drawStepNode(s, 'care', !!careActive[s.id]); });
-      DATA.financialLoop.forEach(function (s) { drawStepNode(s, 'fin', !!finActive[s.id]); });
-
-      // VBC bridge (left rail) — drawn as part of the named VBC track
+      // Edge groups (links between rail nodes and cross-track bridges) are
+      // created BEFORE the node groups so node groups always paint above
+      // them. This guarantees clicks land on nodes even where decorative
+      // edge labels would otherwise intercept.
       var vbcG = svgEl('g', { class: 'vbc-bridge' });
-      DATA.vbcBridge.forEach(function (v) { drawRailNode(v, 'vbc', !!vbcActive[v.id], vbcG); });
       for (var i = 0; i < DATA.vbcBridge.length - 1; i++) {
         var a = DATA.vbcBridge[i], b = DATA.vbcBridge[i + 1];
         var aOn = !!vbcActive[a.id], bOn = !!vbcActive[b.id];
@@ -1848,10 +1847,8 @@
           fill: 'none', stroke: 'rgba(124,77,255,0.7)', 'stroke-width': 1.6, 'marker-end': 'url(#hcl-arrow-vbc)' }, vbcG);
       }
 
-      // Prevention loop — drawn as a real loop on the right.
-      // Sequence: P1 → P2 → P3 → P4 → P5 → (close back to P1).
+      // Prevention loop edges — closed loop on the right.
       var preG = svgEl('g', { class: 'prevention-orbit' });
-      DATA.preventionOrbit.forEach(function (p) { drawRailNode(p, 'prev', !!prevActive[p.id], preG); });
       function preventionEdge(pa, pb) {
         if (!(prevActive[pa.id] && prevActive[pb.id])) return;
         var mx = (pa.x + pb.x) / 2, my = (pa.y + pb.y) / 2;
@@ -1926,6 +1923,17 @@
           fill: e.kind === 'bridge' ? 'rgba(124,77,255,0.85)' : 'rgba(255,140,66,0.85)'
         }, bridgeG).textContent = e.label;
       });
+
+      // ----- Step / rail nodes — drawn LAST among the upper-zone layers
+      // so every loop node paints on top of edges, hulls, and decorative
+      // labels. This is the layer the user clicks; nothing should ever
+      // obscure it.
+      var careNodesG = svgEl('g', { class: 'care-nodes' });
+      DATA.careLoop.forEach(function (s) { drawStepNode(s, 'care', !!careActive[s.id], careNodesG); });
+      var finNodesG = svgEl('g', { class: 'fin-nodes' });
+      DATA.financialLoop.forEach(function (s) { drawStepNode(s, 'fin', !!finActive[s.id], finNodesG); });
+      DATA.vbcBridge.forEach(function (v) { drawRailNode(v, 'vbc', !!vbcActive[v.id], vbcG); });
+      DATA.preventionOrbit.forEach(function (p) { drawRailNode(p, 'prev', !!prevActive[p.id], preG); });
 
       // ----- Tech stack underneath the process visual -----
       // Explicit divider so the stack reads as a separate panel below the
@@ -2046,15 +2054,15 @@
       }
     }
 
-    function drawStepNode(s, kind, isActive) {
+    function drawStepNode(s, kind, isActive, parent) {
       var classes = 'loop-step is-' + kind + (isActive ? ' is-active' : ' is-dim');
       var w = 118, h = 36;
       var g = svgEl('g', {
         class: classes,
         transform: 'translate(' + (s.x - w / 2) + ',' + (s.y - h / 2) + ')',
         tabindex: 0, role: 'button', 'aria-label': s.id + ' ' + s.label,
-        'data-id': s.id
-      });
+        'data-id': s.id, 'data-kind': kind
+      }, parent);
       svgEl('rect', { class: 'bg', width: w, height: h, rx: 8 }, g);
       svgEl('text', { class: 'num', x: 12, y: h / 2 + 4 }, g).textContent = s.id;
       svgEl('text', { class: 'lbl', x: 30, y: h / 2 + 4 }, g).textContent = s.label;
@@ -2072,7 +2080,7 @@
         class: classes,
         transform: 'translate(' + (s.x - w / 2) + ',' + (s.y - h / 2) + ')',
         tabindex: 0, role: 'button', 'aria-label': s.id + ' ' + s.label,
-        'data-id': s.id
+        'data-id': s.id, 'data-kind': kind
       }, parent);
       svgEl('rect', { class: 'bg', width: w, height: h, rx: 8 }, g);
       svgEl('text', { class: 'num', x: 10, y: h / 2 + 4 }, g).textContent = s.id;

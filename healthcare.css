@@ -667,6 +667,20 @@
 .hc-loop-svg .loop-step.is-focus .bg { stroke: var(--hc-purple); stroke-width: 2.5; }
 .hc-loop-svg .loop-step { cursor: pointer; }
 
+/* Click contract for loop step nodes. The group + bg rect catch the click,
+   inner text labels never intercept it. Without this, decorative SVG text
+   that paints on top (bridge labels, track labels, patient card text)
+   could swallow clicks that should reach the step group. */
+.hc-loop-svg .loop-step,
+.hc-loop-svg .loop-step .bg { pointer-events: all; }
+.hc-loop-svg .loop-step .num,
+.hc-loop-svg .loop-step .lbl { pointer-events: none; }
+.hc-loop-svg .loop-step:focus-visible { outline: none; }
+.hc-loop-svg .loop-step:focus-visible .bg {
+  stroke: var(--hc-purple, #7C4DFF);
+  stroke-width: 2.5;
+}
+
 .hc-loop-svg .loop-label.care { font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; fill: rgba(78, 205, 196, 0.85); }
 .hc-loop-svg .loop-label.fin  { font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; fill: rgba(245, 197, 66, 0.85); }
 
@@ -683,6 +697,18 @@
 .hc-loop-svg .rail-step.is-dim .bg { opacity: 0.45; }
 .hc-loop-svg .rail-step.is-focus .bg { stroke: var(--hc-purple); stroke-width: 2.5; }
 .hc-loop-svg .rail-step { cursor: pointer; }
+
+/* Click contract for rail step nodes (VBC bridge V1..V5 and prevention
+   P1..P5). Same pattern as loop-step. */
+.hc-loop-svg .rail-step,
+.hc-loop-svg .rail-step .bg { pointer-events: all; }
+.hc-loop-svg .rail-step .num,
+.hc-loop-svg .rail-step .lbl { pointer-events: none; }
+.hc-loop-svg .rail-step:focus-visible { outline: none; }
+.hc-loop-svg .rail-step:focus-visible .bg {
+  stroke: var(--hc-purple, #7C4DFF);
+  stroke-width: 2.5;
+}
 .hc-loop-svg .rail-step .num { font-size: 10px; font-weight: 800; fill: var(--hc-text-mute); }
 .hc-loop-svg .rail-step.is-active.is-vbc .num { fill: var(--hc-gold); }
 .hc-loop-svg .rail-step.is-active.is-prev .num { fill: var(--hc-orange); }
@@ -711,7 +737,17 @@
 
 .hc-loop-svg .loop-arrow.is-active.is-care { filter: drop-shadow(0 0 3px rgba(78, 205, 196, 0.45)); }
 .hc-loop-svg .loop-arrow.is-active.is-fin  { filter: drop-shadow(0 0 3px rgba(245, 197, 66, 0.45)); }
-.hc-loop-svg .bridge-label { font-size: 10px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+.hc-loop-svg .bridge-label { font-size: 10px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; pointer-events: none; }
+.hc-loop-svg .loop-arrow { pointer-events: none; }
+.hc-loop-svg .vbc-link,
+.hc-loop-svg .prev-link { pointer-events: none; }
+.hc-loop-svg .rail-title,
+.hc-loop-svg .rail-sub { pointer-events: none; }
+.hc-loop-svg .loop-label,
+.hc-loop-svg .loop-label.sub { pointer-events: none; }
+.hc-loop-svg .patient-center { pointer-events: none; }
+.hc-loop-svg .patient-center rect,
+.hc-loop-svg .patient-center text { pointer-events: none; }
 
 /* Named-track group hulls. Very subtle outlines that confirm every node
    belongs to exactly one named process path — no orphan boxes. Kept
