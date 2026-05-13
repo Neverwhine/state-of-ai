@@ -87,7 +87,7 @@ window.SLIDES_DATA = {
     capex2026Detail: '~$695B midpoint · up to $725B top end (Big 4 post-Q1 2026)',
     capex2024: '$224B',
     multiplier: '3.1×',
-    nuclear: 'Three Mile Island restart · Microsoft + Google SMRs'
+    nuclear: 'Three Mile Island 20-yr PPA (targeted restart) · Microsoft + Google SMRs'
   },
 
   // ── NEW slide 10: Agent Anatomy 7-layer stack (KPIs are now inline in the slide headline) ──
@@ -103,7 +103,7 @@ window.SLIDES_DATA = {
 
   // ── NEW slide 11: Vibe coding ──
   vibeCoding: [
-    { letter: 'C', name: 'Cursor',      stat: '$2B+ ARR',        color: '#FF8C42', desc: 'AI-native IDE · doubled in 3 months' },
+    { letter: 'C', name: 'Cursor',      stat: '$2B+ ARR',        color: '#FF8C42', desc: 'AI-native IDE · $1B late 2025 → $2B+ Feb 2026' },
     { letter: 'A', name: 'Claude Code', stat: '$2.5B run-rate',  color: '#D4A574', desc: '9-month ramp · agent-mediated SWE' },
     { letter: 'L', name: 'Lovable',     stat: '$400M ARR',       color: '#7C4DFF', desc: 'Vibe coding for non-engineers' },
     { letter: 'D', name: 'Devin',       stat: '$10.2B val',      color: '#4A90D9', desc: '67% PR merge rate · autonomous SWE' },

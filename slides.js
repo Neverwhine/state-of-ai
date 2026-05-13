@@ -1007,7 +1007,7 @@
     });
 
     // ── 3. model logos band (rotating) ──
-    const modelPool = ['DeepSeek V3.2', 'GPT-5.5', 'Claude 4.1', 'Gemini 2.5', 'Qwen 3', 'GLM-5', 'Llama 4'];
+    const modelPool = ['DeepSeek V3.2', 'GPT-5.5', 'Claude Opus 4.7', 'Gemini 3.1 Pro', 'Qwen3.5', 'GLM-5', 'Llama 4'];
     const modelSlots = 5;
     const modelY = 440;
     const modelTexts = [];

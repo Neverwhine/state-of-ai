@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>What's New &mdash; DVC State of AI Patch Notes &middot; May 6, 2026</title>
-<meta name="description" content="Patch notes for the DVC State of AI report &mdash; what changed in the last 10 days and where it shows up in the main report.">
+<title>What's New &mdash; DVC State of AI Patch Notes &middot; May 13, 2026</title>
+<meta name="description" content="Patch notes for the DVC State of AI report &mdash; what changed in the last week and where it shows up in the main report.">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
 <link rel="icon" type="image/png" sizes="192x192" href="favicon-192.png">
@@ -157,12 +157,63 @@
 
 <header class="wn-hero">
   <span class="wn-eyebrow">DVC State of AI &middot; Patch notes</span>
-  <h1 class="wn-title">What's new<span class="wn-date-badge">May 6, 2026</span></h1>
-  <p class="wn-intro">The last 10 days compressed the report's thesis: compute is the new distribution, model labs are becoming deployment companies, and enterprise agents are moving from demo to packaged workflow. Each item below has been integrated into the relevant section of the main report &mdash; this page is the running changelog.</p>
-  <p class="wn-meta-line">7 updates &middot; window: Apr 27 &ndash; May 6, 2026 &middot; primary sources cited per item</p>
+  <h1 class="wn-title">What's new<span class="wn-date-badge">May 13, 2026</span></h1>
+  <p class="wn-intro">This week's lens: the frontier is reorganizing into unstable coalitions. OpenAI loosened its Microsoft tether and is moving multi-cloud; Anthropic widened its compute base (Amazon, Google/Broadcom, Microsoft/NVIDIA, and now SpaceX) while SpaceX/xAI circles Cursor, one of the distribution surfaces that helped make Claude economically powerful. The main report's structure and Healthcare AI section are unchanged in this run &mdash; only the Incumbents framing, dated callouts, and stale numerics were touched.</p>
+  <p class="wn-meta-line">Updated May 13, 2026 &middot; primary sources cited per item &middot; older entries below the May 13 block</p>
 </header>
 
 <main class="wn-list-wrap">
+
+  <h2 style="font-size:0.78rem;letter-spacing:0.18em;text-transform:uppercase;color:#F5C542;margin:0 0 0.85rem;padding-top:0.25rem;font-weight:700">May 13, 2026 &middot; this week</h2>
+  <div class="wn-list" style="margin-bottom:2.25rem">
+
+    <!-- A) Healthcare AI section note -->
+    <article class="wn-card" style="--wn-accent:#4ECDC4">
+      <span class="wn-card-tag">Report</span>
+      <h2 class="wn-card-headline">AI in Healthcare section: no changes in this run</h2>
+      <p class="wn-card-body">The Healthcare AI section in the main report was added in a previous refresh and is intentionally untouched this week. Mentioned here only so readers know the section is current as of its original publish and was reviewed, not rewritten, on May 13.</p>
+      <div class="wn-card-meta">
+        <span class="wn-card-updates">Updates: <strong>None &mdash; reference only</strong></span>
+        <span class="wn-card-jump"><a href="index.html#sec-healthcare-ai">Jump to section &rarr;</a></span>
+      </div>
+    </article>
+
+    <!-- B) Coalition framing: Anthropic-SpaceX-Cursor checks-and-balances -->
+    <article class="wn-card" style="--wn-accent:#E8837C">
+      <span class="wn-card-tag">Coalitions</span>
+      <h2 class="wn-card-headline">Anthropic / SpaceX / Cursor: a dependency web, not a vertical empire</h2>
+      <p class="wn-card-body">Anthropic adds SpaceX compute (more than 300MW and over 220,000 NVIDIA GPUs, per Anthropic's own framing) on top of Amazon for primary training and Bedrock distribution, Google/Broadcom for TPU capacity, and Microsoft/NVIDIA for Azure capacity. SpaceX/xAI is simultaneously circling Cursor, one of the coding distribution points where Anthropic's models are economically powerful (Cursor and GitHub Copilot together represented roughly 30% of an earlier Anthropic revenue milestone, per reporting). The result is a checks-and-balances structure: everyone gets stronger, everyone gets more exposed.</p>
+      <div class="wn-card-meta">
+        <span class="wn-card-updates">Updates: <strong>Incumbents</strong></span>
+        <span class="wn-card-jump"><a href="index.html#sec-10">Jump to section &rarr;</a></span>
+      </div>
+    </article>
+
+    <!-- C) OpenAI / Microsoft exclusivity reset + multi-cloud stress -->
+    <article class="wn-card" style="--wn-accent:#0078D4">
+      <span class="wn-card-tag">Cloud</span>
+      <h2 class="wn-card-headline">OpenAI / Microsoft exclusivity reset &mdash; and OpenAI's multi-cloud stress</h2>
+      <p class="wn-card-body">Under the Apr 27 partnership reset, Microsoft is no longer OpenAI's exclusive cloud and the IP license through 2032 is non-exclusive; OpenAI continues a (capped) revenue share to Microsoft through 2030 while Microsoft no longer pays revenue share to OpenAI. The strategic cost of cutting the tether is real: OpenAI now has to assemble compute and distribution from multiple patrons (Microsoft, Oracle, AWS, plus its own buildout) without a single dominant protector. The Incumbents section now frames OpenAI/Microsoft/Oracle/AWS as one of three coalitions under stress, alongside the Anthropic/Amazon/Google/SpaceX/Cursor diversified-but-interdependent stack and Meta's separate vertically controlled stack.</p>
+      <div class="wn-card-meta">
+        <span class="wn-card-updates">Updates: <strong>Incumbents</strong>, <strong>$700B Sprint</strong></span>
+        <span class="wn-card-jump"><a href="index.html#sec-10">Jump to section &rarr;</a></span>
+      </div>
+    </article>
+
+    <!-- D) Model version / stale-number cleanup -->
+    <article class="wn-card" style="--wn-accent:#A0A8BC">
+      <span class="wn-card-tag">Cleanup</span>
+      <h2 class="wn-card-headline">Model-version and stale-number reconciliation across report and deck</h2>
+      <p class="wn-card-body">Aligned model labels and tooltips across <code>index.html</code>, <code>slides.html</code>, <code>slides.js</code>, and <code>slides-data.js</code> so the report and deck no longer contradict each other on the OpenAI / Claude / Gemini lineup (GPT-5.4 + GPT-5.5 default Instant, Claude Opus 4.7, Gemini 3.1 Pro). The inference-cost collapse window is reconciled to 36 months end-to-end (2023&ndash;2026). The Manus &rarr; Meta acquisition card was softened to a reported deal with no in-repo primary source. The OpenClaw narrative is now an explicit rise-and-fall arc (Jensen-era hype &rarr; systematic absorption by Anthropic). CapEx is anchored to ~$695B midpoint / up to $725B top end with per-company numbers consistent between report and deck. Rolling phrases like "this week", "active talks", and "doubled in 3 months" were replaced with dated snapshots. "Microsoft restarted Three Mile Island" softened to the 20-year PPA / targeted-restart framing.</p>
+      <div class="wn-card-meta">
+        <span class="wn-card-updates">Updates: <strong>Model Wars</strong>, <strong>$700B Sprint</strong>, <strong>Agent Revolution</strong>, <strong>Slides</strong></span>
+        <span class="wn-card-jump"><a href="index.html#sec-3">Jump to section &rarr;</a></span>
+      </div>
+    </article>
+
+  </div>
+
+  <h2 style="font-size:0.78rem;letter-spacing:0.18em;text-transform:uppercase;color:#7C8395;margin:0 0 0.85rem;font-weight:700">May 6, 2026 &middot; earlier patch notes</h2>
   <div class="wn-list">
 
     <!-- 1) Anthropic / SpaceX Colossus -->
@@ -217,7 +268,7 @@
     <article class="wn-card" style="--wn-accent:#F5C542">
       <span class="wn-card-tag">CapEx</span>
       <h2 class="wn-card-headline">Hyperscaler 2026 CapEx resets toward $725B</h2>
-      <p class="wn-card-body">Amazon (~$200B), Microsoft (~$190B), Google (~$180&ndash;190B), and Meta ($125&ndash;145B) now guide to roughly $725B combined &mdash; about $100B above prior projections. The infrastructure chapter got bigger, not smaller; the bottleneck is memory, power, and data-center execution. Report's headline $700B figure is preserved as guidance midpoint with a callout to the latest reset.</p>
+      <p class="wn-card-body">Big&nbsp;4 hyperscalers plus Oracle now guide to roughly <strong>~$695B midpoint, up to $725B</strong> at the top end &mdash; about $100B above prior projections. Per-company anchors used across the report and deck (CapEx explorer in <a href="index.html#sec-7" style="color:#F5C542">sec-7</a> and slide&nbsp;7): Amazon ~$200B, Alphabet ~$180B, Microsoft ~$145B, Meta ~$125B, Oracle ~$50B. The infrastructure chapter got bigger, not smaller; the bottleneck is memory, power, and data-center execution.</p>
       <div class="wn-card-meta">
         <span class="wn-card-updates">Updates: <strong>$700B Sprint</strong>, <strong>Follow the Money</strong></span>
         <span class="wn-card-jump"><a href="index.html#sec-7">Jump to section &rarr;</a></span>
