@@ -147,7 +147,7 @@ body.embed-mode { padding: 0 !important; margin: 0 !important; }
 
 <section class="section section--hero section--hero-dvc" id="sec-0">
   <a href="slides.html" style="position:absolute;top:1.25rem;right:1.5rem;z-index:1000;font-family:'Inter',sans-serif;font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:#4ECDC4;text-decoration:none;padding:0.5rem 0.85rem;border:1px solid rgba(78,205,196,0.4);border-radius:6px;background:rgba(45,49,66,0.7);backdrop-filter:blur(8px);transition:all 0.2s ease" onmouseover="this.style.background='rgba(78,205,196,0.15)';this.style.borderColor='#4ECDC4'" onmouseout="this.style.background='rgba(45,49,66,0.7)';this.style.borderColor='rgba(78,205,196,0.4)'">▶ 20-min Slideshow</a>
-  <a href="whats-new.html" style="position:absolute;top:3.5rem;right:1.5rem;z-index:1000;font-family:'Inter',sans-serif;font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:#F5C542;text-decoration:none;padding:0.5rem 0.85rem;border:1px solid rgba(245,197,66,0.4);border-radius:6px;background:rgba(45,49,66,0.7);backdrop-filter:blur(8px);transition:all 0.2s ease" onmouseover="this.style.background='rgba(245,197,66,0.15)';this.style.borderColor='#F5C542'" onmouseout="this.style.background='rgba(45,49,66,0.7)';this.style.borderColor='rgba(78,205,196,0.4)'">✦ What's new &middot; May 13</a>
+  <a href="whats-new.html" style="position:absolute;top:3.5rem;right:1.5rem;z-index:1000;font-family:'Inter',sans-serif;font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:#F5C542;text-decoration:none;padding:0.5rem 0.85rem;border:1px solid rgba(245,197,66,0.4);border-radius:6px;background:rgba(45,49,66,0.7);backdrop-filter:blur(8px);transition:all 0.2s ease" onmouseover="this.style.background='rgba(245,197,66,0.15)';this.style.borderColor='#F5C542'" onmouseout="this.style.background='rgba(45,49,66,0.7)';this.style.borderColor='rgba(78,205,196,0.4)'">✦ What's new &middot; May 19</a>
   <div class="hero-blocks">
     <div class="hero-block hero-block--white">
       <div class="hero-block-inner">
@@ -764,7 +764,7 @@ body.embed-mode { padding: 0 !important; margin: 0 !important; }
     </div>
 
     <h2 class="section-headline anim-fade">THE <span class="accent-teal">MODEL WARS</span></h2>
-    <p class="section-intro anim-fade" style="max-width:780px;color:#C8CCD4;font-size:1.05rem;line-height:1.65;margin:0 auto 2.5rem">10+ companies at the frontier simultaneously. The bottom is commoditizing; the top is getting more expensive and more strategic. Open-source models now match proprietary ones on most benchmarks.</p>
+    <p class="section-intro anim-fade" style="max-width:780px;color:#C8CCD4;font-size:1.05rem;line-height:1.65;margin:0 auto 2.5rem">10+ companies at the frontier simultaneously. The bottom is commoditizing; the top is getting more expensive and more strategic. Open-weight models look close to proprietary ones on public benchmarks; held-out government evals still show a gap. Cost efficiency, especially from PRC labs, is real.</p>
     <!-- PROPRIETARY TIER -->
     <h3 class="subsection-title anim-fade" style="margin-bottom:1rem;font-size:0.85rem;color:#A0A8BC;letter-spacing:0.12em">PROPRIETARY FRONTIER</h3>
 
@@ -831,6 +831,17 @@ body.embed-mode { padding: 0 !important; margin: 0 !important; }
 
     <!-- OPEN SOURCE/WEIGHT TIER -->
     <h3 class="subsection-title anim-fade" style="margin-bottom:1rem;font-size:0.85rem;color:#4ECDC4;letter-spacing:0.12em">OPEN SOURCE / OPEN WEIGHT &#128275;</h3>
+
+    <!-- May 2026 - CAISI eval of DeepSeek V4 Pro: holds the open-weight gap honest -->
+    <div class="anim-fade" style="margin:0 0 1.25rem;padding:0.95rem 1.15rem;background:rgba(232,131,124,0.05);border:1px solid rgba(232,131,124,0.2);border-left:3px solid #E8837C;border-radius:8px">
+      <div style="display:flex;align-items:center;gap:0.55rem;margin-bottom:0.25rem;flex-wrap:wrap">
+        <span style="background:rgba(232,131,124,0.18);color:#E8837C;padding:0.16rem 0.5rem;border-radius:4px;font-size:0.64rem;font-weight:700;letter-spacing:0.1em">MAY 2026 &middot; NIST/CAISI</span>
+        <strong style="color:#E8837C;font-size:0.88rem;letter-spacing:0.02em">PUBLIC EVALS LOOK CLOSE. HELD-OUT EVALS SHOW A GAP.</strong>
+      </div>
+      <p style="color:#C8CCD4;font-size:0.84rem;line-height:1.55;margin:0">NIST's Center for AI Standards and Innovation independently evaluated <strong>DeepSeek V4 Pro</strong> on non-public ("uncontaminated") benchmarks across cyber, software engineering, sciences, abstract reasoning, and math. On public benchmarks DeepSeek's own numbers look close to current US frontier; on CAISI's held-out suite V4 Pro lands roughly comparable to GPT-5 (released about 8 months earlier), with an IRT Elo near <span class="tabnum">800</span> vs <span class="tabnum">1260</span> for GPT-5.5 and <span class="tabnum">999</span> for Claude Opus 4.6. Cost efficiency is real: V4 Pro was cheaper than GPT-5.4 mini on 5 of 7 benchmarks. The takeaway is not "open source caught up" or "the gap is closing fast." It is: public evals look close, held-out evals show a gap of roughly 8 months, and PRC cost efficiency is a separate, real advantage.</p>
+      <span class="stat-source" style="display:block;margin-top:0.4rem">Source: <a href="https://www.nist.gov/news-events/news/2026/05/caisi-evaluation-deepseek-v4-pro" target="_blank" rel="noopener" style="color:#E8837C">NIST / CAISI, May 2026</a></span>
+    </div>
+
     <div class="model-grid anim-fade" style="grid-template-columns:repeat(auto-fit,minmax(150px,1fr));margin-bottom:2rem">
       <div class="model-card" data-tip="<strong>Llama 4 Maverick</strong><br><span style='color:#A0A8BC'>Released:</span> Apr 2025<br><span style='color:#A0A8BC'>Params:</span> 17B active / 400B total (128 experts)<br><span style='color:#A0A8BC'>Context:</span> 1M tokens<br><span style='color:#A0A8BC'>Benchmarks:</span> MMLU 85.5% &middot; MMLU-Pro 80.5% &middot; GPQA 69.8%<br><span style='color:#F5C542;font-size:0.82em;margin-top:3px;display:inline-block'>&starf; First open-weight natively multimodal MoE from Meta &mdash; early fusion for text/image/video. Community License.</span>" style="border:1px solid rgba(78,205,196,0.25)">
         <div class="model-logo" style="background:#1877F2">M</div>
@@ -1377,6 +1388,18 @@ body.embed-mode { padding: 0 !important; margin: 0 !important; }
       <div class="callout-box anim-fade" style="border-left:3px solid #D4A574;margin:2rem 0">
         <p><strong style="color:#D4A574">Nightly agent jobs just became practical.</strong> Anthropic shipped <strong>Routines</strong> in research preview on April 14 &mdash; scheduled, API-triggered, and webhook-triggered Claude jobs. Instead of kicking off agents by hand, teams can now run them on cron, on inbound events, or from upstream services. Claude Code plus Routines = continuous autonomous engineering overnight. One more reason the &ldquo;software engineer as agent orchestrator&rdquo; pattern keeps compounding.</p>
         <span class="stat-source">Source: Anthropic, April 14, 2026</span>
+      </div>
+
+      <!-- May 2026 - Agents become infrastructure: governance + toolkit + managed-agent features -->
+      <div class="callout-box anim-fade" style="border-left:3px solid #7C4DFF;margin:2rem 0">
+        <p><strong style="color:#7C4DFF">Agents just became infrastructure.</strong> In a single window in early May, three layers of the agent stack got real product surfaces:</p>
+        <ul style="color:#C8CCD4;font-size:0.9rem;line-height:1.6;margin:0.6rem 0 0;padding-left:1.2rem">
+          <li style="margin-bottom:0.45rem"><strong style="color:#E8E9ED">Governance / control plane:</strong> <strong>Microsoft Agent 365</strong> went GA on May 1 at <span class="tabnum">$15/user/month</span> as an add-on to M365 Copilot. It is positioned as the enterprise control plane for agents: shadow-agent discovery, identity, observability, policy, and an Agent Registry, across human-to-agent and agent-to-agent flows. Enterprises now have a per-user line item for "agent management" the way they do for endpoint security.</li>
+          <li style="margin-bottom:0.45rem"><strong style="color:#E8E9ED">Toolkit / runtime:</strong> <strong>AWS Agent Toolkit</strong> and the <strong>AWS MCP Server</strong> reached GA on May 6, with IAM-scoped guardrails, CloudWatch metrics, CloudTrail logging, and sandboxed execution. AWS is treating MCP as production infrastructure and the toolkit as a first-class AWS interface rather than a dev-tool add-on.</li>
+          <li><strong style="color:#E8E9ED">Managed-agent reliability:</strong> Anthropic announced <strong>Dreaming</strong> (cross-session memory consolidation in research preview), <strong>Outcomes</strong> (rubric-graded eval loops in a separate context window), and <strong>Multi-agent Orchestration</strong> on its managed-agent platform. Cross-session memory at the agent layer (no weight changes) is the architecturally interesting bit.</li>
+        </ul>
+        <p style="color:#C8CCD4;font-size:0.9rem;line-height:1.55;margin:0.75rem 0 0"><strong style="color:#7C4DFF">A2A protocol</strong> crossed <strong class="tabnum">150+</strong> organizations one year in, with native integration across Google, Microsoft, and AWS, complementing MCP as the cross-org agent-to-agent layer. The pattern: above the 7-layer agent stack, a governance / control-plane layer is forming, and the hyperscalers are racing to own it.</p>
+        <span class="stat-source">Source: <a href="https://www.microsoft.com/en-us/security/blog/2026/05/01/microsoft-agent-365-now-generally-available-expands-capabilities-and-integrations/" target="_blank" rel="noopener">Microsoft, May 1 2026</a> &middot; <a href="https://aws.amazon.com/about-aws/whats-new/2026/05/agent-toolkit/" target="_blank" rel="noopener">AWS, May 6 2026</a> &middot; <a href="https://venturebeat.com/technology/anthropic-introduces-dreaming-a-system-that-lets-ai-agents-learn-from-their-own-mistakes" target="_blank" rel="noopener">VentureBeat, May 12 2026</a> &middot; <a href="https://www.linuxfoundation.org/press/a2a-protocol-surpasses-150-organizations-lands-in-major-cloud-platforms-and-sees-enterprise-production-use-in-first-year" target="_blank" rel="noopener">Linux Foundation, Apr 9 2026</a></span>
       </div>
 
       <!-- Claude Code Leak + Open Source Speed -->
@@ -1932,7 +1955,7 @@ body.embed-mode { padding: 0 !important; margin: 0 !important; }
             <span class="aa-tool-chip aa-tool-chip--has-tip" data-tip="<strong>Google DeepMind</strong><br>Gemini 3.1 Pro: 1M context window, natively multimodal. #2 Chatbot Arena.<br><em>SWE-Bench 80.6% · ARC-AGI-2 77.1% · Leader of A2A protocol</em>">Google</span>
             <span class="aa-tool-chip aa-tool-chip--has-tip" data-tip="<strong>xAI</strong> (Elon Musk)<br>Grok 3: Trained on 200K H100 Colossus cluster. $1.25T merged valuation with SpaceX.<br><em>$12B raised · World's largest training cluster</em>">xAI</span>
             <span class="aa-tool-chip aa-tool-chip--has-tip" data-tip="<strong>Meta</strong> · Llama 4 Maverick<br>Most downloaded open-weight model family. Community License. Manus &rarr; Meta acquisition has been discussed in reporting but is not confirmed by a primary release in this report.<br><em>Benchmark controversy exposed industry-wide eval gaming</em>">Meta / Llama</span>
-            <span class="aa-tool-chip aa-tool-chip--has-tip" data-tip="<strong>DeepSeek</strong> · MIT License<br>V3.2 / R1: Open-weight models matching proprietary frontier at fraction of training cost.<br><em>Sparked global debate on compute efficiency vs brute-force scaling</em>">DeepSeek</span>
+            <span class="aa-tool-chip aa-tool-chip--has-tip" data-tip="<strong>DeepSeek</strong> · MIT License<br>V3.2 / R1 / V4 Pro: open-weight models close to US frontier on public benchmarks. NIST/CAISI's held-out evals (May 2026) put V4 Pro about 8 months behind GPT-5.5 on uncontaminated tasks; cost efficiency remains real.<br><em>Sparked global debate on compute efficiency vs brute-force scaling</em>">DeepSeek</span>
             <span class="aa-tool-chip aa-tool-chip--has-tip" data-tip="<strong>Mistral</strong> · EU Sovereign AI<br>Mistral Large 2: Europe's frontier model company. $2.2B raised, $6.2B valuation.<br><em>Le Chat: 4× faster than ChatGPT · 10M+ users</em>">Mistral</span>
           </div>
           <div class="aa-detail-stat">
@@ -2488,6 +2511,16 @@ body.embed-mode { padding: 0 !important; margin: 0 !important; }
       </div>
       <p style="color:#C8CCD4;font-size:0.86rem;line-height:1.55;margin:0">Anthropic signed for the full compute capacity of <strong>SpaceX's Colossus 1</strong> in Memphis (300+ MW), with the deal reportedly extending to interest in space-based compute. The "AI factory" is now fungible enough that competitors will rent it from each other &mdash; compute scarcity beats ideology.</p>
       <span class="stat-source" style="display:block;margin-top:0.45rem">Source: <a href="https://www.cnbc.com/2026/05/06/anthropic-spacex-data-center-capacity.html" target="_blank" rel="noopener" style="color:#E8837C">CNBC, May 6 2026</a></span>
+    </div>
+
+    <!-- May 2026: NVIDIA-IREN - equity-backed AI factory pipeline -->
+    <div class="anim-fade" style="margin:0 0 1.25rem;padding:1rem 1.2rem;background:rgba(118,185,71,0.05);border:1px solid rgba(118,185,71,0.22);border-left:3px solid #76B947;border-radius:10px">
+      <div style="display:flex;align-items:center;gap:0.6rem;margin-bottom:0.4rem;flex-wrap:wrap">
+        <span style="background:rgba(118,185,71,0.18);color:#76B947;padding:0.18rem 0.55rem;border-radius:4px;font-size:0.66rem;font-weight:700;letter-spacing:0.1em">MAY 7 2026</span>
+        <strong style="color:#76B947;font-size:0.92rem;letter-spacing:0.02em">NVIDIA / IREN: 5 GW DSX PIPELINE + EQUITY WARRANT</strong>
+      </div>
+      <p style="color:#C8CCD4;font-size:0.86rem;line-height:1.55;margin:0">NVIDIA and IREN announced a three-part deal: a <strong class="tabnum">$3.4B</strong> five-year managed GPU cloud contract at IREN's Childress, Texas campus; a five-year warrant for NVIDIA to purchase up to <strong class="tabnum">30M</strong> IREN shares at <strong class="tabnum">$70</strong> (about <strong class="tabnum">$2.1B</strong> notional, set above the announcement-day close); and an intent to build up to <strong class="tabnum">5 GW</strong> of DSX-aligned AI factory capacity across IREN's pipeline. The 2 GW <strong>Sweetwater</strong> Texas campus is the flagship (Sweetwater 1 at 1.4 GW energized on ERCOT May 1, Sweetwater 2 due late 2027). The structural read: NVIDIA is now using equity to anchor preferred infrastructure partners, extending DSX as the reference architecture for AI factory construction.</p>
+      <span class="stat-source" style="display:block;margin-top:0.45rem">Source: <a href="https://nvidianews.nvidia.com/news/nvidia-and-iren-announce-strategic-partnership-to-accelerate-deployment-of-up-to-5-gigawatts-of-ai-infrastructure" target="_blank" rel="noopener" style="color:#76B947">NVIDIA, May 7 2026</a></span>
     </div>
 
     <!-- Apr 2026: Microsoft / OpenAI partnership rebalance — distribution & cloud lock-in -->
@@ -3271,9 +3304,20 @@ body.embed-mode { padding: 0 !important; margin: 0 !important; }
       </div>
 
       <p style="color:#C8CCD4;font-size:0.85rem;line-height:1.55;max-width:760px;margin:1.25rem auto 0;text-align:center">
-        <strong style="color:#4ECDC4">Subscription caps upside; usage scales with workload.</strong> Anthropic ARPU $16.20/mo (vs OpenAI $2.20, Google $1.10) — premium per-token customers, not free-tier reach. Per-token revenue grows with task volume and compute intensity; flat subs mis-price heavy users. Subscription remains a useful on-ramp/distribution bundle, but the economic engine is usage / work performed.
+        <strong style="color:#4ECDC4">Subscription caps upside; usage scales with workload.</strong> Anthropic ARPU $16.20/mo (vs OpenAI $2.20, Google $1.10) - premium per-token customers, not free-tier reach. Per-token revenue grows with task volume and compute intensity; flat subs mis-price heavy users. The cleaner read: outcome pricing is the strategic direction, hybrid usage/per-token is the current commercial reality, and subscriptions increasingly function as a revenue floor inside hybrid models rather than the value-capture engine.
       </p>
-      <span class="stat-source" style="display:block;text-align:center;margin-top:0.75rem">Source: Counterpoint Research (Apr 2026), Anthropic disclosures, Perplexity (Apr 2026), OpenAI (Feb 2026), Statista (Meta ARPU 2025), Netflix Q4 2025 earnings</span>
+      <span class="stat-source" style="display:block;text-align:center;margin-top:0.75rem">Source: Counterpoint Research (Apr 2026), Anthropic disclosures, Perplexity (Apr 2026), OpenAI (Feb 2026), Statista (Meta ARPU 2025), Netflix Q4 2025 earnings, <a href="https://www.withorb.com/blog/2026-state-of-ai-agent-pricing-models-trends-and-whats-working" target="_blank" rel="noopener" style="color:#A0A8BC">Orb (2026 State of AI Agent Pricing)</a></span>
+    </div>
+
+    <!-- May 2026 - Coatue + Orb: services-as-software direction, hybrid pricing reality -->
+    <div class="anim-fade" style="margin:1.75rem auto 0;max-width:840px;padding:1.1rem 1.3rem;background:linear-gradient(135deg,rgba(245,197,66,0.06),rgba(78,205,196,0.04));border:1px solid rgba(245,197,66,0.22);border-left:3px solid #F5C542;border-radius:10px">
+      <div style="display:flex;align-items:center;gap:0.55rem;margin-bottom:0.4rem;flex-wrap:wrap">
+        <span style="background:rgba(245,197,66,0.18);color:#F5C542;padding:0.16rem 0.5rem;border-radius:4px;font-size:0.64rem;font-weight:700;letter-spacing:0.1em">MAY 2026 &middot; COATUE + ORB</span>
+        <strong style="color:#F5C542;font-size:0.92rem;letter-spacing:0.02em">SERVICES AS SOFTWARE: DIRECTION VS COMMERCIAL REALITY</strong>
+      </div>
+      <p style="color:#C8CCD4;font-size:0.86rem;line-height:1.6;margin:0 0 0.4rem"><strong style="color:#E8E9ED">Coatue's framing:</strong> AI is re-pricing software from per-seat (selling tools) to per-output (selling work), with a projected TAM expansion from a ~<span class="tabnum">$0.2T</span> software market into a ~<span class="tabnum">$5.5T</span> "services-as-software" paradigm. The single most telling number in their May 2026 take: only <strong class="tabnum" style="color:#F5C542">3.8%</strong> of traditional SaaS spend is consumption-based eleven months into the AI era. Narrative is racing ahead of commercial reality.</p>
+      <p style="color:#C8CCD4;font-size:0.86rem;line-height:1.6;margin:0"><strong style="color:#E8E9ED">Orb's billing-system view:</strong> most production agent companies are on <strong>hybrid pricing</strong> today, a subscription floor plus usage and outcome components, not pure outcome billing. Outcome pricing remains the strategic direction; hybrid usage is current commercial reality; subscriptions are increasingly the floor inside hybrid models, not the engine.</p>
+      <span class="stat-source" style="display:block;margin-top:0.45rem">Source: <a href="https://www.coatue.com/c/takes" target="_blank" rel="noopener" style="color:#F5C542">Coatue C:\Takes</a> &middot; <a href="https://www.withorb.com/blog/2026-state-of-ai-agent-pricing-models-trends-and-whats-working" target="_blank" rel="noopener" style="color:#F5C542">Orb, 2026 State of AI Agent Pricing</a></span>
     </div>
 
     <!-- ═══ CLOSING CALLOUT ═══ -->
@@ -4293,11 +4337,11 @@ body.embed-mode { padding: 0 !important; margin: 0 !important; }
     <!-- May 2026 — Pentagon classified-AI vendor list: frontier models become national-security infra -->
     <div class="anim-fade" style="margin:2rem 0;padding:1.5rem 1.75rem;background:linear-gradient(135deg, rgba(160,168,188,0.06), rgba(74,144,217,0.04));border:1px solid rgba(160,168,188,0.22);border-left:3px solid #A0A8BC;border-radius:14px">
       <div style="display:flex;align-items:center;gap:0.6rem;margin-bottom:0.75rem;flex-wrap:wrap">
-        <span style="background:rgba(160,168,188,0.2);color:#C8CCD4;padding:0.2rem 0.6rem;border-radius:4px;font-size:0.68rem;font-weight:700;letter-spacing:0.1em">MAY 1 2026 &middot; PENTAGON</span>
+        <span style="background:rgba(160,168,188,0.2);color:#C8CCD4;padding:0.2rem 0.6rem;border-radius:4px;font-size:0.68rem;font-weight:700;letter-spacing:0.1em">MAY 1 2026 &middot; PENTAGON IL6 / IL7</span>
         <strong style="color:#E8E9ED;font-size:0.98rem;letter-spacing:0.01em">FRONTIER MODELS BECOME NATIONAL-SECURITY INFRASTRUCTURE</strong>
       </div>
-      <p style="color:#C8CCD4;font-size:0.88rem;line-height:1.6;margin:0 0 0.75rem">DoD signed formal agreements with <strong style="color:#E8E9ED">8 vendors</strong> &mdash; <strong>SpaceX, OpenAI, Google, NVIDIA, Reflection, Microsoft, AWS, and Oracle</strong> &mdash; to deploy frontier AI on classified networks for lawful operational use. <strong style="color:#E8837C">Anthropic was excluded</strong> amid an ongoing supply-chain-risk dispute. The geopolitical map of the AI stack now sits inside the procurement diagrams of the world's largest customer for compute &mdash; safety posture and supply-chain stance have become go-to-market constraints, not just brand choices.</p>
-      <span class="stat-source" style="display:block">Source: <a href="https://defensescoop.com/2026/05/01/dod-expands-classified-ai-work-with-8-companies-excluding-anthropic/" target="_blank" rel="noopener" style="color:#A0A8BC">DefenseScoop, May 1 2026</a></span>
+      <p style="color:#C8CCD4;font-size:0.88rem;line-height:1.6;margin:0 0 0.75rem">The Department of War signed agreements with <strong style="color:#E8E9ED">eight vendors</strong> (<strong>OpenAI, Google, NVIDIA, Microsoft, AWS, SpaceX, Oracle, and Reflection AI</strong>) to deploy frontier AI on <strong>IL6 (Secret)</strong> and <strong>IL7 (most sensitive compartmented)</strong> networks via the Pentagon's <strong>GenAI.mil</strong> platform (1.3M+ DoD personnel). Vendors agreed to the Pentagon's "all lawful use" standard, and the Pentagon explicitly framed the list as a diversity-of-supply move that includes open-source weights alongside proprietary models. Brookings put DoD's potential AI contract value at <strong class="tabnum">$90.7B</strong> in 2026, about <strong class="tabnum">98.9%</strong> of all federal AI spending. <strong style="color:#E8837C">Anthropic was excluded</strong> amid an ongoing dispute traced in earlier reporting; we are not re-attributing causality here. Net effect: the geopolitical map of the AI stack now sits inside the procurement diagrams of the world's largest customer for compute. Safety posture and supply-chain stance have become go-to-market constraints, not just brand choices.</p>
+      <span class="stat-source" style="display:block">Source: <a href="https://www.war.gov/News/Releases/Release/Article/4475177/classified-networks-ai-agreements/" target="_blank" rel="noopener" style="color:#A0A8BC">Department of War, May 1 2026</a> &middot; <a href="https://defensescoop.com/2026/05/01/dod-expands-classified-ai-work-with-8-companies-excluding-anthropic/" target="_blank" rel="noopener" style="color:#A0A8BC">DefenseScoop, May 1 2026</a> &middot; <a href="https://www.brookings.edu/articles/where-does-federal-ai-spending-stand-in-2026/" target="_blank" rel="noopener" style="color:#A0A8BC">Brookings, May 18 2026</a></span>
     </div>
 
     <!-- ═══ SOVEREIGN AI PLAYERS — EXPANDED ═══ -->
@@ -5138,7 +5182,7 @@ body.embed-mode { padding: 0 !important; margin: 0 !important; }
           <span style="background:rgba(124,77,255,0.15);color:#7C4DFF;padding:0.2rem 0.6rem;border-radius:4px;font-size:0.68rem;font-weight:700;letter-spacing:0.08em">FROM THE MODEL WARS + AGENTS</span>
         </div>
         <h3 style="color:#E8E9ED;font-size:1.05rem;font-weight:700;margin:0 0 0.6rem;line-height:1.3">Open Source Becomes the Default Stack</h3>
-        <p style="color:#A0A8BC;font-size:0.85rem;line-height:1.55;margin:0">DeepSeek, Llama, Qwen, OpenClaw &mdash; open-weight models now match or beat closed ones on most benchmarks. Baidu is open-sourcing Ernie. NVIDIA called OpenClaw &ldquo;as big as Linux.&rdquo; By 2030, the majority of production AI runs on open-weight foundations. The durable value shifts from model weights to fine-tuning, orchestration, context engineering, and application-layer moats.</p>
+        <p style="color:#A0A8BC;font-size:0.85rem;line-height:1.55;margin:0">DeepSeek, Llama, Qwen, OpenClaw &mdash; open-weight models look close to closed ones on public benchmarks; held-out evals (NIST/CAISI on DeepSeek V4 Pro, May 2026) still show a gap of roughly 8 months at the frontier, with real cost-efficiency wins for PRC labs. Baidu is open-sourcing Ernie. NVIDIA called OpenClaw &ldquo;as big as Linux.&rdquo; By 2030, the majority of production AI is likely to run on open-weight foundations. The durable value shifts from model weights to fine-tuning, orchestration, context engineering, and application-layer moats.</p>
       </div>
 
     </div>

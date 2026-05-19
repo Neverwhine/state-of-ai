@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>What's New &mdash; DVC State of AI Patch Notes &middot; May 13, 2026</title>
+<title>What's New &mdash; DVC State of AI Patch Notes &middot; May 19, 2026</title>
 <meta name="description" content="Patch notes for the DVC State of AI report &mdash; what changed in the last week and where it shows up in the main report.">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
@@ -157,14 +157,90 @@
 
 <header class="wn-hero">
   <span class="wn-eyebrow">DVC State of AI &middot; Patch notes</span>
-  <h1 class="wn-title">What's new<span class="wn-date-badge">May 13, 2026</span></h1>
-  <p class="wn-intro">This week's lens: the frontier is reorganizing into unstable coalitions. OpenAI loosened its Microsoft tether and is moving multi-cloud; Anthropic widened its compute base (Amazon, Google/Broadcom, Microsoft/NVIDIA, and now SpaceX) while SpaceX/xAI circles Cursor, one of the distribution surfaces that helped make Claude economically powerful. The main report's structure and Healthcare AI section are unchanged in this run &mdash; only the Incumbents framing, dated callouts, and stale numerics were touched.</p>
-  <p class="wn-meta-line">Updated May 13, 2026 &middot; primary sources cited per item &middot; older entries below the May 13 block</p>
+  <h1 class="wn-title">What's new<span class="wn-date-badge">May 19, 2026</span></h1>
+  <p class="wn-intro">This week's lens: agents became infrastructure. Microsoft and AWS shipped the governance and toolkit layers that turn agent platforms into managed enterprise products. NIST/CAISI's first independent eval of DeepSeek V4 Pro shows the open-weight gap is real on held-out benchmarks (roughly 8 months behind US frontier) while cost efficiency holds up. The Pentagon's IL6/IL7 vendor list and NVIDIA's equity-backed IREN deal complete the picture: frontier AI is now a national-security supply chain and an AI-factory build-out priced in gigawatts. The main report's structure and the new Healthcare AI section are untouched.</p>
+  <p class="wn-meta-line">Updated May 19, 2026 &middot; primary sources cited per item &middot; older entries below the May 19 block</p>
 </header>
 
 <main class="wn-list-wrap">
 
-  <h2 style="font-size:0.78rem;letter-spacing:0.18em;text-transform:uppercase;color:#F5C542;margin:0 0 0.85rem;padding-top:0.25rem;font-weight:700">May 13, 2026 &middot; this week</h2>
+  <h2 style="font-size:0.78rem;letter-spacing:0.18em;text-transform:uppercase;color:#F5C542;margin:0 0 0.85rem;padding-top:0.25rem;font-weight:700">May 19, 2026 &middot; this week</h2>
+  <div class="wn-list" style="margin-bottom:2.25rem">
+
+    <!-- New healthcare section reference -->
+    <article class="wn-card" style="--wn-accent:#4ECDC4">
+      <span class="wn-card-tag">Report</span>
+      <h2 class="wn-card-headline">New AI in Healthcare section now in the report</h2>
+      <p class="wn-card-body">The report now includes a standalone AI in Healthcare section that treats healthcare as value chains, reimbursement paths, incentives, liability, regulation, and data flows, not just "models for clinicians." The section itself was not edited in this run; mentioned here so readers know where to find it.</p>
+      <div class="wn-card-meta">
+        <span class="wn-card-updates">Updates: <strong>Healthcare AI</strong></span>
+        <span class="wn-card-jump"><a href="index.html#sec-healthcare-ai">Jump to section &rarr;</a></span>
+      </div>
+    </article>
+
+    <!-- CAISI DeepSeek V4 Pro -->
+    <article class="wn-card" style="--wn-accent:#E8837C">
+      <span class="wn-card-tag">Models &amp; Evals</span>
+      <h2 class="wn-card-headline">NIST/CAISI eval: DeepSeek V4 Pro about 8 months behind US frontier on held-out benchmarks</h2>
+      <p class="wn-card-body">CAISI's independent evaluation used non-public ("uncontaminated") benchmarks across cyber, software engineering, sciences, abstract reasoning, and math. Public-style evals look close to the US frontier; CAISI's held-out evals do not. V4 Pro lands roughly comparable to GPT-5 (released about 8 months earlier), with an IRT Elo near 800 versus GPT-5.5 around 1260. The cost-efficiency story holds: V4 Pro was cheaper than GPT-5.4 mini on 5 of 7 benchmarks. The cleanest framing: public evals look close, held-out evals show a gap, cost efficiency is real.</p>
+      <div class="wn-card-meta">
+        <span class="wn-card-updates">Updates: <strong>Model Wars</strong>, <strong>Geopolitics</strong></span>
+        <span class="wn-card-jump"><a href="index.html#sec-11">Jump to section &rarr;</a></span>
+        <span class="wn-card-source">Source: <a href="https://www.nist.gov/news-events/news/2026/05/caisi-evaluation-deepseek-v4-pro" target="_blank" rel="noopener">NIST/CAISI, May 2026</a></span>
+      </div>
+    </article>
+
+    <!-- Agents became infrastructure -->
+    <article class="wn-card" style="--wn-accent:#7C4DFF">
+      <span class="wn-card-tag">Agents</span>
+      <h2 class="wn-card-headline">Agents became infrastructure: Microsoft Agent 365 GA, AWS Agent Toolkit, Anthropic managed-agent features</h2>
+      <p class="wn-card-body">Microsoft Agent 365 went GA at $15/user/month as the enterprise governance and control plane for agents (discovery of shadow agents, identity, observability, policy). AWS made the Agent Toolkit and AWS MCP Server generally available, treating agent tooling as a first-class AWS interface alongside the SDKs. Anthropic shipped Dreaming (cross-session memory consolidation in research preview), Outcomes (rubric-graded loops), and Multi-agent Orchestration on its managed-agent platform. A2A protocol crossed 150+ organizations with Google, Microsoft, and AWS integration. Net: there is now a real "agent control plane" layer above models.</p>
+      <div class="wn-card-meta">
+        <span class="wn-card-updates">Updates: <strong>Agent Revolution</strong>, <strong>Agent Stack</strong></span>
+        <span class="wn-card-jump"><a href="index.html#sec-4">Jump to section &rarr;</a></span>
+        <span class="wn-card-source">Source: <a href="https://www.microsoft.com/en-us/security/blog/2026/05/01/microsoft-agent-365-now-generally-available-expands-capabilities-and-integrations/" target="_blank" rel="noopener">Microsoft, May 1 2026</a> &middot; <a href="https://aws.amazon.com/about-aws/whats-new/2026/05/agent-toolkit/" target="_blank" rel="noopener">AWS, May 6 2026</a> &middot; <a href="https://venturebeat.com/technology/anthropic-introduces-dreaming-a-system-that-lets-ai-agents-learn-from-their-own-mistakes" target="_blank" rel="noopener">VentureBeat, May 12 2026</a> &middot; <a href="https://www.linuxfoundation.org/press/a2a-protocol-surpasses-150-organizations-lands-in-major-cloud-platforms-and-sees-enterprise-production-use-in-first-year" target="_blank" rel="noopener">Linux Foundation, Apr 9 2026</a></span>
+      </div>
+    </article>
+
+    <!-- Business models correction -->
+    <article class="wn-card" style="--wn-accent:#F5C542">
+      <span class="wn-card-tag">Business Models</span>
+      <h2 class="wn-card-headline">Outcome pricing is the direction; hybrid usage pricing is the reality</h2>
+      <p class="wn-card-body">Coatue's "services as software" framing reads AI as a re-pricing of the software stack from per-seat to per-output, with the cited <strong>3.8%</strong> consumption share of traditional SaaS as the gap between narrative and commercial reality. Orb's State of AI Agent Pricing reinforces the same point from a billing-system vantage: most production agent companies are on hybrid pricing today (subscription floor plus usage and outcome components). Outcome pricing is the strategic direction, hybrid/usage pricing is current commercial reality, and subscriptions are increasingly used as a revenue floor inside hybrid models rather than as the value-capture engine.</p>
+      <div class="wn-card-meta">
+        <span class="wn-card-updates">Updates: <strong>Business Models</strong></span>
+        <span class="wn-card-jump"><a href="index.html#sec-9">Jump to section &rarr;</a></span>
+        <span class="wn-card-source">Source: <a href="https://www.coatue.com/c/takes" target="_blank" rel="noopener">Coatue C:\Takes, May 15 2026</a> &middot; <a href="https://www.withorb.com/blog/2026-state-of-ai-agent-pricing-models-trends-and-whats-working" target="_blank" rel="noopener">Orb, 2026</a></span>
+      </div>
+    </article>
+
+    <!-- DoD IL6/IL7 update -->
+    <article class="wn-card" style="--wn-accent:#A0A8BC">
+      <span class="wn-card-tag">Geopolitics</span>
+      <h2 class="wn-card-headline">DoD IL6/IL7 classified AI agreements: eight named vendors, GenAI.mil platform</h2>
+      <p class="wn-card-body">The Department of War's May 1 release named eight vendors cleared for IL6 (Secret) and IL7 (most sensitive compartmented) deployment on GenAI.mil: <strong>OpenAI, Google, NVIDIA, Microsoft, AWS, SpaceX, Oracle, and Reflection AI</strong>. The Pentagon framed this as a diversity-of-supply move including open-source weights. Brookings put DoD's potential AI contract value at <strong class="tabnum">$90.7B</strong> in 2026 and <strong class="tabnum">98.9%</strong> of all federal AI spending. The exclusion narrative around Anthropic is covered separately in earlier reporting; we are not re-attributing causality here.</p>
+      <div class="wn-card-meta">
+        <span class="wn-card-updates">Updates: <strong>Geopolitics</strong></span>
+        <span class="wn-card-jump"><a href="index.html#sec-11">Jump to section &rarr;</a></span>
+        <span class="wn-card-source">Source: <a href="https://www.war.gov/News/Releases/Release/Article/4475177/classified-networks-ai-agreements/" target="_blank" rel="noopener">Department of War, May 1 2026</a></span>
+      </div>
+    </article>
+
+    <!-- NVIDIA-IREN -->
+    <article class="wn-card" style="--wn-accent:#76B947">
+      <span class="wn-card-tag">AI Factories</span>
+      <h2 class="wn-card-headline">NVIDIA / IREN: 5 GW DSX pipeline + equity warrant for up to 30M IREN shares</h2>
+      <p class="wn-card-body">NVIDIA and IREN announced a multi-part deal: a <strong class="tabnum">$3.4B</strong> five-year managed GPU cloud contract at IREN's Childress, Texas campus; a five-year warrant for NVIDIA to buy up to <strong class="tabnum">30M</strong> IREN shares at <strong class="tabnum">$70</strong> (about <strong class="tabnum">$2.1B</strong> notional); and an intent to build up to <strong class="tabnum">5 GW</strong> of DSX-aligned AI factory capacity across IREN's pipeline, with the 2 GW Sweetwater campus on the Texas grid as the flagship. The structural read: NVIDIA is now using equity to anchor preferred infrastructure partners, extending DSX as the reference architecture for AI factory construction.</p>
+      <div class="wn-card-meta">
+        <span class="wn-card-updates">Updates: <strong>$700B Sprint</strong></span>
+        <span class="wn-card-jump"><a href="index.html#sec-7">Jump to section &rarr;</a></span>
+        <span class="wn-card-source">Source: <a href="https://nvidianews.nvidia.com/news/nvidia-and-iren-announce-strategic-partnership-to-accelerate-deployment-of-up-to-5-gigawatts-of-ai-infrastructure" target="_blank" rel="noopener">NVIDIA, May 7 2026</a></span>
+      </div>
+    </article>
+
+  </div>
+
+  <h2 style="font-size:0.78rem;letter-spacing:0.18em;text-transform:uppercase;color:#A0A8BC;margin:0 0 0.85rem;font-weight:700">May 13, 2026 &middot; previous patch notes</h2>
   <div class="wn-list" style="margin-bottom:2.25rem">
 
     <!-- A) Healthcare AI section note -->
