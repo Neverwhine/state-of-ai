@@ -27,7 +27,9 @@
     anthropic_health:'https://www.anthropic.com/solutions/healthcare-life-sciences',
     palantir_r1:'https://investors.palantir.com/news-details/2025/R1-Launches-R37-AI-Lab-with-Palantir/default.aspx',
     aha_telehealth:'https://www.aha.org/aha-center-health-innovation-market-scan/2025-02-04-behavioral-health-visits-surpass-primary-care',
-    adentris:   'https://www.adentris.com/'
+    adentris:   'https://www.adentris.com/',
+    wolterskluwer:'https://www.wolterskluwer.com/en/expert-insights/2026-future-ready-healthcare',
+    hklaw_states:'https://www.hklaw.com/en/insights/publications/2026/05/states-continue-efforts-to-regulate-ai-in-healthcare'
   };
 
   var headlineStats = [
@@ -1991,7 +1993,31 @@
       stat: '66.4M behavioral vs 62.8M PCP visits',
       body: 'Among commercially insured patients, behavioral health visits surpassed primary care in 2024 (66.4M vs 62.8M); behavioral health was 67% of telehealth encounters. Patient events are no longer just acute clinical episodes.',
       source_label: 'AHA Market Scan / Trilliant Health',
-      source_url: 'https://www.aha.org/aha-center-health-innovation-market-scan/2025-02-04-behavioral-health-visits-surpass-primary-care' }
+      source_url: 'https://www.aha.org/aha-center-health-innovation-market-scan/2025-02-04-behavioral-health-visits-surpass-primary-care' },
+    { id: 'cl_patient_pressure',
+      group: 'pg_prevention',
+      tag: 'Patient-side adoption',
+      title: 'Patients bring AI into the appointment',
+      stat: '52% research conditions · 54% check drug interactions',
+      body: 'Adoption pressure is rising from the demand side: 52% of patients use AI to research conditions or diagnoses and 54% use it to look up side effects or drug interactions. 60% of clinicians now spend appointment time reviewing AI-generated information patients bring in. The system has to respond before reimbursement is solved.',
+      source_label: 'Wolters Kluwer — Future Ready Healthcare 2026',
+      source_url: SRC.wolterskluwer },
+    { id: 'cl_validation_burden',
+      group: 'pg_care',
+      tag: 'Validation burden',
+      title: 'Expert-in-the-loop is the clinical default',
+      stat: '77% of clinicians validate AI output',
+      body: 'AI does not remove the clinician; it adds a verification step. 77% of doctors and nurses always or often validate AI-generated health information, and 92% of doctors and 90% of nurses say expert-in-the-loop validation is important for clinical content. Validation cost is the real adoption gate inside the care loop.',
+      source_label: 'Wolters Kluwer — Future Ready Healthcare 2026',
+      source_url: SRC.wolterskluwer },
+    { id: 'cl_state_rules',
+      group: 'pg_financial',
+      tag: 'State regulation',
+      title: 'Healthcare AI is a set of regulated loops',
+      stat: 'Guardrails on one side · sandboxes on the other',
+      body: 'States are setting market structure faster than federal rules. Alabama, Indiana, Utah, Washington, Maryland, and Georgia regulate AI in insurer prior authorization, claims denials, downcoding, disclosure, and human review. Maine bars AI from therapeutic communications or treatment decisions in mental health and requires consent for ambient listening; Arizona requires informed consent for AI in behavioral health. At the same time, supervised sandboxes (Utah AI Policy Act — including autonomous renewal of certain routine chronic prescriptions, plus Delaware and Texas) create a where-AI-can-decide pathway. Every workflow runs through a different liability owner, reimbursement path, and state rule set.',
+      source_label: 'Holland & Knight — States regulate AI in healthcare',
+      source_url: SRC.hklaw_states }
   ];
 
   var sources = [
@@ -2008,7 +2034,9 @@
     { label: 'Anthropic — Healthcare & life sciences',   url: SRC.anthropic_health },
     { label: 'Palantir IR — R1 R37 AI Lab',              url: SRC.palantir_r1 },
     { label: 'AHA Market Scan — behavioral vs primary care', url: SRC.aha_telehealth },
-    { label: 'Adentris (real-time medical documentation AI)', url: SRC.adentris }
+    { label: 'Adentris (real-time medical documentation AI)', url: SRC.adentris },
+    { label: 'Wolters Kluwer — Future Ready Healthcare 2026', url: SRC.wolterskluwer },
+    { label: 'Holland & Knight — states regulate AI in healthcare', url: SRC.hklaw_states }
   ];
 
   root.HEALTHCARE_DATA = {
