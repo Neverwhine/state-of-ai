@@ -21,11 +21,11 @@
       ebitda: 5,
       ebitdaLabel: '0-10% (near break-even)',
       comps: [
+        { name: 'Harvey',        detail: '$11B · ~$300M ARR' },
+        { name: 'Legora',        detail: '$5.55B · 800+ customers' },
         { name: 'ServiceTitan',  detail: 'NASDAQ: TTAN' },
         { name: 'ServiceNow Otto', detail: 'May 2026' },
-        { name: 'Harvey',        detail: '~$3B val' },
-        { name: 'Atlassian Rovo', detail: 'shipped' },
-        { name: 'Agentforce',    detail: 'Salesforce' }
+        { name: 'Agentforce',    detail: 'pay-per-resolution GA' }
       ],
       dvc: [
         { name: 'Avoca',              detail: 'AI comms · SMB services' },
@@ -55,14 +55,15 @@
       ebitda: -15,
       ebitdaLabel: 'Negative (scaling)',
       comps: [
-        { name: 'Sierra',     detail: '$15.8B · May 2026' },
-        { name: 'Decagon',    detail: '$4.5B · Jan 2026' },
+        { name: 'Sierra',     detail: '$15.8B / ~$200M ARR = ~79×' },
+        { name: 'Decagon',    detail: '$4.5B / ~$35M = ~128×' },
+        { name: 'Lovable',    detail: '$500M ARR · 146 employees' },
         { name: 'Crescendo',  detail: 'Acquired PartnerHero' },
-        { name: 'EvenUp',     detail: '$2B+ · demand letters' },
-        { name: 'Lovable',    detail: '$400M ARR' }
+        { name: 'EvenUp',     detail: '$2B+ · demand letters' }
       ],
       dvc: [
-        { name: 'Doctronic',          detail: 'AI medical consults' },
+        { name: 'Higgsfield',         detail: 'In talks at $5B · >$500M run-rate' },
+        { name: 'Doctronic',          detail: 'AI medical consults · acquired Summer Health' },
         { name: 'Howie AI',           detail: 'EA · scheduling' },
         { name: 'tely.ai',            detail: 'B2B content marketing' },
         { name: 'Unreal Labs',        detail: 'Performance marketing' },
@@ -88,7 +89,7 @@
       ebitda: 35,
       ebitdaLabel: '30-40% target',
       comps: [
-        { name: 'Dwelly',     detail: 'Property mgmt · £69M', dvc: true },
+        { name: 'Dwelly',     detail: 'Property mgmt · $95M equity + debt', dvc: true },
         { name: 'Crete',      detail: 'Accounting · $300M+ ARR' },
         { name: 'Long Lake',  detail: 'HOA · 18+ acquisitions' },
         { name: 'Eudia',      detail: 'In-house legal' },
@@ -96,11 +97,44 @@
         { name: 'Metropolis', detail: 'Parking · $1.6B' }
       ],
       dvc: [
-        { name: 'Dwelly', detail: 'UK property management',         link: 'fleetworks' },
+        { name: 'Dwelly', detail: 'UK property mgmt · $95M equity + debt', link: 'fleetworks' },
         { name: 'Fura',   detail: 'Digital freight broker · uses FleetWorks', link: 'fleetworks' }
       ]
     }
   ];
+
+  // ── Aug 3, 2026 context bands ──
+  // Two things changed the competitive picture for the angles without changing
+  // the angles themselves: the rollup arbitrage is now a funded contest, and the
+  // model layer entered implementation services directly.
+  const CONTEXT = {
+    rollupContest: {
+      tag: 'THE ROLLUP ARBITRAGE IS NOW A FUNDED CONTEST',
+      body: 'Thrive Holdings moved on Jul 7, 2026 to raise ~<strong>$2B</strong> from SoftBank, Altimeter and D1 — with <strong>OpenAI engineers embedded</strong> in portfolio companies. General Catalyst has <strong>$1.5B</strong> allocated to its Creation Strategy. Against ~$2T of PE/VC dry powder chasing the same targets, the 30&ndash;40% EBITDA arbitrage is no longer under-discovered; the edge is sourcing and operating speed at the small end.'
+    },
+    modelLayerServices: {
+      tag: 'MODEL LAYER ENTERS SERVICES',
+      body: 'Anthropic launched <strong>Ode with Anthropic</strong>, a <strong>$1.5B</strong> AI-implementation joint venture with Blackstone, Hellman &amp; Friedman and Goldman Sachs, staffed with <strong>100 engineers</strong>. The services-capture thesis now has a competitor that owns the model.'
+    },
+    disclosure: 'Multiples are computed on company-disclosed, unaudited ARR. Margin bands are unchanged from the May 2026 edition.'
+  };
+
+  function contextHTML(compact) {
+    const cls = compact ? ' aa-context--compact' : '';
+    return `
+      <div class="aa-context${cls}">
+        <div class="aa-context-card aa-context-card--rollup">
+          <span class="aa-context-tag">${CONTEXT.rollupContest.tag}</span>
+          <p class="aa-context-body">${CONTEXT.rollupContest.body}</p>
+        </div>
+        <div class="aa-context-card aa-context-card--model">
+          <span class="aa-context-tag">${CONTEXT.modelLayerServices.tag}</span>
+          <p class="aa-context-body">${CONTEXT.modelLayerServices.body}</p>
+        </div>
+      </div>
+      <p class="aa-context-note">${CONTEXT.disclosure}</p>
+    `;
+  }
 
   // SVG glyphs for column headers
   const GLYPHS = {
@@ -205,6 +239,7 @@
           </article>
         `).join('')}
       </div>
+      ${contextHTML(false)}
       <p class="aa-footer">
         <strong>Pick one.</strong> The market structure picks the strategy &mdash; not the founder.
         <span class="aa-footer-note">Inside DVC: <strong>Fura</strong> (rollup) uses <strong>FleetWorks</strong> (SaaS) for its AI voice layer &mdash; the portfolio compounds.</span>
@@ -243,13 +278,14 @@
           </article>
         `).join('')}
       </div>
+      ${contextHTML(true)}
       <p class="aa-stage-footer">Market structure picks the strategy — not the founder. <span class="aa-stage-footer-note">Full company map in the report.</span></p>
     `;
     el.dataset.aaStageRendered = '1';
   }
 
   // Expose globally so both index.html and slides.html can call it.
-  window.ATTACK_ANGLES = { ANGLES, render, renderStage };
+  window.ATTACK_ANGLES = { ANGLES, CONTEXT, render, renderStage };
 
   // Auto-render if a default container is present in the page.
   function autoRender() {

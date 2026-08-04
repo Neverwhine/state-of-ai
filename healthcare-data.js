@@ -29,7 +29,44 @@
     aha_telehealth:'https://www.aha.org/aha-center-health-innovation-market-scan/2025-02-04-behavioral-health-visits-surpass-primary-care',
     adentris:   'https://www.adentris.com/',
     wolterskluwer:'https://www.wolterskluwer.com/en/expert-insights/2026-future-ready-healthcare',
-    hklaw_states:'https://www.hklaw.com/en/insights/publications/2026/05/states-continue-efforts-to-regulate-ai-in-healthcare'
+    hklaw_states:'https://www.hklaw.com/en/insights/publications/2026/05/states-continue-efforts-to-regulate-ai-in-healthcare',
+
+    // ── Added in the August 3, 2026 refresh ──
+    pwc_axios:      'https://www.axios.com/2026/06/12/health-ai-more-expensive-costs',
+    pwc_fortune:    'https://fortune.com/2026/06/12/ai-making-medical-bills-higher/',
+    coding_techtarget:'https://www.techtarget.com/revcyclemanagement/news/366644824/Revenue-cycle-AI-IDR-disputes-drive-9-medical-cost-trend',
+    kff_premiums:   'https://medicalxpress.com/news/2026-07-premium-enrollment-sags.html',
+    kocher_nejm:    'https://schaeffer.usc.edu/research/thinking-about-the-impact-of-ai-on-u-s-health-care-costs-and-spending-growth/',
+    wiser_stat:     'https://www.statnews.com/2026/07/16/medicare-ai-prior-authorization-pilot-wiser-senate-vote/',
+    wiser_cms:      'https://www.cms.gov/priorities/innovation/files/wiser-provider-supplier-guide.pdf',
+    murphy_bill:    'https://murphy.house.gov/media/press-releases/murphy-co-introduces-bipartisan-legislation-prevent-ai-increasing-prior',
+    epa_deadline:   'https://altair-health.com/news/2026-07-29',
+    cms_year2:      'https://www.healthitanswers.net/one-year-anniversary-of-cms-health-tech-ecosystem-initiative/',
+    cms_categories: 'https://www.cms.gov/health-technology-ecosystem/categories',
+    cohere_epa:     'https://www.prnewswire.com/news-releases/cohere-health-endorses-cms-electronic-prior-authorization-initiative-to-accelerate-patient-care-access-302776553.html',
+    openai_health:  'https://openai.com/index/health-in-chatgpt/',
+    winters_reuters:'https://www.reuters.com/legal/government/chatgpts-advice-kept-man-seeking-medical-treatment-dangerous-condition-lawsuit-2026-07-22/',
+    overdose_reuters:'https://www.reuters.com/legal/litigation/openai-faces-lawsuit-california-court-claiming-chatbot-gave-advice-that-led-2026-05-12/',
+    noharm_fortune: 'https://fortune.com/2026/07/29/new-medical-ai-study-same-flaw-openevidence-openai-anthropic-doximity/',
+    kcl_substitution:'https://www.theregister.com/ai-ml/2026/05/16/one_in_seven_brits_swapped_their_gp_for_chatgpt_study_finds/5240514',
+    ms_hma_agents:  'https://www.microsoft.com/en-us/microsoft-cloud/blog/healthcare/2026/02/12/assessing-healthcares-agentic-ai-readiness-new-research-from-microsoft-and-the-health-management-academy/',
+    blackbook_q2:   'https://blackbookmarketresearch.com/uploads/pdf/2026-AI-Agentic-Healthcare-Administration-Survey-Q2-(4).pdf',
+    crs_genai_fda:  'https://www.everycrsreport.com/reports/IF13245.html',
+    aidoc_bdd:      'https://www.aidoc.com/about/news/aidoc-receives-fda-breakthrough-device-designation-for-ai-that-drafts-radiology-reports/',
+    nhs_10b:        'https://www.england.nhs.uk/2026/07/nhs-accelerates-artificial-intelligence-rollout-to-cut-waiting-times-and-improve-care-for-millions/',
+    jama_scribes:   'https://medicalxpress.com/news/2026-04-ai-scribes-linked-modest-reductions.html',
+    jmir_ed:        'https://pubmed.ncbi.nlm.nih.gov/42391625/',
+    jamia_sim:      'https://academic.oup.com/jamiaopen/article/9/4/ooag101/8726639',
+    jmir_timemotion:'https://medinform.jmir.org/2026/1/e85580',
+    healthpolicy_review:'https://www.mattheneus.com/editorial/pubmed-healthcare-ai-value-claims-2026-07-21',
+    pitchbook_q2:   'https://pitchbook.com/news/reports/q2-2026-healthtech-report-commures-7-billion-raise-headlines-a-slow-quarter',
+    fierce_h1:      'https://www.fiercehealthcare.com/digital-health/digital-health-brought-74b-vc-funding-ai-powered-rebound-fuels-market',
+    xsolis_breach:  'https://www.beckershospitalreview.com/healthcare-information-technology/cybersecurity/1-4-million-patients-7-health-systems-caught-in-ai-company-data-breach/',
+    hhs_ocr:        'https://ocrportal.hhs.gov/ocr/breach/breach_report_hip.jsf',
+    doctronic_summer:'https://www.beckershospitalreview.com/healthcare-information-technology/ai/the-ai-virtual-care-consolidation-wave/',
+    collectly_epic: 'https://www.collectly.co/blog/collectly-ai-agent-for-patient-billing-and-rcm-platform-now-live-on-epic-showroom',
+    collectly_index:'https://aihealthindex.io/vendors/collectly',
+    cohere_auto:    'https://revcycleai.com/blog/cohere-health-90m-series-c/'
   };
 
   var headlineStats = [
@@ -37,7 +74,10 @@
     { label: 'Year-over-year growth',          value: '7.2%',    sub: '2024 final; CMS earlier projected 8.2%', evidence: 'official', src: SRC.nhe },
     { label: 'Per person',                     value: '$15,474', sub: '2024 CMS NHE', evidence: 'official', src: SRC.nhe },
     { label: 'Share of GDP',                   value: '18.0%',   sub: '2024 CMS NHE', evidence: 'official', src: SRC.nhe },
-    { label: 'Healthcare AI spend (survey)',   value: '$1.4B',   sub: 'Menlo 2025',   evidence: 'vc_survey', src: SRC.menlo }
+    { label: 'Healthcare AI spend (survey)',   value: '$1.4B',   sub: 'Menlo 2025',   evidence: 'vc_survey', src: SRC.menlo },
+    // Added Aug 3, 2026. This is the number that reframes the whole section: the
+    // direction of travel on cost is now measured, and it is up.
+    { label: '2027 medical cost trend',        value: '9%',      sub: 'group; 8.5% individual — highest in ~2 decades (PwC 2027)', evidence: 'official', src: SRC.pwc_axios }
   ];
 
   // =====================================================================
@@ -414,12 +454,12 @@
     tt_physician:         { title: 'Physician & clinical services', body: 'Clinics and professional services. Labor-heavy, workflow-heavy, and a major surface for copilots, access, documentation, and billing.' },
     tt_rx:                { title: 'Retail prescription drugs',body: 'Pharmacy-dispensed drugs. The value chain includes manufacturers, pharmacies, wholesalers, PBMs, rebates, formularies, and patient cost-sharing.' },
     tt_clinical_labor:    { title: 'Clinical labor',           body: 'Doctors, nurses, APPs, dentists, therapists, pharmacists, and care teams. AI can augment time and decisions but must fit workflow and liability.' },
-    tt_provider_admin:    { title: 'Provider admin',           body: 'Provider-side coding, billing, scheduling, prior auth, compliance, and collections. The CMS NHE insurance/admin line is ~$371B (7% of NHE); provider+payer admin drag together is ~$800-900B (Commonwealth Fund / JAMA).' },
-    tt_payer_admin:       { title: 'Payer operations',         body: 'Claims, utilization management, payment integrity, customer service, fraud review, and plan administration. The CMS NHE admin line (~$371B) captures insurer overhead only; total addressable admin drag is closer to $800-900B once provider billing complexity is included.' },
+    tt_provider_admin:    { title: 'Provider admin',           body: 'Provider-side coding, billing, scheduling, prior auth, compliance, and collections. The CMS NHE insurance/admin line is ~$371B (7% of NHE); provider+payer admin drag together is ~$800-900B (Commonwealth Fund / JAMA). Read these as MARKET SIZE, never as savings: as of June 2026 ~70% of health plans rank provider AI documentation and coding tools among their top three 2027 cost inflators, and a systematic review of 98 economic evaluations found only 36% showed a clear health-economic preference for AI (44% among high-quality studies), with ZERO economic evaluations of generative AI.' },
+    tt_payer_admin:       { title: 'Payer operations',         body: 'Claims, utilization management, payment integrity, customer service, fraud review, and plan administration. The CMS NHE admin line (~$371B) captures insurer overhead only; total addressable admin drag is closer to $800-900B once provider billing complexity is included. Market size, not savings — the measured 2027 trend is 9% group / 8.5% individual, the highest in nearly two decades.' },
     tt_drugs_biologics:   { title: 'Drugs and biologics',      body: 'Therapeutic product value. AI can move upstream into discovery, trial design, precision medicine, and adherence.' },
     tt_supplies_devices:  { title: 'Supplies and devices',     body: 'Medical supplies, equipment, diagnostics, wearables, dental devices, and DME. AI often enters through signal interpretation and monitoring.' },
     tt_it_data:           { title: 'IT and data',              body: 'EHRs, data warehouses, interoperability, cybersecurity, cloud, and workflow software. A small cost pool but huge control point.' },
-    tt_mlr:               { title: 'Medical loss ratio',       body: 'ACA MLR rules require insurers to spend 80% (individual/small group) or 85% (large group) of premiums on care and quality improvement, capping the margin available from cost-reduction software alone. Provider-side admin savings primarily benefit providers, not insurers.' },
+    tt_mlr:               { title: 'Medical loss ratio',       body: 'ACA MLR rules require insurers to spend 80% (individual/small group) or 85% (large group) of premiums on care and quality improvement, capping the margin available from cost-reduction software alone. Provider-side admin savings primarily benefit providers, not insurers — and that is double-edged: provider-side documentation and coding AI is exactly what payers now name as a top cost inflator, so the provider ROI is real AND is paid for by premiums. ACA insurers proposed a median 14% increase for 2027 across 16 states + DC, several citing increased claim severity.' },
     tt_vbc:               { title: 'Value-based care',         body: 'Payment tied to outcomes, quality, risk, or total cost. It is the bridge from event-driven care to prevention.' }
   };
 
@@ -734,7 +774,7 @@
       stack_ids: ['stack_admin','stack_workflow'],
       buyer_user: 'Provider RCM', value_capture: 'Per-account fee' },
     { id: 'co_collectly',       name: 'Collectly',            group: 'dvc',    role: 'ai-native', layer_id: 'L7b_patient_billing', tag: 'DVC portfolio · AI patient billing',
-      short_description: 'AI patient billing across 3,000+ facilities; $1B+ managed; "Billie" voice/chat agent for out-of-pocket collection.',
+      short_description: 'AI patient billing across 3,000+ facilities; $1B+ managed; "Billie" voice/chat agent for out-of-pocket collection. AUG 2026 UPDATE: went live in Connection Hub on the Epic Showroom on Jul 9, 2026 with a bidirectional Epic integration — 3,000+ facilities, time-to-collect under two weeks (as low as 12.6 days), and 475,000+ patient billing questions resolved by its AI agent across chat, SMS, email and voice (all company-disclosed and unaudited). Context for why this matters: patient responsibility rose from ~5% of provider revenue in 2010 to ~20% today and is projected toward 30% by decade end.',
       money_pool_ids: ['pool_provider_admin'],
       destination_ids: ['dest_hospital','dest_physician'],
       process_step_ids: ['F6','F7'],
@@ -1118,7 +1158,7 @@
       stack_ids: ['stack_ai','stack_workflow'],
       buyer_user: 'Health system / payer', value_capture: 'Enterprise SaaS' },
     { id: 'co_doctronic',       name: 'Doctronic',            group: 'dvc',    role: 'dvc',       layer_id: 'L17_virtual_pcp', tag: 'DVC portfolio · Direct-pay AI doctor',
-      short_description: 'Multi-agent AI physician consultation (UCSF-validated); $40M+ raised; first US AI authorized to issue Rx renewals (Utah supervised pilot, 2025).',
+      short_description: 'Multi-agent AI physician consultation (UCSF-validated); $40M Series B Mar 2026; first US AI authorized to issue Rx renewals (Utah supervised pilot, 2025). AUG 2026 UPDATE: acquired Summer Health on Jul 29, 2026 — buying a library of 100,000+ pediatric text-based patient interactions as training data, and hiring Summer\'s founder/CEO as SVP of Partnerships to lead enterprise and health-plan expansion. Combined platform intended to serve birth through adulthood. Reports 30M+ health encounters over two years at $39/visit (company-disclosed). The same week Included Health agreed to buy Firefly Health, a clinically integrated health plan — AI-native virtual care is buying data, provider networks and payer capability rather than building them.',
       money_pool_ids: ['pool_clinical_labor','pool_provider_admin'],
       destination_ids: ['dest_physician'],
       process_step_ids: ['C2','C3','F1','P1','P5'],
@@ -1917,12 +1957,18 @@
       },
     };
 
+  // Revised Aug 3, 2026. The lead takeaway is now the incentive mechanic, and the
+  // single 10–15 year horizon has been replaced by a two-speed clock.
   var takeaways = [
+    { title: 'AI follows incentives — and in fee-for-service it can raise efficiency AND total spend',
+      copy: 'This is the section\'s thesis. Ambient documentation genuinely saves clinician time (−13 to −16 min/day in a 5-hospital JAMA study). Health plans simultaneously project a 9% group / 8.5% individual 2027 medical cost trend — the highest in nearly two decades — with ~70% ranking provider AI documentation and coding among their top three cost inflators and ~20% calling AI the single biggest. PwC\'s mechanism is not more services but "changes in severity, mix and amount per claim." Efficiency is not a savings thesis unless someone bears risk.' },
     { title: 'Follow the money, then the patient', copy: 'Adoption depends less on technical elegance than on who pays, who uses, and who captures the value.' },
-    { title: 'Admin AI is an arms race', copy: 'The CMS NHE admin line is ~$371B; total addressable admin drag (provider billing + payer ops + clinical documentation) is ~$800-900B per Commonwealth Fund. Prior auth, coding, claims, and RCM are the highest-ROI surfaces, and automation on one side often triggers automation on the other.' },
-    { title: 'Prevention needs a payer', copy: 'Consumer prevention scales through private pay. Systemic prevention requires VBC, employers, Medicare Advantage, ACOs, or CMS reimbursement.' },
-    { title: 'The data layer is shared', copy: 'Care, payment, prevention, research, and admin all compete over the same records, claims, labs, devices, and workflow data.' },
-    { title: 'Near-term wins differ from long-term shift', copy: 'Near-term wins are documentation and admin. The long-term shift is upstream into diagnostics, drug discovery, and continuous prevention.' }
+    { title: 'Admin AI is an arms race — and the admin number is market size, not savings', copy: 'The CMS NHE admin line is ~$371B; total addressable admin drag (provider billing + payer ops + clinical documentation) is ~$800-900B per Commonwealth Fund. Prior auth, coding, claims, and RCM are the highest-ROI surfaces, and automation on one side triggers automation on the other — WISeR survived a 46–50 Senate vote and ePA becomes mandatory Jan 1, 2027. But a systematic review of 98 economic evaluations found only 36% showed a clear economic preference for AI, with zero evaluations of generative AI at all. Treat the drag as the size of the prize, never as the size of the saving.' },
+    { title: 'Two gates, not one: reimbursement decides what gets bought, liability decides what gets deployed', copy: 'The NOHARM benchmark found 76.6% of harmful errors across every tested clinical AI were omissions (not peer-reviewed; disputed), OpenAI was sued for the unauthorized practice of medicine one day before Health in ChatGPT launched, and an AI vendor breach exposed 1.4M patients across seven health systems. Courts have not yet allocated liability among doctor, hospital and vendor.' },
+    { title: 'Two clocks, not one: admin 2–4 years, clinical autonomy 10–15 years', copy: 'Admin moves on regulatory deadlines — ePA mandatory Jan 1, 2027; NHS AI triage to every NHS App user by April 2028. Clinical autonomy moves on evidence and liability — only 3% of health systems have AI agents in live workflows against 43% piloting, 68% of adopters remain pre-scale, and the FDA has authorised zero generative-AI devices for marketing (designations, not clearances).' },
+    { title: 'Prevention needs a payer', copy: 'Consumer prevention scales through private pay. Systemic prevention requires VBC, employers, Medicare Advantage, ACOs, or CMS reimbursement — and measurement alone is not enough: without changes to incentives and market structure, AI will not slow cost growth (Kocher, Zhao & Duffy, NEJM Catalyst). Risk transfer is the binding constraint.' },
+    { title: 'The data layer is shared — and the consumer front door is now a frontier lab', copy: 'Care, payment, prevention, research and admin all compete over the same records, claims, labs, devices and workflow data. As of Jul 23, 2026 OpenAI connects Apple Health, supported hospital records, One Medical and Function Health inside ChatGPT, and 40M users already ask health questions daily. One in seven UK adults have used AI instead of contacting a doctor.' },
+    { title: 'Vendor metrics are company-disclosed; independent numbers are smaller', copy: 'Read 85%-no-human-in-the-loop and 40–65% physician penetration as marketing until audited. The independent measurements are 3% live agent deployment, 13–16 minutes/day of scribe savings, and 72.6 seconds per ED encounter.' }
   ];
 
   // =====================================================================
@@ -2017,7 +2063,130 @@
       stat: 'Guardrails on one side · sandboxes on the other',
       body: 'States are setting market structure faster than federal rules. Alabama, Indiana, Utah, Washington, Maryland, and Georgia regulate AI in insurer prior authorization, claims denials, downcoding, disclosure, and human review. Maine bars AI from therapeutic communications or treatment decisions in mental health and requires consent for ambient listening; Arizona requires informed consent for AI in behavioral health. At the same time, supervised sandboxes (Utah AI Policy Act — including autonomous renewal of certain routine chronic prescriptions, plus Delaware and Texas) create a where-AI-can-decide pathway. Every workflow runs through a different liability owner, reimbursement path, and state rule set.',
       source_label: 'Holland & Knight — States regulate AI in healthcare',
-      source_url: SRC.hklaw_states }
+      source_url: SRC.hklaw_states },
+
+    // ══════════════════════════════════════════════════════════════════
+    //   ADDED IN THE AUGUST 3, 2026 REFRESH
+    //   Core reframing: AI follows incentives — and in fee-for-service it can
+    //   raise efficiency AND total spend. These callouts arm the incentive
+    //   argument with measured evidence instead of assertion.
+    // ══════════════════════════════════════════════════════════════════
+    { id: 'cl_2027_trend',
+      group: 'pg_financial',
+      tag: 'Premiums / cost trend',
+      title: '2027: the bill arrives — and payers name AI',
+      stat: '9% group · 8.5% individual · highest in ~2 decades',
+      body: 'PwC\'s "Medical Cost Trend: Behind the Numbers 2027" (actuaries at 27 US health plans covering 103M+ employer-sponsored and 8M ACA members) projects a 9% group and 8.5% individual medical cost trend for 2027 — the highest in nearly two decades — and ranks provider AI documentation and coding tools as the #1 NEW inflator. About 70% of health plans put AI tools in their top three cost drivers; about 20% call AI the single biggest. PwC\'s mechanism is not more services but "changes in severity, mix and amount per claim." ACA insurers separately proposed a median 14% increase for 2027 across 16 states plus DC, several citing increased claim severity that may reflect providers using AI to find billing codes that maximise payment.',
+      source_label: 'Axios / Fortune on PwC Behind the Numbers 2027; Peterson-KFF via Medical Xpress',
+      source_url: SRC.pwc_axios },
+
+    { id: 'cl_coding_intensity',
+      group: 'pg_financial',
+      tag: 'Measured, not theorized',
+      title: 'Same care, higher-severity code, no more denials',
+      stat: '4% → 12.3% of maternity admissions · +$22M',
+      body: 'This is mechanism-level proof rather than vibes. A Blue Cross Blue Shield analysis found the billing code for acute posthemorrhagic anemia in new mothers jumped from 4% to 12.3% of maternity admissions between 2022 and 2025 while transfusions barely moved — "coding intensity" alone added $22M to maternity spending at the studied hospitals in three years. Blue Health Intelligence tied roughly $2.3B of additional expected spending to AI-enabled documentation and billing. Trilliant Health found increased outpatient coding intensity following AI scribe adoption. A UCSF Health study found AI scribe adoption associated with higher billing units per encounter and per week, and modestly more visits, WITH NO INCREASE IN DENIALS — the cleanest possible statement of the incentive problem.',
+      source_label: 'Fortune / TechTarget on BCBS, Blue Health Intelligence, Trilliant and UCSF',
+      source_url: SRC.pwc_fortune },
+
+    { id: 'cl_incentives_thesis',
+      group: 'pg_financial',
+      tag: 'The incentive thesis',
+      title: 'AI follows incentives — efficiency is not a savings thesis',
+      stat: 'Peer-reviewed: AI likely raises total cost under FFS',
+      body: 'Kocher, Zhao and Duffy in NEJM Catalyst Innovations in Care Delivery (Jul 8, 2026): under the still-dominant fee-for-service model and highly consolidated hospital and insurance markets, AI is MORE likely to increase total costs and spending growth in the short-to-medium term than to slow them — even while delivering real access and quality gains. Without changes to financial incentives and market structure, AI will not slow cost growth. Bob Kocher (Venrock) put it plainly: "AI enhances efficiency in any system" — and because US healthcare is already highly efficient at fee-for-service and coding, AI will escalate both. Measurement is necessary but not sufficient; risk transfer is the binding constraint.',
+      source_label: 'Kocher, Zhao & Duffy, NEJM Catalyst (DOI 10.1056/CAT.25.0509) via USC Schaeffer',
+      source_url: SRC.kocher_nejm },
+
+    { id: 'cl_prior_auth_ai_vs_ai',
+      group: 'pg_financial',
+      tag: 'Prior auth · AI vs AI',
+      title: 'Prior authorization is an AI-vs-AI arms race — now with referees',
+      stat: 'WISeR survived 46–50 · ePA mandatory Jan 1, 2027',
+      body: 'PAYER SIDE: one vendor reports up to ~90% auto-approval on 12M+ annual prior-auth requests (company-disclosed, not independently verified). FEDERAL SIDE: on Jul 16, 2026 the Senate voted 46–50 and FAILED to halt WISeR, the CMMI pilot applying AI-assisted prior authorization and pre-payment review to select services in ORIGINAL Medicare, where prior auth is normally rare; the model has been live since Jan 5, 2026 for dates of service on or after Jan 15. Two physician-Congressmen then introduced the Protecting Patients from Automated Denials Act (Jul 16): physician attestations, direct communication with the reviewing physician, mandatory AI-use disclosure, 10-year retention of AI-related denial records, and reporting to HHS every 90 days. Rep. Murphy: "we must protect the physician-in-the-loop." STATE SIDE: the emerging national standard is licensed-human signoff + AI-use disclosure + regulator reporting — Georgia SB 544 expressly PERMITS AI in prior auth but bars AI-issued adverse determinations without licensed review, and Washington, Utah, Maryland, Alabama and Indiana converge on the same shape. AND THE DEADLINE: CMS\'s electronic prior authorization standard becomes MANDATORY Jan 1, 2027 for MA, Medicaid, CHIP and FFE QHP issuers — a forced-adoption event, not a pledge.',
+      source_label: 'STAT (Senate vote) · CMS WISeR Operational Guide · Rep. Murphy · Altair (ePA deadline) · Holland & Knight (states)',
+      source_url: SRC.wiser_stat },
+
+    { id: 'cl_consumer_front_door',
+      group: 'pg_prevention',
+      tag: 'Consumer front door',
+      title: 'The consumer front door is now a frontier lab',
+      stat: 'Health in ChatGPT launched Jul 23 · 40M ask daily',
+      body: 'On July 23, 2026 OpenAI launched "Health in ChatGPT" to logged-in US users 18+ on web and iOS across Free, Go, Plus and Pro. Users can connect Apple Health, supported US hospital medical records, One Medical and Function Health. Connected data is NOT used to train foundation models or target ads, and disconnected-source data is deleted within 30 days. GPT-5.5 Instant received dedicated health training; every GPT-5.6 model beat GPT-5.5 on HealthBench Professional. OpenAI disclosed that in earlier testing more than 70% of health conversations happened OUTSIDE the dedicated health surface, which is why Health now works across all conversations. Scale: Reuters notes OpenAI has said 40 million users ask ChatGPT healthcare-related questions DAILY. Demand-side substitution now has a number too: a King\'s College London study found one in seven UK adults have used AI INSTEAD of contacting a doctor or healthcare service, and one in ten used chatbots instead of professional mental-health support — convenience was the top reason. A frontier lab has shipped a consented longitudinal patient data layer straight to the consumer.',
+      source_label: 'OpenAI · Reuters (40M/day) · King\'s College London via The Register',
+      source_url: SRC.openai_health },
+
+    { id: 'cl_safety_liability',
+      group: 'pg_care',
+      tag: 'The second gate',
+      title: 'Reimbursement decides what gets bought. Liability decides what gets deployed.',
+      stat: '76.6% of harmful errors were omissions',
+      body: 'The Stanford / Harvard / ARISE NOHARM benchmark tested 1,100 real clinical cases with ~13,000 physician annotations across Doximity Ask, OpenEvidence, GPT-5.6 Sol and Claude Fable 5. Doximity Ask scored best. Across EVERY system, 76.6% of harmful errors were OMISSIONS — leaving something out rather than stating something false. Eric Topol: omissions "need to be brought as close to zero as possible." The paper describes an "illusion of readiness." Importantly it also found that doctors WITH AI gave better care than doctors without. CAVEATS: the study is NOT peer-reviewed, and OpenEvidence\'s CEO contested both the peer-review status and Doximity\'s score. Meanwhile the liability is now docketed: one day BEFORE Health in ChatGPT launched, OpenAI and Sam Altman were sued in San Francisco Superior Court for negligence and the UNAUTHORIZED PRACTICE OF MEDICINE, with the plaintiff asking the court to pause the rollout pending third-party safety audits — the second 2026 complaint to seek that. And the vendor is now the attack surface: a single healthcare AI utilization-management vendor\'s breach exposed 1,396,519 individuals across seven health systems including Mayo Clinic and UW Medicine (HHS posted Jun 22, 2026). Courts have not yet decided whether liability sits with the doctor, the hospital or the vendor.',
+      source_label: 'Fortune on NOHARM · Reuters (Winters v. OpenAI) · HHS OCR / Becker\'s (Xsolis breach)',
+      source_url: SRC.noharm_fortune },
+
+    { id: 'cl_two_clocks',
+      group: 'pg_care',
+      tag: 'Adoption horizon',
+      title: 'Two clocks, not one',
+      stat: 'Admin 2–4 years · clinical autonomy 10–15 years',
+      body: 'A single "10–15 year transformation horizon" is unfalsifiable and was contradicted in BOTH directions inside this window. ADMIN MOVES ON REGULATORY DEADLINES — 2 to 4 years: CMS\'s ePA standard is mandatory Jan 1, 2027, and NHS England committed £10B over three years with an AI triage tool reaching every NHS App user by April 2028. CLINICAL AUTONOMY MOVES ON EVIDENCE AND LIABILITY — 10 to 15 years: only 3% of health systems have AI agents in live workflows against 43% piloting or testing (Microsoft + The Health Management Academy, published in NEJM); 68% of adopters remain in proof-of-concept, pilot or limited production with only 11% at broad enterprise deployment (Black Book, Q2 2026, 340 organisations); and the FDA has still authorised ZERO generative-AI-enabled devices for marketing.',
+      source_label: 'Altair (ePA) · NHS England · Microsoft/HMA in NEJM · Black Book Q2 2026 · CRS IF13245',
+      source_url: SRC.ms_hma_agents },
+
+    { id: 'cl_fda_precision',
+      group: 'pg_care',
+      tag: 'Regulatory precision',
+      title: 'Designations, not clearances',
+      stat: 'Zero marketed generative-AI devices',
+      body: 'Any copy implying generative-AI clinical tools are "getting approved" is wrong, and the distinction keeps this section credible. The FDA granted Breakthrough Device Designation to TWO generative-AI radiology report-drafting tools on the SAME DAY (Jun 25, 2026) — Aidoc\'s First Read for chest radiographs (designation Q260882, investigational only) and Cognita CXR from Radiology Partners / Mosaic Clinical Technologies. Yet as of Jun 10, 2026 the Congressional Research Service reported the agency had authorised ZERO generative-AI-enabled devices for marketing, and the cornerstone Total Product Life Cycle guidance for AI-enabled device software remains a DRAFT from January 2025. Use the exact words: designation, not clearance. Separately, UpDoc launched what it describes as the first FDA-CLEARED agentic AI platform for chronic disease management (510(k) K253281, cleared Dec 23, 2025) — verify the K-number before relying on it.',
+      source_label: 'Aidoc · CRS IF13245 · FDA AI/ML SaMD guidance tracker',
+      source_url: SRC.crs_genai_fda },
+
+    { id: 'cl_cms_year2',
+      group: 'pg_financial',
+      tag: 'Interoperability',
+      title: 'CMS Health Tech Ecosystem entered "Year 2: structured acceleration"',
+      stat: '7 new named pledge tracks · "early implementation"',
+      body: 'On Jul 27, 2026 CMS marked the one-year anniversary of the Health Tech Ecosystem Initiative and shifted framing from "Year 1 groundwork" to "Year 2 structured acceleration," adding named pledge tracks for Real-Time Benefits, Advanced Scheduling, Clinical Trials Access, Medical Media Shuttling (imaging), Electronic Prior Authorization, Patient-Facing App Library Expansion and Digital Identity Validation, plus an Ecosystem Adoption Work Group. The honest counterweight: CMS itself conceded many commitments remain in "early implementation" — pledges are not deployment. CMS published the Health Tech Ecosystem category framework on May 11, 2026, aligned to the CMS Interoperability Framework. The first named participant in the ePA Acceleration initiative was a prior-authorization AI vendor (May 20), which is concrete proof the pledge machinery reaches PA vendors rather than only EHRs.',
+      source_label: 'Health IT Answers · CMS category framework · Cohere Health (first named ePA participant)',
+      source_url: SRC.cms_year2 },
+
+    { id: 'cl_scribe_roi_band',
+      group: 'pg_care',
+      tag: 'Independent ROI',
+      title: 'What ambient documentation actually saves — the independent band',
+      stat: '−13 to −16 min/day · time is redirected, not saved',
+      body: 'These are the independent measurements to read every vendor claim against. Multisite JAMA study (Mass General Brigham + UCSF, 5 hospitals, 2+ years): −13 minutes/day of EHR time and −16 minutes/day of documentation time (−3% and −10%), plus 0.5 more visits/week — with heavy users (>50% of visits) getting 2× the EHR-time reduction and 3× the documentation reduction, but only 32% of users adopting that frequently. A 13-month staged ED rollout (JMIR AI): −72.6 seconds of on-shift documentation per encounter (95% CI 63.8–81.4; P<.001), about 24 minutes per 8-hour shift at 20 encounters — though after-shift documentation ROSE 9.1 seconds. A controlled simulation (JAMIA Open): documentation fell from 36.3% to 11.2% of the encounter, a 69.1% reduction, with total encounter time UNCHANGED. A Singapore time-motion study (169 consultations): −15% documentation time, +10.6 percentage points of eye-contact share, and no change in consultation duration or total cycle time. The honest mechanism: clinician time is REDIRECTED to engagement, not shortened.',
+      source_label: 'JAMA via Medical Xpress · JMIR AI · JAMIA Open · JMIR Medical Informatics',
+      source_url: SRC.jama_scribes },
+
+    { id: 'cl_nhs_counterfactual',
+      group: 'pg_prevention',
+      tag: 'Single-payer counterfactual',
+      title: 'What happens when buyer, payer and beneficiary are the same entity',
+      stat: '£10B over 3 years · £41B of projected benefits',
+      body: 'On Jul 4, 2026 NHS England set out how £10B over three years will be spent, projecting £41B of benefits over a decade — roughly half the 10 Year Health Plan\'s commitments. It includes an AI triage tool in the NHS App (200,000+ patients within 12 months, all App users by April 2028), a NATIONAL rollout of ambient voice documentation starting in outpatients, a Single Patient Record, and Microsoft Copilot for 500,000+ NHS staff after a trial cut admin time by an average of two days per person per month. NHS-cited evidence: a Great Ormond Street-led study found ambient voice gave clinicians ~25% more direct patient interaction time; a Sussex GP trial cut phone-queue numbers 29%; the Copilot trial across 30,000 staff in 90 organisations saved an average of 43 minutes per person per day. A national payer publishing its own ROI arithmetic is a better proof point than any vendor case study — and there is no coding-intensity problem here, because nobody bills a claim.',
+      source_label: 'NHS England',
+      source_url: SRC.nhs_10b },
+
+    { id: 'cl_hc_funding_regime',
+      group: 'pg_financial',
+      tag: 'Funding regime',
+      title: 'Healthcare AI concentrated rather than broadened',
+      stat: 'Q2 $2.7B (−39.9% YoY) · 228 deals, a decade low',
+      body: 'Fewer, bigger, later. Q2 2026 healthtech VC raised just $2.7B, down 39.9% year over year and 51.8% from Q1 (PitchBook). Global digital health deal volume fell to 228 deals in Q2 — a decade low, down 36% quarter over quarter and two-thirds below the Q2 2022 peak of 688 — while median deal size rose 54% year to date to $7.7M. H1 2026 totalled $7.4B with 20 megadeals ($100M+) from 19 companies accounting for 45% of all capital. The marquee round was Commure at a $7B post-money on $70M. Healthcare AI is showing the same concentration regime as the frontier labs, one layer down.',
+      source_label: 'PitchBook Q2 2026 healthtech · Fierce Healthcare · Becker\'s',
+      source_url: SRC.pitchbook_q2 },
+
+    { id: 'cl_vendor_metrics',
+      group: 'pg_care',
+      tag: 'Disclosure',
+      title: 'Vendor operating metrics are company-disclosed and unaudited',
+      stat: 'Independent: 3% live agents · −13 to −16 min/day',
+      body: 'The most impressive numbers in healthcare AI are all self-reported and should be read as marketing until audited: one RCM platform claims 85%+ of revenue-cycle work completed with NO human in the loop across ~200M patient encounters a year; one scribe vendor claims 300+ health systems, 100M+ annual clinical conversations and 250M+ patients; one clinical-search product claims 40–65% US physician penetration with NO published methodology defining "daily use"; one prior-auth vendor claims ~90% auto-approval; one patient-billing vendor claims 475,000+ resolved inquiries. Contrast with the INDEPENDENT numbers in this section: 3% of health systems with agents in live workflows, 13–16 minutes/day of scribe savings, and 72.6 seconds per ED encounter. Where this report cites a vendor figure, it is labelled.',
+      source_label: 'Composite — see the individual company tiles and the independent ROI callout',
+      source_url: SRC.healthpolicy_review }
   ];
 
   var sources = [
@@ -2036,7 +2205,43 @@
     { label: 'AHA Market Scan — behavioral vs primary care', url: SRC.aha_telehealth },
     { label: 'Adentris (real-time medical documentation AI)', url: SRC.adentris },
     { label: 'Wolters Kluwer — Future Ready Healthcare 2026', url: SRC.wolterskluwer },
-    { label: 'Holland & Knight — states regulate AI in healthcare', url: SRC.hklaw_states }
+    { label: 'Holland & Knight — states regulate AI in healthcare', url: SRC.hklaw_states },
+    // ── Added in the August 3, 2026 refresh ──
+    { label: 'Axios — health plans say AI is pushing costs up (PwC 2027 trend)', url: SRC.pwc_axios },
+    { label: 'Fortune — AI is making medical bills higher (BCBS coding intensity)', url: SRC.pwc_fortune },
+    { label: 'TechTarget — revenue-cycle AI and the 9% medical cost trend', url: SRC.coding_techtarget },
+    { label: 'Peterson-KFF via Medical Xpress — median 14% proposed 2027 ACA increase', url: SRC.kff_premiums },
+    { label: 'Kocher, Zhao & Duffy, NEJM Catalyst via USC Schaeffer', url: SRC.kocher_nejm },
+    { label: 'STAT — Senate 46–50 fails to halt the WISeR prior-auth pilot', url: SRC.wiser_stat },
+    { label: 'CMS — WISeR Provider & Supplier Guide (Operational Guide v6.0)', url: SRC.wiser_cms },
+    { label: 'Rep. Murphy — Protecting Patients from Automated Denials Act', url: SRC.murphy_bill },
+    { label: 'Altair Health — CMS ePA standard mandatory Jan 1, 2027', url: SRC.epa_deadline },
+    { label: 'Health IT Answers — CMS Health Tech Ecosystem Year 2', url: SRC.cms_year2 },
+    { label: 'CMS — Health Technology Ecosystem categories', url: SRC.cms_categories },
+    { label: 'Cohere Health — endorses the CMS ePA Acceleration initiative', url: SRC.cohere_epa },
+    { label: 'OpenAI — Health in ChatGPT', url: SRC.openai_health },
+    { label: 'Reuters — Winters v. OpenAI (unauthorized practice of medicine)', url: SRC.winters_reuters },
+    { label: 'Reuters — May 12 overdose complaint seeking to halt ChatGPT Health', url: SRC.overdose_reuters },
+    { label: 'Fortune — NOHARM benchmark (76.6% of harmful errors are omissions)', url: SRC.noharm_fortune },
+    { label: "King's College London via The Register — 1 in 7 UK adults used AI instead of a doctor", url: SRC.kcl_substitution },
+    { label: 'Microsoft + Health Management Academy in NEJM — 43% piloting, 3% live', url: SRC.ms_hma_agents },
+    { label: 'Black Book Q2 2026 — 68% of adopters pre-scale', url: SRC.blackbook_q2 },
+    { label: 'CRS IF13245 — FDA has authorised zero generative-AI devices', url: SRC.crs_genai_fda },
+    { label: 'Aidoc — FDA Breakthrough Device Designation for genAI radiology reports', url: SRC.aidoc_bdd },
+    { label: 'NHS England — £10B over three years, £41B projected benefits', url: SRC.nhs_10b },
+    { label: 'JAMA multisite scribe study via Medical Xpress', url: SRC.jama_scribes },
+    { label: 'JMIR AI — 13-month ED ambient scribe rollout', url: SRC.jmir_ed },
+    { label: 'JAMIA Open — controlled simulation of scribe documentation time', url: SRC.jamia_sim },
+    { label: 'JMIR Medical Informatics — Singapore time-motion study', url: SRC.jmir_timemotion },
+    { label: 'Health Policy systematic review — 98 economic evaluations of healthcare AI', url: SRC.healthpolicy_review },
+    { label: 'PitchBook — Q2 2026 healthtech report', url: SRC.pitchbook_q2 },
+    { label: 'Fierce Healthcare — H1 2026 digital health VC', url: SRC.fierce_h1 },
+    { label: "Becker's — 1.4M patients across 7 health systems in an AI vendor breach", url: SRC.xsolis_breach },
+    { label: 'HHS OCR breach portal', url: SRC.hhs_ocr },
+    { label: "Becker's — the AI virtual care consolidation wave (Doctronic, Included Health)", url: SRC.doctronic_summer },
+    { label: 'Collectly — live on the Epic Showroom', url: SRC.collectly_epic },
+    { label: 'AI Health Index — Collectly vendor profile', url: SRC.collectly_index },
+    { label: 'RevCycleAI — Cohere Health auto-approval rates (company-disclosed)', url: SRC.cohere_auto }
   ];
 
   root.HEALTHCARE_DATA = {

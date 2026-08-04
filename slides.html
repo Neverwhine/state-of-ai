@@ -35,7 +35,7 @@
   </svg>
   <span class="fs-toggle-label">Present</span>
 </button>
-<div class="slide-counter"><span id="slideNum">1</span> / <span id="slideTotal">15</span></div>
+<div class="slide-counter"><span id="slideNum">1</span> / <span id="slideTotal">18</span></div>
 
 <!-- Click zones (overlay) -->
 <div class="click-zone click-zone--prev" id="zonePrev" aria-label="Previous slide"></div>
@@ -419,7 +419,7 @@
   </section>
   <!-- ============== SLIDE 4: Application Layer Funnel (was 6) ============== -->
   <section class="slide" data-slide="5" id="slide-5">
-    <div class="slide-inner slide-7">
+    <div class="slide-inner slide-7 slide-applayer">
       <p class="slide-eyebrow">Application layer</p>
       <h1 class="slide-headline">The user never sees the model.</h1>
       <p class="slide-sub">Whoever owns the application picks the model. Distribution &gt; intelligence.</p>
@@ -436,18 +436,154 @@
           <text x="80" y="500" fill="#A0A8BC" font-size="12" font-weight="600" letter-spacing="0.08em">MODELS · fungible</text>
         </svg>
       </div>
+      <div class="tk-strip" style="margin-top:10px">
+        <div class="tk-strip-head">
+          <span class="tk-strip-tag" style="background:#4ECDC4">LAB LEADERSHIP · AUG 3, 2026</span>
+          <span class="tk-strip-warn">Private valuations are primary-round marks; secondary prints differ. Every private ARR figure is company-disclosed and unaudited.</span>
+        </div>
+        <div class="tk-items">
+          <div class="tk-item" style="--tk-c:#D4A574">
+            <span class="tk-item-num tabnum">$965B</span>
+            <span class="tk-item-label"><strong>ANTHROPIC</strong> — primary; ~$1.2T secondary. <strong>$30B–$47B</strong> reported run-rate (sources conflict). <strong>34.4%</strong> of US paid business use vs ChatGPT 32.3%. 300K+ business customers, ~70% of the F100.</span>
+          </div>
+          <div class="tk-item" style="--tk-c:#10A37F">
+            <span class="tk-item-num tabnum">$852B</span>
+            <span class="tk-item-label"><strong>OPENAI</strong> — primary; ~$908B secondary. ChatGPT crossed <strong>1B MAU</strong>. Codex + ChatGPT Work at ~<strong>10M WAU</strong>. No audited 2026 revenue filed.</span>
+          </div>
+          <div class="tk-item" style="--tk-c:#4285F4">
+            <span class="tk-item-num tabnum">950M</span>
+            <span class="tk-item-label"><strong>GOOGLE GEMINI</strong> MAU; AI Mode past <strong>1B</strong> MAU; ~<strong>90%</strong> of the F100 on Gemini Enterprise; <strong>22B tokens/min</strong> through the APIs.</span>
+          </div>
+          <div class="tk-item" style="--tk-c:#1877F2">
+            <span class="tk-item-num tabnum">1.2B</span>
+            <span class="tk-item-label"><strong>META AI</strong> MAU / 800M WAU — nominally the largest assistant by reach, but embedded in existing search bars rather than chosen.</span>
+          </div>
+        </div>
+      </div>
+      <p class="slide-source">Sources: <a href="https://valueaddvc.com/blog/anthropic-valuation-2026-965b-series-h-and-the-ipo-filing-explained" target="_blank" rel="noopener">Value Add VC</a> &middot; <a href="https://www.linkedotter.com/articles/anthropic-overtakes-openai-revenue-what-b2b-buyers-must-know-july-2026" target="_blank" rel="noopener">Ramp AI Index via Linkedotter</a> &middot; <a href="https://www.theverge.com/tech/969624/google-says-gemini-now-has-950-million-monthly-users" target="_blank" rel="noopener">The Verge</a> &middot; <a href="https://fourweekmba.com/ai-openai-codex-chatgpt-work-10-million-agentic-users/" target="_blank" rel="noopener">FourWeekMBA</a> &middot; <a href="https://www.digitalapplied.com/blog/openai-july-arr-run-rate-memo" target="_blank" rel="noopener">Digital Applied (audit caveat)</a></p>
     </div>
     <a class="dive-deeper" data-slide-link="5">→ Dive deeper</a>
   </section>
   <!-- ============== SLIDE 5: Model Cluster (was 7) ============== -->
   <section class="slide" data-slide="6" id="slide-6">
-    <div class="slide-inner slide-8">
-      <p class="slide-eyebrow">Model layer · 15 frontier models</p>
-      <h1 class="slide-headline">Frontier broke into three races.</h1>
-      <p class="slide-sub">Commodity. Specialist. Restricted.</p>
-      <div class="cluster-stage" id="clusterStage">
-        <svg id="clusterSvg" viewBox="0 0 1200 520" aria-hidden="true"></svg>
+    <div class="slide-inner slide-mb">
+      <p class="slide-eyebrow">Model layer &middot; August 3, 2026 flagship set</p>
+      <h1 class="slide-headline">The model market became a <span class="hl-accent hl-accent--gold">barbell</span>.</h1>
+      <p class="slide-sub">Premium multi-day agents priced <strong>up</strong> to $10/$50. Capable output priced <strong>down</strong> to $1–$6. The middle thinned — and token efficiency became a third, independent economic axis.</p>
+
+      <div class="mb-barbell">
+        <div class="mb-end mb-end--left">
+          <span class="mb-end-num tabnum">$10 / $50</span>
+          <span class="mb-end-label">PREMIUM MULTI-DAY AGENTIC (Claude Fable 5 / Mythos 5)</span>
+        </div>
+        <div class="mb-bar"></div>
+        <div class="mb-end mb-end--right">
+          <span class="mb-end-num tabnum">$1 – $6</span>
+          <span class="mb-end-label">CAPABLE OUTPUT (Grok 4.5, GPT-5.6 Luna, Muse Spark)</span>
+        </div>
       </div>
+
+      <div class="mb-lanes">
+        <!-- LANE 1: PREMIUM AGENTIC -->
+        <div class="mb-lane" style="--mb-c:#7C4DFF">
+          <div class="mb-lane-head">
+            <span class="mb-lane-title">PREMIUM AGENTIC</span>
+            <span class="mb-lane-sub">Priced for multi-day autonomous work, not chat</span>
+          </div>
+          <div class="mb-rows">
+            <div class="mb-row">
+              <div class="mb-row-top"><span class="mb-model">Claude Fable 5 / Mythos 5</span><span class="mb-price tabnum">$10/$50</span></div>
+              <span class="mb-note">Jun 9 &middot; marketed on multi-day agentic task execution. SWE-Bench Pro leader at 80.4%.</span>
+            </div>
+            <div class="mb-row">
+              <div class="mb-row-top"><span class="mb-model">GPT-5.6 Sol</span><span class="mb-price tabnum">$5/$30</span></div>
+              <span class="mb-note">Jul 9 GA &middot; Ultra mode, Max reasoning. <strong>54% more token-efficient</strong> on coding than its predecessor.</span>
+            </div>
+          </div>
+          <span class="mb-lane-foot">The top of the market got more expensive, not cheaper.</span>
+        </div>
+
+        <!-- LANE 2: EFFICIENT FRONTIER -->
+        <div class="mb-lane" style="--mb-c:#4ECDC4">
+          <div class="mb-lane-head">
+            <span class="mb-lane-title">EFFICIENT FRONTIER</span>
+            <span class="mb-lane-sub">Frontier-adjacent capability at commodity prices</span>
+          </div>
+          <div class="mb-rows">
+            <div class="mb-row">
+              <div class="mb-row-top"><span class="mb-model">Claude Sonnet 5</span><span class="mb-price tabnum">$2/$10</span></div>
+              <span class="mb-note">Promo through <strong>Aug 31</strong>, then $3/$15. 1M context. Default for Free/Pro and Claude Code.</span>
+            </div>
+            <div class="mb-row">
+              <div class="mb-row-top"><span class="mb-model">Grok 4.5</span><span class="mb-price tabnum">$2/$6</span></div>
+              <span class="mb-note">500K context &middot; <strong>co-trained with Cursor</strong>. Uses ~4.2× fewer output tokens than Opus 4.8.</span>
+            </div>
+            <div class="mb-row">
+              <div class="mb-row-top"><span class="mb-model">GPT-5.6 Terra / Luna</span><span class="mb-price tabnum">$2.50/$15 · $1/$6</span></div>
+              <span class="mb-note">Luna at $1/$6 is the floor of the credible frontier tier.</span>
+            </div>
+            <div class="mb-row">
+              <div class="mb-row-top"><span class="mb-model">Gemini 3.6 Flash</span><span class="mb-price tabnum">$1.50/$7.50</span></div>
+              <span class="mb-note">Output fell from $9.00 &middot; <strong>17% fewer output tokens</strong> &middot; cutoff moved to Mar 2026.</span>
+            </div>
+            <div class="mb-row">
+              <div class="mb-row-top"><span class="mb-model">Meta Muse Spark 1.1</span><span class="mb-price tabnum">$1.25/$4.25</span></div>
+              <span class="mb-note">Meta's <strong>first paid Model API</strong>. Leads on tool use; loses on raw coding and long context.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- LANE 3: OPEN-WEIGHT CHINA -->
+        <div class="mb-lane" style="--mb-c:#F5C542">
+          <div class="mb-lane-head">
+            <span class="mb-lane-title">OPEN-WEIGHT CHINA</span>
+            <span class="mb-lane-sub">The parameter-count crown left the West</span>
+          </div>
+          <div class="mb-rows">
+            <div class="mb-row">
+              <div class="mb-row-top"><span class="mb-model">Kimi K3 (Moonshot)</span><span class="mb-price tabnum">2.8T</span></div>
+              <span class="mb-note">896 experts / 16 active &middot; 1M context &middot; weights released <strong>Jul 27</strong>. Largest open-source model to date.</span>
+            </div>
+            <div class="mb-row">
+              <div class="mb-row-top"><span class="mb-model">Qwen3.8-Max-Preview</span><span class="mb-price tabnum">2.4T</span></div>
+              <span class="mb-note">Alibaba &middot; Jul 19.</span>
+            </div>
+            <div class="mb-row">
+              <div class="mb-row-top"><span class="mb-model">DeepSeek V4 Preview</span><span class="mb-price tabnum">1.6T / 284B</span></div>
+              <span class="mb-note">V4-Pro 1.6T (49B active); V4-Flash 284B (13B active); 33T training tokens.</span>
+            </div>
+          </div>
+          <span class="mb-lane-foot">Open weights now win on scale and ownability — not on price.</span>
+        </div>
+
+        <!-- LANE 4: RESTRICTED / CYBER -->
+        <div class="mb-lane" style="--mb-c:#E8837C">
+          <div class="mb-lane-head">
+            <span class="mb-lane-title">RESTRICTED / CYBER</span>
+            <span class="mb-lane-sub">Cyber capability became a release gate, not a footnote</span>
+          </div>
+          <div class="mb-rows">
+            <div class="mb-row">
+              <div class="mb-row-top"><span class="mb-model">Fable 5 / Mythos 5 suspension</span><span class="mb-price tabnum">19 days</span></div>
+              <span class="mb-note">US Commerce export controls suspended both models <strong>globally</strong> from Jun 12; mostly lifted Jun 30, restored Jul 1 behind new cybersecurity classifiers.</span>
+            </div>
+            <div class="mb-row">
+              <div class="mb-row-top"><span class="mb-model">GPT-5.6 pre-release review</span><span class="mb-price">EO 14409</span></div>
+              <span class="mb-note">A US pre-release review process preceded GA. The White House denied granting a &ldquo;green light&rdquo;; OpenAI objected to it becoming &ldquo;the long-term default.&rdquo;</span>
+            </div>
+            <div class="mb-row">
+              <div class="mb-row-top"><span class="mb-model">Gemini 3.5 Flash Cyber</span><span class="mb-price">Dedicated SKU</span></div>
+              <span class="mb-note">Google shipped a cyber-specific model; GPT-5.6 was billed as OpenAI's &ldquo;strongest cybersecurity model yet.&rdquo;</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-caveat">
+        <strong>Benchmark integrity:</strong> the Grok 4.5 CursorBench result was <strong>withdrawn</strong> after Cursor disclosed that a snapshot of its codebase had accidentally entered the model's training data. Treat single-benchmark leadership claims accordingly.
+      </div>
+
+      <p class="slide-source">Sources: <a href="https://www.anthropic.com/news" target="_blank" rel="noopener">Anthropic</a> &middot; <a href="https://openai.com/index/gpt-5-6/" target="_blank" rel="noopener">OpenAI GPT-5.6</a> &middot; <a href="https://the-decoder.com/grok-4-5-is-so-cheap-compared-to-fable-5-and-gpt-5-5-that-benchmark-gaps-may-not-matter-much/" target="_blank" rel="noopener">The Decoder</a> &middot; <a href="https://ai.meta.com/blog/introducing-muse-spark-meta-model-api/" target="_blank" rel="noopener">Meta AI</a> &middot; <a href="https://howaiworks.ai/blog/google-gemini-3-6-flash-launch-2026" target="_blank" rel="noopener">How AI Works</a> &middot; <a href="https://www.elser.ai/news/chinas-ai-moment-kimi-k3-deepseek-v4-qwen-2026" target="_blank" rel="noopener">Elser.ai (China)</a> &middot; <a href="https://roo.beehiiv.com/p/grok-4-5" target="_blank" rel="noopener">Roo (CursorBench withdrawal)</a></p>
     </div>
     <a class="dive-deeper" data-slide-link="6">→ Dive deeper</a>
   </section>
@@ -457,9 +593,34 @@
       <p class="slide-eyebrow">Capability vs. cost</p>
       <h1 class="slide-headline">Smarter AND cheaper.</h1>
       <p class="slide-sub">Every prior cycle: more power = more cost. AI inverted that. Embed intelligence everywhere.</p>
-      <div class="chart-wrap chart-wrap--smarter">
+      <div class="chart-wrap chart-wrap--smarter chart-wrap--smarter-compact">
         <canvas id="smarterChart"></canvas>
       </div>
+      <div class="tk-strip">
+        <div class="tk-strip-head">
+          <span class="tk-strip-tag">THREE SEPARATE VENDOR CLAIMS, NOT A TIME SERIES</span>
+          <span class="tk-strip-warn">Each figure is a single vendor's own comparison against its own predecessor. They are not measured on a common benchmark and must not be read as a curve.</span>
+        </div>
+        <div class="tk-items">
+          <div class="tk-item" style="--tk-c:#4ECDC4">
+            <span class="tk-item-num tabnum">4.2&times;</span>
+            <span class="tk-item-label"><strong>Grok 4.5</strong> uses ~4.2&times; fewer output tokens than Claude Opus 4.8.</span>
+          </div>
+          <div class="tk-item" style="--tk-c:#10A37F">
+            <span class="tk-item-num tabnum">54%</span>
+            <span class="tk-item-label"><strong>GPT-5.6 Sol</strong> is 54% more token-efficient on coding than its predecessor.</span>
+          </div>
+          <div class="tk-item" style="--tk-c:#4285F4">
+            <span class="tk-item-num tabnum">17%</span>
+            <span class="tk-item-label"><strong>Gemini 3.6 Flash</strong> produces 17% fewer output tokens, alongside a $9.00 &rarr; $7.50 output price cut.</span>
+          </div>
+          <div class="tk-item tk-item--axis">
+            <span class="tk-item-num">NEW ECONOMIC AXIS</span>
+            <span class="tk-item-label">Price-per-token <strong>understates</strong> the decline in cost per completed task. Application-layer gross margin improves faster than any price curve implies.</span>
+          </div>
+        </div>
+      </div>
+      <p class="slide-source">Sources: <a href="https://the-decoder.com/grok-4-5-is-so-cheap-compared-to-fable-5-and-gpt-5-5-that-benchmark-gaps-may-not-matter-much/" target="_blank" rel="noopener">The Decoder</a> &middot; <a href="https://openai.com/index/gpt-5-6/" target="_blank" rel="noopener">OpenAI</a> &middot; <a href="https://howaiworks.ai/blog/google-gemini-3-6-flash-launch-2026" target="_blank" rel="noopener">How AI Works</a></p>
     </div>
     <a class="dive-deeper" data-slide-link="7">→ Dive deeper</a>
   </section>
@@ -469,12 +630,36 @@
       <div class="slide-text">
         <p class="slide-eyebrow">Infrastructure &amp; Energy</p>
         <h1 class="slide-headline">Software demand. Industrial buildout.</h1>
-        <p class="slide-sub">Hyperscaler CapEx tripled in two years. Microsoft signed a 20-yr PPA for a targeted Three Mile Island restart. Google builds SMRs. NVIDIA uses equity to anchor preferred infrastructure partners (DSX as the reference architecture).</p>
+        <p class="slide-sub">Top-four 2026 capex guidance now sits at <strong>$700&ndash;725B</strong> &mdash; up to ~<strong>$800B</strong> for calendar 2026 including leases, with Google raised to <strong>$195&ndash;205B</strong>. The number held. The way it is paid for did not.</p>
         <div class="iframe-stat-row">
           <div class="iframe-stat"><span class="iframe-stat-num">$224B</span><span class="iframe-stat-label">2024 CapEx</span></div>
           <span class="iframe-stat-arrow">→</span>
-          <div class="iframe-stat iframe-stat--big"><span class="iframe-stat-num">$700B</span><span class="iframe-stat-label">2026 GUIDANCE</span></div>
+          <div class="iframe-stat iframe-stat--big"><span class="iframe-stat-num">$700–725B</span><span class="iframe-stat-label">2026 GUIDANCE (TOP FOUR)</span></div>
           <div class="iframe-stat"><span class="iframe-stat-num">3.1×</span><span class="iframe-stat-label">in 2 years</span></div>
+        </div>
+        <div class="hf-block">
+          <div class="hf-head">
+            <span class="hf-tag">HOW IT&rsquo;S FUNDED</span>
+            <span class="hf-sub">The scale survived. The funding quality changed — this is now a balance-sheet story, not an operating-leverage story.</span>
+          </div>
+          <div class="hf-items">
+            <div class="hf-item">
+              <span class="hf-item-num tabnum">9% &rarr; 32%</span>
+              <span class="hf-item-label">Incremental annual <strong>debt</strong> as a share of hyperscaler capex, FY24 &rarr; LTM mid-2026.</span>
+            </div>
+            <div class="hf-item">
+              <span class="hf-item-num tabnum">$28B &rarr; $0</span>
+              <span class="hf-item-label"><strong>Buybacks halted</strong> at Meta and Alphabet (Meta $13B &rarr; $0, Alphabet $15B &rarr; $0 in Q1 2026).</span>
+            </div>
+            <div class="hf-item">
+              <span class="hf-item-num">FCF negative</span>
+              <span class="hf-item-label"><strong>Alphabet</strong> free cash flow turned negative for the first time since its 2004 IPO.</span>
+            </div>
+            <div class="hf-item">
+              <span class="hf-item-num tabnum">$84.75B</span>
+              <span class="hf-item-label">Alphabet <strong>June equity raise</strong> — its first since 2005.</span>
+            </div>
+          </div>
         </div>
       </div>
       <div class="slide-block-stage">
@@ -506,8 +691,117 @@
     </div>
     <a class="dive-deeper" data-slide-link="8">→ Dive deeper</a>
   </section>
-  <!-- ============== SLIDE 8: Agent Anatomy (NATIVE 7-LAYER STACK) ============== -->
+  <!-- ============== SLIDE 9: Silicon & Power (NEW — Aug 2026) ============== -->
   <section class="slide" data-slide="9" id="slide-9">
+    <div class="slide-inner slide-silicon">
+      <p class="slide-eyebrow">Silicon &amp; Power &middot; the two physical gates</p>
+      <h1 class="slide-headline">The monopoly cracked. <span class="hl-accent hl-accent--gold">The power didn't arrive.</span></h1>
+      <p class="slide-sub">Three independent breaks in NVIDIA's accelerator lock happened in one quarter. Meanwhile announced nuclear runs <strong>5&times; ahead</strong> of operational nuclear — and gas is filling the gap.</p>
+
+      <div class="sp-grid">
+        <!-- LEFT: SILICON -->
+        <div class="sp-col sp-col--silicon">
+          <div class="sp-col-head">
+            <span class="sp-col-tag sp-col-tag--silicon">SILICON</span>
+            <span class="sp-col-sub">The accelerator monopoly cracked in one quarter</span>
+          </div>
+
+          <div class="sp-cards">
+            <div class="sp-card" style="--sp-c:#76B900">
+              <div class="sp-card-top">
+                <span class="sp-card-name">NVIDIA</span>
+                <span class="sp-card-badge">Q1 FY27</span>
+              </div>
+              <span class="sp-card-num tabnum">$81.6B</span>
+              <span class="sp-card-label">quarterly revenue &middot; data center <strong class="tabnum">$75.2B</strong></span>
+              <p class="sp-card-body">VeraRubin production ships Q3. Physical-AI revenue disclosed above <strong class="tabnum">$9B</strong> TTM. China compute revenue: <strong>zero</strong>.</p>
+            </div>
+
+            <div class="sp-card" style="--sp-c:#FF6B6B">
+              <div class="sp-card-top">
+                <span class="sp-card-name">AMD</span>
+                <span class="sp-card-badge">8 GW committed</span>
+              </div>
+              <span class="sp-card-num tabnum">2 + 6 GW</span>
+              <span class="sp-card-label">Anthropic up to 2 GW MI450 &middot; Meta 6 GW</span>
+              <p class="sp-card-body">Anthropic buys up to <strong>2 GW</strong> of Instinct MI450 from H1 2027; AMD supplies <strong>6 GW</strong> to Meta, 1 GW of it in H2 2026.</p>
+            </div>
+
+            <div class="sp-card" style="--sp-c:#FF8C42">
+              <div class="sp-card-top">
+                <span class="sp-card-name">BROADCOM &middot; CUSTOM</span>
+                <span class="sp-card-badge">+143%</span>
+              </div>
+              <span class="sp-card-num tabnum">$10.8B</span>
+              <span class="sp-card-label">AI semis FQ2 &middot; Q3 guided <strong class="tabnum">$16B</strong></span>
+              <p class="sp-card-body">OpenAI partnered with Broadcom on its <strong>first in-house processors</strong>. Custom silicon is no longer a side bet.</p>
+            </div>
+
+            <div class="sp-card" style="--sp-c:#F5C542">
+              <div class="sp-card-top">
+                <span class="sp-card-name">ETCHED</span>
+                <span class="sp-card-badge">Jul 23 &middot; Series C</span>
+              </div>
+              <span class="sp-card-num tabnum">$10.3B</span>
+              <span class="sp-card-label">$300M led by Sequoia &middot; &gt;$1B raised</span>
+              <p class="sp-card-body">a16z, Jane Street, Diffusion and SK Hynix joined. <strong class="tabnum">$1B</strong> of pre-orders against a transformer-only ASIC bet.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: POWER -->
+        <div class="sp-col sp-col--power">
+          <div class="sp-col-head">
+            <span class="sp-col-tag sp-col-tag--power">POWER</span>
+            <span class="sp-col-sub">Announced nuclear vs. electrons on the wire</span>
+          </div>
+
+          <div class="sp-gap">
+            <div class="sp-gap-row">
+              <span class="sp-gap-label">Committed across 13 hyperscaler nuclear deals</span>
+              <div class="sp-gap-track">
+                <div class="sp-gap-fill sp-gap-fill--committed" data-target="100"><span class="tabnum">9.8 GW</span></div>
+              </div>
+            </div>
+            <div class="sp-gap-row">
+              <span class="sp-gap-label">Actually operational today</span>
+              <div class="sp-gap-track">
+                <div class="sp-gap-fill sp-gap-fill--live" data-target="19.6"><span class="tabnum">1.92 GW</span></div>
+              </div>
+            </div>
+            <div class="sp-gap-ratio">
+              <span class="sp-gap-ratio-num tabnum">5:1</span>
+              <span class="sp-gap-ratio-text">announced-to-delivered gap</span>
+            </div>
+          </div>
+
+          <div class="sp-bridge">
+            <span class="sp-bridge-tag">THE BRIDGE IS GAS, NOT FISSION</span>
+            <div class="sp-bridge-body">
+              <div class="sp-bridge-item">
+                <span class="sp-bridge-num tabnum">2.67 GW</span>
+                <span class="sp-bridge-label"><strong>Project Kilby</strong> — off-grid West Texas gas plant, 20-yr PPA with Microsoft. First delivery 2028.</span>
+              </div>
+              <div class="sp-bridge-item">
+                <span class="sp-bridge-num tabnum">H2 2027–28</span>
+                <span class="sp-bridge-label"><strong>Three Mile Island / Crane</strong> — FERC waiver only landed June 1, 2026. 835 MW produces nothing until then.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="sp-quote">
+            <p>The binding constraints are now <strong>HBM supply, land, electricity and construction labour</strong> — not GPU fabrication.</p>
+            <span class="sp-quote-attr">— Jensen Huang, NVIDIA Q1 FY27</span>
+          </div>
+        </div>
+      </div>
+
+      <p class="slide-source">Sources: <a href="https://www.theglobeandmail.com/investing/markets/stocks/NVDA/pressreleases/36680709/nvidia-announces-financial-results-for-first-quarter-fiscal-2027/" target="_blank" rel="noopener">NVIDIA Q1 FY2027</a> &middot; <a href="https://www.reuters.com/business/autos-transportation/companies-pouring-billions-advance-ai-infrastructure-2026-07-22/" target="_blank" rel="noopener">Reuters (AMD/OpenAI)</a> &middot; <a href="https://www.reuters.com/technology/ai-chip-startup-etched-raises-300-million-103-billion-valuation-2026-07-23/" target="_blank" rel="noopener">Reuters (Etched)</a> &middot; <a href="https://axis-intelligence.com/nuclear-energy-for-data-centers/" target="_blank" rel="noopener">Axis Intelligence (nuclear)</a> &middot; <a href="https://www.aipowerweekly.com/p/monday-news-roundup-7626" target="_blank" rel="noopener">AI Power Weekly (Kilby)</a></p>
+    </div>
+    <a class="dive-deeper" data-slide-link="9">→ Dive deeper</a>
+  </section>
+  <!-- ============== SLIDE 8: Agent Anatomy (NATIVE 7-LAYER STACK) ============== -->
+  <section class="slide" data-slide="10" id="slide-10">
     <div class="slide-inner slide-block-layout">
       <div class="slide-text">
         <p class="slide-eyebrow">Agent anatomy</p>
@@ -730,26 +1024,131 @@
         <span class="stat-source" style="text-align:center">Sources: Crunchbase, TechCrunch, GitHub, npm, PyPI · 2025–2026</span>
       </div>
     </div>
-    <a class="dive-deeper" data-slide-link="9">→ Dive deeper</a>
-  </section>
-  <!-- ============== SLIDE 9: Vibe Coding (NEW) ============== -->
-  <section class="slide" data-slide="10" id="slide-10">
-    <div class="slide-inner slide-11">
-      <p class="slide-eyebrow">Vibe coding</p>
-      <h1 class="slide-headline">Code is becoming a throwaway artifact.</h1>
-      <p class="slide-sub"><strong>42%</strong> of committed code is AI-generated or significantly AI-assisted. <strong>72%</strong> of developers who tried AI use it every day. Lovable hit $400M ARR. The roofing company runs AI agents now.</p>
-      <div class="vibe-grid" id="vibeGrid"></div>
-      <p class="slide-source">Source: <a href="https://www.sonarsource.com/state-of-code-developer-survey-report.pdf" target="_blank" rel="noopener">SonarSource 2026 State of Code Developer Survey</a> (42% AI-authored code, 72% daily use among triers). Stack Overflow 2025 — 51% daily — as secondary signal.</p>
-    </div>
     <a class="dive-deeper" data-slide-link="10">→ Dive deeper</a>
   </section>
-  <!-- ============== SLIDE 10: Business Models + ARPU (NATIVE) ============== -->
+  <!-- ============== SLIDE 9: Vibe Coding (NEW) ============== -->
   <section class="slide" data-slide="11" id="slide-11">
-    <div class="slide-inner slide-iframe-layout">
+    <div class="slide-inner slide-11 slide-vibe-cc">
+      <p class="slide-eyebrow">Vibe coding</p>
+      <h1 class="slide-headline">Code is becoming a throwaway artifact.</h1>
+      <p class="slide-sub"><strong>42%</strong> of committed code is AI-generated or significantly AI-assisted. Cursor reached <strong>$4B ARR</strong> and was acquired for <strong>$60B all-stock</strong>. Lovable hit <strong>$500M ARR</strong> on <strong>146 employees</strong> — ~$3.4M ARR per head.</p>
+      <div class="vibe-grid" id="vibeGrid"></div>
+      <div class="cc-flow">
+        <div class="cc-flow-head">
+          <span class="cc-flow-tag">CATEGORY CONSOLIDATION</span>
+          <span class="cc-flow-sub">Independent coding tools now face acquisition-consolidation and platform-bundling at the same time. This is model + application vertical integration, not a valuation event.</span>
+        </div>
+        <div class="cc-lanes">
+          <div class="cc-lane">
+            <span class="cc-lane-from">Independent tool</span>
+            <span class="cc-lane-arrow">&darr;</span>
+            <span class="cc-lane-to">Cursor &rarr; SpaceXAI</span>
+            <span class="cc-lane-note"><strong>$4B ARR</strong>; $60B all-stock, option exercised <strong>Jun 16</strong>. Grok 4.5 was <strong>co-trained with Cursor</strong> — the IDE and the frontier model now sit inside one public company.</span>
+          </div>
+          <div class="cc-lane">
+            <span class="cc-lane-from">Model-layer surface</span>
+            <span class="cc-lane-arrow">&darr;</span>
+            <span class="cc-lane-to">Claude Code &rarr; Sonnet 5 bundle</span>
+            <span class="cc-lane-note">Claude Code became the <strong>default surface for Sonnet 5</strong> from Jul 1, at a promo $2/$10. The coding tool ships with the model.</span>
+          </div>
+          <div class="cc-lane">
+            <span class="cc-lane-from">Assistant surface</span>
+            <span class="cc-lane-arrow">&darr;</span>
+            <span class="cc-lane-to">Work + Codex &rarr; OpenAI platform</span>
+            <span class="cc-lane-note">ChatGPT Work shipped <strong>Jul 9</strong>; Codex + Work reached ~<strong>10M WAU</strong> by Jul 21, doubling in nine days (OpenAI-disclosed; &ldquo;active&rdquo; undefined).</span>
+          </div>
+          <div class="cc-lane">
+            <span class="cc-lane-from">New entrant</span>
+            <span class="cc-lane-arrow">&darr;</span>
+            <span class="cc-lane-to">Muse Spark &rarr; Meta enters</span>
+            <span class="cc-lane-note">Meta entered coding directly on <strong>Jul 9</strong> with Muse Spark 1.1 at $1.25/$4.25 — its first paid Model API.</span>
+          </div>
+        </div>
+        <p class="cc-flow-sub" style="margin-top:9px">Margin note: Cursor&rsquo;s reported gross margin is close to negative on token pass-through, which makes a <strong style="color:#E8E9ED">~15&times; LTM ARR</strong> acquisition multiple the expected outcome for this cost structure, not a discount.</p>
+      </div>
+      <p class="slide-source">Source: <a href="https://www.sonarsource.com/state-of-code-developer-survey-report.pdf" target="_blank" rel="noopener">SonarSource 2026 State of Code Developer Survey</a> (42% AI-authored code, 72% daily use among triers). Stack Overflow 2025 — 51% daily — as secondary signal.</p>
+    </div>
+    <a class="dive-deeper" data-slide-link="11">→ Dive deeper</a>
+  </section>
+  <!-- ============== SLIDE 12: Voice AI (NEW — Aug 2026) ============== -->
+  <section class="slide" data-slide="12" id="slide-12">
+    <div class="slide-inner slide-voice">
+      <p class="slide-eyebrow">Voice AI &middot; the category that cleared the bar</p>
+      <h1 class="slide-headline">Voice stopped being a feature. <span class="hl-accent hl-accent--teal">It became a layer.</span></h1>
+      <p class="slide-sub">A year ago voice was a demo. In July 2026 it has a $600M ARR independent, a full-duplex frontier model, and 41% of the Fortune 500 paying for it.</p>
+
+      <!-- Animated waveform -->
+      <div class="va-wave" id="voiceWave" aria-hidden="true">
+        <div class="va-wave-bars" id="voiceWaveBars"></div>
+        <div class="va-wave-mid"></div>
+        <div class="va-wave-caption">
+          <span class="va-wave-tag">FULL DUPLEX</span>
+          <span class="va-wave-text">Both sides speak at once. Turn-taking stopped being the product constraint.</span>
+        </div>
+      </div>
+
+      <div class="va-cards">
+        <div class="va-card" style="--va-c:#4ECDC4">
+          <div class="va-card-head">
+            <span class="va-card-name">ELEVENLABS</span>
+            <span class="va-card-tag">Independent · July 2026</span>
+          </div>
+          <span class="va-card-num tabnum">$600M</span>
+          <span class="va-card-label">ARR — from $330M at end-2025 (~175% YoY)</span>
+          <ul class="va-card-list">
+            <li><strong class="tabnum">41%</strong> of the Fortune 500 as customers</li>
+            <li><strong class="tabnum">1B+</strong> end users reached via API</li>
+            <li><strong class="tabnum">$22M</strong> paid out to <strong class="tabnum">10.4K+</strong> voice creators</li>
+          </ul>
+          <span class="va-card-caveat">Company-disclosed, unaudited (CEO, All-In conference)</span>
+        </div>
+
+        <div class="va-card" style="--va-c:#10A37F">
+          <div class="va-card-head">
+            <span class="va-card-name">OPENAI GPT-LIVE</span>
+            <span class="va-card-tag">Shipped July 8, 2026</span>
+          </div>
+          <span class="va-card-num">Full duplex</span>
+          <span class="va-card-label">GPT-Live-1 and GPT-Live-mini, released globally</span>
+          <ul class="va-card-list">
+            <li>Simultaneous listen-and-speak — no push-to-talk turn model</li>
+            <li>Platform-level: voice ships with the frontier model, not beside it</li>
+            <li>The independent layer and the platform layer now overlap</li>
+          </ul>
+          <span class="va-card-caveat">Primary source: OpenAI product announcement</span>
+        </div>
+      </div>
+
+      <div class="va-strip">
+        <div class="va-strip-item">
+          <span class="va-strip-num tabnum">$600M</span>
+          <span class="va-strip-label">ELEVENLABS ARR</span>
+        </div>
+        <div class="va-strip-item">
+          <span class="va-strip-num tabnum">41%</span>
+          <span class="va-strip-label">OF THE FORTUNE 500</span>
+        </div>
+        <div class="va-strip-item">
+          <span class="va-strip-num tabnum">1B+</span>
+          <span class="va-strip-label">API END USERS</span>
+        </div>
+        <div class="va-strip-item va-strip-item--dvc">
+          <span class="va-strip-num">FleetWorks · Avoca</span>
+          <span class="va-strip-label">DVC VOICE-AGENT EXPOSURE</span>
+        </div>
+      </div>
+
+      <p class="slide-source">Sources: <a href="https://www.postbeam.ai/blog/how-elevenlabs-grows" target="_blank" rel="noopener">Postbeam</a> and <a href="https://www.bleap.finance/blog/elevenlabs-explained" target="_blank" rel="noopener">Bleap</a> (ElevenLabs, company-disclosed) &middot; <a href="https://openai.com/index/introducing-gpt-live/" target="_blank" rel="noopener">OpenAI GPT-Live</a></p>
+    </div>
+    <a class="dive-deeper" data-slide-link="12">→ Dive deeper</a>
+  </section>
+  <!-- ============== SLIDE 10: Business Models + ARPU (NATIVE) ============== -->
+  <section class="slide" data-slide="13" id="slide-13">
+    <div class="slide-inner slide-iframe-layout slide-bizmodels">
       <div class="iframe-headline">
         <p class="slide-eyebrow">Business models · usage is the engine</p>
-        <h1 class="slide-headline">Per-token beats per-seat when AI does the work.</h1>
-        <p class="slide-sub">Anthropic 3&times; in 4 months on per-token API. Perplexity +50% in a month after Computer. Usage is where revenue scales with value.</p>
+        <h1 class="slide-headline">Outcome pricing stopped being a thesis. <span class="hl-accent hl-accent--teal">It became a price list.</span></h1>
+        <p class="slide-sub">In one quarter the category acquired published prices, an incumbent convert, a quantified TAM at risk and a services proof point. What is unresolved is <strong>margin</strong>, not mechanism.</p>
       </div>
       <div class="pricing-row pricing-row--compact">
         <div class="pricing-icon pricing-icon--cracked"><div class="pricing-glyph">👤</div><span class="pricing-label">Per-seat</span></div>
@@ -758,7 +1157,25 @@
         <div class="pricing-icon pricing-icon--cracked"><div class="pricing-glyph">◉</div><span class="pricing-label">Per-ad</span></div>
         <div class="pricing-icon pricing-icon--glow"><div class="pricing-glyph">✓</div><span class="pricing-label pricing-label--teal">Per-outcome / per-task</span></div>
       </div>
-      <div class="slide-arpu-block">
+      <div class="pm-band">
+        <div class="pm-head">
+          <span class="pm-tag">A PRICED MARKET</span>
+          <span class="pm-sub">Published per-outcome prices now exist across the category — not projections, list prices.</span>
+        </div>
+        <div class="pm-prices">
+          <div class="pm-price"><span class="pm-price-num tabnum">$0.99</span><span class="pm-price-label">Intercom <strong>Fin</strong> — per resolution ($49/mo base incl. 50)</span></div>
+          <div class="pm-price"><span class="pm-price-num tabnum">from $1.50</span><span class="pm-price-label"><strong>Zendesk</strong> — per verified resolution</span></div>
+          <div class="pm-price"><span class="pm-price-num tabnum">~$1.50</span><span class="pm-price-label"><strong>Sierra</strong> — per resolution, nothing on human escalation</span></div>
+          <div class="pm-price"><span class="pm-price-num tabnum">$1–3.50</span><span class="pm-price-label"><strong>Sierra / Decagon</strong> band per resolved interaction</span></div>
+          <div class="pm-price"><span class="pm-price-num tabnum">$0.10</span><span class="pm-price-label">Salesforce <strong>Flex Credits</strong> — per action</span></div>
+        </div>
+        <div class="pm-proof">
+          <div class="pm-proof-item"><span class="pm-proof-num">GA</span><span class="pm-proof-label"><strong>Agentforce Help Agent</strong> shipped pay-per-resolution GA in July — and Salesforce closed the <strong>m3ter</strong> acquisition Jul 1 to meter and bill it.</span></div>
+          <div class="pm-proof-item"><span class="pm-proof-num tabnum">$234B</span><span class="pm-proof-label">Gartner: ~<strong>20%</strong> of enterprise application software spend is exposed to &ldquo;agentic arbitrage&rdquo; — outcomes delivered without the seat login.</span></div>
+          <div class="pm-proof-item"><span class="pm-proof-num tabnum">45%</span><span class="pm-proof-label">of <strong>Cognizant&rsquo;s</strong> new BPO contracts are now signed on outcome-based commercial models. Services pricing is converting too.</span></div>
+        </div>
+      </div>
+      <div class="slide-arpu-block slide-arpu-block--compact">
         <p class="slide-arpu-intro">
           Charge for the work. Anthropic: <strong class="tabnum">$30B+</strong> run-rate, <strong class="tabnum">3×</strong> in 4 months, ARPU <strong class="tabnum">$16.20/mo</strong> — per-token. Perplexity: ~<strong class="tabnum">$420M</strong> ARR after Computer (per-task). OpenAI: <strong class="tabnum">900M</strong> WAU, only <strong class="tabnum slide-arpu-pct">5.6%</strong> pay — subscription distributes; usage captures.
         </p>
@@ -807,13 +1224,13 @@
         <p class="slide-arpu-foot">
           <strong>Outcome is the direction. Hybrid usage is the reality. Subs are a floor.</strong> Anthropic ARPU <strong class="tabnum">$16.20/mo</strong> vs OpenAI <strong class="tabnum">$2.20</strong>, Google <strong class="tabnum">$1.10</strong>. Coatue: only <strong class="tabnum">3.8%</strong> of traditional SaaS spend is consumption-based so far. Orb: most agent companies are on hybrid pricing today.
         </p>
-        <span class="stat-source">Source: Counterpoint Research, Anthropic, Perplexity, OpenAI, Coatue C:\Takes, Orb 2026 State of AI Agent Pricing</span>
+        <span class="stat-source">Sources: <a href="https://www.thefoundersreport.com/the-seat-is-dying-vertical-ai-saas-bets-on-outcomes-over-logins" target="_blank" rel="noopener">The Founders Report</a> (price list, Gartner $234B) &middot; <a href="https://www.teqfocus.com/newsletter/teqfocus-insights-july-2026-ai-pricing-shifts-to-outcomes/" target="_blank" rel="noopener">Teqfocus</a> (Agentforce GA, m3ter) &middot; <a href="https://www.moneycontrol.com/artificial-intelligence/outcome-based-pricing-gains-ground-as-45-of-cognizant-s-new-bpo-contracts-adopt-the-model-article-13966968.html" target="_blank" rel="noopener">Moneycontrol</a> (Cognizant) &middot; Counterpoint Research, Anthropic, OpenAI, Orb 2026 State of AI Agent Pricing</span>
       </div>
     </div>
-    <a class="dive-deeper" data-slide-link="11">→ Dive deeper</a>
+    <a class="dive-deeper" data-slide-link="13">→ Dive deeper</a>
   </section>
   <!-- ============== SLIDE 11: Sequoia Services Matrix (NATIVE) ============== -->
-  <section class="slide" data-slide="12" id="slide-12">
+  <section class="slide" data-slide="14" id="slide-14">
     <div class="slide-inner slide-iframe-layout slide-iframe-layout--full">
       <div class="slide-text slide-text--compact">
         <p class="slide-eyebrow">Services disruption</p>
@@ -903,10 +1320,10 @@
       <span class="stat-source" style="display:block;text-align:center;margin-top:1rem">Framework: Sequoia Capital, 2026 &mdash; contenders filtered to $10M+ raised &mdash; <span style="color:#7C4DFF">DVC portfolio</span> highlighted</span>
       </div>
     </div>
-    <a class="dive-deeper" data-slide-link="12">→ Dive deeper</a>
+    <a class="dive-deeper" data-slide-link="14">→ Dive deeper</a>
   </section>
   <!-- ============== SLIDE 12: Three attack angles (NATIVE) ============== -->
-  <section class="slide" data-slide="13" id="slide-13">
+  <section class="slide" data-slide="15" id="slide-15">
     <div class="slide-inner slide-iframe-layout">
       <div class="iframe-headline">
         <p class="slide-eyebrow">How founders attack the $1.5T services map</p>
@@ -915,48 +1332,178 @@
       </div>
       <div class="slide-attack-stage" id="attack-angles-stage" aria-label="Three attack angles — stage view"></div>
     </div>
-    <a class="dive-deeper" data-slide-link="13">→ Dive deeper</a>
+    <a class="dive-deeper" data-slide-link="15">→ Dive deeper</a>
+  </section>
+  <!-- ============== SLIDE 16: Healthcare AI (NEW — Aug 2026) ============== -->
+  <section class="slide" data-slide="16" id="slide-16">
+    <div class="slide-inner slide-hcs">
+      <p class="slide-eyebrow">Healthcare AI &middot; incentive mechanics</p>
+      <h1 class="slide-headline">AI makes healthcare more efficient — <span class="hl-accent hl-accent--coral">and more expensive.</span></h1>
+      <p class="slide-sub">AI follows incentives. In fee-for-service, the same visit documented better is a higher-severity claim. Efficiency and total spend both go up.</p>
+
+      <div class="hcs-grid">
+        <!-- LEFT: the two-arrow tension -->
+        <div class="hcs-tension">
+          <span class="hcs-panel-tag">THE MECHANISM</span>
+          <div class="hcs-arrow hcs-arrow--down">
+            <svg viewBox="0 0 40 90" class="hcs-arrow-svg" aria-hidden="true">
+              <path d="M20 6 V70" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+              <path d="M8 58 L20 76 L32 58" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <div class="hcs-arrow-text">
+              <span class="hcs-arrow-title">WORKFLOW TIME</span>
+              <span class="hcs-arrow-body">Ambient documentation is real: <strong>−13 to −16 min/day</strong> of EHR and documentation time in a 5-hospital JAMA study.</span>
+            </div>
+          </div>
+          <div class="hcs-arrow hcs-arrow--up">
+            <svg viewBox="0 0 40 90" class="hcs-arrow-svg" aria-hidden="true">
+              <path d="M20 84 V20" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+              <path d="M8 32 L20 14 L32 32" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <div class="hcs-arrow-text">
+              <span class="hcs-arrow-title">CLAIM SEVERITY &amp; COST</span>
+              <span class="hcs-arrow-body">PwC's mechanism is not more services — it is <strong>&ldquo;changes in severity, mix and amount per claim.&rdquo;</strong></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- MIDDLE: the numbers -->
+        <div class="hcs-numbers">
+          <span class="hcs-panel-tag">WHAT THE PAYERS NOW SAY</span>
+          <div class="hcs-num-card hcs-num-card--lead">
+            <span class="hcs-num tabnum">9%</span>
+            <span class="hcs-num-label">2027 medical cost trend, group plans (8.5% individual) — the highest in nearly two decades</span>
+          </div>
+          <div class="hcs-num-card">
+            <span class="hcs-num tabnum">~70%</span>
+            <span class="hcs-num-label">of health plans rank provider AI documentation and coding in their <strong>top three</strong> cost inflators. ~20% call it the single biggest.</span>
+          </div>
+          <div class="hcs-num-card hcs-num-card--evidence">
+            <span class="hcs-num tabnum">4% → 12.3%</span>
+            <span class="hcs-num-label">One maternity code's share of admissions, 2022–2025, <strong>while transfusions barely moved</strong> — <strong class="tabnum">+$22M</strong> of coding-intensity spend at the studied hospitals.</span>
+          </div>
+        </div>
+
+        <!-- RIGHT: two gates -->
+        <div class="hcs-gates">
+          <span class="hcs-panel-tag">TWO GATES</span>
+          <div class="hcs-gate hcs-gate--reimb">
+            <span class="hcs-gate-num">01</span>
+            <span class="hcs-gate-title">REIMBURSEMENT</span>
+            <span class="hcs-gate-sub">decides what gets bought</span>
+            <ul class="hcs-gate-list">
+              <li><strong>WISeR</strong> survived the Senate <strong class="tabnum">46–50</strong> — AI-assisted prior auth is live in <em>Original</em> Medicare.</li>
+              <li><strong>ePA</strong> becomes mandatory <strong>Jan 1, 2027</strong> for MA, Medicaid, CHIP and FFE plans.</li>
+            </ul>
+          </div>
+          <div class="hcs-gate hcs-gate--liab">
+            <span class="hcs-gate-num">02</span>
+            <span class="hcs-gate-title">LIABILITY</span>
+            <span class="hcs-gate-sub">decides what gets deployed</span>
+            <ul class="hcs-gate-list">
+              <li><strong class="tabnum">76.6%</strong> of harmful errors across every tested clinical AI were <strong>omissions</strong> (NOHARM; not peer-reviewed, disputed).</li>
+              <li>OpenAI sued for the <strong>unauthorized practice of medicine</strong> one day before Health in ChatGPT launched.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- BOTTOM: two clocks + DVC -->
+      <div class="hcs-bottom">
+        <div class="hcs-clocks">
+          <span class="hcs-clock-tag">TWO CLOCKS, NOT ONE</span>
+          <div class="hcs-clock hcs-clock--admin">
+            <span class="hcs-clock-num tabnum">2–4 yrs</span>
+            <span class="hcs-clock-label"><strong>ADMIN</strong> — moves on regulatory deadlines (ePA 2027, NHS App triage by April 2028)</span>
+          </div>
+          <div class="hcs-clock hcs-clock--clinical">
+            <span class="hcs-clock-num tabnum">10–15 yrs</span>
+            <span class="hcs-clock-label"><strong>CLINICAL AUTONOMY</strong> — moves on evidence and liability. 43% piloting agents, only <strong class="tabnum">3%</strong> live; 68% pre-scale; FDA has authorised <strong>zero</strong> genAI devices.</span>
+          </div>
+        </div>
+        <div class="hcs-dvc">
+          <span class="hcs-dvc-tag">DVC PORTFOLIO</span>
+          <div class="hcs-dvc-item">
+            <span class="hcs-dvc-name">DOCTRONIC</span>
+            <span class="hcs-dvc-body">Acquired <strong>Summer Health</strong> (Jul 29) for 100K+ pediatric interactions — buying training data, not distribution.</span>
+          </div>
+          <div class="hcs-dvc-item">
+            <span class="hcs-dvc-name">COLLECTLY</span>
+            <span class="hcs-dvc-body">Live in the <strong>Epic Showroom</strong> (Jul 9) across 3,000+ facilities; 475K+ patient billing questions resolved.<span class="hcs-dvc-caveat">company-disclosed</span></span>
+          </div>
+        </div>
+      </div>
+
+      <p class="slide-source">Sources: <a href="https://medicalxpress.com/news/2026-04-ai-scribes-linked-modest-reductions.html" target="_blank" rel="noopener">JAMA via Medical Xpress</a> (scribe time) &middot; <a href="https://www.axios.com/2026/06/12/health-ai-more-expensive-costs" target="_blank" rel="noopener">Axios</a> and <a href="https://fortune.com/2026/06/12/ai-making-medical-bills-higher/" target="_blank" rel="noopener">Fortune</a> (PwC 2027 trend, BCBS coding intensity) &middot; <a href="https://www.statnews.com/2026/07/16/medicare-ai-prior-authorization-pilot-wiser-senate-vote/" target="_blank" rel="noopener">STAT</a> (WISeR) &middot; <a href="https://fortune.com/2026/07/29/new-medical-ai-study-same-flaw-openevidence-openai-anthropic-doximity/" target="_blank" rel="noopener">Fortune</a> (NOHARM) &middot; <a href="https://www.reuters.com/legal/government/chatgpts-advice-kept-man-seeking-medical-treatment-dangerous-condition-lawsuit-2026-07-22/" target="_blank" rel="noopener">Reuters</a> (lawsuit) &middot; <a href="https://www.microsoft.com/en-us/microsoft-cloud/blog/healthcare/2026/02/12/assessing-healthcares-agentic-ai-readiness-new-research-from-microsoft-and-the-health-management-academy/" target="_blank" rel="noopener">Microsoft/HMA</a> (3% live)</p>
+    </div>
+    <a class="dive-deeper" data-slide-link="16">→ Dive deeper</a>
   </section>
   <!-- ============== SLIDE 13: Physical AI (REBUILT) ============== -->
-  <section class="slide" data-slide="14" id="slide-14">
-    <div class="slide-inner slide-physical">
+  <section class="slide" data-slide="17" id="slide-17">
+    <div class="slide-inner slide-physical slide-physical-aug">
       <p class="slide-eyebrow">Physical AI</p>
       <h1 class="slide-headline">It already left the screen.</h1>
-      <p class="slide-sub">$38 trillion labor market in play. Slower than software people think. Faster than industrial incumbents hope.</p>
+      <p class="slide-sub">$38 trillion labor market in play. The Waymo&ndash;Tesla gap <strong>widened</strong> rather than closed, and humanoids reached the public markets before the units did.</p>
 
       <div class="phys-tiles" id="physTiles"></div>
 
       <div class="phys-stats-strip" id="physStatsStrip"></div>
+
+      <div class="tk-strip" style="margin-top:14px">
+        <div class="tk-strip-head">
+          <span class="tk-strip-tag" style="background:#E8837C">FUNDING RAN AHEAD OF DELIVERY</span>
+          <span class="tk-strip-warn">Humanoid funding hit $8.6B in 2026 by late July &mdash; 1.8&times; all of 2025 &mdash; with two public-market events. The delivery ledger has not moved with the cap table.</span>
+        </div>
+        <div class="tk-items">
+          <div class="tk-item" style="--tk-c:#F5C542">
+            <span class="tk-item-num tabnum">$39B</span>
+            <span class="tk-item-label"><strong>FIGURE AI</strong> reported valuation on $2.34B raised &mdash; the sector&rsquo;s high-water mark.</span>
+          </div>
+          <div class="tk-item" style="--tk-c:#4A90D9">
+            <span class="tk-item-num tabnum">~$2.5B</span>
+            <span class="tk-item-label"><strong>AGILITY ROBOTICS</strong> going public via SPAC, raising $620M+ &mdash; and its CEO declined to promise a home robot.</span>
+          </div>
+          <div class="tk-item" style="--tk-c:#7C4DFF">
+            <span class="tk-item-num tabnum">$1.35B</span>
+            <span class="tk-item-label"><strong>HUMANOID</strong> (UK) &mdash; $152M Series A, Jul 22. Europe&rsquo;s first pure-play humanoid unicorn. <strong>Unitree</strong> IPO approved at ~$618M.</span>
+          </div>
+          <div class="tk-item tk-item--axis" style="border-color:rgba(232,131,124,0.26);background:rgba(232,131,124,0.06)">
+            <span class="tk-item-num" style="color:#E8837C">THE CAVEAT</span>
+            <span class="tk-item-label">~$2.7B raised across four humanoid companies between Sept 2025 and Jul 2026 against unit deliveries that do not remotely match. NVIDIA disclosed <strong>&gt;$9B</strong> of physical-AI revenue TTM &mdash; the picks-and-shovels are real; the robots are not yet shipping at scale.</span>
+          </div>
+        </div>
+      </div>
+      <p class="slide-source">Sources: <a href="https://robofutur.com/en/articles/robotaxi-reality-check-2026/" target="_blank" rel="noopener">RoboFutur</a> and <a href="https://www.techtimes.com/articles/320170/20260711/waymo-driverless-four-more-cities-fleet-14-times-teslas-sensor-debate-hits-road.htm" target="_blank" rel="noopener">Tech Times</a> (Waymo) &middot; <a href="https://www.reuters.com/business/autos-transportation/teslas-once-bullish-tone-robotaxis-shifts-2026-07-23/" target="_blank" rel="noopener">Reuters</a> and <a href="https://electrek.co/2026/07/22/tesla-robotaxi-growth-flat-own-chart-q2-2026/" target="_blank" rel="noopener">Electrek</a> (Tesla) &middot; <a href="https://venturepost.co/funding/humanoid-robot-startups-2026" target="_blank" rel="noopener">Venture Post</a> and <a href="https://www.grabarobot.com/blog/humanoid-funding-vs-units-delivered-2026/" target="_blank" rel="noopener">GrabaRobot</a> (humanoids). Rhoda figures per DVC.</p>
     </div>
-    <a class="dive-deeper" data-slide-link="14">→ Dive deeper</a>
+    <a class="dive-deeper" data-slide-link="17">→ Dive deeper</a>
   </section>
   <!-- ============== SLIDE 14: Key Learnings (close) ============== -->
-  <section class="slide" data-slide="15" id="slide-15">
+  <section class="slide" data-slide="18" id="slide-18">
     <div class="slide-inner slide-15 slide-keylearn">
       <p class="slide-eyebrow">Key learnings</p>
       <h1 class="slide-headline">Six things <span class="hl-accent hl-accent--teal">we now believe</span>.</h1>
-      <p class="slide-sub">After mapping the stack: where value is shifting, what's structural, and where today's leaders are most exposed.</p>
+      <p class="slide-sub">Revised August 3, 2026. Where value is shifting, what's structural, and which of our own beliefs the last quarter forced us to retire.</p>
 
       <ol class="kl-grid" aria-label="Key learnings">
         <li class="kl-card kl-card--teal">
           <span class="kl-num">01</span>
-          <h3 class="kl-title">Intelligence got cheap. The stack didn't.</h3>
-          <p class="kl-body">Inference fell <strong>99.6%</strong> in 36 months. The application surface around the model — distribution, memory, tools, eval — is still being invented.</p>
+          <h3 class="kl-title">Models commoditize. Distribution wins — but distribution changed meaning.</h3>
+          <p class="kl-body">The contested surfaces stopped being app stores and became <strong>records, regulators and institutional accounts</strong>. OpenAI now connects hospital records and Apple Health inside ChatGPT; Mayo Clinic owns a frontier clinical model that Microsoft distributes; OpenAI and Anthropic <em>donated</em> public-health seats rather than sell them. Leadership also inverted: Anthropic at <strong>34.4%</strong> of US paid business use vs ChatGPT's 32.3%.</p>
         </li>
         <li class="kl-card kl-card--coral">
           <span class="kl-num">02</span>
-          <h3 class="kl-title">The bottleneck moved to atoms.</h3>
-          <p class="kl-body">Compute, power, memory, distribution. <strong>~$700B</strong> of 2026 hyperscaler CapEx for ~$60B of app revenue. Whoever owns the scarce input prices the cycle.</p>
+          <h3 class="kl-title">Energy is still binding — and it is being met with gas, not fission.</h3>
+          <p class="kl-body"><strong>9.8 GW</strong> of hyperscaler nuclear committed against <strong>1.92 GW</strong> operational, bridged by a <strong>2.67 GW</strong> off-grid gas plant. The real constraints are construction and financing: debt went from <strong>9% to 32%</strong> of hyperscaler capex and Alphabet's free cash flow turned negative for the first time since 2004.</p>
         </li>
         <li class="kl-card kl-card--gold">
           <span class="kl-num">03</span>
-          <h3 class="kl-title">Pricing is unbundling from seats.</h3>
-          <p class="kl-body">Per-token, per-task, per-work-unit beat flat seats when the agent does the work. Outcome pricing is where AI margin actually shows up.</p>
+          <h3 class="kl-title">Outcome pricing has been invented. Margin is the unresolved variable.</h3>
+          <p class="kl-body">We are retiring &ldquo;the pricing model is still being invented.&rdquo; It is now a price list: Fin <strong>$0.99</strong>/resolution, Zendesk from <strong>$1.50</strong>, Sierra ~<strong>$1.50</strong>, Flex Credits <strong>$0.10</strong>/action, Agentforce pay-per-resolution GA. Gartner puts <strong>$234B</strong> (~20% of enterprise app spend) in scope. What is unresolved is whether those unit economics survive token costs — and why the best vertical franchises still sell seats.</p>
         </li>
         <li class="kl-card kl-card--purple">
           <span class="kl-num">04</span>
-          <h3 class="kl-title">Agents and vibe coding shipped.</h3>
-          <p class="kl-body"><strong>42%</strong> of committed code is AI-authored or AI-assisted. Cursor, Claude Code, Lovable, Devin are revenue lines, not demos. Software creation is a new workflow.</p>
+          <h3 class="kl-title">Open weights lead on scale. Regulated inference stays proprietary.</h3>
+          <p class="kl-body">Chinese open weights took the parameter crown — <strong>Kimi K3 at 2.8T</strong>, Qwen3.8-Max at 2.4T, DeepSeek V4 Pro at 1.6T. They win because they are <em>ownable</em>, not because they are cheapest: closed pricing became a barbell and token efficiency now decides inference cost. Regulated enterprise inference remains proprietary or hybrid.</p>
         </li>
         <li class="kl-card kl-card--teal">
           <span class="kl-num">05</span>
@@ -965,14 +1512,14 @@
         </li>
         <li class="kl-card kl-card--coral">
           <span class="kl-num">06</span>
-          <h3 class="kl-title">Physical AI is next — and slower.</h3>
-          <p class="kl-body"><strong>$38T</strong> labor market in play, but latency, safety, and regulation gate the timeline. Mobility and logistics first; humanoids in controlled environments before open-world.</p>
+          <h3 class="kl-title">AI follows incentives. Efficiency doesn&rsquo;t guarantee lower spend.</h3>
+          <p class="kl-body">Health plans project a <strong>9%</strong> 2027 medical cost trend — the highest in ~two decades — and ~<strong>70%</strong> rank provider AI documentation and coding among their top three inflators. Same care, higher-severity code, no rise in denials. Read across: in any fee-for-service market, AI raises throughput <em>and</em> the bill. Humanoids stay &ldquo;real but slower&rdquo; for the same class of reason — <strong>$8.6B</strong> of 2026 funding against a delivery ledger that hasn&rsquo;t moved.</p>
         </li>
       </ol>
 
-      <p class="kl-kicker">You are not late to a trend. You are early to a restructuring of the global economy.</p>
+      <p class="kl-kicker">Not a bubble — a repricing with a mechanism. Public markets have started marking the private book, and concentration (OpenAI + Anthropic took <strong>43%</strong> of every H1 2026 venture dollar) is now market structure rather than a warning. You are not late to a trend; you are early to a restructuring.</p>
     </div>
-    <a class="dive-deeper" data-slide-link="15">→ Dive deeper</a>
+    <a class="dive-deeper" data-slide-link="18">→ Dive deeper</a>
   </section>
 
 </main>

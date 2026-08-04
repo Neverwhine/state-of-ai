@@ -5893,3 +5893,119 @@ html {
   .capex-total-badge { position: static; margin-top: 0.5rem; }
   .capex-header { flex-direction: column; align-items: flex-start; }
 }
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   AUGUST 3, 2026 REFRESH — report update blocks
+   A single, consistent shell so every new/updated block is visibly
+   dated and every number carries a real source link.
+   ═══════════════════════════════════════════════════════════════════ */
+.aug-block {
+  --aug-c: #4ECDC4;
+  background: var(--bg-card);
+  border: 1px solid rgba(160,168,188,0.14);
+  border-left: 3px solid var(--aug-c);
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  margin: 1.75rem 0;
+}
+.aug-block-head {
+  display: flex; align-items: baseline; gap: 0.75rem;
+  flex-wrap: wrap; margin-bottom: 0.85rem;
+}
+.aug-stamp {
+  font-size: 0.62rem; font-weight: 800; letter-spacing: 0.14em;
+  text-transform: uppercase; color: #0E1014;
+  background: var(--aug-c); padding: 0.22rem 0.55rem; border-radius: 4px;
+  white-space: nowrap;
+}
+.aug-block-title {
+  font-size: 1.02rem; font-weight: 800; color: #E8E9ED;
+  letter-spacing: -0.01em; margin: 0;
+}
+.aug-block-lede {
+  font-size: 0.9rem; line-height: 1.6; color: #C8CCD4; margin: 0 0 0.85rem;
+}
+.aug-block-lede strong { color: #E8E9ED; }
+.aug-block p { font-size: 0.87rem; line-height: 1.6; color: #C8CCD4; margin: 0 0 0.7rem; }
+.aug-block p:last-of-type { margin-bottom: 0; }
+.aug-block strong { color: #E8E9ED; font-weight: 700; }
+.aug-block em { color: #A0A8BC; }
+.aug-block a { color: var(--aug-c); text-decoration: underline; text-underline-offset: 2px; }
+.aug-block a:hover { color: #E8E9ED; }
+
+.aug-grid { display: grid; gap: 0.75rem; }
+.aug-grid--2 { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+.aug-grid--3 { grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); }
+.aug-grid--4 { grid-template-columns: repeat(auto-fit, minmax(175px, 1fr)); }
+
+.aug-card {
+  background: rgba(160,168,188,0.05);
+  border: 1px solid rgba(160,168,188,0.12);
+  border-radius: 9px; padding: 0.8rem 0.95rem;
+  display: flex; flex-direction: column; gap: 0.2rem;
+}
+.aug-card--accent { background: color-mix(in srgb, var(--aug-c) 8%, transparent); border-color: color-mix(in srgb, var(--aug-c) 30%, transparent); }
+.aug-card-num {
+  font-size: 1.5rem; font-weight: 800; letter-spacing: -0.025em;
+  color: var(--aug-c); line-height: 1.05;
+}
+.aug-card-num--sm { font-size: 1.05rem; }
+.aug-card-label { font-size: 0.75rem; line-height: 1.45; color: #A0A8BC; }
+.aug-card-label strong { color: #C8CCD4; }
+.aug-card-name {
+  font-size: 0.7rem; font-weight: 800; letter-spacing: 0.09em;
+  color: var(--aug-c); text-transform: uppercase;
+}
+.aug-card-body { font-size: 0.78rem; line-height: 1.5; color: #C8CCD4; }
+
+.aug-list { list-style: none; margin: 0.5rem 0 0; padding: 0; display: flex; flex-direction: column; gap: 0.45rem; }
+.aug-list li {
+  font-size: 0.85rem; line-height: 1.55; color: #C8CCD4;
+  padding-left: 1rem; position: relative;
+}
+.aug-list li::before {
+  content: ''; position: absolute; left: 0; top: 0.55em;
+  width: 5px; height: 5px; border-radius: 50%; background: var(--aug-c);
+}
+.aug-list strong { color: #E8E9ED; }
+
+.aug-sources {
+  display: block; font-size: 0.72rem; line-height: 1.55;
+  color: #6B7280; margin-top: 0.85rem;
+  padding-top: 0.65rem; border-top: 1px solid rgba(160,168,188,0.1);
+}
+.aug-sources a { color: #A0A8BC; text-decoration: underline; text-underline-offset: 2px; }
+.aug-sources a:hover { color: var(--aug-c); }
+
+.aug-caveat {
+  font-size: 0.76rem; line-height: 1.5; color: #A0A8BC;
+  font-style: italic; margin-top: 0.7rem;
+  padding: 0.55rem 0.8rem;
+  background: rgba(232,131,124,0.05);
+  border-left: 2px solid rgba(232,131,124,0.4);
+  border-radius: 0 6px 6px 0;
+}
+.aug-caveat strong { color: #E8837C; font-style: normal; }
+
+/* Two-arrow tension figure reused in the healthcare report block */
+.aug-tension { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+.aug-tension-item {
+  border-radius: 9px; padding: 0.8rem 1rem;
+  border: 1px solid rgba(160,168,188,0.14);
+  display: flex; gap: 0.7rem; align-items: flex-start;
+}
+.aug-tension-item--down { border-left: 3px solid #4ECDC4; background: rgba(78,205,196,0.05); }
+.aug-tension-item--up   { border-left: 3px solid #E8837C; background: rgba(232,131,124,0.05); }
+.aug-tension-glyph { font-size: 1.35rem; line-height: 1; }
+.aug-tension-item--down .aug-tension-glyph { color: #4ECDC4; }
+.aug-tension-item--up   .aug-tension-glyph { color: #E8837C; }
+.aug-tension-title { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.09em; display: block; margin-bottom: 0.2rem; }
+.aug-tension-item--down .aug-tension-title { color: #4ECDC4; }
+.aug-tension-item--up   .aug-tension-title { color: #E8837C; }
+.aug-tension-body { font-size: 0.8rem; line-height: 1.5; color: #C8CCD4; }
+
+@media (max-width: 720px) {
+  .aug-block { padding: 1rem 1.1rem; }
+  .aug-tension { grid-template-columns: 1fr; }
+}

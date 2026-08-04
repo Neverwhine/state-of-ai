@@ -420,3 +420,42 @@ body.embed-mode .aa-chips { gap: 4px; }
   .aa-stage-facts li { grid-template-columns: 80px 1fr; gap: 0.4rem; }
   .aa-stage-fact-value { font-size: 0.84rem; }
 }
+
+
+/* ═══ Aug 2026 refresh — context bands under the three angles ═══ */
+.aa-context {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 12px; margin: 18px 0 8px;
+}
+.aa-context-card {
+  border-radius: 10px; padding: 11px 14px;
+  border: 1px solid rgba(160,168,188,0.16);
+  background: rgba(160,168,188,0.05);
+}
+.aa-context-card--rollup { border-left: 3px solid #E8837C; }
+.aa-context-card--model  { border-left: 3px solid #7C4DFF; }
+.aa-context-tag {
+  display: block; font-size: 10px; font-weight: 800;
+  letter-spacing: 0.13em; margin-bottom: 5px;
+}
+.aa-context-card--rollup .aa-context-tag { color: #E8837C; }
+.aa-context-card--model  .aa-context-tag { color: #7C4DFF; }
+.aa-context-body {
+  font-size: 12px; line-height: 1.5; color: #C8CCD4; margin: 0;
+}
+.aa-context-body strong { color: #E8E9ED; font-weight: 700; }
+.aa-context-note {
+  font-size: 10.5px; color: #A0A8BC; opacity: 0.8;
+  font-style: italic; margin: 4px 0 0;
+}
+
+/* Compact variant for the slide stage — must not force an internal scrollbar */
+.aa-context--compact { gap: 9px; margin: 10px 0 4px; }
+.aa-context--compact .aa-context-card { padding: 7px 11px; border-radius: 8px; }
+.aa-context--compact .aa-context-tag { font-size: 9px; margin-bottom: 3px; }
+.aa-context--compact .aa-context-body { font-size: 10.2px; line-height: 1.42; }
+.slide .aa-context-note { font-size: 9.5px; margin-top: 3px; }
+
+@media (max-width: 900px) {
+  .aa-context { grid-template-columns: 1fr; }
+}

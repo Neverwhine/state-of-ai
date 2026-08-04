@@ -1050,7 +1050,9 @@
     });
 
     // ── 3. model logos band (rotating) ──
-    const modelPool = ['DeepSeek V3.2', 'GPT-5.5', 'Claude Opus 4.7', 'Gemini 3.1 Pro', 'Qwen3.5', 'GLM-5', 'Llama 4'];
+    // Aug 3, 2026 flagship set — the point of the rotation is that the model
+    // underneath the application is interchangeable.
+    const modelPool = ['Claude Fable 5', 'GPT-5.6 Sol', 'Grok 4.5', 'Gemini 3.6 Flash', 'Kimi K3', 'DeepSeek V4', 'Muse Spark 1.1', 'Claude Sonnet 5'];
     const modelSlots = 5;
     const modelY = 440;
     const modelTexts = [];
@@ -1108,155 +1110,23 @@
     }
   };
 
-  // ─── SLIDE 5 — Model cluster (3 lanes: Commodity / Specialist / Restricted) ───
+  // ─── SLIDE 6 — Model barbell (4 readable lanes, native markup) ───
+  // Replaced the old cluster SVG in the Aug 2026 refresh. The lanes are static
+  // HTML so they stay legible in fullscreen; only the entrance is animated.
   ANIMATIONS[6] = function () {
-    const svg = document.getElementById('clusterSvg');
-    if (!svg) return;
-    if (svg.dataset.rendered === '1') {
-      // Replay only the entrance animation — don't re-render geometry
-      if (window.gsap) {
-        const lanes = svg.querySelectorAll('.lane-bg');
-        const titles = svg.querySelectorAll('.lane-title, .lane-sub');
-        const chips = svg.querySelectorAll('.cluster-chip');
-        const dep = svg.querySelectorAll('.cluster-chip--deprecated');
-        gsap.fromTo(lanes,  { opacity: 0, scaleX: 0.8, transformOrigin: '50% 50%' }, { opacity: 1, scaleX: 1, duration: 0.55, stagger: 0.1, ease: 'power2.out' });
-        gsap.fromTo(titles, { opacity: 0, y: -8 }, { opacity: 1, y: 0, duration: 0.4, delay: 0.15, stagger: 0.05 });
-        gsap.fromTo(chips,  { opacity: 0 }, { opacity: 1, duration: 0.45, stagger: 0.04, delay: 0.45, ease: 'power2.out' });
-        if (dep.length) gsap.to(dep, { opacity: 0.45, duration: 0.6, delay: 1.5 });
-      }
-      return;
-    }
-    const SVG_NS = 'http://www.w3.org/2000/svg';
-
-    // viewBox is 1200x520; carve into 3 vertical lanes.
-    const VW = 1200, VH = 520;
-    const laneCenters = { commodity: 200, specialist: 600, govOnly: 1000 };
-    const fillMap = {
-      commodity:   'rgba(232,131,124,0.16)',
-      specialist:  'rgba(245,197,66,0.18)',
-      govOnly:     'rgba(160,168,188,0.18)',
-      deprecated:  'rgba(124,77,255,0.10)'
-    };
-    const strokeMap = {
-      commodity:   '#E8837C',
-      specialist:  '#F5C542',
-      govOnly:     '#A0A8BC',
-      deprecated:  '#7C4DFF'
-    };
-
-    const groups = D.modelClusterGroups;
-
-    // ----- 1. draw lane backdrops + headers -----
-    const lanes = [
-      { key: 'commodity',  title: 'COMMODITY',  sub: 'Open-source, fungible' },
-      { key: 'specialist', title: 'SPECIALIST', sub: 'Vertical leaders' },
-      { key: 'govOnly',    title: 'RESTRICTED', sub: 'Government / safety-gated' }
-    ];
-    lanes.forEach(lane => {
-      const cx = laneCenters[lane.key];
-      // backdrop column
-      const bg = document.createElementNS(SVG_NS, 'rect');
-      bg.setAttribute('x', cx - 170); bg.setAttribute('y', 30);
-      bg.setAttribute('width', 340);  bg.setAttribute('height', VH - 60);
-      bg.setAttribute('rx', 14);
-      bg.setAttribute('fill', fillMap[lane.key].replace(/0\.\d+/, '0.05'));
-      bg.setAttribute('stroke', strokeMap[lane.key] + '40');
-      bg.setAttribute('stroke-width', '1');
-      bg.setAttribute('class', 'lane-bg');
-      bg.dataset.lane = lane.key;
-      svg.appendChild(bg);
-
-      const title = document.createElementNS(SVG_NS, 'text');
-      title.setAttribute('class', 'lane-title');
-      title.setAttribute('x', cx); title.setAttribute('y', 70);
-      title.setAttribute('text-anchor', 'middle');
-      title.setAttribute('fill', strokeMap[lane.key]);
-      title.textContent = lane.title;
-      svg.appendChild(title);
-
-      const sub = document.createElementNS(SVG_NS, 'text');
-      sub.setAttribute('class', 'lane-sub');
-      sub.setAttribute('x', cx); sub.setAttribute('y', 92);
-      sub.setAttribute('text-anchor', 'middle');
-      sub.setAttribute('fill', '#A0A8BC');
-      sub.textContent = lane.sub;
-      svg.appendChild(sub);
-    });
-
-    // ----- 2. place chips inside each lane in a 2-column grid -----
-    const allItems = [];
-    function placeLane(items, laneKey) {
-      const cx = laneCenters[laneKey];
-      const cols = 2;
-      const colW = 165;
-      const startY = 140;
-      const rowH = 60;
-      items.forEach((name, i) => {
-        const col = i % cols;
-        const row = Math.floor(i / cols);
-        const x = cx - colW / 2 + col * colW;
-        const y = startY + row * rowH;
-        allItems.push({ name, group: laneKey, x, y });
-      });
-    }
-    placeLane(groups.commodity,  'commodity');
-    placeLane(groups.specialist, 'specialist');
-    placeLane(groups.govOnly,    'govOnly');
-
-    // Deprecated chips: row across the bottom
-    const depStartX = (VW - groups.deprecated.length * 130) / 2 + 65;
-    const depY = VH - 30;
-    groups.deprecated.forEach((name, i) => {
-      allItems.push({ name, group: 'deprecated', x: depStartX + i * 130, y: depY });
-    });
-
-    // ----- 3. render the chips (rounded pills, not bare circles) -----
-    const chipEls = [];
-    allItems.forEach(it => {
-      const g = document.createElementNS(SVG_NS, 'g');
-      g.setAttribute('class', 'cluster-chip' + (it.group === 'deprecated' ? ' cluster-chip--deprecated' : ''));
-      g.setAttribute('transform', `translate(${it.x},${it.y})`);
-
-      const w = Math.max(120, Math.min(155, it.name.length * 9 + 22));
-      const r = document.createElementNS(SVG_NS, 'rect');
-      r.setAttribute('class', 'chip-shape');
-      r.setAttribute('x', -w / 2); r.setAttribute('y', -18);
-      r.setAttribute('width', w);   r.setAttribute('height', 36);
-      r.setAttribute('rx', 18);
-      r.setAttribute('fill', fillMap[it.group]);
-      r.setAttribute('stroke', strokeMap[it.group]);
-      r.setAttribute('stroke-width', '1.5');
-      g.appendChild(r);
-
-      const t = document.createElementNS(SVG_NS, 'text');
-      t.setAttribute('class', 'cluster-chip-text');
-      t.setAttribute('y', 4);
-      t.setAttribute('text-anchor', 'middle');
-      t.textContent = it.name;
-      g.appendChild(t);
-
-      if (it.group === 'deprecated') {
-        const ln = document.createElementNS(SVG_NS, 'line');
-        ln.setAttribute('x1', -w / 2 + 8); ln.setAttribute('x2', w / 2 - 8);
-        ln.setAttribute('y1', 0); ln.setAttribute('y2', 0);
-        ln.setAttribute('stroke', '#E8837C'); ln.setAttribute('stroke-width', '2');
-        g.appendChild(ln);
-      }
-
-      svg.appendChild(g);
-      chipEls.push(g);
-    });
-    svg.dataset.rendered = '1';
-
+    const slide = document.getElementById('slide-6');
+    if (!slide) return;
+    const barbell = slide.querySelector('.mb-barbell');
+    const bar     = slide.querySelector('.mb-bar');
+    const lanes   = slide.querySelectorAll('.mb-lane');
+    const rows    = slide.querySelectorAll('.mb-row');
+    const caveat  = slide.querySelector('.mb-caveat');
     if (!window.gsap) return;
-    // Lane backdrops fade in first
-    gsap.fromTo(svg.querySelectorAll('.lane-bg'),  { opacity: 0, scaleX: 0.8, transformOrigin: '50% 50%' }, { opacity: 1, scaleX: 1, duration: 0.55, stagger: 0.1, ease: 'power2.out' });
-    gsap.fromTo(svg.querySelectorAll('.lane-title, .lane-sub'), { opacity: 0, y: -8 }, { opacity: 1, y: 0, duration: 0.4, delay: 0.15, stagger: 0.05 });
-    // Chips drop in by lane
-    gsap.fromTo(chipEls, { opacity: 0 }, { opacity: 1, duration: 0.45, stagger: 0.04, delay: 0.45, ease: 'power2.out' });
-    // Deprecated dim after settling
-    const depEls = chipEls.filter((_, i) => allItems[i].group === 'deprecated');
-    if (depEls.length) gsap.to(depEls, { opacity: 0.45, duration: 0.6, delay: 1.5 });
+    if (barbell) gsap.fromTo(barbell, { opacity: 0, y: -10 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' });
+    if (bar) gsap.fromTo(bar, { scaleX: 0, transformOrigin: '50% 50%' }, { scaleX: 1, duration: 0.7, delay: 0.2, ease: 'power2.inOut' });
+    gsap.fromTo(lanes, { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5, stagger: 0.09, delay: 0.28, ease: 'power2.out' });
+    gsap.fromTo(rows, { opacity: 0 }, { opacity: 1, duration: 0.35, stagger: 0.03, delay: 0.6 });
+    if (caveat) gsap.fromTo(caveat, { opacity: 0 }, { opacity: 1, duration: 0.45, delay: 1.05 });
   };
 
   // ─── SLIDE 6 — Smarter AND cheaper dual axis (was 8) ───
@@ -1347,7 +1217,7 @@
   };
 
   // ─── SLIDE 8 — Agent anatomy (iframe of 7-layer stack) ───
-  ANIMATIONS[9] = function () {
+  ANIMATIONS[10] = function () {
     initSlide8AgentStack();
     const layers = document.querySelectorAll('#slide-9 .aa-layer');
     if (window.gsap && layers.length) {
@@ -1455,7 +1325,7 @@
   }
 
   // ─── SLIDE 9 — Vibe coding cards ───
-  ANIMATIONS[10] = function () {
+  ANIMATIONS[11] = function () {
     const grid = document.getElementById('vibeGrid');
     if (!grid || grid.children.length) return;
     (D.vibeCoding || []).forEach(c => {
@@ -1482,7 +1352,7 @@
   };
 
   // ─── SLIDE 13 — Physical AI: 3 motion tiles + stat strip (REBUILT) ───
-  ANIMATIONS[14] = function () {
+  ANIMATIONS[17] = function () {
     const tilesC = document.getElementById('physTiles');
     const stripC = document.getElementById('physStatsStrip');
     if (!tilesC || tilesC.children.length) return;
@@ -1642,7 +1512,7 @@
   };
 
   // ─── SLIDE 10 — Pricing + ARPU (NATIVE bars) ───
-  ANIMATIONS[11] = function () {
+  ANIMATIONS[13] = function () {
     const icons = document.querySelectorAll('#slide-11 .pricing-icon');
     if (icons.length && window.gsap) {
       gsap.from(icons, { y: 14, opacity: 0, duration: 0.45, stagger: 0.07, ease: 'power2.out' });
@@ -1660,8 +1530,8 @@
   };
 
   // ─── SLIDE 11 — Sequoia services matrix (NATIVE) ───
-  ANIMATIONS[12] = function () {
-    const slide = document.getElementById('slide-12');
+  ANIMATIONS[14] = function () {
+    const slide = document.getElementById('slide-14');
     bindSlideTooltips(slide);
     const entries = slide ? slide.querySelectorAll('.seq-entry') : [];
     if (!entries.length) return;
@@ -1684,7 +1554,7 @@
   };
 
   // ─── SLIDE 12 — Three attack angles (stage-compact cards) ───
-  ANIMATIONS[13] = function () {
+  ANIMATIONS[15] = function () {
     if (window.ATTACK_ANGLES && typeof window.ATTACK_ANGLES.renderStage === 'function') {
       window.ATTACK_ANGLES.renderStage('attack-angles-stage');
     }
@@ -1695,7 +1565,7 @@
   };
 
   // ─── SLIDE 14 — Key Learnings (staggered card fade-in) ───
-  ANIMATIONS[15] = function () {
+  ANIMATIONS[18] = function () {
     const cards = document.querySelectorAll('#slide-15 .kl-card');
     if (cards.length && window.gsap) {
       gsap.from(cards, { y: 14, opacity: 0, duration: 0.45, stagger: 0.08, ease: 'power2.out' });
@@ -1762,4 +1632,106 @@
 
   // expose for debugging
   window.__deck = { activate, next, prev, get index() { return activeIndex; } };
+
+  // ══════════════════════════════════════════════════════════════
+  //   AUGUST 2026 REFRESH — animations for the three new slides
+  // ══════════════════════════════════════════════════════════════
+
+  // ─── SLIDE 9 — Silicon & Power ───
+  // Silicon cards stagger in; the power-gap bars grow to their data-target
+  // widths so the 5:1 announced-vs-operational gap reads visually.
+  ANIMATIONS[9] = function () {
+    const slide = document.getElementById('slide-9');
+    if (!slide) return;
+    const cards  = slide.querySelectorAll('.sp-card');
+    const fills  = slide.querySelectorAll('.sp-gap-fill');
+    const ratio  = slide.querySelector('.sp-gap-ratio');
+    const bridge = slide.querySelector('.sp-bridge');
+    const quote  = slide.querySelector('.sp-quote');
+
+    // Always set the widths, even without GSAP, so the slide is never blank.
+    fills.forEach(f => {
+      const t = parseFloat(f.dataset.target || '0');
+      if (window.gsap) {
+        gsap.fromTo(f, { width: '0%' }, { width: t + '%', duration: 1.0, delay: 0.45, ease: 'power2.out' });
+      } else {
+        f.style.width = t + '%';
+      }
+    });
+    if (!window.gsap) return;
+    gsap.fromTo(cards, { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.45, stagger: 0.07, ease: 'power2.out' });
+    if (ratio)  gsap.fromTo(ratio,  { opacity: 0 }, { opacity: 1, duration: 0.5, delay: 1.3 });
+    if (bridge) gsap.fromTo(bridge, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.5, delay: 0.75, ease: 'power2.out' });
+    if (quote)  gsap.fromTo(quote,  { opacity: 0 }, { opacity: 1, duration: 0.5, delay: 1.1 });
+  };
+
+  // ─── SLIDE 12 — Voice AI ───
+  // Builds an animated waveform out of DOM bars (no canvas, so it survives
+  // fullscreen resizes) and loops it while the slide is on screen.
+  ANIMATIONS[12] = function () {
+    const slide = document.getElementById('slide-12');
+    if (!slide) return;
+    const wrap  = slide.querySelector('#voiceWaveBars');
+    const cards = slide.querySelectorAll('.va-card');
+    const strip = slide.querySelectorAll('.va-strip-item');
+
+    if (wrap && !wrap.children.length) {
+      const BARS = 84;
+      for (let i = 0; i < BARS; i++) {
+        const b = document.createElement('span');
+        b.className = 'va-wave-bar';
+        // Envelope: taller in the middle, tapering at both ends, plus jitter,
+        // so it reads as speech rather than an equaliser.
+        const env = Math.sin((i / (BARS - 1)) * Math.PI);
+        b.dataset.amp = String(0.16 + env * (0.42 + Math.random() * 0.52));
+        wrap.appendChild(b);
+      }
+    }
+
+    if (!window.gsap) {
+      if (wrap) Array.from(wrap.children).forEach(b => { b.style.transform = 'scaleY(' + b.dataset.amp + ')'; });
+      return;
+    }
+
+    if (wrap && !wrap.dataset.animated) {
+      wrap.dataset.animated = '1';
+      Array.from(wrap.children).forEach((b, i) => {
+        const amp = parseFloat(b.dataset.amp);
+        gsap.to(b, {
+          scaleY: amp,
+          duration: 0.42 + Math.random() * 0.5,
+          delay: i * 0.008,
+          repeat: -1,
+          yoyo: true,
+          ease: 'sine.inOut'
+        });
+      });
+    }
+
+    gsap.fromTo(cards, { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.5, stagger: 0.12, delay: 0.25, ease: 'power2.out' });
+    gsap.fromTo(strip, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.4, stagger: 0.06, delay: 0.6, ease: 'power2.out' });
+  };
+
+  // ─── SLIDE 16 — Healthcare AI (incentive mechanics) ───
+  // The two tension arrows animate in opposite directions to carry the thesis:
+  // workflow time down, claim severity up.
+  ANIMATIONS[16] = function () {
+    const slide = document.getElementById('slide-16');
+    if (!slide) return;
+    if (!window.gsap) return;
+    const down   = slide.querySelector('.hcs-arrow--down');
+    const up     = slide.querySelector('.hcs-arrow--up');
+    const nums   = slide.querySelectorAll('.hcs-num-card');
+    const gates  = slide.querySelectorAll('.hcs-gate');
+    const clocks = slide.querySelector('.hcs-clocks');
+    const dvc    = slide.querySelector('.hcs-dvc');
+
+    if (down) gsap.fromTo(down, { opacity: 0, y: -18 }, { opacity: 1, y: 0, duration: 0.55, ease: 'power2.out' });
+    if (up)   gsap.fromTo(up,   { opacity: 0, y:  18 }, { opacity: 1, y: 0, duration: 0.55, delay: 0.12, ease: 'power2.out' });
+    gsap.fromTo(nums,  { opacity: 0, x: -14 }, { opacity: 1, x: 0, duration: 0.45, stagger: 0.1, delay: 0.3, ease: 'power2.out' });
+    gsap.fromTo(gates, { opacity: 0, x:  14 }, { opacity: 1, x: 0, duration: 0.45, stagger: 0.12, delay: 0.5, ease: 'power2.out' });
+    if (clocks) gsap.fromTo(clocks, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.5, delay: 0.8, ease: 'power2.out' });
+    if (dvc)    gsap.fromTo(dvc,    { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.5, delay: 0.92, ease: 'power2.out' });
+  };
+
 })();

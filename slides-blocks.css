@@ -319,13 +319,13 @@
 .slide-block-layout .pricing-row { margin: 0 auto; }
 
 /* Sequoia matrix overrides — make compact for slide context */
-.slide[data-slide="12"] .seq-grid-wrap {
+.slide[data-slide="14"] .seq-grid-wrap {
   position: relative; margin: 0 auto; max-width: 1100px;
 }
-.slide[data-slide="12"] .seq-cell {
+.slide[data-slide="14"] .seq-cell {
   min-height: 150px;
 }
-.slide[data-slide="12"] .seq-axis-label {
+.slide[data-slide="14"] .seq-axis-label {
   color: #6B7280; font-size: 0.7rem; font-weight: 700;
   letter-spacing: 0.15em; text-transform: uppercase;
 }
@@ -365,10 +365,10 @@
   .slide .aa-col { padding: 0.7rem 0.75rem 0.85rem; }
 
   /* Sequoia matrix on mobile: stack quadrants vertically */
-  .slide[data-slide="12"] .seq-grid-wrap > div[style*="grid-template-columns:1fr 1fr"] {
+  .slide[data-slide="14"] .seq-grid-wrap > div[style*="grid-template-columns:1fr 1fr"] {
     grid-template-columns: 1fr !important;
   }
-  .slide[data-slide="12"] .seq-axis-label--side { display: none !important; }
+  .slide[data-slide="14"] .seq-axis-label--side { display: none !important; }
 }
 
 @media (max-width: 480px) {
@@ -470,8 +470,8 @@
 /* ─────────────────────────────────────────────────────────
    SLIDE 11  —  Native Sequoia matrix wrapper (scroll if tall)
    ───────────────────────────────────────────────────────── */
-.slide[data-slide="12"] .slide-inner { overflow: hidden; }
-.slide[data-slide="12"] .slide-seq-matrix {
+.slide[data-slide="14"] .slide-inner { overflow: hidden; }
+.slide[data-slide="14"] .slide-seq-matrix {
   flex: 1 1 auto;
   min-height: 0;
   overflow-y: auto;
@@ -485,56 +485,56 @@
   scrollbar-width: thin;
   scrollbar-color: rgba(78,205,196,0.55) rgba(255,255,255,0.06);
 }
-.slide[data-slide="12"] .slide-seq-matrix::-webkit-scrollbar { width: 10px; }
-.slide[data-slide="12"] .slide-seq-matrix::-webkit-scrollbar-track {
+.slide[data-slide="14"] .slide-seq-matrix::-webkit-scrollbar { width: 10px; }
+.slide[data-slide="14"] .slide-seq-matrix::-webkit-scrollbar-track {
   background: rgba(255,255,255,0.04); border-radius: 8px;
 }
-.slide[data-slide="12"] .slide-seq-matrix::-webkit-scrollbar-thumb {
+.slide[data-slide="14"] .slide-seq-matrix::-webkit-scrollbar-thumb {
   background: linear-gradient(180deg, rgba(78,205,196,0.65), rgba(78,205,196,0.35));
   border-radius: 8px;
 }
 /* Tighten quadrant cells so all four fit in typical laptop viewports
    (≤900px tall). The inline min-height:180px was causing the lower row
    to push entries past the matrix's overflow-y boundary. */
-.slide[data-slide="12"] .slide-seq-matrix div[style*="min-height:180px"] {
+.slide[data-slide="14"] .slide-seq-matrix div[style*="min-height:180px"] {
   min-height: 0 !important;
   padding: 0.7rem 0.9rem !important;
 }
-.slide[data-slide="12"] .seq-entry {
+.slide[data-slide="14"] .seq-entry {
   padding: 0.22rem 0.5rem !important;
   font-size: 0.68rem !important;
 }
 /* On tighter viewports, shrink chip padding/text further so the bottom row
    of entries doesn't get clipped. */
 @media (max-height: 820px) {
-  .slide[data-slide="12"] .slide-seq-matrix div[style*="min-height:180px"] {
+  .slide[data-slide="14"] .slide-seq-matrix div[style*="min-height:180px"] {
     padding: 0.55rem 0.75rem !important;
   }
-  .slide[data-slide="12"] .seq-entry {
+  .slide[data-slide="14"] .seq-entry {
     padding: 0.18rem 0.45rem !important;
     font-size: 0.66rem !important;
   }
-  .slide[data-slide="12"] .slide-text--compact .slide-headline {
+  .slide[data-slide="14"] .slide-text--compact .slide-headline {
     font-size: clamp(24px, 2.6vw, 36px);
     margin-bottom: 4px;
   }
-  .slide[data-slide="12"] .slide-text--compact .slide-sub {
+  .slide[data-slide="14"] .slide-text--compact .slide-sub {
     font-size: clamp(12px, 0.9vw, 14px);
     margin-bottom: 6px;
   }
 }
-.slide[data-slide="12"] #seq-matrix-block {
+.slide[data-slide="14"] #seq-matrix-block {
   margin: 0 !important;
 }
-.slide[data-slide="12"] #seq-matrix-block .seq-matrix-header,
-.slide[data-slide="12"] #seq-matrix-block .seq-matrix-intro {
+.slide[data-slide="14"] #seq-matrix-block .seq-matrix-header,
+.slide[data-slide="14"] #seq-matrix-block .seq-matrix-intro {
   display: none;
 }
-.slide[data-slide="12"] .seq-entry {
+.slide[data-slide="14"] .seq-entry {
   cursor: pointer;
   outline: none;
 }
-.slide[data-slide="12"] .seq-entry:focus-visible {
+.slide[data-slide="14"] .seq-entry:focus-visible {
   box-shadow: 0 0 0 2px rgba(78,205,196,0.55);
 }
 /* The fixed-position .click-zone sits at z:30 at the root stacking context,
@@ -542,8 +542,8 @@
    so when slide 11 is active we shrink the prev/next click-zones to thin
    side rails. Forward/back nav still works via keyboard, swipe, the side
    rails, and the page chrome links. */
-body:has(.slide[data-slide="12"].is-active) .click-zone--prev { width: 64px; }
-body:has(.slide[data-slide="12"].is-active) .click-zone--next { width: 64px; }
+body:has(.slide[data-slide="14"].is-active) .click-zone--prev { width: 64px; }
+body:has(.slide[data-slide="14"].is-active) .click-zone--next { width: 64px; }
 /* Tooltip popup must always paint above slide chrome, click zones, and any
    stacking context introduced by the slide-iframe-layout grid. */
 .aa-tip-popup { z-index: 10000; }
@@ -551,14 +551,14 @@ body:has(.slide[data-slide="12"].is-active) .click-zone--next { width: 64px; }
 /* ─────────────────────────────────────────────────────────
    SLIDE 12  —  Native attack-angles wrapper (scrollable region)
    ───────────────────────────────────────────────────────── */
-.slide[data-slide="13"] .slide-inner {
+.slide[data-slide="15"] .slide-inner {
   overflow: hidden;
   min-height: 0;
 }
-.slide[data-slide="13"] .iframe-headline { min-height: 0; }
+.slide[data-slide="15"] .iframe-headline { min-height: 0; }
 
 /* Wrapper holds the scrolling container + scroll affordances. */
-.slide[data-slide="13"] .slide-attack-angles {
+.slide[data-slide="15"] .slide-attack-angles {
   position: relative;
   min-height: 0;
   width: 100%;
@@ -572,7 +572,7 @@ body:has(.slide[data-slide="12"].is-active) .click-zone--next { width: 64px; }
 }
 
 /* The actual scroller. Padded so the bottom fade doesn't cover content. */
-.slide[data-slide="13"] .slide-attack-angles__scroll {
+.slide[data-slide="15"] .slide-attack-angles__scroll {
   flex: 1 1 auto;
   min-height: 0;
   overflow-y: auto;
@@ -585,28 +585,28 @@ body:has(.slide[data-slide="12"].is-active) .click-zone--next { width: 64px; }
   -webkit-overflow-scrolling: touch;
 }
 /* WebKit scrollbar — visible, on-brand, never invisible. */
-.slide[data-slide="13"] .slide-attack-angles__scroll::-webkit-scrollbar {
+.slide[data-slide="15"] .slide-attack-angles__scroll::-webkit-scrollbar {
   width: 10px;
 }
-.slide[data-slide="13"] .slide-attack-angles__scroll::-webkit-scrollbar-track {
+.slide[data-slide="15"] .slide-attack-angles__scroll::-webkit-scrollbar-track {
   background: rgba(255,255,255,0.04);
   border-radius: 8px;
   margin: 4px 0;
 }
-.slide[data-slide="13"] .slide-attack-angles__scroll::-webkit-scrollbar-thumb {
+.slide[data-slide="15"] .slide-attack-angles__scroll::-webkit-scrollbar-thumb {
   background: linear-gradient(180deg, rgba(78,205,196,0.65), rgba(78,205,196,0.35));
   border-radius: 8px;
   border: 2px solid rgba(15,17,24,0.0);
   background-clip: padding-box;
 }
-.slide[data-slide="13"] .slide-attack-angles__scroll::-webkit-scrollbar-thumb:hover {
+.slide[data-slide="15"] .slide-attack-angles__scroll::-webkit-scrollbar-thumb:hover {
   background: rgba(78,205,196,0.85);
   background-clip: padding-box;
   border: 2px solid rgba(15,17,24,0.0);
 }
 
 /* Bottom fade — shown when there's more content below the fold. */
-.slide[data-slide="13"] .slide-attack-angles__fade {
+.slide[data-slide="15"] .slide-attack-angles__fade {
   position: absolute;
   left: 0; right: 0; bottom: 0;
   height: 56px;
@@ -617,15 +617,15 @@ body:has(.slide[data-slide="12"].is-active) .click-zone--next { width: 64px; }
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
 }
-.slide[data-slide="13"] .slide-attack-angles[data-can-scroll="true"] .slide-attack-angles__fade {
+.slide[data-slide="15"] .slide-attack-angles[data-can-scroll="true"] .slide-attack-angles__fade {
   opacity: 1;
 }
-.slide[data-slide="13"] .slide-attack-angles[data-at-bottom="true"] .slide-attack-angles__fade {
+.slide[data-slide="15"] .slide-attack-angles[data-at-bottom="true"] .slide-attack-angles__fade {
   opacity: 0;
 }
 
 /* "Scroll for more" pill — gentle pulse so the affordance is unmistakable. */
-.slide[data-slide="13"] .slide-attack-angles__hint {
+.slide[data-slide="15"] .slide-attack-angles__hint {
   position: absolute;
   left: 50%;
   bottom: 10px;
@@ -646,16 +646,16 @@ body:has(.slide[data-slide="12"].is-active) .click-zone--next { width: 64px; }
   opacity: 0;
   transition: opacity 220ms ease;
 }
-.slide[data-slide="13"] .slide-attack-angles__hint::after {
+.slide[data-slide="15"] .slide-attack-angles__hint::after {
   content: "▾";
   font-size: 12px;
   line-height: 1;
 }
-.slide[data-slide="13"] .slide-attack-angles[data-can-scroll="true"] .slide-attack-angles__hint {
+.slide[data-slide="15"] .slide-attack-angles[data-can-scroll="true"] .slide-attack-angles__hint {
   opacity: 1;
   animation: aaScrollHintBob 1.6s ease-in-out infinite;
 }
-.slide[data-slide="13"] .slide-attack-angles[data-at-bottom="true"] .slide-attack-angles__hint {
+.slide[data-slide="15"] .slide-attack-angles[data-at-bottom="true"] .slide-attack-angles__hint {
   opacity: 0;
   animation: none;
 }
@@ -664,24 +664,24 @@ body:has(.slide[data-slide="12"].is-active) .click-zone--next { width: 64px; }
   50%      { transform: translate(-50%, 3px); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .slide[data-slide="13"] .slide-attack-angles__hint { animation: none !important; }
+  .slide[data-slide="15"] .slide-attack-angles__hint { animation: none !important; }
 }
 
 /* On mobile the deck flips to vertical page-scroll mode (slides.css @768),
    so the wrapper should not create its own inner scroller — let the page own it. */
 @media (max-width: 768px) {
-  .slide[data-slide="13"] .slide-inner { overflow: visible; }
-  .slide[data-slide="13"] .slide-attack-angles {
+  .slide[data-slide="15"] .slide-inner { overflow: visible; }
+  .slide[data-slide="15"] .slide-attack-angles {
     height: auto;
     display: block;
   }
-  .slide[data-slide="13"] .slide-attack-angles__scroll {
+  .slide[data-slide="15"] .slide-attack-angles__scroll {
     overflow: visible;
     padding: 0;
     max-height: none;
   }
-  .slide[data-slide="13"] .slide-attack-angles__fade,
-  .slide[data-slide="13"] .slide-attack-angles__hint { display: none; }
+  .slide[data-slide="15"] .slide-attack-angles__fade,
+  .slide[data-slide="15"] .slide-attack-angles__hint { display: none; }
 }
 
 /* ─────────────────────────────────────────────────────────
@@ -695,11 +695,11 @@ body:has(.slide[data-slide="12"].is-active) .click-zone--next { width: 64px; }
   .slide-arpu-intro { font-size: 0.8rem; }
 
   /* Sequoia matrix: stack quadrants on small screens */
-  .slide[data-slide="12"] .slide-seq-matrix > div > div[style*="grid-template-columns:1fr 1fr"] {
+  .slide[data-slide="14"] .slide-seq-matrix > div > div[style*="grid-template-columns:1fr 1fr"] {
     grid-template-columns: 1fr !important;
   }
-  .slide[data-slide="12"] .slide-seq-matrix span[style*="rotate(-90deg)"],
-  .slide[data-slide="12"] .slide-seq-matrix span[style*="rotate(90deg)"] {
+  .slide[data-slide="14"] .slide-seq-matrix span[style*="rotate(-90deg)"],
+  .slide[data-slide="14"] .slide-seq-matrix span[style*="rotate(90deg)"] {
     display: none !important;
   }
 }
@@ -719,77 +719,551 @@ body:has(.slide[data-slide="12"].is-active) .click-zone--next { width: 64px; }
   /* Slide 8 (Agent anatomy) — bigger layer bars; the slide is meant to
      read as architecture, not a chip dump. Chips remain in expanded detail.
      Constrain headline so all 7 layers fit without scroll. */
-  .slide[data-slide="9"] .slide-block-layout { padding-top: 1rem; padding-bottom: 0.9rem; gap: 0.5rem; }
-  .slide[data-slide="9"] .slide-headline { font-size: clamp(26px, 2.8vw, 38px); margin-bottom: 0.15rem; }
-  .slide[data-slide="9"] .slide-sub { font-size: clamp(13px, 1vw, 16px); margin-bottom: 0.3rem; }
-  .slide[data-slide="9"] .aa-stack { max-width: 980px; gap: 5px; }
-  .slide[data-slide="9"] .aa-layer-bar { padding: 10px 16px; gap: 12px; }
-  .slide[data-slide="9"] .aa-layer-num {
+  .slide[data-slide="10"] .slide-block-layout { padding-top: 1rem; padding-bottom: 0.9rem; gap: 0.5rem; }
+  .slide[data-slide="10"] .slide-headline { font-size: clamp(26px, 2.8vw, 38px); margin-bottom: 0.15rem; }
+  .slide[data-slide="10"] .slide-sub { font-size: clamp(13px, 1vw, 16px); margin-bottom: 0.3rem; }
+  .slide[data-slide="10"] .aa-stack { max-width: 980px; gap: 5px; }
+  .slide[data-slide="10"] .aa-layer-bar { padding: 10px 16px; gap: 12px; }
+  .slide[data-slide="10"] .aa-layer-num {
     width: 26px; height: 26px; font-size: 0.78rem;
   }
-  .slide[data-slide="9"] .aa-layer-icon { width: 22px; height: 22px; }
-  .slide[data-slide="9"] .aa-layer-name { font-size: 1rem; letter-spacing: 0.01em; }
-  .slide[data-slide="9"] .aa-layer-tagline { font-size: 0.84rem; }
-  .slide[data-slide="9"] .aa-layer-chevron { width: 18px; height: 18px; }
+  .slide[data-slide="10"] .aa-layer-icon { width: 22px; height: 22px; }
+  .slide[data-slide="10"] .aa-layer-name { font-size: 1rem; letter-spacing: 0.01em; }
+  .slide[data-slide="10"] .aa-layer-tagline { font-size: 0.84rem; }
+  .slide[data-slide="10"] .aa-layer-chevron { width: 18px; height: 18px; }
   /* Make the architecture row read as a stack: tint the left border heavier */
-  .slide[data-slide="9"] .aa-layer { border-left-width: 6px; }
+  .slide[data-slide="10"] .aa-layer { border-left-width: 6px; }
   /* Tame any extra-long chips so an accidental expand doesn't ruin the visual */
-  .slide[data-slide="9"] .aa-tool-chip { font-size: 0.76rem; padding: 3px 9px; }
+  .slide[data-slide="10"] .aa-tool-chip { font-size: 0.76rem; padding: 3px 9px; }
 
   /* Slide 10 (Business models) — reduce paragraph density. Cap intro/foot
      widths so the eye doesn't have to track long lines on stage. Also
      compress vertical rhythm so the bottom row (OpenAI) is never clipped. */
-  .slide[data-slide="11"] { padding-top: 36px !important; padding-bottom: 24px; }
-  .slide[data-slide="11"] .slide-headline { font-size: clamp(26px, 3vw, 40px); margin-bottom: 4px; }
-  .slide[data-slide="11"] .slide-sub { margin-bottom: 8px; font-size: clamp(13px, 1vw, 15px); }
-  .slide[data-slide="11"] .pricing-row--compact { margin: 0 0 6px; }
-  .slide[data-slide="11"] .slide-arpu-intro,
-  .slide[data-slide="11"] .slide-arpu-foot {
+  .slide[data-slide="13"] { padding-top: 36px !important; padding-bottom: 24px; }
+  .slide[data-slide="13"] .slide-headline { font-size: clamp(26px, 3vw, 40px); margin-bottom: 4px; }
+  .slide[data-slide="13"] .slide-sub { margin-bottom: 8px; font-size: clamp(13px, 1vw, 15px); }
+  .slide[data-slide="13"] .pricing-row--compact { margin: 0 0 6px; }
+  .slide[data-slide="13"] .slide-arpu-intro,
+  .slide[data-slide="13"] .slide-arpu-foot {
     max-width: 760px; margin-left: auto; margin-right: auto;
     line-height: 1.45;
   }
-  .slide[data-slide="11"] .slide-arpu-intro { font-size: 0.88rem; }
-  .slide[data-slide="11"] .slide-arpu-foot { font-size: 0.84rem; }
-  .slide[data-slide="11"] .slide-arpu-block { gap: 0.45rem; max-width: 860px; }
-  .slide[data-slide="11"] .slide-arpu-label { width: 170px; font-size: 0.88rem; }
-  .slide[data-slide="11"] .slide-arpu-track { height: 28px; }
-  .slide[data-slide="11"] .slide-arpu-fill { font-size: 0.86rem; padding-right: 0.7rem; }
+  .slide[data-slide="13"] .slide-arpu-intro { font-size: 0.88rem; }
+  .slide[data-slide="13"] .slide-arpu-foot { font-size: 0.84rem; }
+  .slide[data-slide="13"] .slide-arpu-block { gap: 0.45rem; max-width: 860px; }
+  .slide[data-slide="13"] .slide-arpu-label { width: 170px; font-size: 0.88rem; }
+  .slide[data-slide="13"] .slide-arpu-track { height: 28px; }
+  .slide[data-slide="13"] .slide-arpu-fill { font-size: 0.86rem; padding-right: 0.7rem; }
 
   /* Slide 11 (Services quadrant) — make quadrant labels + dollar figures
      larger; group the industry chips a bit more legibly. Keep Sequoia framing. */
-  .slide[data-slide="12"] { padding-top: 36px !important; padding-bottom: 28px; }
-  .slide[data-slide="12"] .slide-headline { font-size: clamp(26px, 3vw, 40px); margin-bottom: 4px; }
-  .slide[data-slide="12"] .slide-sub { margin-bottom: 6px; font-size: clamp(13px, 1vw, 15px); }
-  .slide[data-slide="12"] .slide-text { margin-bottom: 6px; }
-  .slide[data-slide="12"] .slide-seq-matrix { padding: 0 0.5rem; }
-  .slide[data-slide="12"] .slide-seq-matrix span[style*="OUTSOURCED"],
-  .slide[data-slide="12"] .slide-seq-matrix span[style*="INSOURCED"],
-  .slide[data-slide="12"] .slide-seq-matrix span[style*="JUDGEMENT"],
-  .slide[data-slide="12"] .slide-seq-matrix span[style*="INTELLIGENCE"] {
+  .slide[data-slide="14"] { padding-top: 36px !important; padding-bottom: 28px; }
+  .slide[data-slide="14"] .slide-headline { font-size: clamp(26px, 3vw, 40px); margin-bottom: 4px; }
+  .slide[data-slide="14"] .slide-sub { margin-bottom: 6px; font-size: clamp(13px, 1vw, 15px); }
+  .slide[data-slide="14"] .slide-text { margin-bottom: 6px; }
+  .slide[data-slide="14"] .slide-seq-matrix { padding: 0 0.5rem; }
+  .slide[data-slide="14"] .slide-seq-matrix span[style*="OUTSOURCED"],
+  .slide[data-slide="14"] .slide-seq-matrix span[style*="INSOURCED"],
+  .slide[data-slide="14"] .slide-seq-matrix span[style*="JUDGEMENT"],
+  .slide[data-slide="14"] .slide-seq-matrix span[style*="INTELLIGENCE"] {
     font-size: 0.82rem !important;
   }
   /* Per-quadrant headers (COPILOT TERRITORY / AUTOPILOT TERRITORY / WATCH / NEXT WAVE) */
-  .slide[data-slide="12"] .slide-seq-matrix span[style*="COPILOT TERRITORY"],
-  .slide[data-slide="12"] .slide-seq-matrix span[style*="AUTOPILOT TERRITORY"],
-  .slide[data-slide="12"] .slide-seq-matrix span[style*="WATCH"],
-  .slide[data-slide="12"] .slide-seq-matrix span[style*="NEXT WAVE"] {
+  .slide[data-slide="14"] .slide-seq-matrix span[style*="COPILOT TERRITORY"],
+  .slide[data-slide="14"] .slide-seq-matrix span[style*="AUTOPILOT TERRITORY"],
+  .slide[data-slide="14"] .slide-seq-matrix span[style*="WATCH"],
+  .slide[data-slide="14"] .slide-seq-matrix span[style*="NEXT WAVE"] {
     font-size: 0.88rem !important; letter-spacing: 0.14em !important;
   }
   /* The $370B / $700B / etc. */
-  .slide[data-slide="12"] .slide-seq-matrix span.tabnum[style*="font-weight:800"] {
+  .slide[data-slide="14"] .slide-seq-matrix span.tabnum[style*="font-weight:800"] {
     font-size: 1.15rem !important;
   }
   /* Industry chips — bigger text, tighter padding, fewer-feeling layout */
-  .slide[data-slide="12"] .seq-entry {
+  .slide[data-slide="14"] .seq-entry {
     font-size: 0.84rem !important;
     padding: 0.4rem 0.7rem !important;
     border-radius: 8px !important;
   }
-  .slide[data-slide="12"] .seq-entry .tabnum {
+  .slide[data-slide="14"] .seq-entry .tabnum {
     font-size: 0.75rem !important;
   }
   /* Quadrant tagline (Outsourced × Judgement) */
-  .slide[data-slide="12"] .slide-seq-matrix p[style*="font-style:italic"] {
+  .slide[data-slide="14"] .slide-seq-matrix p[style*="font-style:italic"] {
     font-size: 0.82rem !important;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════════
+   AUGUST 2026 REFRESH — new slide blocks
+   Slide 9 Silicon & Power · Slide 12 Voice AI · Slide 16 Healthcare AI
+   plus: model barbell (6), token-efficiency evidence (7),
+   how-it's-funded (8), category consolidation (11)
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Shared: dense slides need a tighter headline than the 64px default */
+.slide-silicon .slide-headline,
+.slide-voice   .slide-headline,
+.slide-hcs     .slide-headline,
+.slide-mb      .slide-headline { font-size: clamp(30px, 3.1vw, 44px); margin-bottom: 8px; }
+.slide-silicon .slide-sub,
+.slide-voice   .slide-sub,
+.slide-hcs     .slide-sub,
+.slide-mb      .slide-sub { font-size: clamp(13px, 1.02vw, 15.5px); margin-bottom: 16px; max-width: 1080px; }
+.slide-silicon .slide-eyebrow,
+.slide-voice   .slide-eyebrow,
+.slide-hcs     .slide-eyebrow,
+.slide-mb      .slide-eyebrow { margin-bottom: 8px; }
+.slide-silicon, .slide-voice, .slide-hcs, .slide-mb { max-width: 1400px; }
+
+/* ─────────────── SLIDE 9 — SILICON & POWER ─────────────── */
+.sp-grid {
+  display: grid; grid-template-columns: 1.28fr 1fr;
+  gap: 20px; width: 100%; align-items: stretch;
+}
+.sp-col { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.sp-col-head { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.sp-col-tag {
+  font-size: 11px; font-weight: 800; letter-spacing: 0.16em;
+  padding: 4px 9px; border-radius: 5px;
+}
+.sp-col-tag--silicon { color: #0E1014; background: var(--teal); }
+.sp-col-tag--power   { color: #0E1014; background: var(--gold); }
+.sp-col-sub { font-size: 11.5px; color: var(--text-mute); letter-spacing: 0.01em; }
+
+.sp-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; flex: 1; }
+.sp-card {
+  background: var(--bg-card);
+  border: 1px solid rgba(160,168,188,0.14);
+  border-left: 3px solid var(--sp-c, var(--teal));
+  border-radius: 10px; padding: 11px 13px;
+  display: flex; flex-direction: column; gap: 3px; min-width: 0;
+}
+.sp-card-top { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.sp-card-name { font-size: 11px; font-weight: 800; letter-spacing: 0.1em; color: var(--sp-c); }
+.sp-card-badge {
+  font-size: 9.5px; font-weight: 700; letter-spacing: 0.06em;
+  color: var(--text-mute); background: rgba(160,168,188,0.1);
+  padding: 2px 6px; border-radius: 4px; white-space: nowrap;
+}
+.sp-card-num { font-size: 27px; font-weight: 800; letter-spacing: -0.02em; color: var(--text); line-height: 1.05; }
+.sp-card-label { font-size: 10.5px; color: var(--text-mute); line-height: 1.35; }
+.sp-card-label strong { color: var(--text); }
+.sp-card-body { font-size: 11px; line-height: 1.45; color: #C8CCD4; margin-top: 3px; }
+.sp-card-body strong { color: var(--sp-c); font-weight: 700; }
+
+/* Power gap bars */
+.sp-gap {
+  background: var(--bg-card); border: 1px solid rgba(160,168,188,0.14);
+  border-radius: 10px; padding: 12px 14px;
+  display: flex; flex-direction: column; gap: 9px;
+}
+.sp-gap-row { display: flex; flex-direction: column; gap: 4px; }
+.sp-gap-label { font-size: 10.5px; color: var(--text-mute); letter-spacing: 0.02em; }
+.sp-gap-track { height: 26px; background: rgba(160,168,188,0.08); border-radius: 5px; overflow: hidden; }
+.sp-gap-fill {
+  height: 100%; width: 0%; border-radius: 5px;
+  display: flex; align-items: center; justify-content: flex-end;
+  padding: 0 9px; font-size: 12.5px; font-weight: 800;
+}
+.sp-gap-fill--committed { background: linear-gradient(90deg, rgba(245,197,66,0.35), var(--gold)); color: #0E1014; }
+.sp-gap-fill--live { background: linear-gradient(90deg, rgba(232,131,124,0.4), var(--coral)); color: #0E1014; min-width: 78px; }
+.sp-gap-ratio {
+  display: flex; align-items: baseline; gap: 8px;
+  padding-top: 6px; border-top: 1px solid rgba(160,168,188,0.12);
+}
+.sp-gap-ratio-num { font-size: 22px; font-weight: 800; color: var(--coral); letter-spacing: -0.02em; }
+.sp-gap-ratio-text { font-size: 11px; color: var(--text-mute); letter-spacing: 0.04em; text-transform: uppercase; font-weight: 700; }
+
+.sp-bridge {
+  background: rgba(245,197,66,0.05); border: 1px solid rgba(245,197,66,0.18);
+  border-radius: 10px; padding: 11px 13px; display: flex; flex-direction: column; gap: 8px;
+}
+.sp-bridge-tag { font-size: 10px; font-weight: 800; letter-spacing: 0.12em; color: var(--gold); }
+.sp-bridge-body { display: flex; flex-direction: column; gap: 8px; }
+.sp-bridge-item { display: flex; gap: 10px; align-items: flex-start; }
+.sp-bridge-num { font-size: 15px; font-weight: 800; color: var(--text); white-space: nowrap; min-width: 82px; }
+.sp-bridge-label { font-size: 10.5px; line-height: 1.45; color: #C8CCD4; }
+.sp-bridge-label strong { color: var(--gold); }
+
+.sp-quote {
+  border-left: 3px solid var(--teal); padding: 8px 0 8px 12px;
+}
+.sp-quote p { font-size: 12px; line-height: 1.5; color: #C8CCD4; font-style: italic; margin: 0; }
+.sp-quote p strong { color: var(--teal); font-style: normal; font-weight: 700; }
+.sp-quote-attr { display: block; font-size: 10px; color: var(--text-mute); margin-top: 4px; }
+
+/* ─────────────── SLIDE 12 — VOICE AI ─────────────── */
+.va-wave {
+  position: relative; width: 100%; height: 92px;
+  background: linear-gradient(180deg, rgba(78,205,196,0.05), rgba(78,205,196,0.01));
+  border: 1px solid rgba(78,205,196,0.16); border-radius: 12px;
+  overflow: hidden; margin-bottom: 14px;
+}
+.va-wave-bars {
+  position: absolute; inset: 0; display: flex; align-items: center;
+  justify-content: space-between; gap: 2px; padding: 0 16px;
+}
+.va-wave-bar {
+  flex: 1 1 0; min-width: 2px; height: 68px; border-radius: 2px;
+  background: linear-gradient(180deg, var(--teal), rgba(78,205,196,0.35));
+  transform: scaleY(0.08); transform-origin: center;
+}
+.va-wave-mid {
+  position: absolute; left: 16px; right: 16px; top: 50%;
+  height: 1px; background: rgba(78,205,196,0.22);
+}
+.va-wave-caption {
+  position: absolute; left: 18px; bottom: 8px;
+  display: flex; align-items: center; gap: 9px;
+}
+.va-wave-tag {
+  font-size: 9.5px; font-weight: 800; letter-spacing: 0.14em;
+  color: #0E1014; background: var(--teal); padding: 3px 7px; border-radius: 4px;
+}
+.va-wave-text { font-size: 11px; color: #C8CCD4; }
+
+.va-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; width: 100%; }
+.va-card {
+  background: var(--bg-card); border: 1px solid rgba(160,168,188,0.14);
+  border-top: 3px solid var(--va-c, var(--teal));
+  border-radius: 12px; padding: 14px 16px;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.va-card-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.va-card-name { font-size: 12px; font-weight: 800; letter-spacing: 0.1em; color: var(--va-c); }
+.va-card-tag { font-size: 10px; color: var(--text-mute); }
+.va-card-num { font-size: 34px; font-weight: 800; letter-spacing: -0.025em; color: var(--text); line-height: 1.05; }
+.va-card-label { font-size: 11.5px; color: var(--text-mute); line-height: 1.4; }
+.va-card-list { list-style: none; margin: 7px 0 0; padding: 0; display: flex; flex-direction: column; gap: 5px; }
+.va-card-list li {
+  font-size: 11.5px; line-height: 1.45; color: #C8CCD4;
+  padding-left: 13px; position: relative;
+}
+.va-card-list li::before {
+  content: ''; position: absolute; left: 0; top: 6px;
+  width: 5px; height: 5px; border-radius: 50%; background: var(--va-c);
+}
+.va-card-list strong { color: var(--text); }
+.va-card-caveat {
+  font-size: 9.5px; color: var(--text-mute); opacity: 0.75;
+  margin-top: 7px; font-style: italic;
+}
+
+.va-strip {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
+  width: 100%; margin-top: 14px;
+}
+.va-strip-item {
+  background: rgba(160,168,188,0.05); border: 1px solid rgba(160,168,188,0.12);
+  border-radius: 9px; padding: 9px 12px;
+  display: flex; flex-direction: column; gap: 2px;
+}
+.va-strip-item--dvc { border-color: rgba(124,77,255,0.35); background: rgba(124,77,255,0.06); }
+.va-strip-num { font-size: 19px; font-weight: 800; color: var(--text); letter-spacing: -0.02em; }
+.va-strip-item--dvc .va-strip-num { font-size: 14px; color: var(--purple); }
+.va-strip-label { font-size: 9px; font-weight: 700; letter-spacing: 0.12em; color: var(--text-mute); }
+
+/* ─────────────── SLIDE 16 — HEALTHCARE AI ─────────────── */
+.hcs-grid {
+  display: grid; grid-template-columns: 0.95fr 1.05fr 1fr;
+  gap: 14px; width: 100%;
+}
+.hcs-panel-tag {
+  font-size: 9.5px; font-weight: 800; letter-spacing: 0.14em;
+  color: var(--text-mute); display: block; margin-bottom: 7px;
+}
+.hcs-tension, .hcs-numbers, .hcs-gates { display: flex; flex-direction: column; min-width: 0; }
+
+/* two-arrow tension */
+.hcs-tension { gap: 8px; }
+.hcs-arrow {
+  display: flex; gap: 10px; align-items: center;
+  background: var(--bg-card); border: 1px solid rgba(160,168,188,0.14);
+  border-radius: 10px; padding: 11px 13px; flex: 1;
+}
+.hcs-arrow--down { border-left: 3px solid var(--teal); color: var(--teal); }
+.hcs-arrow--up   { border-left: 3px solid var(--coral); color: var(--coral); }
+.hcs-arrow-svg { width: 26px; height: 56px; flex: 0 0 26px; }
+.hcs-arrow-text { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.hcs-arrow-title { font-size: 10.5px; font-weight: 800; letter-spacing: 0.1em; color: currentColor; }
+.hcs-arrow-body { font-size: 11px; line-height: 1.45; color: #C8CCD4; }
+.hcs-arrow-body strong { color: var(--text); }
+
+/* middle numbers */
+.hcs-numbers { gap: 8px; }
+.hcs-num-card {
+  background: var(--bg-card); border: 1px solid rgba(160,168,188,0.14);
+  border-radius: 10px; padding: 10px 13px; flex: 1;
+  display: flex; flex-direction: column; gap: 3px; justify-content: center;
+}
+.hcs-num-card--lead { background: rgba(232,131,124,0.07); border-color: rgba(232,131,124,0.28); }
+.hcs-num-card--evidence { background: rgba(245,197,66,0.06); border-color: rgba(245,197,66,0.24); }
+.hcs-num { font-size: 30px; font-weight: 800; letter-spacing: -0.025em; color: var(--text); line-height: 1; }
+.hcs-num-card--lead .hcs-num { color: var(--coral); }
+.hcs-num-card--evidence .hcs-num { font-size: 24px; color: var(--gold); }
+.hcs-num-label { font-size: 10.5px; line-height: 1.42; color: var(--text-mute); }
+.hcs-num-label strong { color: var(--text); }
+
+/* right gates */
+.hcs-gates { gap: 8px; }
+.hcs-gate {
+  background: var(--bg-card); border: 1px solid rgba(160,168,188,0.14);
+  border-radius: 10px; padding: 10px 13px; flex: 1;
+  display: flex; flex-direction: column; gap: 2px; position: relative;
+}
+.hcs-gate--reimb { border-top: 3px solid var(--gold); }
+.hcs-gate--liab  { border-top: 3px solid var(--purple); }
+.hcs-gate-num {
+  position: absolute; top: 8px; right: 12px;
+  font-size: 17px; font-weight: 800; color: rgba(160,168,188,0.22);
+}
+.hcs-gate-title { font-size: 12px; font-weight: 800; letter-spacing: 0.1em; }
+.hcs-gate--reimb .hcs-gate-title { color: var(--gold); }
+.hcs-gate--liab  .hcs-gate-title { color: var(--purple); }
+.hcs-gate-sub { font-size: 10px; color: var(--text-mute); font-style: italic; }
+.hcs-gate-list { list-style: none; margin: 6px 0 0; padding: 0; display: flex; flex-direction: column; gap: 5px; }
+.hcs-gate-list li {
+  font-size: 10.5px; line-height: 1.42; color: #C8CCD4;
+  padding-left: 11px; position: relative;
+}
+.hcs-gate-list li::before {
+  content: ''; position: absolute; left: 0; top: 5px;
+  width: 4px; height: 4px; border-radius: 50%; background: currentColor; opacity: 0.55;
+}
+.hcs-gate-list strong { color: var(--text); }
+.hcs-gate-list em { color: var(--text-mute); }
+
+/* bottom: clocks + DVC */
+.hcs-bottom {
+  display: grid; grid-template-columns: 1.5fr 1fr; gap: 14px;
+  width: 100%; margin-top: 12px;
+}
+.hcs-clocks {
+  display: grid; grid-template-columns: auto 1fr 1fr; gap: 12px;
+  align-items: center;
+  background: rgba(160,168,188,0.05); border: 1px solid rgba(160,168,188,0.12);
+  border-radius: 10px; padding: 10px 14px;
+}
+.hcs-clock-tag {
+  font-size: 9.5px; font-weight: 800; letter-spacing: 0.13em;
+  color: var(--text-mute); writing-mode: vertical-rl; transform: rotate(180deg);
+  text-align: center; align-self: stretch;
+}
+.hcs-clock { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.hcs-clock-num { font-size: 20px; font-weight: 800; letter-spacing: -0.02em; }
+.hcs-clock--admin .hcs-clock-num { color: var(--teal); }
+.hcs-clock--clinical .hcs-clock-num { color: var(--coral); }
+.hcs-clock-label { font-size: 10px; line-height: 1.4; color: var(--text-mute); }
+.hcs-clock-label strong { color: var(--text); letter-spacing: 0.06em; }
+
+.hcs-dvc {
+  background: rgba(124,77,255,0.06); border: 1px solid rgba(124,77,255,0.3);
+  border-radius: 10px; padding: 9px 13px;
+  display: flex; flex-direction: column; gap: 5px;
+}
+.hcs-dvc-tag { font-size: 9.5px; font-weight: 800; letter-spacing: 0.13em; color: var(--purple); }
+.hcs-dvc-item { display: flex; flex-direction: column; gap: 1px; }
+.hcs-dvc-name { font-size: 10px; font-weight: 800; letter-spacing: 0.08em; color: var(--text); }
+.hcs-dvc-body { font-size: 10px; line-height: 1.4; color: var(--text-mute); }
+.hcs-dvc-body strong { color: #C8CCD4; }
+.hcs-dvc-caveat { font-size: 8.5px; font-style: italic; opacity: 0.7; margin-left: 5px; }
+
+/* ─────────────── SLIDE 6 — MODEL BARBELL (4 lanes) ─────────────── */
+.mb-lanes {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 12px; width: 100%;
+}
+.mb-lane {
+  background: var(--bg-card); border: 1px solid rgba(160,168,188,0.14);
+  border-top: 3px solid var(--mb-c, var(--teal));
+  border-radius: 11px; padding: 12px 13px;
+  display: flex; flex-direction: column; gap: 7px; min-width: 0;
+}
+.mb-lane-head { display: flex; flex-direction: column; gap: 2px; }
+.mb-lane-title { font-size: 11.5px; font-weight: 800; letter-spacing: 0.1em; color: var(--mb-c); }
+.mb-lane-sub { font-size: 10px; color: var(--text-mute); line-height: 1.35; }
+.mb-rows { display: flex; flex-direction: column; gap: 6px; }
+.mb-row {
+  display: flex; flex-direction: column; gap: 1px;
+  padding-bottom: 6px; border-bottom: 1px dashed rgba(160,168,188,0.13);
+}
+.mb-row:last-child { border-bottom: 0; padding-bottom: 0; }
+.mb-row-top { display: flex; justify-content: space-between; align-items: baseline; gap: 6px; }
+.mb-model { font-size: 11.5px; font-weight: 700; color: var(--text); }
+.mb-price { font-size: 11.5px; font-weight: 800; color: var(--mb-c); white-space: nowrap; }
+.mb-note { font-size: 9.5px; line-height: 1.4; color: var(--text-mute); }
+.mb-lane-foot {
+  font-size: 9.5px; line-height: 1.4; color: var(--text-mute);
+  margin-top: auto; padding-top: 7px; border-top: 1px solid rgba(160,168,188,0.12);
+  font-style: italic;
+}
+.mb-barbell {
+  display: grid; grid-template-columns: 1fr auto 1fr; gap: 14px;
+  align-items: center; width: 100%; margin-bottom: 14px;
+  background: rgba(160,168,188,0.05); border: 1px solid rgba(160,168,188,0.12);
+  border-radius: 11px; padding: 10px 16px;
+}
+.mb-end { display: flex; flex-direction: column; gap: 1px; }
+.mb-end--right { text-align: right; }
+.mb-end-num { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; }
+.mb-end--left .mb-end-num { color: var(--purple); }
+.mb-end--right .mb-end-num { color: var(--teal); }
+.mb-end-label { font-size: 10px; color: var(--text-mute); letter-spacing: 0.04em; }
+.mb-bar {
+  width: 100%; min-width: 90px; height: 4px; border-radius: 2px;
+  background: linear-gradient(90deg, var(--purple), rgba(160,168,188,0.3), var(--teal));
+}
+.mb-caveat {
+  width: 100%; margin-top: 12px; padding: 8px 13px;
+  background: rgba(232,131,124,0.06); border: 1px solid rgba(232,131,124,0.22);
+  border-radius: 9px; font-size: 10.5px; line-height: 1.45; color: #C8CCD4;
+}
+.mb-caveat strong { color: var(--coral); }
+
+/* ─────────────── SLIDE 7 — TOKEN-EFFICIENCY EVIDENCE STRIP ─────────────── */
+.tk-strip { width: 100%; margin-top: 14px; }
+.tk-strip-head {
+  display: flex; align-items: center; gap: 9px; margin-bottom: 8px; flex-wrap: wrap;
+}
+.tk-strip-tag {
+  font-size: 9.5px; font-weight: 800; letter-spacing: 0.13em;
+  color: #0E1014; background: var(--gold); padding: 3px 8px; border-radius: 4px;
+}
+.tk-strip-warn { font-size: 10.5px; color: var(--text-mute); font-style: italic; }
+.tk-items { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.tk-item {
+  background: var(--bg-card); border: 1px solid rgba(160,168,188,0.14);
+  border-left: 3px solid var(--tk-c, var(--gold));
+  border-radius: 9px; padding: 9px 12px;
+  display: flex; flex-direction: column; gap: 2px;
+}
+.tk-item--axis { background: rgba(245,197,66,0.06); border-color: rgba(245,197,66,0.26); }
+.tk-item-num { font-size: 19px; font-weight: 800; letter-spacing: -0.02em; color: var(--tk-c); line-height: 1.05; }
+.tk-item--axis .tk-item-num { font-size: 12px; letter-spacing: 0.08em; }
+.tk-item-label { font-size: 10px; line-height: 1.4; color: var(--text-mute); }
+.tk-item-label strong { color: var(--text); }
+
+/* ─────────────── SLIDE 8 — HOW IT'S FUNDED ─────────────── */
+.hf-block {
+  width: 100%; margin-top: 12px;
+  background: rgba(232,131,124,0.05); border: 1px solid rgba(232,131,124,0.22);
+  border-radius: 11px; padding: 10px 13px;
+}
+.hf-head { display: flex; align-items: baseline; gap: 9px; margin-bottom: 8px; flex-wrap: wrap; }
+.hf-tag {
+  font-size: 9.5px; font-weight: 800; letter-spacing: 0.13em;
+  color: #0E1014; background: var(--coral); padding: 3px 8px; border-radius: 4px;
+}
+.hf-sub { font-size: 10.5px; color: var(--text-mute); }
+.hf-items { display: grid; grid-template-columns: repeat(4, 1fr); gap: 9px; }
+.hf-item { display: flex; flex-direction: column; gap: 1px; }
+.hf-item-num { font-size: 17px; font-weight: 800; letter-spacing: -0.02em; color: var(--coral); line-height: 1.1; }
+.hf-item-label { font-size: 9.5px; line-height: 1.38; color: var(--text-mute); }
+.hf-item-label strong { color: #C8CCD4; }
+
+/* ─────────────── SLIDE 11 — CATEGORY CONSOLIDATION FLOW ─────────────── */
+.cc-flow { width: 100%; margin-top: 14px; }
+.cc-flow-head { display: flex; align-items: baseline; gap: 9px; margin-bottom: 8px; flex-wrap: wrap; }
+.cc-flow-tag {
+  font-size: 9.5px; font-weight: 800; letter-spacing: 0.13em;
+  color: #0E1014; background: var(--purple); padding: 3px 8px; border-radius: 4px;
+}
+.cc-flow-sub { font-size: 10.5px; color: var(--text-mute); }
+.cc-lanes { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.cc-lane {
+  background: var(--bg-card); border: 1px solid rgba(160,168,188,0.14);
+  border-radius: 9px; padding: 9px 12px;
+  display: flex; flex-direction: column; gap: 3px;
+}
+.cc-lane-from { font-size: 10px; color: var(--text-mute); letter-spacing: 0.03em; }
+.cc-lane-arrow { font-size: 12px; color: var(--purple); line-height: 1; }
+.cc-lane-to { font-size: 12px; font-weight: 800; color: var(--text); letter-spacing: -0.01em; }
+.cc-lane-note { font-size: 9.5px; line-height: 1.4; color: var(--text-mute); }
+.cc-lane-note strong { color: #C8CCD4; }
+
+/* ─────────────── Mobile stacking for all new blocks ─────────────── */
+@media (max-width: 900px) {
+  .sp-grid, .sp-cards, .va-cards, .hcs-grid, .hcs-bottom,
+  .mb-lanes, .tk-items, .hf-items, .cc-lanes, .va-strip,
+  .mb-barbell, .hcs-clocks { grid-template-columns: 1fr; }
+  .hcs-clock-tag { writing-mode: horizontal-tb; transform: none; text-align: left; }
+  .mb-bar { display: none; }
+  .mb-end--right { text-align: left; }
+}
+
+
+/* ─────────────── SLIDE 13 — OUTCOME PRICING IS A PRICED MARKET ─────────────── */
+.pm-band {
+  width: 100%; margin: 4px 0 12px;
+  background: rgba(78,205,196,0.05); border: 1px solid rgba(78,205,196,0.2);
+  border-radius: 11px; padding: 10px 14px;
+}
+.pm-head { display: flex; align-items: baseline; gap: 9px; margin-bottom: 8px; flex-wrap: wrap; }
+.pm-tag {
+  font-size: 9.5px; font-weight: 800; letter-spacing: 0.13em;
+  color: #0E1014; background: var(--teal); padding: 3px 8px; border-radius: 4px;
+}
+.pm-sub { font-size: 10.5px; color: var(--text-mute); }
+.pm-prices { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 9px; }
+.pm-price {
+  display: flex; flex-direction: column; gap: 1px;
+  padding: 7px 9px; background: rgba(160,168,188,0.06);
+  border: 1px solid rgba(160,168,188,0.12); border-radius: 7px;
+}
+.pm-price-num { font-size: 16px; font-weight: 800; color: var(--teal); letter-spacing: -0.02em; }
+.pm-price-label { font-size: 9.5px; line-height: 1.35; color: var(--text-mute); }
+.pm-price-label strong { color: #C8CCD4; }
+.pm-proof {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+  padding-top: 8px; border-top: 1px solid rgba(78,205,196,0.15);
+}
+.pm-proof-item { display: flex; gap: 8px; align-items: flex-start; }
+.pm-proof-num {
+  font-size: 15px; font-weight: 800; color: var(--gold);
+  letter-spacing: -0.02em; white-space: nowrap; min-width: 48px;
+}
+.pm-proof-label { font-size: 10px; line-height: 1.42; color: var(--text-mute); }
+.pm-proof-label strong { color: #C8CCD4; }
+
+/* Slide 13 has to hold the pricing row, the price list and the ARPU bars */
+.slide-bizmodels .slide-headline { font-size: clamp(26px, 2.7vw, 38px); margin-bottom: 6px; }
+.slide-bizmodels .slide-sub { font-size: clamp(12px, 0.95vw, 14.5px); margin-bottom: 10px; }
+.slide-bizmodels .pricing-row--compact { margin: 0 0 8px; }
+.slide-arpu-block--compact .slide-arpu-intro,
+.slide-arpu-block--compact .slide-arpu-foot { font-size: 11px; line-height: 1.45; }
+.slide-arpu-block--compact .slide-arpu-row { margin-bottom: 4px; }
+.slide-arpu-block--compact .slide-arpu-track { height: 20px; }
+
+/* ─── Slides that gained content in the Aug refresh: tighten the chrome ─── */
+.chart-wrap--smarter-compact { max-height: 40vh; }
+.slide-applayer .funnel-wrap { max-height: 42vh; }
+.slide-applayer .funnel-svg { max-height: 42vh; }
+.slide-applayer .slide-headline { font-size: clamp(28px, 3vw, 42px); margin-bottom: 6px; }
+.slide-applayer .slide-sub { margin-bottom: 10px; }
+.slide-vibe-cc .slide-headline { font-size: clamp(28px, 3vw, 42px); margin-bottom: 6px; }
+.slide-vibe-cc .slide-sub { font-size: clamp(12px, 0.98vw, 15px); margin-bottom: 12px; }
+.slide-vibe-cc .vibe-grid { margin-bottom: 0; }
+
+/* Slide 15 (attack angles) must fit with no clipping or internal scrollbar */
+.slide-attack-stage { overflow: visible; }
+
+@media (max-width: 900px) {
+  .pm-prices, .pm-proof { grid-template-columns: 1fr; }
+}
+
+/* Slide 17 gained the humanoid funding-vs-delivery strip */
+.slide-physical-aug .slide-headline { font-size: clamp(28px, 3vw, 42px); margin-bottom: 6px; }
+.slide-physical-aug .slide-sub { font-size: clamp(12px, 0.98vw, 15px); margin-bottom: 12px; }
+.slide-physical-aug .phys-tiles { margin-bottom: 10px; }
+
+
+/* Slide 8 gained the HOW IT'S FUNDED block: reclaim vertical space so the
+   capex explorer below it is not clipped inside .slide-block-stage. */
+.slide[data-slide="8"] .slide-block-layout { padding: 1rem 2rem 0.9rem; gap: 0.55rem; }
+.slide[data-slide="8"] .slide-headline { font-size: clamp(26px, 2.6vw, 38px); margin-bottom: 0.2rem; }
+.slide[data-slide="8"] .slide-sub { font-size: clamp(12px, 0.95vw, 14.5px); margin-bottom: 0.35rem; }
+.slide[data-slide="8"] .iframe-stat-row { margin: 0 auto 0.35rem; }
+.slide[data-slide="8"] .iframe-stat-num { font-size: 1.5rem; }
+.slide[data-slide="8"] .hf-block { margin-top: 0; text-align: left; }
+.slide[data-slide="8"] .capex-chart-wrap { min-height: 200px; }
