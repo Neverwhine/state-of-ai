@@ -90,7 +90,7 @@
     {n:"Archetype",d:"World-descriptor AI for IoT/sensors",c:"infra",g:"ai-infra",f:true},
     {n:"DeepFlow AI",d:"Agentic workflow orchestration",c:"agents",g:"ai-infra",f:false},
 
-    {n:"Rhoda AI",d:"Foundational model for robotics",c:"physical-ai",g:"physical-ai",f:true},
+    {n:"Rhoda AI",d:"Two-arm general-purpose robot using video models for physical imagination",c:"physical-ai",g:"physical-ai",f:true},
     {n:"Matic Robots",d:"Autonomous home robots",c:"physical-ai",g:"physical-ai",f:false},
     {n:"Abagy Robotics",d:"AI for welding robots",c:"physical-ai",g:"physical-ai",f:false},
 

@@ -1,4 +1,4 @@
-/* === Three Attack Angles on the $1.5T Services Map ===
+/* === Three Attack Angles on the Services Map ===
  * Single source of truth. Used by index.html (in #attack-angles-block) and slides.html (slide 15).
  */
 (function () {
@@ -21,8 +21,8 @@
       ebitda: 5,
       ebitdaLabel: '0-10% (near break-even)',
       comps: [
-        { name: 'Harvey',        detail: '$11B · ~$300M ARR' },
-        { name: 'Legora',        detail: '$5.55B · 800+ customers' },
+        { name: 'Harvey',        detail: '$11B · ~$190M ARR (Jan 2026) ≈ 58×' },
+        { name: 'Legora',        detail: 'Harvey’s direct European competitor' },
         { name: 'ServiceTitan',  detail: 'NASDAQ: TTAN' },
         { name: 'ServiceNow Otto', detail: 'May 2026' },
         { name: 'Agentforce',    detail: 'pay-per-resolution GA' }
@@ -55,8 +55,8 @@
       ebitda: -15,
       ebitdaLabel: 'Negative (scaling)',
       comps: [
-        { name: 'Sierra',     detail: '$15.8B / ~$200M ARR = ~79×' },
-        { name: 'Decagon',    detail: '$4.5B / ~$35M = ~128×' },
+        { name: 'Sierra',     detail: '$15.8B / ~$165M ARR ≈ 96×' },
+        { name: 'Decagon',    detail: '$4.5B ($250M Series D, Jan 2026) — no multiple shown: the ARR denominator could not be sourced' },
         { name: 'Lovable',    detail: '$500M ARR · 146 employees' },
         { name: 'Crescendo',  detail: 'Acquired PartnerHero' },
         { name: 'EvenUp',     detail: '$2B+ · demand letters' }
@@ -90,11 +90,11 @@
       ebitdaLabel: '30-40% target',
       comps: [
         { name: 'Dwelly',     detail: 'Property mgmt · $95M equity + debt', dvc: true },
-        { name: 'Crete',      detail: 'Accounting · $300M+ ARR' },
-        { name: 'Long Lake',  detail: 'HOA · 18+ acquisitions' },
+        { name: 'Crete',      detail: 'Accounting rollup' },
+        { name: 'Long Lake',  detail: 'HOA management rollup' },
         { name: 'Eudia',      detail: 'In-house legal' },
-        { name: 'Titan + RFA', detail: 'IT MSPs · $74M' },
-        { name: 'Metropolis', detail: 'Parking · $1.6B' }
+        { name: 'Titan + RFA', detail: 'IT managed services' },
+        { name: 'Metropolis', detail: 'Parking operations' }
       ],
       dvc: [
         { name: 'Dwelly', detail: 'UK property mgmt · $95M equity + debt', link: 'fleetworks' },
@@ -110,13 +110,13 @@
   const CONTEXT = {
     rollupContest: {
       tag: 'THE ROLLUP ARBITRAGE IS NOW A FUNDED CONTEST',
-      body: 'Thrive Holdings moved on Jul 7, 2026 to raise ~<strong>$2B</strong> from SoftBank, Altimeter and D1 — with <strong>OpenAI engineers embedded</strong> in portfolio companies. General Catalyst has <strong>$1.5B</strong> allocated to its Creation Strategy. Against ~$2T of PE/VC dry powder chasing the same targets, the 30&ndash;40% EBITDA arbitrage is no longer under-discovered; the edge is sourcing and operating speed at the small end.'
+      body: 'The rollup arbitrage is now a funded contest: dedicated AI-services holding vehicles are raising against the same small-cap services targets that the angle depends on, alongside a large pool of PE/VC dry powder. We do not print fund sizes here — the specific figures we previously carried could not be sourced. The consequence stands: the 30&ndash;40% EBITDA arbitrage is no longer under-discovered, and the edge is sourcing and operating speed at the small end.'
     },
     modelLayerServices: {
       tag: 'MODEL LAYER ENTERS SERVICES',
-      body: 'Anthropic launched <strong>Ode with Anthropic</strong>, a <strong>$1.5B</strong> AI-implementation joint venture with Blackstone, Hellman &amp; Friedman and Goldman Sachs, staffed with <strong>100 engineers</strong>. The services-capture thesis now has a competitor that owns the model.'
+      body: 'Anthropic entered AI implementation services directly through <strong>Ode with Anthropic</strong>, a joint venture with private-capital partners. We do not print the venture size or headcount — those figures could not be sourced. The structural point is what matters: the services-capture thesis now has a competitor that owns the model.'
     },
-    disclosure: 'Multiples are computed on company-disclosed, unaudited ARR. Margin bands are unchanged from the May 2026 edition.'
+    disclosure: 'Multiples are computed on company-disclosed, unaudited ARR, and are dated where the denominator is dated. Margin bands are DVC estimates unchanged from the May 2026 edition. Funding and revenue figures were re-checked against source on Aug 4, 2026.'
   };
 
   function contextHTML(compact) {
@@ -176,7 +176,7 @@
 
     el.innerHTML = `
       <div class="aa-header">
-        <h3 class="aa-title">Three angles of attack on the $1.5T services map.</h3>
+        <h3 class="aa-title">Three angles of attack on the services map.</h3>
         <p class="aa-sub">Market structure picks the strategy. Founders who pick the wrong one fight gravity.</p>
       </div>
       <div class="aa-grid">

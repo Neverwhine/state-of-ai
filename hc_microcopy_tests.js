@@ -631,7 +631,7 @@ check('healthcare.js emits a band-co-hint summary instead',
 console.log('--- Test: Dmitry sourced callouts exist and are wired ---');
 check('loopCallouts data is present', Array.isArray(D.loopCallouts) && D.loopCallouts.length >= 5);
 var calloutIds = (D.loopCallouts || []).map(function (c) { return c.id; });
-['cl_workforce','cl_cms_rht','cl_claude_health','cl_palantir_r1','cl_behavioral_telehealth'].forEach(function (id) {
+['cl_workforce','cl_cms_rht','cl_claude_health','cl_palantir_r1'].forEach(function (id) {
   check('callout ' + id + ' is present', calloutIds.indexOf(id) > -1);
 });
 (D.loopCallouts || []).forEach(function (c) {
@@ -651,8 +651,8 @@ check('Claude for Healthcare callout cites prior authorization and FHIR',
   /prior auth/i.test(allCalloutText) && /FHIR/i.test(allCalloutText));
 check('Palantir / R1 callout names the R37 AI Lab partnership',
   /R37 AI Lab/i.test(allCalloutText));
-check('Behavioral health callout cites 66.4M vs 62.8M visit figure',
-  /66\.4M/.test(allCalloutText) && /62\.8M/.test(allCalloutText));
+check('retired behavioral-health visit figures do not remain in callouts',
+  !/66\.4M/.test(allCalloutText) && !/62\.8M/.test(allCalloutText));
 
 check('index.html has the loop-callouts container', indexSrc.indexOf('id="hc-loop-callouts"') > -1);
 check('healthcare.css styles hc-loop-callout cards', cssSrc.indexOf('.hc-loop-callout') > -1);
@@ -712,8 +712,8 @@ check('Anthropic healthcare source listed',
   srcLabels.some(function (l) { return /Anthropic/i.test(l) && /healthcare/i.test(l); }));
 check('Palantir / R1 source listed',
   srcLabels.some(function (l) { return /Palantir/i.test(l); }));
-check('AHA / behavioral telehealth source listed',
-  srcLabels.some(function (l) { return /behavioral/i.test(l) || /AHA/i.test(l); }));
+check('broken AHA behavioral-health source is not listed',
+  !srcLabels.some(function (l) { return /AHA Market Scan/i.test(l); }));
 check('Adentris source listed',
   srcLabels.some(function (l) { return /Adentris/i.test(l); }));
 

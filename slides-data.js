@@ -21,7 +21,7 @@ window.SLIDES_DATA = {
     },
     {
       badge: 'LAYER 3', title: 'CLOUD & INFRA', accent: '#4A90D9',
-      revenue2026: '$45-55B', revenueLabel: 'AI cloud rev (+ $224B CapEx)',
+      revenue2026: '$45-55B', revenueLabel: 'AI cloud rev (+ ~$725B 2026 CapEx)',
       revenue2024Num: 20, revenue2026Num: 50,
       growth: '+150%',
       marginPct: 28, marginRange: '20-35%'
@@ -35,15 +35,17 @@ window.SLIDES_DATA = {
     },
     {
       badge: 'LAYER 1', title: 'ENERGY', accent: '#F5C542',
-      revenue2026: '580 TWh', revenueLabel: 'data-center power by 2028',
+      revenue2026: '580 TWh (US high case)', revenueLabel: 'US data-center power by 2028',
       revenue2024Num: 460, revenue2026Num: 580,
       growth: '+26%',
       marginPct: 12, marginRange: '8-15% (utility)'
     }
   ],
 
-  // Hyperscaler CapEx ($B) — Big 4 2026 guidance: ~$695B midpoint, up to $725B top end (post-Q1 2026 earnings)
-  hyperscalerCapex: { y2024: 224, y2026: 695, y2026Label: '~$695B mid / up to $725B', ratio: '$12 infra : $1 app revenue' },
+  // Hyperscaler CapEx ($B) — Big 4 2026 guidance: ~$725B midpoint, up to ~$745B top end
+  // (post-Q2 2026 earnings; Alphabet raised to $195–205B on the Jul 22 2026 call).
+  // y2024 = 224 is the 2024 figure and is labelled as such — it is NOT a 2026 number.
+  hyperscalerCapex: { y2024: 224, y2026: 725, y2026Label: '~$725B mid / up to ~$745B', ratio: '$12 infra : $1 app revenue' },
 
   // Inference cost collapse — log scale. Cost per million tokens (USD).
   inferenceCost: [
@@ -53,14 +55,17 @@ window.SLIDES_DATA = {
     { date: 'Gemini Flash',      cost: 0.70 },
     { date: 'Today (commodity)', cost: 0.14 }
   ],
-  inferenceCostDrop: '99.6%',
+  inferenceCostDrop: null, // removed Aug 4 2026: the two cost series in the report used different model classes, baselines and windows and could not be reconciled to one current source
+  inferenceBarbell: 'Commodity tier at $1/$6 (GPT-5.6 Luna) against $10/$50 at the agentic frontier (Claude Fable 5) — published list prices, Aug 2026',
 
   // Application layer companies (slide 7)
   // Aug 3, 2026. Private run-rate/ARR figures are company-disclosed and unaudited.
-  // Anthropic is shown as a range because sources conflict ($30B and ~$47B in the
-  // same window). Cursor is a SpaceXAI subsidiary as of the Jun 16 option exercise.
+  // Anthropic's run-rate is a time series, not a source conflict: $14B Feb → $19B Mar
+  // → $30B Apr (official) → $47B reported June 2026. We show the latest point.
+  // Cursor: the SpaceX transaction was signed Jun 16 2026 and is expected to close in
+  // Q3 2026 subject to regulatory approval — signed, not closed.
   appLayer: [
-    { name: 'Anthropic',  val: '$30–47B', color: '#D4A574' },
+    { name: 'Anthropic',  val: '$47B', color: '#D4A574' },
     { name: 'OpenAI',     val: '1B MAU',  color: '#10A37F' },
     { name: 'Cursor',     val: '$4B',     color: '#A0A8BC' },
     { name: 'ElevenLabs', val: '$600M',   color: '#A0A8BC' },
@@ -71,10 +76,10 @@ window.SLIDES_DATA = {
   // ── Lab leadership (slide 5 strip + report cards) ──
   // Valuations are primary-round marks; secondary prints differ and are labelled.
   labLeadership: {
-    anthropic: { primary: '$965B', secondary: '~$1.2T', runRate: '$30B–$47B reported run-rate (sources conflict)',
-                 enterprise: '34.4% of US paid business use vs ChatGPT 32.3% (Ramp AI Index, Jul 2026)',
+    anthropic: { primary: '$965B', secondary: null, runRate: '$47B run-rate reported June 2026, up from the official $30B in April',
+                 enterprise: '42.4% of US paid business use vs OpenAI 39.5% (Ramp AI Index, July 2026; overall business AI adoption 46.6%)',
                  customers: '300K+ business customers · ~70% of the Fortune 100' },
-    openai:    { primary: '$852B', secondary: '~$908B', usage: 'ChatGPT 1B MAU · Codex + ChatGPT Work ~10M WAU',
+    openai:    { primary: '$852B', secondary: '~$880–895B (secondary prints, late Jun 2026)', usage: 'ChatGPT 1B MAU · Codex + ChatGPT Work ~10M WAU',
                  caveat: 'No audited 2026 revenue filed; latest signal is a partial internal transcript with no dollar figures' },
     google:    { gemini: '950M MAU', aiMode: '1B+ MAU', enterprise: '~90% of the Fortune 100', tokens: '22B tokens/min through Gemini APIs' },
     meta:      { mau: '1.2B MAU', wau: '800M WAU', note: 'Largest by reach, but embedded in existing search bars rather than chosen' },
@@ -86,23 +91,22 @@ window.SLIDES_DATA = {
   // text stays legible in fullscreen; this block is the source of record.
   modelBarbell: {
     premiumAgentic: [
-      { model: 'Claude Fable 5 / Mythos 5', price: '$10/$50', note: 'Jun 9 · multi-day agentic tier · SWE-Bench Pro 80.4%' },
+      { model: 'Claude Fable 5', price: '$10/$50', note: 'Jun 9 · multi-day agentic tier · SWE-Bench Pro 80.3% · Mythos 5 is restricted to Project Glasswing partners, not purchasable' },
       { model: 'GPT-5.6 Sol',               price: '$5/$30',  note: 'Jul 9 GA · 54% more token-efficient on coding' }
     ],
     efficientFrontier: [
       { model: 'Claude Sonnet 5',        price: '$2/$10',            note: 'Promo through Aug 31, then $3/$15 · 1M context · default in Claude Code' },
-      { model: 'Grok 4.5',               price: '$2/$6',             note: '500K context · co-trained with Cursor · ~4.2× fewer output tokens than Opus 4.8' },
+      { model: 'Grok 4.5',               price: 'efficient frontier', note: 'Exact price, context and token comparison removed after primary-source audit' },
       { model: 'GPT-5.6 Terra / Luna',   price: '$2.50/$15 · $1/$6', note: 'Luna is the floor of the credible frontier tier' },
-      { model: 'Gemini 3.6 Flash',       price: '$1.50/$7.50',       note: 'Output $9.00 → $7.50 · 17% fewer output tokens' },
+      { model: 'Gemini 3.6 Flash',       price: 'efficient frontier', note: 'Exact pricing and token comparison removed after primary-source audit' },
       { model: 'Meta Muse Spark 1.1',    price: '$1.25/$4.25',       note: "Meta's first paid Model API · leads on tool use" }
     ],
     openWeightChina: [
       { model: 'Kimi K3 (Moonshot)',      params: '2.8T', note: '896 experts / 16 active · 1M context · weights Jul 27 · largest open model to date' },
-      { model: 'Qwen3.8-Max-Preview',     params: '2.4T', note: 'Alibaba · Jul 19' },
-      { model: 'DeepSeek V4 Preview',     params: '1.6T / 284B', note: 'Pro 1.6T (49B active) · Flash 284B (13B active) · 33T training tokens' }
+      { model: 'DeepSeek V4 Preview',     params: 'open weights', note: 'Parameter and active-expert splits unconfirmed — not printed' }
     ],
     restrictedCyber: [
-      { model: 'Fable 5 / Mythos 5 suspension', stat: '19 days', note: 'US Commerce export controls suspended both globally from Jun 12; restored Jul 1 behind new cyber classifiers' },
+      { model: 'Fable 5 / Mythos 5 controls', stat: 'restricted access', note: 'Exact suspension duration and regulatory causality were not independently verified' },
       { model: 'GPT-5.6 pre-release review',    stat: 'EO 14409', note: 'US pre-release review preceded GA; OpenAI objected to it becoming the long-term default' },
       { model: 'Gemini 3.5 Flash Cyber',        stat: 'Dedicated SKU', note: 'Cyber capability became a release gate, not a footnote' }
     ],
@@ -113,12 +117,14 @@ window.SLIDES_DATA = {
   // Deliberately not modelled as a curve: the three figures are each a vendor's
   // own comparison against its own predecessor on different tasks.
   tokenEfficiencyClaims: [
-    { vendor: 'Grok 4.5',         claim: '4.2×', detail: 'fewer output tokens than Claude Opus 4.8' },
+    { vendor: 'Grok 4.5',         claim: 'EFFICIENCY', detail: 'marketed on lower tokens per task; exact multiplier removed after audit' },
     { vendor: 'GPT-5.6 Sol',      claim: '54%',  detail: 'more token-efficient on coding than its predecessor' },
-    { vendor: 'Gemini 3.6 Flash', claim: '17%',  detail: 'fewer output tokens, alongside a $9.00 → $7.50 output cut' }
+    { vendor: 'Gemini 3.6 Flash', claim: 'EFFICIENCY', detail: 'marketed on lower output-token use; exact percentage removed after audit' }
   ],
 
   // Smarter + Cheaper diverging curves
+  // Illustrative only: MMLU is saturated and is retained here purely as a legacy
+  // capability axis. The report itself notes SWE-bench Verified is nearing its ceiling.
   smarterCurve: [
     { date: '2023', mmlu: 70, cost: 37.50 },
     { date: '2024', mmlu: 80, cost: 15 },
@@ -128,11 +134,11 @@ window.SLIDES_DATA = {
 
   // ── NEW slide 6: Infrastructure & Energy headline stats ──
   infraStats: {
-    capex2026: '$700–725B',
+    capex2026: '~$725B mid / up to ~$745B',
     capex2026Detail: 'Top four 2026 guidance · up to ~$800B calendar 2026 including leases · Google raised to $195–205B',
-    capex2024: '$224B',
+    capex2024: '$224B (2024)',
     multiplier: '3.1×',
-    nuclear: '9.8 GW committed across 13 hyperscaler nuclear deals vs 1.92 GW operational · bridged by 2.67 GW off-grid gas (Project Kilby)'
+    nuclear: '9.8 GW committed across 13 hyperscaler nuclear deals vs 1.92 GW operational (tracker snapshot, May 2026) · bridged by a proposed 2.67 GW off-grid gas project without final investment decision'
   },
 
   // ── Slide 8: HOW IT'S FUNDED — the scale held, the funding quality changed ──
@@ -146,17 +152,19 @@ window.SLIDES_DATA = {
   // ── Slide 9 (NEW): SILICON & POWER ──
   siliconPower: {
     nvidia:   { period: 'Q1 FY2027 (quarter ended Apr 26, 2026)', revenue: '$81.6B', dataCenter: '$75.2B',
-                note: 'VeraRubin production ships Q3 · >$9B physical-AI revenue TTM · China compute revenue zero',
+                note: 'VeraRubin production ships Q3 · physical AI is a disclosed revenue line (TTM figure not printed — unsourced) · China compute revenue zero',
                 annualContrast: 'Do not confuse with FY2026 annual revenue of $215.9B — always label the period' },
-    amd:      { anthropic: 'up to 2 GW MI450 from H1 2027', meta: '6 GW (1 GW of MI450 in H2 2026)', total: '8 GW committed' },
+    amd:      { summary: 'Major hyperscaler commitments for the Instinct roadmap; exact gigawatt totals removed after the Aug 4 source audit.' },
     broadcom: { aiSemis: '$10.8B FQ2 (+143%)', q3Guide: '$16.0B', openai: 'OpenAI partnered with Broadcom on its first in-house processors' },
-    // Etched is NOT a DVC portfolio company. No DVC badge anywhere.
+    // Etched IS a DVC portfolio company (dvc: true below). DVC publicly states "DVC invested
+    // in Etched at an early stage" — a firm's own statement about its own portfolio is first-party.
+    // The DVC badge must render on the report card and on the Etched card in the silicon slide.
     etched:   { round: '$300M Series C', valuation: '$10.3B', date: 'Jul 23, 2026',
-                investors: 'Led by Sequoia with a16z, Jane Street, Diffusion and SK Hynix',
-                totalRaised: '>$1B', preOrders: '$1B', dvc: false },
-    power:    { committed: '9.8 GW across 13 hyperscaler nuclear deals', operational: '1.92 GW', ratio: '5:1',
-                gasBridge: 'Project Kilby — 2.67 GW off-grid West Texas gas plant, 20-yr Microsoft PPA, first delivery 2028',
-                tmi: 'Three Mile Island Unit 1 / Crane: FERC waiver Jun 1, 2026; 835 MW produces nothing until H2 2027–2028' }
+                investors: 'Led by Sequoia with a16z, Jane Street and SK Hynix (Etched’s own release lists Argo; other coverage lists Diffusion)',
+                totalRaised: '>$1B', preOrders: null, /* $1B pre-orders removed Aug 4 2026: unsourced */ dvc: true },
+    nuclear: { committed: '9.8 GW across 13 hyperscaler nuclear deals (SMR Intel tracker, May 2026 cut)', operational: '1.92 GW — one deal: Amazon/Talen Susquehanna', ratio: '5:1',
+                gasBridge: 'Project Kilby — proposed 2.67 GW off-grid West Texas gas plant with a 20-year Microsoft PPA; no final investment decision as of Aug 4, 2026',
+                tmi: 'Three Mile Island Unit 1 / Crane restart: 835 MW, 20-year PPA, ~$16B — produces no power until H2 2027 at the earliest (no FERC waiver date printed — unsourced)' }
   },
 
   // ── Slide 12 (NEW): VOICE AI ──
@@ -164,7 +172,7 @@ window.SLIDES_DATA = {
     elevenlabs: { arr: '$600M', from: '$330M at end-2025', growth: '~175% YoY',
                   f500: '41% of the Fortune 500', apiUsers: '1B+ end users via API',
                   creators: '$22M paid to 10,400+ voice creators', disclosure: 'company-disclosed' },
-    openai:     { product: 'GPT-Live-1 and GPT-Live-mini', date: 'July 8, 2026', capability: 'full-duplex conversation, released globally' },
+    openai:     { product: 'OpenAI full-duplex voice', date: '2026 product release', capability: 'Simultaneous listening and speaking; exact SKU names/date removed after source audit.' },
     dvcExposure: ['FleetWorks', 'Avoca']
   },
 
@@ -182,7 +190,7 @@ window.SLIDES_DATA = {
   // ── NEW slide 11: Vibe coding ──
   // Aug 3, 2026. ARR figures are company-disclosed and unaudited.
   vibeCoding: [
-    { letter: 'C', name: 'Cursor',      stat: '$4B ARR',         color: '#FF8C42', desc: '$60B all-stock to SpaceX, exercised Jun 16 · co-trained Grok 4.5' },
+    { letter: 'C', name: 'Cursor',      stat: '$4B ARR',         color: '#FF8C42', desc: '$60B all-stock agreement with SpaceX, signed Jun 16 and subject to closing' },
     { letter: 'A', name: 'Claude Code', stat: 'Sonnet 5 default', color: '#D4A574', desc: 'Default surface for Sonnet 5 from Jul 1 · ~$2.5B annualized' },
     { letter: 'L', name: 'Lovable',     stat: '$500M ARR',       color: '#7C4DFF', desc: '146 employees · ~$3.4M ARR/head · $13.2B raise reportedly in progress' },
     { letter: 'O', name: 'Work + Codex', stat: '~10M WAU',       color: '#10A37F', desc: 'OpenAI platform bundle · doubled from 6M in nine days' },
@@ -206,19 +214,19 @@ window.SLIDES_DATA = {
   physicalAI: {
     waymoWeeklyRides: '~500,000',
     waymoTarget:      '1M/week by year-end (one forecast puts Q4 nearer 775,000)',
-    waymoMetros:      '15+ fully driverless US metros · ~3,000 vehicles',
+    waymoMetros:      '11 public driverless US metros + 4 employee-only · ~3,871 vehicles (Jun 2026 NHTSA filing)',
     waymoMiles:       '220M+ autonomous miles through end-March 2026',
     teslaPaidMiles:   '2.5M paid robotaxi miles · only 380,000 without a safety monitor',
-    teslaFlat:        '~900,000 added paid miles in each of Q1 and Q2 2026 · ~14 unsupervised Austin cars',
+    teslaFlat:        '~1.1M added paid miles in Q1 vs ~700K in Q2 2026 — roughly 36% lower on the majority reading of Tesla’s cumulative chart',
     laborMarketTAM:   '$38T',
     humanoidFunding:  '$8.6B in 2026 YTD — 1.8× all of 2025',
-    nvidiaPhysicalAI: '>$9B physical-AI revenue TTM'
+    nvidiaPhysicalAI: 'physical AI is a disclosed revenue line (TTM figure not printed — unsourced)'
   },
   physicalAITiles: [
     { category: 'AUTONOMOUS MOBILITY',  color: '#4ECDC4', icon: 'car',
-      company: 'WAYMO',          detail: '~500K paid rides/week · 15+ driverless metros · 220M+ mi' },
+      company: 'WAYMO',          detail: '~500K paid rides/week (flat since Mar 2026) · 11 public driverless metros · 220M+ mi' },
     { category: 'THE GAP WIDENED',      color: '#F5C542', icon: 'truck',
-      company: 'TESLA ROBOTAXI', detail: '2.5M paid mi · 380K without a safety monitor · flat QoQ' },
+      company: 'TESLA ROBOTAXI', detail: '2.5M paid mi · 380K without a safety monitor · Q2 added miles ~36% below Q1 on majority read' },
     { category: 'AUTONOMOUS WORK',      color: '#E8837C', icon: 'robotarm',
       company: 'RHODA',          detail: '>$450M raised · >$2.4B valuation', dvc: true }
   ],
@@ -226,11 +234,11 @@ window.SLIDES_DATA = {
     { num: '~500K',  label: 'WAYMO PAID RIDES/WEEK',   accent: '#4ECDC4' },
     { num: '$8.6B',  label: 'HUMANOID FUNDING 2026 YTD', accent: '#F5C542' },
     { num: '380K',   label: 'TESLA MI, NO SAFETY MONITOR', accent: '#E8837C' },
-    { num: '>$9B',   label: 'NVIDIA PHYSICAL-AI TTM',   accent: '#7C4DFF' }
+    { num: 'DISCLOSED LINE', label: 'NVIDIA PHYSICAL AI — NO TTM FIGURE PRINTED', accent: '#7C4DFF' }
   ],
 
-  // Slide 10 ARPU bars are now native (Netflix/Meta/Google/OpenAI). Numbers are
-  // hard-coded in slides.html under .slide-arpu-block. Update both the report
+  // Slide 13 business-model proof points are native. Exact cross-company ARPU
+  // bars were removed because their user denominators were not comparable.
   // (index.html #arpu-block) and slides.html together if any value changes.
 
   // Tech cycle phases (slide 15 close)

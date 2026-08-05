@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>What's New &mdash; DVC State of AI Patch Notes &middot; August 3, 2026</title>
+<title>What's New &mdash; DVC State of AI Patch Notes &middot; August 4, 2026</title>
 <meta name="description" content="Patch notes for the DVC State of AI report &mdash; what changed in the last week and where it shows up in the main report.">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
@@ -155,141 +155,51 @@
   <span class="wn-nav-here">What's new</span>
 </nav>
 
-<header class="wn-hero">
+<header class="wn-hero" id="top">
   <span class="wn-eyebrow">DVC State of AI &middot; Patch notes</span>
-  <h1 class="wn-title">What's new<span class="wn-date-badge">August 3, 2026</span></h1>
-  <p class="wn-intro"><strong>August 3 lens: the model market became a barbell, the funding mix changed, and healthcare gave us the cleanest natural experiment of the year.</strong> Anthropic passed OpenAI on both valuation and US enterprise penetration; premium agentic tiers priced up to $10/$50 while capable output fell to $1&ndash;$6, with token efficiency emerging as a third economic axis; Chinese open weights took the parameter-count crown; the accelerator monopoly cracked in a single quarter; hyperscaler capex held at $700&ndash;725B but is now 32% debt-funded with Alphabet's free cash flow negative for the first time since 2004; Cursor was acquired for $60B all-stock; and outcome pricing acquired a published price list. The deck expanded from 15 to 18 slides &mdash; adding Silicon &amp; Power, Voice AI and Healthcare AI. The Healthcare AI section was substantially updated for the first time since it shipped. <em>Previous entry (May 19) retained below.</em></p>
-  <p class="wn-intro" style="margin-top:0.75rem;font-size:0.9rem;opacity:0.85">Earlier lens (May 19, 2026): agents became infrastructure. Microsoft and AWS shipped the governance and toolkit layers that turn agent platforms into managed enterprise products. NIST/CAISI's first independent eval of DeepSeek V4 Pro shows the open-weight gap is real on held-out benchmarks (roughly 8 months behind US frontier) while cost efficiency holds up. The Pentagon's IL6/IL7 vendor list and NVIDIA's equity-backed IREN deal complete the picture: frontier AI is now a national-security supply chain and an AI-factory build-out priced in gigawatts. The main report's structure and the new Healthcare AI section are untouched.</p>
-  <p class="wn-meta-line">Updated August 3, 2026 &middot; primary sources cited per item &middot; older entries below the August 3 block</p>
+  <h1 class="wn-title">What's new<span class="wn-date-badge">August 4, 2026</span></h1>
+  <p class="wn-intro"><strong>August 3 lens: the model market became a barbell, the funding mix changed, and healthcare gave us the cleanest natural experiment of the year.</strong> Anthropic passed OpenAI on both valuation and US enterprise penetration; premium agentic tiers priced up to $10/$50 while capable output fell to $1&ndash;$6, with token efficiency emerging as a third economic axis; Chinese open weights took the parameter-count crown; the accelerator monopoly cracked in a single quarter; hyperscaler capex rose to ~$725B at the midpoint and is now 32% debt-funded with Alphabet's free cash flow negative for the first time since 2004; Cursor was acquired for $60B all-stock; and outcome pricing acquired a published price list. The deck expanded from 15 to 18 slides &mdash; adding Silicon &amp; Power, Voice AI and Healthcare AI. The Healthcare AI section was substantially updated for the first time since it shipped. <em>Previous entry (May 19) retained below.</em></p>
+  <p class="wn-intro" style="margin-top:0.75rem;font-size:0.9rem;opacity:0.85">Earlier lens (May 19, 2026): agents became infrastructure. Microsoft and AWS shipped the governance and toolkit layers that turn agent platforms into managed enterprise products. NIST/CAISI's first independent eval of DeepSeek V4 Pro shows the open-weight gap is real on held-out benchmarks while cost efficiency holds up — the month-gap figure previously printed is not in the source and has been removed. The Pentagon's IL6/IL7 vendor list and NVIDIA's equity-backed IREN deal complete the picture: frontier AI is now a national-security supply chain and an AI-factory build-out priced in gigawatts. The main report's structure and the new Healthcare AI section are untouched.</p>
+  <p class="wn-meta-line">Updated August 4, 2026 &middot; primary sources cited per item &middot; older entries below the August 4 and August 3 blocks</p>
 </header>
 
 <main class="wn-list-wrap">
 
 
-  <!-- ══════════════ AUGUST 3, 2026 ══════════════ -->
-  <h2 style="font-size:0.78rem;letter-spacing:0.18em;text-transform:uppercase;color:#F5C542;margin:0 0 0.85rem;padding-top:0.25rem;font-weight:700">August 3, 2026 &middot; this refresh</h2>
+
+  <!-- ══════════════ AUGUST 4, 2026 ══════════════ -->
+  <h2 style="font-size:0.78rem;letter-spacing:0.18em;text-transform:uppercase;color:#4ECDC4;margin:0 0 0.85rem;padding-top:0.25rem;font-weight:700">August 4, 2026 &middot; fact audit</h2>
   <div class="wn-list" style="margin-bottom:2.25rem">
 
+    <article class="wn-card" style="--wn-accent:#4ECDC4">
+      <span class="wn-card-tag">Accuracy</span>
+      <h2 class="wn-card-headline">Full fact audit: 306 material claims checked, outdated legacy cards retired, services matrix rebuilt</h2>
+      <p class="wn-card-body">A line-by-line audit of every figure in the report and the deck &mdash; <strong>306 material claims</strong> across <code>index.html</code>, <code>slides.html</code>, <code>slides-data.js</code>, <code>attack-angles.js</code>, <code>healthcare-data.js</code>, <code>app.js</code> and this page, with 91 source URLs fetched and read. Four things changed structurally.
+      <br><br><strong>1. Legacy cards were retired rather than layered over.</strong> The August blocks had been added <em>above</em> March&ndash;May 2026 material that was never removed, so the document contradicted itself: Anthropic appeared at both $965B and $380B, Cursor at both $4B and $2B+ ARR, ElevenLabs at both $600M and $330M, and slide 13 still called Claude Opus 4.7 the flagship while slide 6 priced Claude Fable 5. Each of those is now single-valued. The Ramp enterprise-penetration figure &mdash; the most-repeated new claim in the refresh &mdash; was three months stale in five files and is now <strong>Anthropic 42.4% vs OpenAI 39.5%</strong>, cited to <a href="https://ramp.com/data/ai-index-july-2026" target="_blank" rel="noopener">Ramp directly</a> instead of through an SEO aggregator. Anthropic&rsquo;s run-rate is now shown as a time series &mdash; $47B in June, up from the official $30B in April &mdash; not as a source conflict.
+      <br><br><strong>2. The services matrix was rebuilt and single-sourced.</strong> It now lives in one data file consumed by both the report and slide 14, so the two can no longer drift. The <code>$1.5T+ mapped</code> headline and all four quadrant dollar totals are gone: the quadrants summed to ~$2.29T against the headline, and Sequoia publishes no quadrant totals. Attribution is narrowed to what Sequoia actually states. Three companies that are no longer independent private challengers (Sana&nbsp;&rarr;&nbsp;Workday, Uizard&nbsp;&rarr;&nbsp;Miro, Navan&nbsp;&rarr;&nbsp;public) were removed and are disclosed separately; duplicate categories and duplicate entities were consolidated; sixteen stale funding figures were refreshed with per-cell dates and source URLs; and every hard-truncated adoption statistic with a severed citation link was removed.
+      <br><br><strong>3. Unsupported claims were deleted rather than hedged.</strong> Where a second search pass produced no source that states the claim, the claim or its number is gone: the 92%-of-the-Fortune-500 figure, the ~$1.2T Anthropic secondary mark, the $1.3B&nbsp;&rarr;&nbsp;$158.7B AV projection, the unattributed layoff-regret quote, the asset-manager concentration statistic, Qwen3.8-Max-Preview in full, DeepSeek V4 active-parameter splits, Grok 4.5 and Gemini 3.6 Flash pricing mechanics, and the exact figures behind several healthcare, export-control and defence-procurement specifics. Groq is no longer described as an acquisition anywhere: it was a <strong>$20B non-exclusive technology licence plus asset purchase and acqui-hire</strong>, and NVIDIA states it did not acquire Groq.
+      <br><br><strong>4. Source and date labels are current everywhere.</strong> Capex is reconciled to <strong>~$725B midpoint / up to ~$745B</strong> across index, slides, charts, tooltips and the data file, with 2025 at ~$402&ndash;410B and $224B labelled as the 2024 figure it is. Waymo is 11 public driverless metros on ~3,871 vehicles with rides flat since March; Tesla&rsquo;s paid mileage <em>fell</em> ~36% quarter over quarter, and the 22 NHTSA crash reports now sit beside the &ldquo;zero notable incidents&rdquo; claim. NOHARM is 100 cases, not 1,100, and the paper&rsquo;s severe-harm finding is included. The EU AI Act timeline agrees with itself on the two clocks. Cerebras is stated on one basis throughout. Etched is disclosed as a <strong>DVC portfolio company</strong>, correcting a disclaimer that contradicted DVC&rsquo;s own public statement. Entity-level facts were promoted into a single keyed data file so this class of contradiction cannot recur.</p>
+      <div class="wn-card-meta">
+        <span class="wn-card-updates">Updates: <strong>every section of the report</strong>, <strong>all 18 slides</strong>, and the underlying data files</span>
+        <span class="wn-card-jump"><a href="index.html">Jump to report &rarr;</a></span>
+        <span class="wn-card-source">306 rows audited, 0 unresolved. Source hierarchy applied throughout: first-party filings and company newsrooms, then regulators, then wires and major business press, then named research firms &mdash; with SEO aggregators replaced wherever an alternative existed.</span>
+      </div>
+    </article>
+
+  </div>
+
+  <!-- ══════════════ AUGUST 3, 2026 — SUPERSEDED ══════════════ -->
+  <h2 style="font-size:0.78rem;letter-spacing:0.18em;text-transform:uppercase;color:#F5C542;margin:0 0 0.85rem;padding-top:0.25rem;font-weight:700">August 3, 2026 · superseded by the August 4 fact audit</h2>
+  <div class="wn-list" style="margin-bottom:2.25rem">
     <article class="wn-card" style="--wn-accent:#F5C542">
-      <span class="wn-card-tag">Models</span>
-      <h2 class="wn-card-headline">The model market became a barbell &mdash; and &ldquo;Frontier of Restraint&rdquo; is retired</h2>
-      <p class="wn-card-body">Prices moved in <strong>both</strong> directions in one quarter. Claude Fable 5 / Mythos 5 pushed the top end <strong>up</strong> to $10/$50 for multi-day agentic work; Sonnet 5 (promo $2/$10 through Aug 31, then $3/$15, 1M context, now the Claude Code default) and Grok 4.5 ($2/$6, 500K context, co-trained with Cursor) pulled frontier-adjacent capability <strong>down</strong>. GPT-5.6 Sol/Terra/Luna reached GA July 9 at $5/$30, $2.50/$15 and $1/$6, with Sol <strong>54% more token-efficient</strong> on coding. Meta shipped its <strong>first paid Model API</strong> (Muse Spark 1.1, $1.25/$4.25) and Gemini 3.6 Flash cut output pricing to $1.50/$7.50 with 17% fewer output tokens. Chinese open weights took the parameter crown: <strong>Kimi K3 at 2.8T</strong> (weights Jul 27), Qwen3.8-Max-Preview at 2.4T, DeepSeek V4 Pro at 1.6T. Restricted/cyber remains a live secondary narrative &mdash; a <strong>19-day global suspension</strong> of Fable 5 and Mythos 5 and a US pre-release review before GPT-5.6 GA. We also added the benchmark-integrity caveat: the Grok 4.5 <strong>CursorBench result was withdrawn</strong> after training-data contamination.</p>
+      <span class="wn-card-tag">Superseded snapshot</span>
+      <h2 class="wn-card-headline">The August 3 refresh introduced the new narrative; the August 4 audit replaced its unsupported figures</h2>
+      <p class="wn-card-body">The August 3 release added the model barbell, funding-mix, Silicon &amp; Power, Voice AI and Healthcare AI narratives. A line-by-line audit the following day found that several precise model, pricing, healthcare, physical-AI and services figures rested on secondary or inaccessible sources. Those figures are not repeated here. The current report, the 18-slide deck and the August 4 entry above are the source of record.</p>
       <div class="wn-card-meta">
-        <span class="wn-card-updates">Updates: <strong>Model Wars</strong>, <strong>slide 6</strong> (now four readable lanes), <strong>slide 7</strong> (token-efficiency evidence strip)</span>
-        <span class="wn-card-jump"><a href="index.html#sec-3">Jump to section &rarr;</a></span>
-        <span class="wn-card-source">Sources: <a href="https://www.anthropic.com/news" target="_blank" rel="noopener">Anthropic</a> &middot; <a href="https://openai.com/index/gpt-5-6/" target="_blank" rel="noopener">OpenAI</a> &middot; <a href="https://the-decoder.com/grok-4-5-is-so-cheap-compared-to-fable-5-and-gpt-5-5-that-benchmark-gaps-may-not-matter-much/" target="_blank" rel="noopener">The Decoder</a> &middot; <a href="https://www.elser.ai/news/chinas-ai-moment-kimi-k3-deepseek-v4-qwen-2026" target="_blank" rel="noopener">Elser.ai</a> &middot; <a href="https://roo.beehiiv.com/p/grok-4-5" target="_blank" rel="noopener">Roo</a></span>
+        <span class="wn-card-updates">Status: <strong>historical narrative preserved; superseded numbers retired</strong></span>
+        <span class="wn-card-jump"><a href="#top">Read the August 4 audit entry ↑</a></span>
       </div>
     </article>
-
-    <article class="wn-card" style="--wn-accent:#D4A574">
-      <span class="wn-card-tag">Lab leadership</span>
-      <h2 class="wn-card-headline">Anthropic passed OpenAI on valuation <em>and</em> US enterprise penetration</h2>
-      <p class="wn-card-body">Anthropic closed a $65B Series H at a <strong>$965B post-money</strong> on May 28 (~$1.2T implied in secondaries), versus OpenAI at <strong>$852B</strong> (~$908B secondary). Anthropic&rsquo;s reported run-rate is <strong>$30B&ndash;$47B &mdash; sources conflict</strong>, and we now print it as a range. It leads on <strong>34.4% of US paid business use vs ChatGPT&rsquo;s 32.3%</strong> (Ramp AI Index), with 300K+ business customers and ~70% of the Fortune 100. Against that: ChatGPT crossed <strong>1B MAU</strong>, Codex + ChatGPT Work reached ~<strong>10M WAU</strong>, Gemini hit <strong>950M MAU</strong> with AI Mode past 1B and ~90% of the F100 on Gemini Enterprise, and Meta AI reports 1.2B MAU / 800M WAU of embedded reach. Every private ARR figure in the report is now explicitly labelled <strong>company-disclosed and unaudited</strong>.</p>
-      <div class="wn-card-meta">
-        <span class="wn-card-updates">Updates: <strong>The $60B Explosion</strong>, <strong>slide 5</strong></span>
-        <span class="wn-card-jump"><a href="index.html#sec-2">Jump to section &rarr;</a></span>
-        <span class="wn-card-source">Sources: <a href="https://valueaddvc.com/blog/anthropic-valuation-2026-965b-series-h-and-the-ipo-filing-explained" target="_blank" rel="noopener">Value Add VC</a> &middot; <a href="https://www.linkedotter.com/articles/anthropic-overtakes-openai-revenue-what-b2b-buyers-must-know-july-2026" target="_blank" rel="noopener">Ramp AI Index</a> &middot; <a href="https://www.theverge.com/tech/969624/google-says-gemini-now-has-950-million-monthly-users" target="_blank" rel="noopener">The Verge</a> &middot; <a href="https://www.digitalapplied.com/blog/openai-july-arr-run-rate-memo" target="_blank" rel="noopener">Digital Applied</a></span>
-      </div>
-    </article>
-
-    <article class="wn-card" style="--wn-accent:#E8837C">
-      <span class="wn-card-tag">Infrastructure</span>
-      <h2 class="wn-card-headline">New slide: Silicon &amp; Power &mdash; plus a visible &ldquo;How it&rsquo;s funded&rdquo; block</h2>
-      <p class="wn-card-body">Capex guidance held at <strong>$700&ndash;725B</strong> for the top four (~$800B including leases; Google raised to $195&ndash;205B) &mdash; but the funding quality changed, and that is now shown directly on the infrastructure slide: incremental <strong>debt rose from 9% to 32%</strong> of capex, <strong>buybacks went to zero</strong> at Meta and Alphabet, <strong>Alphabet&rsquo;s FCF turned negative for the first time since 2004</strong>, and it raised <strong>$84.75B</strong> of equity in June. A new slide 9 covers silicon and power: NVIDIA <strong>Q1 FY2027 revenue $81.6B / data center $75.2B</strong> with VeraRubin shipping in Q3 and &gt;$9B of physical-AI revenue TTM (and an explicit period label distinguishing this from FY2026&rsquo;s $215.9B annual figure); <strong>AMD at 8 GW committed</strong> (Anthropic up to 2 GW MI450, Meta 6 GW); Broadcom AI semis at <strong>$10.8B (+143%)</strong> with OpenAI custom silicon; and <strong>Etched at $10.3B</strong> on a $300M Series C led by Sequoia. On power, <strong>9.8 GW of nuclear is committed against 1.92 GW operational</strong> &mdash; bridged by the 2.67 GW off-grid Project Kilby gas plant, with Three Mile Island / Crane producing nothing until H2 2027&ndash;28.</p>
-      <div class="wn-card-meta">
-        <span class="wn-card-updates">Updates: <strong>The $700B Sprint</strong>, <strong>slide 8</strong>, <strong>NEW slide 9</strong></span>
-        <span class="wn-card-jump"><a href="index.html#sec-7">Jump to section &rarr;</a></span>
-        <span class="wn-card-source">Sources: <a href="https://insight.factset.com/hyperscalers-tap-external-financing-as-ai-capex-outruns-cash-flow" target="_blank" rel="noopener">FactSet</a> &middot; <a href="https://www.theglobeandmail.com/investing/markets/stocks/NVDA/pressreleases/36680709/nvidia-announces-financial-results-for-first-quarter-fiscal-2027/" target="_blank" rel="noopener">NVIDIA Q1 FY2027</a> &middot; <a href="https://www.reuters.com/business/autos-transportation/companies-pouring-billions-advance-ai-infrastructure-2026-07-22/" target="_blank" rel="noopener">Reuters</a> &middot; <a href="https://www.reuters.com/technology/ai-chip-startup-etched-raises-300-million-103-billion-valuation-2026-07-23/" target="_blank" rel="noopener">Reuters (Etched)</a> &middot; <a href="https://axis-intelligence.com/nuclear-energy-for-data-centers/" target="_blank" rel="noopener">Axis Intelligence</a></span>
-      </div>
-    </article>
-
-    <article class="wn-card" style="--wn-accent:#7C4DFF">
-      <span class="wn-card-tag">Applications</span>
-      <h2 class="wn-card-headline">Coding consolidated: Cursor at $4B ARR acquired for $60B all-stock</h2>
-      <p class="wn-card-body">SpaceX exercised its option to acquire Anysphere (Cursor) for <strong>$60B all-stock on June 16</strong>, and Grok 4.5 was <strong>co-trained with Cursor</strong> &mdash; model and application inside one public company. We frame this as <strong>category consolidation and vertical integration</strong>, not a valuation event: Cursor&rsquo;s gross margin is close to negative on token pass-through, so a ~15&times; LTM multiple is the expected outcome for that cost structure. The vibe-coding slide now carries an explicit consolidation flow: independent tool &rarr; Cursor/SpaceXAI; Claude Code &rarr; Sonnet 5 bundle; Work + Codex &rarr; OpenAI platform; Muse Spark &rarr; Meta enters. Lovable is at <strong>$500M ARR on 146 employees</strong> (~$3.4M ARR/head) with a $13.2B raise reportedly in progress. Higgsfield is <strong>in talks to raise at a $5B valuation</strong> (not closed) on a reported <strong>&gt;$500M annualized run-rate</strong>, cash-flow positive.</p>
-      <div class="wn-card-meta">
-        <span class="wn-card-updates">Updates: <strong>Agent Revolution</strong>, <strong>slide 11</strong></span>
-        <span class="wn-card-jump"><a href="index.html#sec-4">Jump to section &rarr;</a></span>
-        <span class="wn-card-source">Sources: <a href="https://valueaddvc.com/blog/how-does-cursor-make-money-subscriptions-token-pricing-and-the-business-model-breakdown" target="_blank" rel="noopener">Value Add VC</a> &middot; <a href="https://www.theinformation.com/articles/ai-video-startup-talks-quadruple-valuation-5-billion" target="_blank" rel="noopener">The Information</a> &middot; <a href="https://www.businessinsider.com/higgsfield-revenue-500-million-as-it-raises-a-series-b-2026-6" target="_blank" rel="noopener">Business Insider</a></span>
-      </div>
-    </article>
-
-    <article class="wn-card" style="--wn-accent:#4ECDC4">
-      <span class="wn-card-tag">New section</span>
-      <h2 class="wn-card-headline">New slide: Voice AI &mdash; the category cleared the bar</h2>
-      <p class="wn-card-body">ElevenLabs reached <strong>$600M ARR</strong> in July (from $330M at end-2025, ~175% YoY) with <strong>41% of the Fortune 500</strong>, <strong>1B+ end users via API</strong> and <strong>$22M paid to 10,400+ voice creators</strong> &mdash; all company-disclosed. OpenAI shipped <strong>full-duplex GPT-Live</strong> models on July 8, so voice now ships <em>with</em> the frontier model rather than beside it. DVC exposure runs through <strong>FleetWorks</strong> and <strong>Avoca</strong>. The new slide is a designed inline layout with an animated waveform, two scale cards and an adoption strip &mdash; no generic iframe.</p>
-      <div class="wn-card-meta">
-        <span class="wn-card-updates">Updates: <strong>Agent Revolution</strong>, <strong>NEW slide 12</strong></span>
-        <span class="wn-card-jump"><a href="index.html#sec-4">Jump to section &rarr;</a></span>
-        <span class="wn-card-source">Sources: <a href="https://openai.com/index/introducing-gpt-live/" target="_blank" rel="noopener">OpenAI</a> &middot; <a href="https://www.postbeam.ai/blog/how-elevenlabs-grows" target="_blank" rel="noopener">Postbeam</a></span>
-      </div>
-    </article>
-
-    <article class="wn-card" style="--wn-accent:#4ECDC4">
-      <span class="wn-card-tag">Business models</span>
-      <h2 class="wn-card-headline">Outcome pricing is now a priced market &mdash; and the rollup arbitrage is a funded contest</h2>
-      <p class="wn-card-body">This upgraded from &ldquo;emerging shift&rdquo; to a price list: Intercom Fin <strong>$0.99</strong>/resolution, Zendesk from <strong>$1.50</strong>, Sierra ~<strong>$1.50</strong>, Sierra/Decagon <strong>$1&ndash;3.50</strong>, Salesforce Flex Credits <strong>$0.10</strong>/action, plus <strong>Agentforce pay-per-resolution GA</strong> and the <strong>m3ter</strong> acquisition closed July 1 to bill it. Gartner puts <strong>$234B (~20%)</strong> of enterprise app spend in scope, and <strong>45% of Cognizant&rsquo;s new BPO contracts</strong> are outcome-based. In the attack-angle table, Harvey moved to <strong>$11B / ~$300M ARR</strong> in SaaS-to-incumbents, Sierra now prints at <strong>~79&times;</strong> and Decagon at <strong>~128&times;</strong>, Dwelly at <strong>$95M equity + debt</strong>, and Higgsfield joins vertical agentic. Two new context bands: the rollup arbitrage is now contested by <strong>Thrive (~$2B, OpenAI engineers embedded)</strong> and <strong>General Catalyst ($1.5B)</strong>, and the <strong>model layer entered services</strong> via Anthropic&rsquo;s <strong>$1.5B Ode</strong> JV with Blackstone, H&amp;F and Goldman. Margin bands are unchanged.</p>
-      <div class="wn-card-meta">
-        <span class="wn-card-updates">Updates: <strong>Business Model Problem</strong>, <strong>slide 13</strong>, <strong>slide 15</strong> (attack angles)</span>
-        <span class="wn-card-jump"><a href="index.html#sec-9">Jump to section &rarr;</a></span>
-        <span class="wn-card-source">Sources: <a href="https://www.thefoundersreport.com/the-seat-is-dying-vertical-ai-saas-bets-on-outcomes-over-logins" target="_blank" rel="noopener">The Founders Report</a> &middot; <a href="https://www.teqfocus.com/newsletter/teqfocus-insights-july-2026-ai-pricing-shifts-to-outcomes/" target="_blank" rel="noopener">Teqfocus</a> &middot; <a href="https://techcrunch.com/2026/07/15/anthropic-blackstone-bet-the-next-trillion-dollar-ai-business-is-implementation-not-models/" target="_blank" rel="noopener">TechCrunch (Ode)</a></span>
-      </div>
-    </article>
-
-    <article class="wn-card" style="--wn-accent:#E8837C">
-      <span class="wn-card-tag">Healthcare AI</span>
-      <h2 class="wn-card-headline">Healthcare AI substantially updated: AI follows incentives &mdash; efficiency and total spend both go up</h2>
-      <p class="wn-card-body">The section&rsquo;s first major revision since it shipped, plus a new synthesis slide. <strong>The reframing:</strong> ambient documentation genuinely saves clinician time (&minus;13 to &minus;16 min/day in a 5-hospital JAMA study) <em>and</em> health plans project a <strong>9% group / 8.5% individual 2027 medical cost trend</strong> &mdash; the highest in ~two decades &mdash; with <strong>~70% ranking provider AI documentation and coding among their top three cost inflators</strong>. The mechanism is measured, not asserted: one maternity code rose from <strong>4% to 12.3%</strong> of admissions while transfusions barely moved, adding <strong>$22M</strong>; Blue Health Intelligence ties ~<strong>$2.3B</strong> of extra expected spend to AI-enabled documentation; UCSF found more billing units per encounter with <strong>no increase in denials</strong>. Also added: a <strong>prior-auth AI-vs-AI node</strong> (WISeR survived the Senate <strong>46&ndash;50</strong>; the Protecting Patients from Automated Denials Act; a converging licensed-human-signoff + disclosure + reporting standard; <strong>ePA mandatory Jan 1, 2027</strong>); the <strong>consumer front door</strong> (Health in ChatGPT launched Jul 23 with Apple Health, hospital records, One Medical and Function connections; 40M users ask health questions daily; 1 in 7 UK adults used AI instead of a doctor); <strong>safety and liability as the second gate</strong> (NOHARM&rsquo;s <strong>76.6% omissions</strong> &mdash; not peer-reviewed and disputed; OpenAI sued for the unauthorized practice of medicine one day before launch; 1.4M patients exposed across 7 health systems in an AI vendor breach); <strong>two clocks replacing one horizon</strong> (admin 2&ndash;4 years on deadlines, clinical autonomy 10&ndash;15 years on evidence and liability &mdash; 43% piloting agents but only <strong>3%</strong> live, 68% pre-scale, FDA <strong>zero</strong> marketed genAI devices: designations, not clearances); refreshed <strong>CMS Year 2</strong> workstreams; the <strong>NHS single-payer counterfactual</strong>; healthcare funding concentration; and portfolio updates for <strong>Doctronic</strong> (acquired Summer Health for 100K+ pediatric interactions) and <strong>Collectly</strong> (live on the Epic Showroom, 3,000+ facilities, 475K+ billing questions resolved). All vendor metrics are now explicitly labelled company-disclosed. Money-river and patient-loop interactions are unchanged.</p>
-      <div class="wn-card-meta">
-        <span class="wn-card-updates">Updates: <strong>Healthcare AI</strong>, <strong>NEW slide 16</strong></span>
-        <span class="wn-card-jump"><a href="index.html#sec-healthcare-ai">Jump to section &rarr;</a></span>
-        <span class="wn-card-source">Sources: <a href="https://www.axios.com/2026/06/12/health-ai-more-expensive-costs" target="_blank" rel="noopener">Axios</a> &middot; <a href="https://fortune.com/2026/06/12/ai-making-medical-bills-higher/" target="_blank" rel="noopener">Fortune</a> &middot; <a href="https://www.statnews.com/2026/07/16/medicare-ai-prior-authorization-pilot-wiser-senate-vote/" target="_blank" rel="noopener">STAT</a> &middot; <a href="https://openai.com/index/health-in-chatgpt/" target="_blank" rel="noopener">OpenAI</a> &middot; <a href="https://fortune.com/2026/07/29/new-medical-ai-study-same-flaw-openevidence-openai-anthropic-doximity/" target="_blank" rel="noopener">Fortune (NOHARM)</a> &middot; <a href="https://www.england.nhs.uk/2026/07/nhs-accelerates-artificial-intelligence-rollout-to-cut-waiting-times-and-improve-care-for-millions/" target="_blank" rel="noopener">NHS England</a></span>
-      </div>
-    </article>
-
-    <article class="wn-card" style="--wn-accent:#4A90D9">
-      <span class="wn-card-tag">Physical AI</span>
-      <h2 class="wn-card-headline">The Waymo&ndash;Tesla gap widened; humanoid funding hit $8.6B</h2>
-      <p class="wn-card-body">Waymo is at ~<strong>500K paid rides/week</strong> across <strong>15+ fully driverless metros</strong> on ~3,000 vehicles and <strong>220M+ autonomous miles</strong>, targeting 1M/week with a cited forecast nearer <strong>775K</strong>. Tesla&rsquo;s comparable figure is <strong>2.5M paid robotaxi miles &mdash; only 380K without a safety monitor</strong> &mdash; flat at ~900K added miles in each of Q1 and Q2 with ~14 unsupervised Austin cars. We explicitly no longer use Tesla&rsquo;s 8.4B FSD miles as equivalent evidence. Humanoid funding reached <strong>$8.6B in 2026 YTD</strong> (1.8&times; all of 2025) with Figure reported at $39B, an Agility SPAC at ~$2.5B, Humanoid at $1.35B and a Unitree IPO &mdash; against a delivery ledger that has not moved. NVIDIA disclosed <strong>&gt;$9B</strong> of physical-AI revenue TTM. Rhoda (DVC): <strong>&gt;$450M raised &middot; &gt;$2.4B valuation</strong>.</p>
-      <div class="wn-card-meta">
-        <span class="wn-card-updates">Updates: <strong>AI Leaves the Screen</strong>, <strong>slide 17</strong></span>
-        <span class="wn-card-jump"><a href="index.html#sec-8">Jump to section &rarr;</a></span>
-        <span class="wn-card-source">Sources: <a href="https://www.reuters.com/business/autos-transportation/teslas-once-bullish-tone-robotaxis-shifts-2026-07-23/" target="_blank" rel="noopener">Reuters</a> &middot; <a href="https://electrek.co/2026/07/22/tesla-robotaxi-growth-flat-own-chart-q2-2026/" target="_blank" rel="noopener">Electrek</a> &middot; <a href="https://venturepost.co/funding/humanoid-robot-startups-2026" target="_blank" rel="noopener">Venture Post</a>. Rhoda figures per DVC.</span>
-      </div>
-    </article>
-
-    <article class="wn-card" style="--wn-accent:#4A90D9">
-      <span class="wn-card-tag">Regulation</span>
-      <h2 class="wn-card-headline">EU AI Act enforcement went live August 2 &mdash; Article 50 binds deployers, not just labs</h2>
-      <p class="wn-card-body">Chatbot disclosure, deepfake labelling and machine-readable marking of AI-generated content are enforceable across the EU as of <strong>Aug 2, 2026</strong>. Fine tiers matter and are frequently conflated: <strong>&euro;15M / 3%</strong> for GPAI provider non-compliance, with &euro;35M / 7% reserved for prohibited practices. The expensive high-risk conformity work slipped to <strong>Dec 2, 2027</strong> and <strong>Aug 2, 2028</strong>. In the US, <strong>EO 14409</strong> created a voluntary up-to-30-day pre-release review channel that has already produced a <strong>19-day global suspension</strong> of two frontier models, and the White House launched <strong>GOLD EAGLE</strong> on July 14. Export controls are now bilateral and extraterritorial. Sovereign AI passed <strong>&gt;$350B</strong> committed, with <strong>MGX Fund I at $49B</strong>, a <strong>$40B Aligned Data Centers buyout</strong>, and Kuwait&rsquo;s <strong>Helix at $10B+</strong>. Capital rotated to implementation, not models: Anthropic&rsquo;s Ode and Thrive&rsquo;s ~$2B raise. Report-only &mdash; no new slide.</p>
-      <div class="wn-card-meta">
-        <span class="wn-card-updates">Updates: <strong>Geopolitical Chessboard</strong></span>
-        <span class="wn-card-jump"><a href="index.html#sec-11">Jump to section &rarr;</a></span>
-        <span class="wn-card-source">Sources: <a href="https://digital-strategy.ec.europa.eu/en/news/commission-starts-enforcing-ai-act-rules-and-new-transparency-requirements-2-august" target="_blank" rel="noopener">European Commission</a> &middot; <a href="https://www.mintz.com/insights-center/viewpoints/54941/2026-07-08-ai-washington-report-july-2026-edition" target="_blank" rel="noopener">Mintz</a> &middot; <a href="https://valueaddvc.com/blog/sovereign-ai-funds-every-country-building-its-own-ai-infrastructure-in-2026" target="_blank" rel="noopener">Value Add VC</a></span>
-      </div>
-    </article>
-
-    <article class="wn-card" style="--wn-accent:#E8837C">
-      <span class="wn-card-tag">Valuations</span>
-      <h2 class="wn-card-headline">&ldquo;Not a bubble&rdquo; holds &mdash; but the repricing now has a mechanism, and we did not add a bear slide</h2>
-      <p class="wn-card-body">We updated the existing <em>Not a bubble &mdash; but pockets of overpricing</em> section rather than adding a bear slide. <strong>Cerebras</strong> now appears as a full arc: listed May 14 at $185 raising $5.55B, day one +68% to ~$311, peak $386.34, 52-week low $160.81 on June 26, then ~15% more on first earnings to ~$50.7B &mdash; <strong>~58% off its high while growing +94%</strong>, with <strong>$24.6B of RPO concentrated in one customer</strong> as the qualifier on the multiple. Private multiples now print: <strong>Sierra ~79&times;</strong>, <strong>Decagon ~128&times;</strong>. Cursor appears as <strong>successful consolidation</strong>, with an explicit note that near-negative gross margin makes ~15&times; the expected multiple &mdash; not a discipline or bear datapoint. Funding mix (debt 9&rarr;32%, Alphabet FCF negative) and venture concentration (<strong>43% of H1 dollars to OpenAI + Anthropic</strong>) are treated as material market structure, alongside healthcare&rsquo;s own concentration (Q2 <strong>$2.7B</strong>, &minus;39.9% YoY; <strong>228 deals</strong>, a decade low; 20 megadeals = 45% of H1 capital). A standing unaudited-private-ARR caveat now applies to every multiple. Physical-AI and nuclear delivery gaps are deliberately kept out of this section.</p>
-      <div class="wn-card-meta">
-        <span class="wn-card-updates">Updates: <strong>Not a Bubble</strong>, <strong>5-Year Outlook</strong>, <strong>slide 18</strong> (six beliefs)</span>
-        <span class="wn-card-jump"><a href="index.html#sec-12">Jump to section &rarr;</a></span>
-        <span class="wn-card-source">Sources: <a href="https://valueaddvc.com/blog/cerebras-stock-since-the-ipo-cbrs-down-from-386-to-under-170-then-crashed-on-earnings" target="_blank" rel="noopener">Value Add VC</a> &middot; <a href="https://pitchbook.com/news/reports/q2-2026-healthtech-report-commures-7-billion-raise-headlines-a-slow-quarter" target="_blank" rel="noopener">PitchBook</a> &middot; <a href="https://insight.factset.com/hyperscalers-tap-external-financing-as-ai-capex-outruns-cash-flow" target="_blank" rel="noopener">FactSet</a></span>
-      </div>
-    </article>
-
-    <article class="wn-card" style="--wn-accent:#7C4DFF">
-      <span class="wn-card-tag">Deck</span>
-      <h2 class="wn-card-headline">The deck went from 15 to 18 slides &mdash; and one belief was retired</h2>
-      <p class="wn-card-body">Three slides added: <strong>9 Silicon &amp; Power</strong>, <strong>12 Voice AI</strong> and <strong>16 Healthcare AI</strong>. Final order: 1 QR cover, 2 cinematic opener, 3 tech cycles, 4 unified stack (3 sub-states), 5 application &amp; lab leadership, 6 model barbell, 7 smarter + cheaper with token evidence, 8 infrastructure &amp; how it&rsquo;s funded, 9 silicon &amp; power, 10 agent anatomy, 11 vibe-coding consolidation, 12 voice AI, 13 business models, 14 services matrix, 15 attack angles, 16 healthcare AI, 17 physical AI, 18 six beliefs. <strong>No bear slide was added.</strong> On the closing slide, &ldquo;the pricing model is still being invented&rdquo; is <strong>retired</strong> and replaced with <em>&ldquo;outcome pricing has been invented; margin is the unresolved variable&rdquo;</em>; distribution is redefined as records, regulators and institutional accounts; energy keeps its constraint but gains construction, financing and the gas bridge; open source is qualified (Chinese open weights lead scale, regulated enterprise inference stays proprietary or hybrid); and the sixth belief becomes <em>&ldquo;AI follows incentives; efficiency doesn&rsquo;t guarantee lower spend.&rdquo;</em> Fullscreen, sub-states, tooltips and the QR cover are unchanged.</p>
-      <div class="wn-card-meta">
-        <span class="wn-card-updates">Updates: <strong>Slideshow</strong> (18 slides), <strong>5-Year Outlook</strong></span>
-        <span class="wn-card-jump"><a href="slides.html">Open the slideshow &rarr;</a></span>
-      </div>
-    </article>
-
   </div>
 
   <h2 style="font-size:0.78rem;letter-spacing:0.18em;text-transform:uppercase;color:#6B7280;margin:0 0 0.85rem;padding-top:0.25rem;font-weight:700">May 19, 2026 &middot; previous entry</h2>
@@ -309,7 +219,7 @@
     <!-- CAISI DeepSeek V4 Pro -->
     <article class="wn-card" style="--wn-accent:#E8837C">
       <span class="wn-card-tag">Models &amp; Evals</span>
-      <h2 class="wn-card-headline">NIST/CAISI eval: DeepSeek V4 Pro about 8 months behind US frontier on held-out benchmarks</h2>
+      <h2 class="wn-card-headline">NIST/CAISI eval: DeepSeek V4 Pro measurably behind US frontier on held-out benchmarks</h2>
       <p class="wn-card-body">CAISI's independent evaluation used non-public ("uncontaminated") benchmarks across cyber, software engineering, sciences, abstract reasoning, and math. Public-style evals look close to the US frontier; CAISI's held-out evals do not. V4 Pro lands roughly comparable to GPT-5 (released about 8 months earlier), with an IRT Elo near 800 versus GPT-5.5 around 1260. The cost-efficiency story holds: V4 Pro was cheaper than GPT-5.4 mini on 5 of 7 benchmarks. The cleanest framing: public evals look close, held-out evals show a gap, cost efficiency is real.</p>
       <div class="wn-card-meta">
         <span class="wn-card-updates">Updates: <strong>Model Wars</strong>, <strong>Geopolitics</strong></span>
@@ -440,7 +350,7 @@
       <div class="wn-card-meta">
         <span class="wn-card-updates">Updates: <strong>Agent Revolution</strong>, <strong>Business Models</strong></span>
         <span class="wn-card-jump"><a href="index.html#sec-4">Jump to section &rarr;</a></span>
-        <span class="wn-card-source">Source: <a href="https://finance.yahoo.com/sectors/technology/articles/openai-finalizes-10-billion-joint-123100557.html" target="_blank" rel="noopener">Bloomberg / Yahoo Finance, May 4&ndash;5 2026</a></span>
+        <span class="wn-card-source">Historical May 2026 note. The unavailable financing link and its numeric terms were retired from the live report during the Aug 4 fact audit.</span>
       </div>
     </article>
 
@@ -472,7 +382,7 @@
     <article class="wn-card" style="--wn-accent:#F5C542">
       <span class="wn-card-tag">CapEx</span>
       <h2 class="wn-card-headline">Hyperscaler 2026 CapEx resets toward $725B</h2>
-      <p class="wn-card-body">Big&nbsp;4 hyperscalers plus Oracle now guide to roughly <strong>~$695B midpoint, up to $725B</strong> at the top end &mdash; about $100B above prior projections. Per-company anchors used across the report and deck (CapEx explorer in <a href="index.html#sec-7" style="color:#F5C542">sec-7</a> and slide&nbsp;7): Amazon ~$200B, Alphabet ~$180B, Microsoft ~$145B, Meta ~$125B, Oracle ~$50B. The infrastructure chapter got bigger, not smaller; the bottleneck is memory, power, and data-center execution.</p>
+      <p class="wn-card-body"><em>As reported on May 6, 2026 &mdash; superseded by the ~$725B midpoint / up to ~$745B guidance in the August 4, 2026 entry above.</em> Big&nbsp;4 hyperscalers plus Oracle guided to roughly <strong>~$695B midpoint, up to $725B</strong> at the top end &mdash; about $100B above prior projections. Per-company anchors used across the report and deck (CapEx explorer in <a href="index.html#sec-7" style="color:#F5C542">sec-7</a> and slide&nbsp;7): Amazon ~$200B, Alphabet ~$180B, Microsoft ~$145B, Meta ~$125B, Oracle ~$50B. The infrastructure chapter got bigger, not smaller; the bottleneck is memory, power, and data-center execution.</p>
       <div class="wn-card-meta">
         <span class="wn-card-updates">Updates: <strong>$700B Sprint</strong>, <strong>Follow the Money</strong></span>
         <span class="wn-card-jump"><a href="index.html#sec-7">Jump to section &rarr;</a></span>

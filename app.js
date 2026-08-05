@@ -361,9 +361,9 @@
     const YEARS = ['2020', '2021', '2022', '2023', '2024', '2025', '2026E'];
     const COMPANIES = {
       amazon:   { label: 'Amazon',   color: '#FF9900', data: [40, 61, 63, 54, 83, 131, 200] },
-      alphabet: { label: 'Alphabet', color: '#4285F4', data: [22, 29, 31, 32, 52, 91, 180] },
-      microsoft:{ label: 'Microsoft',color: '#7FBA00', data: [20, 27, 32, 35, 56, 80, 145] },
-      meta:     { label: 'Meta',     color: '#0668E1', data: [16, 19, 32, 28, 39, 72, 125] },
+      alphabet: { label: 'Alphabet', color: '#4285F4', data: [22, 29, 31, 32, 52, 91, 200] },
+      microsoft:{ label: 'Microsoft',color: '#7FBA00', data: [20, 27, 32, 35, 56, 80, 190] },
+      meta:     { label: 'Meta',     color: '#0668E1', data: [16, 19, 32, 28, 39, 72, 135] },
       oracle:   { label: 'Oracle',   color: '#C74634', data: [9, 7, 9, 9, 13, 35, 50] },
     };
 
@@ -1113,7 +1113,7 @@
         name: 'Google',
         rank: '#1 Best Positioned',
         color: '#4ECDC4',
-        superpower: 'Owns search (90%), cloud ($70B+ run rate), custom TPUs, 750M Gemini MAU, and the Anthropic relationship',
+        superpower: 'Owns search (90%), cloud ($70B+ run rate), custom TPUs, 950M Gemini app MAU (Jul 2026), and the Anthropic relationship',
         heel: 'AI Overviews halve clickthrough rates (15% → 8%), compressing Google\'s $200B search ad machine. Each AI answer that replaces a search link erodes high-intent ad inventory.',
         stat: 'Perplexity: 200M daily queries (~1.3% of Google\'s 15B/day). ChatGPT: 2.5B prompts/day. Combined AI search is now a real threat — growing 20%+ month-over-month.'
       },
@@ -1122,7 +1122,7 @@
         rank: '#2 Enterprise King',
         color: '#7C4DFF',
         superpower: 'Deepest enterprise distribution: Office 365, Azure, GitHub, LinkedIn. 100M+ Copilot MAU. Multi-model (OpenAI, Anthropic, Mistral).',
-        heel: 'Consumer AI is invisible — 2.4M daily Copilot web visits vs. ChatGPT\'s 831M users. No consumer identity. Bing AI never broke through.',
+        heel: 'Consumer AI is invisible — 2.4M daily Copilot web visits vs. ChatGPT\'s ~1B mobile MAU. No consumer identity. Bing AI never broke through.',
         stat: 'Rolled out Claude Code to its E+D division, telling even non-technical employees to use it. M365 Copilot drives ARPU uplift, but hedging away from OpenAI dependency.'
       },
       meta: {
@@ -1145,15 +1145,15 @@
         name: 'xAI / SpaceX',
         rank: '#5 Arms Dealer',
         color: '#E8837C',
-        superpower: 'Absorbed into SpaceX. $1.25T combined valuation. Colossus supercomputer. Now using compute as acquisition currency — $60B option to buy Cursor, or $10B for the partnership.',
+        superpower: 'Absorbed into SpaceX. $1.25T combined valuation. Colossus supercomputer. Now using compute as acquisition currency — $60B all-stock acquisition of Cursor agreed Jun 16 2026, expected to close Q3 2026.',
         heel: 'Lost all 11 original cofounders. Elon rebuilding team from scratch. Grok 5 targeting Q2 release but consistently behind OpenAI/Anthropic on benchmarks.',
-        stat: 'April 2026: Signed Cursor deal giving SpaceX option to acquire at $60B. Cursor gets Colossus access — "bottlenecked by compute" no more. SpaceX IPO expected June 2026.'
+        stat: 'April 2026: Signed Cursor deal giving SpaceX option to acquire at $60B. Cursor gets Colossus access — "bottlenecked by compute" no more. SpaceX completed its IPO on June 12 2026.'
       },
       nvidia: {
         name: 'NVIDIA',
         rank: 'Arms Dealer',
         color: '#76B900',
-        superpower: '$36B+ committed across ecosystem investments: OpenAI, Anthropic, xAI, robotics. Acquired Groq for $20B. Vera Rubin ships 2026.',
+        superpower: '$36B+ committed across ecosystem investments: OpenAI, Anthropic, xAI, robotics. $20B non-exclusive technology licence plus asset purchase and acqui-hire for Groq (Dec 2025); NVIDIA states it did not acquire Groq. Vera Rubin ships 2026.',
         heel: 'Google TPU, Amazon Trainium, Microsoft Maia — every hyperscaler building custom silicon to reduce NVIDIA dependency.',
         stat: 'Ironically: NVIDIA\'s biggest risk is its own customers becoming competitors. But switching costs are enormous (CUDA moat).'
       },
@@ -1342,6 +1342,7 @@
     const paretoContainer = document.getElementById('paretoDeals');
     if (paretoContainer) {
       const dealData = [
+        { company: 'Anthropic', amount: 65,  label: '$65B',   date: 'May 2026',  investors: 'Series H closed May 28 2026 at $965B post-money — the second-largest private round on record', color: '#F5C542' },
         { company: 'OpenAI',    amount: 122, label: '$122B',  date: 'Mar 2026',  investors: 'Series F closed at $852B post-money / $730B pre-money — SoftBank $30B + Amazon $50B + NVIDIA $30B',  color: '#E8837C' },
         { company: 'OpenAI',    amount: 40,  label: '$40B',   date: 'Mar 2025',  investors: 'SoftBank, Microsoft, Thrive Capital',  color: '#E8837C' },
         { company: 'Anthropic', amount: 30,  label: '$30B',   date: 'Feb 2026',  investors: 'Series G at $380B post-money — GIC + Coatue lead',      color: '#F5C542' },
